@@ -1,0 +1,47 @@
+version: '3'
+services:
+    apache:
+        build: .docker/apache
+        container_name: calendar_apache
+        ports:
+          - 8000:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/var/www/
+        depends_on:
+          - php
+
+    php:
+        build: .docker/php
+        container_name: calendar_php
+        volumes:
+          - .:/var/www/
+        depends_on:
+          - mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: calendar_phpmyadmin
+        environment:
+          PMA_HOST: mysql
+          PMA_PORT: 3306
+        ports:
+            - 8080:80
+        links:
+            - mysql
+
+    mysql:
+         image: mysql
+         volumes:
+            - calendar-data:/var/lib/mysql
+         restart: always
+         ports:
+            - "3307:3307"
+         environment:
+           MYSQL_ROOT_PASSWORD: root
+           MYSQL_DATABASE: calendar
+           MYSQL_USER: root
+           MYSQL_PASSWORD: root
+
+volumes:
+    calendar-data:
