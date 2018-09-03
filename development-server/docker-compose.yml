@@ -4,10 +4,10 @@ services:
         build: .docker/apache
         container_name: calendar_apache
         ports:
-          - 8000:80
+          - 8090:80
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
-          - .:/var/www/
+          - ../www:/var/www/
         depends_on:
           - php
 
@@ -15,7 +15,7 @@ services:
         build: .docker/php
         container_name: calendar_php
         volumes:
-          - .:/var/www/
+          - ../www:/var/www/
         depends_on:
           - mysql
 
@@ -26,7 +26,7 @@ services:
           PMA_HOST: mysql
           PMA_PORT: 3306
         ports:
-            - 8080:80
+            - 8091:80
         links:
             - mysql
 
