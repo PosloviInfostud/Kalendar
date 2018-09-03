@@ -22,8 +22,7 @@ $  docker-compose up -d
 This will build and start the docker stack it will take about 10 mins until it downloads and builds the stack for the first
 time.
 
-After everything is finished you can make an index.html in your choosen directory and go to `localhost:8090` and you should
-see the index.html loaded.
+After everything is finished go to `localhost:8090`, you should see an "Welcome to CodeIgniter!" page.
 
 ## Usage
 
