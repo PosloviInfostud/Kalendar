@@ -1,0 +1,4 @@
+# Definisemo promenljive da bi smo cuvali podatke. 
+# Preporucljivo je da se koristi "let" ali videcete i da se koristi "var". Za konstante koristite "const"
+# Varijable treba da se nazivaju razumno i deklarativno (opisno). Treba se truditi da drugi programeri razumeju sta one znace
+# Preporucljivo je korisiti camelCase ---> nekaVarijabla = "tekst"
