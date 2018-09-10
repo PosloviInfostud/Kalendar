@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Uvod u javascript</title>
+</head>
+<body>
+    <script>
+        // Tacka zared ";" nije obavezna ali stavljajte
+        let varijabla = "nesto";
+
+        ///////////////////////////////////
+        // 1. Brojevi, Stringovi and Operatori
+
+        // JavaScript ima int i double.
+        
+        let broj1 = 3; // = 3
+        let broj2 = 4.5; // = 4.5
+
+        // Osnovna artimetika radi kako vec znate.
+        1 + 1; // = 2
+        0.1 + 0.2; // = 0.30000000000000004
+        
+        8 - 1; // = 7
+        10 * 2; // = 20
+        35 / 5; // = 7
+
+        // Deljenje sa neparnim brojem.
+        5 / 2; // = 2.5
+
+        // Moduo broja.
+        10 % 2; // = 0
+        30 % 4; // = 2
+        18.5 % 7; // = 4.5
+
+        //Osnove logicke operacije
+        // < > <= >= != ==
+
+        // Boolean tipovi.
+        true;
+        false;
+
+        // Stringovi se prave sa "" ili ''.
+        'abc';
+        "Hello, world";
+
+        // Negacija se radi sa !
+        !true; // = false
+        !false; // = true
+
+        // Uporedjivanje se radi sa ===
+        1 === 1; // = true
+        2 === 1; // = false
+
+        // Uporedjivanje sa negacijom !==
+        1 !== 1; // = false
+        2 !== 1; // = true
+
+        // Ostale logicke operacije
+        1 < 10; // = true
+        1 > 10; // = false
+        2 <= 2; // = true
+        2 >= 2; // = true
+
+        // Strings se spajaju sa +
+        "Hello " + "world!"; // = "Hello world!"
+
+        // ... i ovo radi i sa brojevima i nizovima
+        "1, 2, " + 3; // = "1, 2, 3"
+        "Hello " + ["world", "!"]; // = "Hello world,!"
+
+        // Mozete naci i pristupiti karakteru sa `charAt`
+        "This is a string".charAt(0);  // = 'T'
+
+        // ...ili koristiti  `substring` da dobijete vise od jednom.
+        "Hello world".substring(0, 5); // = "Hello"
+
+
+        // Variables se deklarisu sa `let` keyword-om. 
+        let someVar = 5;
+
+    
+        // Varijable koje se definisu bez vrednosti su undefined.
+        var someThirdVar; // = undefined
+
+        // Ako hocete mozete deklarisati vise varijabli u jednom redu
+        var someFourthVar = 2, someFifthVar = 4;
+
+        // Dodavanje +1 na varijablu
+        someVar++; // ako je 100 posle ovoga je 101
+        someVar--; // ako je 101 posle ovoga je 100
+
+        // Array je ordered lists of values, bilo kod tipa.
+        var myArray = ["Hello", 45, true];
+
+        // Elementima u nizu se pristupa sa [broj].
+        // Array pocinje sa indeksom 0.
+        myArray[1]; // = 45
+
+        // U array se moze dodavati vrednost
+        myArray.push("World");
+        myArray.length; // = 4
+
+        // Dodati/Promeniti na specificnom indeksu
+        myArray[3] = "Hello";
+
+        // JavaScript's objecti se ponasaju kao mape
+        // Kolekcija kljuc-vrednost
+        var myObj = 
+        {
+            key1: "Hello", 
+            key2: "World"
+        };
+
+
+        // Vrednostima objekta se pristupa sa.
+        myObj.key1; // = "Hello"
+
+        // Ako objekt nema taj kljuc vraca se undefined
+        myObj.myFourthKey; // = undefined
+
+        ///////////////////////////////////
+        // Logika i operacije 
+
+        // If struktura radi kako ste navikli
+        var count = 1;
+        if (count == 3){
+        } else if (count == 4){
+        } else {
+        }
+
+        ///////////////////////////////////
+        // Funkcije
+
+        // JavaScript funkcije se deklarisu sa funkcion.
+        function myFunction(thing){
+            return thing.toUpperCase();
+        }
+        myFunction("foo"); // = "FOO"
+    
+    </script>
+</body>
+</html>
