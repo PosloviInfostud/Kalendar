@@ -22,12 +22,12 @@ body,html {
 </style>
 <body>
     <?php 
-        if(empty($_POST['git_message'])) {
+        if(empty($_GET['git_message'])) {
     ?>
     <div class="container h-100">
         <div class="row h-100 justify-content-center align-items-center">
             <h1 class="text-center" style="font-size:72pt;">Say hello!</h1>
-            <form class="col-12" action="" method="POST">
+            <form class="col-12" action="" method="GET">
             <div class="form-group">
                 <input type="text" name="git_message" class="form-control" id="git_message">
                 <p class="text-center" style="margin-top:10px;">
@@ -42,7 +42,7 @@ body,html {
             ?>
                 <div class="container h-100">
                     <div class="row h-100 justify-content-center align-items-center">
-                        <h1 class="text-center" style="font-size:96pt;"><?= $_POST['git_message'] ?></h1>
+                        <h1 class="text-center" style="font-size:96pt;"><?= $_GET['git_message'] ?></h1>
                         </form>   
                     </div>  
                 </div>
@@ -51,8 +51,4 @@ body,html {
     ?>
 </body>
 </html>
-<?php 
 
-//echo "Hello Git!";
-
-?>
