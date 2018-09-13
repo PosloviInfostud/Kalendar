@@ -15,7 +15,7 @@
 <style>
 body,html {
     height: 100%;
-    background: url(http://www.salbii.com/wp-content/themes/salbii/images/wp-admin/layout-backgrounds/bgimg3.jpg);
+    background: url("mounhouse.jpeg");
     background-repeat: no-repeat;
     background-size: cover;
 }

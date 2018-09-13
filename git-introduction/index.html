@@ -25,29 +25,15 @@
     </style>
 </head>
 <body>
-<?php 
-
-if (empty($_GET['git_message'])) { ?>
-
     <div class="container">
         <div class="content">
             <h1>Say Hello!</h1>
         </div>
         <form action="" method="GET">
             <input type="text" name="git_message" id="git_message">
-            <input type="text" name="git_message2" id="git_message2">
             <input type="submit" value="Pošalji" />
         </form>
     </div>
-
-<?php 
-    } else { ?>
-
-        <h1><?php echo $_GET['git_message']; ?> </h1>
-
-    <?php } ?>
- 
-    
     
 </body>
 </html>
