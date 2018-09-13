@@ -35,6 +35,7 @@ if (empty($_GET['git_message'])) { ?>
         </div>
         <form action="" method="GET">
             <input type="text" name="git_message" id="git_message">
+            <input type="text" name="git_message1" id="git_message1">
             <input type="submit" value="Pošalji" />
         </form>
     </div>
