@@ -68,4 +68,37 @@
             $query = $this->db->query($sql, [$id]);
         }
 
+        public function posts_by_tag($id)
+        {
+            $result = [];
+            $sql = 'SELECT post_id FROM post_tags WHERE tag_id = ?';
+            $query = $this->db->query($sql, [$id]);
+
+            if($query->num_rows()) {
+                $result = $query->result_array();
+                foreach($result as $post) {
+                    $posts[] = $post['post_id'];
+                }
+            }
+            return $posts;
+        }
+
+        public function get_posts_by_param($posts_array)
+        {
+            // $results = [];
+            // $sql = 'SELECT * FROM posts WHERE id IN (?)';
+            // $posts_array = implode(", ", $posts_array);
+            // $query = $this->db->query($sql, [$posts_array]);
+
+            $results = [];
+            $this->db->select("*");
+            $this->db->where_in('id', $posts_array);
+            $query = $this->db->get('posts');
+
+            if($query->num_rows()) {
+                $results = $query->result_array();
+            }
+
+            return $results;
+        }
     }

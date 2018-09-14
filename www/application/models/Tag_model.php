@@ -20,6 +20,7 @@
             $tags = [];
             $sql = 'SELECT * FROM post_tags WHERE post_id = ?';
             $query = $this->db->query($sql, [$id]);
+            
             if($query->num_rows()) {
                 $result = $query->result_array();
                 foreach($result as $tag) {
@@ -30,13 +31,20 @@
         }
         public function get_tags_by_param($tags_array) 
         {
+            // $results = [];
+            // $sql = 'SELECT * FROM tags WHERE id IN (?)';
+            // $tags_array = implode(", ", $tags_array);
+            // $query = $this->db->query($sql, [$tags_array]);
+
             $results = [];
-            $sql = 'SELECT * FROM tags WHERE id IN (?)';
-            $tags_array = implode(", ", $tags_array);
-            $query = $this->db->query($sql, [$tags_array]);
+            $this->db->select("*");
+            $this->db->where_in('id', $tags_array);
+            $query = $this->db->get('tags');
 
             if($query->num_rows()) {
-                $results = $query->row_array();
+                $results = $query->result_array();
             }
+
+            return $results;
         }
     }

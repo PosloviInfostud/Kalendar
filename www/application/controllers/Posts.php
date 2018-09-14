@@ -24,7 +24,8 @@
             $tag_names = $this->tags->get_tags_by_param($tag_ids);
 
             $data = [
-                'post' => $this->post->get_single_post_by_id($id)
+                'post' => $this->post->get_single_post_by_id($id),
+                'tags' => $tag_names
             ];
 
             $this->load->view('templates/header', $data);
@@ -106,5 +107,32 @@
 
             $this->load->helper('link_helper');
             url_redirect('/posts');
+        }
+
+        public function tags_index()
+        {
+            $this->load->model('Tag_model', 'tags');
+            
+            $data = ['tags' => $this->tags->get_list()];
+            
+            $this->load->view('templates/header');
+            $this->load->view('/posts/tags/main', $data);
+            $this->load->view('templates/footer');
+        }
+
+        public function posts_by_tag($id)
+        {
+            $this->load->model('Post_model', 'posts');
+            $this->load->model('Tag_model', 'tags');
+            $post_ids = $this->posts->posts_by_tag($id);
+
+            $data = [
+                'posts' => $this->posts->get_posts_by_param($post_ids),
+                'tag' => $this->tags->get_tags_by_param($id)
+            ];
+
+            $this->load->view('templates/header');
+            $this->load->view('/posts/tags/single', $data);
+            $this->load->view('templates/footer');
         }
     }
