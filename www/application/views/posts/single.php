@@ -1,4 +1,5 @@
 <?php
+
     if($post === FALSE) {
         echo 'Post doesn\'t exist.';
         // redirect('/posts', 'location');
@@ -10,6 +11,12 @@
         </div>
         <div class="article-body mt-3">
             <?= nl2br($post['content']) ?>
+        </div>
+        <hr>
+        <div class="tags">
+            <?php foreach($tags as $tag) { ?>
+                <a href="/tags/<?= $tag['id'] ?>" class="btn btn-secondary btn-sm"><?= $tag['name'] ?></a>
+            <?php } ?>
         </div>
     </div>
 <?php } ?>
