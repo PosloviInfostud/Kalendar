@@ -71,6 +71,7 @@
         public function posts_by_tag($id)
         {
             $result = [];
+            $posts = [];
             $sql = 'SELECT post_id FROM post_tags WHERE tag_id = ?';
             $query = $this->db->query($sql, [$id]);
 
@@ -89,16 +90,20 @@
             // $sql = 'SELECT * FROM posts WHERE id IN (?)';
             // $posts_array = implode(", ", $posts_array);
             // $query = $this->db->query($sql, [$posts_array]);
-
             $results = [];
-            $this->db->select("*");
-            $this->db->where_in('id', $posts_array);
-            $query = $this->db->get('posts');
+            
+            if(!empty($posts_array)) {
+                $this->db->select("*");
+                $this->db->where_in('id', $posts_array);
+                $query = $this->db->get('posts');
 
-            if($query->num_rows()) {
-                $results = $query->result_array();
+                if($query->num_rows()) {
+                    $results = $query->result_array();
+                }
+    
+                return $results;
+            } else {
+                return $results;
             }
-
-            return $results;
         }
     }
