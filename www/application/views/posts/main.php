@@ -9,7 +9,6 @@
         <thead class="thead-light">
         <tr>
         <th scope="col">Title</th>
-        <th scope="col">Author</th>
         <th scope="col">Published</th>
         <th scope="col">Action</th>
         </tr>
@@ -18,7 +17,6 @@
         <?php foreach($posts as $post) { ?>
         <tr>
         <td><a href="/posts/<?= $post['id'] ?>"><?= $post['title'] ?></a></td>
-        <td><?= $post['author'] ?></td>
         <td><?= date( "d/m/Y", strtotime($post['created_at'])); ?></td>
         <td><a href="/posts/delete/<?= $post['id']; ?>">Delete</a> | <a href="/posts/update/<?= $post['id']; ?>">Edit</a></td>
         </tr>
