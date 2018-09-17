@@ -131,8 +131,13 @@
                 'tag' => $this->tags->get_tags_by_param($id)
             ];
 
+            if($this->input->is_ajax_request()) {
+                echo json_encode($data);
+                die();
+            }
             $this->load->view('templates/header');
             $this->load->view('/posts/tags/single', $data);
             $this->load->view('templates/footer');
         }
+
     }

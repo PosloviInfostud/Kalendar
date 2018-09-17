@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>JS Vezba</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+        <input type="text" name="username" id="username" placeholder="Your username">
+        <input type="password" name="password" id="password" placeholder="Your password">
+        <input type="button" value="Submit" id="btn-login">
+    </div>
+    <div class="login-result"></div>
+    <br>
+    <hr>
+    <h2>Products</h2>
+    <input type="text" name="product" id="product" placeholder="Product search">
+    <input type="button" value="Submit" id="btn-products">
+    <div id="product-details">
+        <ul style="display: none" id="list">
+            <li id="name"></li>
+            <li id="price"></li>
+            <li id="amount"></li>
+        </ul>
+    </div>
+
+<script>
+    $("#btn-login").click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            method: "POST",
+            // url: "https://stefke.info/javascript-introduction/login.php",
+            url: "login.php",
+            data: {
+                username: $("#username").val(),
+                password: $("#password").val()
+            }
+        })
+        .done(function(data) {
+            console.log(data)
+            let response = JSON.parse(data);
+            $(".login-result").html(response.username);
+         })
+    })
+
+    $('#btn-products').click(function(e) {
+        e.preventDefault();
+        $.ajax({
+            method: "POST",
+            url: "https://stefke.info/javascript-introduction/products.php",
+            data: {
+                product_name: $("#product").val()
+            }
+        })
+        .done(function(data) {
+            if(data.product != 'not found'){
+            $("#list").css("display", "block")
+            $("#name").html("Naziv:"+data.product_name)
+            $("#price").html("Cena:"+data.price)
+            $("#amount").html("Kolicina:"+data.amount_in_stock)
+            } else {
+                $("#product-details").html("<p>Product not found</p>")
+            }
+        })
+    })
+</script>
+</body>
+</html>

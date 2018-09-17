@@ -23,6 +23,7 @@
             $query = $this->db->query($sql, [$id]);
 
             if($query->num_rows()) {
+                
                 $result = $query->row_array();
             } else {
                 $result = FALSE;
@@ -86,11 +87,11 @@
 
         public function get_posts_by_param($posts_array)
         {
-            // $results = [];
+            $results = [];
             // $sql = 'SELECT * FROM posts WHERE id IN (?)';
             // $posts_array = implode(", ", $posts_array);
             // $query = $this->db->query($sql, [$posts_array]);
-            $results = [];
+            // $results = $query->result_array();
             
             if(!empty($posts_array)) {
                 $this->db->select("*");

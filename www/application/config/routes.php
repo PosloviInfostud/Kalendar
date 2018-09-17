@@ -55,4 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['posts/(:num)'] = 'posts/single_post/$1';
 $route['tags'] = 'posts/tags_index';
 $route['tags/(:num)'] = 'posts/posts_by_tag/$1';
+$route['tags-js/(:num)'] = 'posts/posts_by_tag_js/$1';
 
