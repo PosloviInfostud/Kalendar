@@ -7,11 +7,10 @@ $(".tag-buttons").click(function(e){
         // data: {id: tagId}
     })
     .done(function(data) {
+        $("#posts").empty();
         let response = JSON.parse(data);
         response.posts.forEach(function(entry) {
-            $("#posts").append("<li>"+entry.title+"</li>");
-            console.log(entry);
+            $("#posts").append('<li><a href="/posts/'+entry.id+'">'+entry.title+'</a></li>');
         });
-        // console.log(response.posts);
     })
 })
