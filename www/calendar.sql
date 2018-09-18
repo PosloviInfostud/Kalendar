@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql:3306
--- Generation Time: Sep 14, 2018 at 11:03 AM
+-- Generation Time: Sep 18, 2018 at 02:25 PM
 -- Server version: 8.0.12
 -- PHP Version: 7.2.8
 
@@ -21,6 +21,29 @@ SET time_zone = "+00:00";
 --
 -- Database: `calendar`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contacts`
+--
+
+CREATE TABLE `contacts` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `email` varchar(255) NOT NULL DEFAULT '',
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `contacts`
+--
+
+INSERT INTO `contacts` (`id`, `name`, `email`, `message`, `created_at`) VALUES
+(1, 'Atila', 'atila@email.com', 'this message', '2018-09-18 13:51:17'),
+(2, 'Atila', 'atila@email.com', 'this message', '2018-09-18 13:55:24'),
+(3, 'Atila', 'atila@email.com', 'another message', '2018-09-18 14:23:05');
 
 -- --------------------------------------------------------
 
@@ -100,6 +123,12 @@ INSERT INTO `tags` (`id`, `name`) VALUES
 --
 
 --
+-- Indexes for table `contacts`
+--
+ALTER TABLE `contacts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `posts`
 --
 ALTER TABLE `posts`
@@ -120,6 +149,12 @@ ALTER TABLE `tags`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `contacts`
+--
+ALTER TABLE `contacts`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `posts`
