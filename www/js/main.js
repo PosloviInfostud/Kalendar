@@ -9,8 +9,12 @@ $(".tag-buttons").click(function(e){
     .done(function(data) {
         $("#posts").empty();
         let response = JSON.parse(data);
+        if(jQuery.isEmptyObject(response.posts)) {
+            $("#posts").html('No post found.')
+        } else {
         response.posts.forEach(function(entry) {
-            $("#posts").append('<li><a href="/posts/'+entry.id+'">'+entry.title+'</a></li>');
+            $("#posts").append('<li><a href="/posts/'+entry.id+'">'+entry.title+'</a></li>')
         });
+        }
     })
 })
