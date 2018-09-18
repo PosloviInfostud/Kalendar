@@ -26,6 +26,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/tags">Tags</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
         </div>
     </nav>
     <div class="container">
