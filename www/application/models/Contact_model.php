@@ -14,9 +14,5 @@ class Contact_model extends CI_Model
         
         $sql = 'INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)';
         $query = $this->db->query($sql, [$form_values['contact-name'], $form_values['contact-email'], $form_values['contact-message']]);
-
-        $message = "Message sent!";
-        echo $message;
-        die();
     }
 }

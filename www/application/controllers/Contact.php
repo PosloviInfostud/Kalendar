@@ -13,17 +13,42 @@ class Contact extends CI_Controller
         $this->load->model('Contact_model', 'contact');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('contact-name', 'Name', 'required');
-        $this->form_validation->set_rules('contact-email', 'Email', 'required');
-        $this->form_validation->set_rules('contact-message', 'Message', 'required');
+        $this->form_validation->set_rules('contact_name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('contact_email', 'Email',
+            'required|valid_email|is_unique[contacts.email]|trim',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => 'You need to use a valid email address.',
+                'is_unique' => 'This %s already exists.'
+            )
+        );
+        $this->form_validation->set_rules('contact_message', 'Message', 'required|trim');
 
         $data = $this->input->post('form_data');
-        $this->contact->insert($data);
+        
+        $message = [];
+        if ($this->form_validation->run() == FALSE) {
+            // $message = validation_errors();
+            $message = [
+                'status' => FALSE,
+                'status_message' => 'Submission failed! Please check the errors and try again.',
+                'contact_name' => form_error('contact_name'),
+                'contact_email' => form_error('contact_email'),
+                'contact_message' => form_error('contact_message')
+            ];
+        } else {
+            $this->contact->insert($data);
+            $message = [
+                'status' => TRUE,
+                'status_message' => 'Message successfully sent!',
+                'contact_name' => '',
+                'contact_email' => '',
+                'contact_message' => ''
+            ];
+        }
 
-        if ($this->form_validation->run() == FALSE)
-                {
-                    echo validation_errors();
-                }
+        echo json_encode($message);
+        die();
 
     }
 }
