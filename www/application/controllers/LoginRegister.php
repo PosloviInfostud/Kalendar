@@ -14,7 +14,9 @@ class LoginRegister extends CI_Controller
         $this->load->library('form_validation');
 
         $this->form_validation->set_rules('register_name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('register_email', 'Email',
+        $this->form_validation->set_rules(
+            'register_email',
+            'Email',
             'required|valid_email|is_unique[users.email]|trim',
             array(
                 'required' => 'You have not provided %s.',
@@ -34,7 +36,7 @@ class LoginRegister extends CI_Controller
         ];
 
         $message = [];
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == false) {
             $message = validation_errors();
             // $message = [
             //     'status' => FALSE,
@@ -65,11 +67,15 @@ class LoginRegister extends CI_Controller
         $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('login_email', 'Email', 'required|valid_email|trim',
+        $this->form_validation->set_rules(
+            'login_email',
+            'Email',
+            'required|valid_email|trim',
             array(
                 'required' => 'You have not provided %s.',
                 'valid_email' => 'You need to use a valid email address.'
-            ));
+            )
+        );
         $this->form_validation->set_rules('login_password', 'Password', 'required|trim');
 
         $data = [
@@ -78,7 +84,7 @@ class LoginRegister extends CI_Controller
         ];
 
         $message = [];
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->form_validation->run() == false) {
             $message = validation_errors();
             // $message = [
             //     'status' => FALSE,
@@ -91,11 +97,11 @@ class LoginRegister extends CI_Controller
             $user = $this->user->get_user_by_email($data['login_email']);
             $correct_pass = $this->user->verify_password($data['login_password'], $user['password']);
 
-            if(empty($user)) {
+            if (empty($user)) {
                 $message = 'Email is not registered!';
-            } elseif(!$correct_pass) {
+            } elseif (!$correct_pass) {
                 $message = 'Wrong password!';
-            } elseif($user['active'] === '0') {
+            } elseif ($user['active'] === '0') {
                 $message = 'User not activated!';
             } else {
                 $this->user->set_session($user);
@@ -117,12 +123,14 @@ class LoginRegister extends CI_Controller
 
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->session->sess_destroy();
         url_redirect('/');
     }
 
-    public function activate() {
+    public function activate()
+    {
         $this->load->model('User_model', 'user');
         $email = $this->input->get('email');
         $token = $this->input->get('token');
@@ -130,11 +138,11 @@ class LoginRegister extends CI_Controller
 
         $data = [];
 
-        if(empty($email) || empty($token) || empty($user)) {
-            $data = [ 'message' => 'Invalid activation URL'];
+        if (empty($email) || empty($token) || empty($user)) {
+            $data = ['message' => 'Invalid activation URL'];
         } else {
             $this->user->activate_user($email, $token);
-            $data = [ 'message' => 'Account activated!'];
+            $data = ['message' => 'Account activated!'];
         }
 
         $this->load->view('templates/header');
