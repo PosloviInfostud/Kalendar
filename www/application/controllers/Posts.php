@@ -3,16 +3,24 @@
     {
         public function index()
         {
-            $this->load->model('Post_model', 'post');
+            if(isset($this->session->userdata['user_name'])) {
+                
+                $this->load->model('Post_model', 'post');
 
-            $data = [
-                'posts' => $this->post->get_list(),
-                'title' => 'Latest Blog Posts',
-            ];
+                $data = [
+                    'posts' => $this->post->get_list(),
+                    'title' => 'Latest Blog Posts',
+                ];
+    
+                $this->load->view('templates/header');
+                $this->load->view('posts/main', $data);
+                $this->load->view('templates/footer');
 
-            $this->load->view('templates/header', $data);
-            $this->load->view('posts/main', $data);
-            $this->load->view('templates/footer');
+            } else { 
+                $this->load->view('templates/header');
+                $this->load->view('templates/not-allowed');
+                $this->load->view('templates/footer');
+            }
         }
 
         public function single_post($id)

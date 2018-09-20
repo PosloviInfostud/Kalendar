@@ -1,0 +1,1 @@
+You need to be logged in to access this page. <a href="/">Click here</a> to login.

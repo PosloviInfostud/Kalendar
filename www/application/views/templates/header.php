@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title><?php if(isset($title)) {echo $title;} else {echo 'First Project';}; ?> :: INFOSTUD</title>
 </head>
@@ -30,5 +31,11 @@
                 <a class="nav-link" href="/contact">Contact</a>
             </li>
         </div>
+        <?php if(isset($this->session->userdata['user_name'])) { ?>
+            <button class="btn btn-outline-secondary">Hello, <?= $this->session->userdata['user_name'] ?></button>
+            <a class="btn btn-secondary" href="/logout">Logout</a>
+        <?php } else { ?>
+            <a class="btn btn-secondary" href="/">Login</a>
+        <?php } ?>
     </nav>
     <div class="container">
