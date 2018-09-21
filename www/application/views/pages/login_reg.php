@@ -11,17 +11,17 @@
             <fieldset>
                 <div class="form-group">
                     <label for="login_email">Email</label>
-                    <input type="email" class="form-control" name="login_email" id="login_email" placeholder="Enter name">
+                    <input type="email" class="form-control" name="login_email" id="login_email">
                     <div class="text-danger small" id="login_email_err"></div>
                 </div>
                 <div class="form-group">
                     <label for="login_password">Password</label>
-                    <input type="password" class="form-control" name="login_password" id="login_password" aria-describedby="emailHelp" placeholder="Enter email">
+                    <input type="password" class="form-control" name="login_password" id="login_password" aria-describedby="emailHelp">
                     <div class="text-danger small" id="login_password_err"></div>
                 </div>
                 <div class="row">
                     <div class="col-6"><button type="submit" class="btn btn-block btn-primary">Login</button></div>
-                    <div class="col-6"><button class="btn btn-block btn-secondary" id="reset_btn">Reset Password</button></div>
+                    <div class="col-6"><button type="reset" class="btn btn-block btn-secondary">Reset Password</button></div>
                 </div>
             </fieldset>
         </form>
@@ -56,9 +56,21 @@
                 <button type="submit" class="btn btn-primary">Register</button>
             </fieldset>
         </form>
+
+        <form id="reset_form" class="hide" novalidate>
+            <fieldset>
+                <div class="form-group">
+                    <label for="register_email">Email address</label>
+                    <input type="email" class="form-control" name="reset_email" id="reset_email">
+                    <div class="text-danger small" id="reset_email_err"></div>
+                </div>
+                <button type="submit" class="btn btn-primary">Reset Password</button>
+            </fieldset>
+        </form>
+
     </div>
 </div>
 
-<script src="/js/logreg.js"></script>
-
 <?php } ?>
+
+<script src="/js/logreg.js"></script>

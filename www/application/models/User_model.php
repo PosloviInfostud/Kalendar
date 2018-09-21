@@ -87,4 +87,9 @@ class User_model extends CI_Model
 
         $this->session->set_userdata($session_data);
     }
+
+    public function reset_user_password($data)
+    {
+        
+    }
 }

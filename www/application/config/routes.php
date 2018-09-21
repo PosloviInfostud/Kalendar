@@ -56,6 +56,7 @@ $route['posts/(:num)'] = 'posts/single_post/$1';
 $route['tags'] = 'posts/tags_index';
 $route['activate'] = 'LoginRegister/activate';
 $route['logout'] = 'LoginRegister/logout';
+$route['not-logged-in'] = 'Not_logged_in';
 $route['tags/(:num)'] = 'posts/posts_by_tag/$1';
 $route['tags-js/(:num)'] = 'posts/posts_by_tag_js/$1';
 

@@ -148,9 +148,24 @@ class LoginRegister extends CI_Controller
         $this->load->view('templates/header');
         $this->load->view('pages/activation', $data);
         $this->load->view('templates/footer');
+    }
 
+    public function reset_password()
+    {
+        $this->load->model('User_model', 'user');
+        $this->load->library('form_validation');
 
+        $this->form_validation->set_rules(
+            'reset_email',
+            'required|valid_email|trim',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => 'You need to use a valid email address.'
+            )
+        );
+
+        $data = ["reset_email" => $this->input->post('reset_email')];
+
+        $this->user->get_user_by_email($data['reset_email']);
     }
 }
-
-// domain.com/LoginRegister/activate?email=a@a.com&token=

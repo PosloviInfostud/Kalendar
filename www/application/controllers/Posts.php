@@ -1,26 +1,26 @@
 <?php
 class Posts extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        if (!isset($this->session->userdata['user_name'])) {
+            url_redirect('/not-logged-in');
+        }
+    }
+
     public function index()
     {
-        if (isset($this->session->userdata['user_name'])) {
+        $this->load->model('Post_model', 'post');
 
-            $this->load->model('Post_model', 'post');
+        $data = [
+            'posts' => $this->post->get_list(),
+            'title' => 'Latest Blog Posts',
+        ];
 
-            $data = [
-                'posts' => $this->post->get_list(),
-                'title' => 'Latest Blog Posts',
-            ];
-
-            $this->load->view('templates/header');
-            $this->load->view('posts/main', $data);
-            $this->load->view('templates/footer');
-
-        } else {
-            $this->load->view('templates/header');
-            $this->load->view('templates/not-allowed');
-            $this->load->view('templates/footer');
-        }
+        $this->load->view('templates/header');
+        $this->load->view('posts/main', $data);
+        $this->load->view('templates/footer');
     }
 
     public function single_post($id)
