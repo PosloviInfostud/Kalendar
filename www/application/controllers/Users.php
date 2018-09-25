@@ -8,8 +8,15 @@ class Users extends CI_Controller
         $this->load->view('index');
     }
 
+    public function register()
+    {
+        
+    }
+
     public function login()
     {
         
     }
+
+
 }
