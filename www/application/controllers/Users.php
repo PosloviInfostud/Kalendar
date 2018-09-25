@@ -7,4 +7,9 @@ class Users extends CI_Controller
         $this->load->view('header');
         $this->load->view('index');
     }
+
+    public function login()
+    {
+        
+    }
 }

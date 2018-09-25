@@ -32,7 +32,7 @@
                     <label for="password" name="password" id="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                <input type="submit" class="btn btn-primary">
+                <input type="submit" id="login_submit" class="btn btn-primary">
             </form>
             
         </div>
@@ -43,3 +43,4 @@
     </div>
 </div>
 <script src="/js/reglog.js"></script>
+<script src="/js/login.js"></script>
