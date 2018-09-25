@@ -10,6 +10,7 @@ class Users extends CI_Controller
 
     public function login()
     {
-        
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules("email", "E-Mail", "trim|required");
     }
 }
