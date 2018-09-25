@@ -2,7 +2,7 @@
     <div class="row">
         <div id="show" class="col-9">
 
-            <form id="register_form" class="border border-info rounded p-3">
+            <form id="register_form" class="border border-info rounded p-3 hide">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" name="name" id="name">
@@ -42,3 +42,4 @@
         </div>
     </div>
 </div>
+<script src="/js/reglog.js"></script>
