@@ -17,10 +17,10 @@ $("#register_form").click(function(e){
         method: "POST",
         url: "/users/register",
         data: {
-            "name" : $("#name").val(),
-            "email" : $("#email").val(),
-            "password" : $("#password").val(),
-            "password_confirm" : $("#password_confirm").val()
+            "name" : $("#register_name").val(),
+            "email" : $("#register_email").val(),
+            "password" : $("#register_password").val(),
+            "password_confirm" : $("#register_password_confirm").val()
         }
     })
     .done(function(response){
