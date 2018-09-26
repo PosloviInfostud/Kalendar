@@ -5,20 +5,20 @@
             <form id="register_form" class="border border-info rounded p-3 hide">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>
-                    <input type="text" class="form-control" name="name" id="name">
+                    <input type="text" class="form-control" name="name" id="register_name">
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" name="email" id="email">
+                    <input type="email" class="form-control" name="email" id="register_email">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password">
+                    <input type="password" class="form-control" id="register_password">
                 </div>
                 <div class="form-group">
 
                     <label for="exampleInputPassword1">Confirm Password</label>
-                    <input type="password" class="form-control" id="password_confirm">
+                    <input type="password" class="form-control" id="register_password_confirm">
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
