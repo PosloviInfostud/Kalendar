@@ -11,7 +11,8 @@ $("#login_button").click(function () {
 })
 
 // Register user
-$("#register_form").click(function(e){
+$("#register_form").submit
+(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -24,5 +25,21 @@ $("#register_form").click(function(e){
         }
     })
     .done(function(response){
+    })
+})
+
+//Login user
+$("#login_form").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/login",
+        data: {
+            "email" : $("#login_email").val(),
+            "password" : $("#login_password").val()
+        }
+    })
+    .done(function(response){
+
     })
 })
