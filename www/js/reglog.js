@@ -40,6 +40,6 @@ $("#login_form").submit(function(e){
         }
     })
     .done(function(response){
-
+        $("#messages").append(response);
     })
 })

@@ -47,7 +47,7 @@ class Users extends CI_Controller
         $this->form_validation->set_rules("password", "Password", "trim|required");
 
         if($this->form_validation->run() == FALSE) {
-            echo form_validation_errors();
+            $message = validation_errors();
 
         } else {
             $data = [
@@ -55,7 +55,9 @@ class Users extends CI_Controller
                 "password" => $this->input->post('password')
             ];
             $this->load->model('User_model','user');
-            $this->user->login($data);
+            $message = $this->user->login($data);
         }
+        echo $message;
+
     }
 }
