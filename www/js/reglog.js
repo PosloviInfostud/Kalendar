@@ -11,8 +11,7 @@ $("#login_button").click(function () {
 })
 
 // Register user
-$("#register_form").submit
-(function(e){
+$("#register_form").submit(function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -25,6 +24,7 @@ $("#register_form").submit
         }
     })
     .done(function(response){
+        console.log(response);
     })
 })
 
