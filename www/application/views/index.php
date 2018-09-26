@@ -44,4 +44,3 @@
     </div>
 </div>
 <script src="/js/reglog.js"></script>
-<script src="/js/login.js"></script>
