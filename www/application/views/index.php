@@ -26,11 +26,11 @@
             <form id="login_form" class="border border-primary rounded p-3">
                 <div class="form-group">
                     <label for="email">E-Mail</label>
-                    <input type="email" name="email" id="email" class="form-control">
+                    <input type="email" name="email" id="login_email" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="password" name="password" id="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control">
+                    <input type="password" name="password" id="login_password" class="form-control">
                 </div>
                 <input type="submit" id="login_submit" class="btn btn-primary">
             </form>

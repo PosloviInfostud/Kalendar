@@ -1,4 +1,4 @@
-$("#login_submit").click(function(e){
+$("#login_form").submit(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -9,6 +9,6 @@ $("#login_submit").click(function(e){
         }
     })
     .done(function(response){
-        
+
     })
 })
