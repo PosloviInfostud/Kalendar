@@ -11,8 +11,10 @@ class Users extends CI_Controller
     public function register()
     {
         $this->load->model('User_model', 'user');
+        
         $this->load->library('form_validation');
         $this->load->library('encryption');
+
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]|trim',
             array(
@@ -34,10 +36,12 @@ class Users extends CI_Controller
             $data = [
                 "name" => $this->input->post('name'),
                 "email" => $this->input->post('email'),
-                "password" => password_hash($this->input->post('password'), PASSWORD_DEFAULT)
+                "password" => $this->input->post('password')
             ];
-            $this->user->create();
+            $this->user->create($data);
+            $message = 'Successful registration.';
         }
+        echo $message;
     }
 
     public function login()
