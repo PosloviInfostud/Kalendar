@@ -70,6 +70,7 @@ class User_model extends CI_Model
 
         return $result;
     }
+ 
     public function login($data)
     {
         $user = $this->get_user_by_email($data['email']);
@@ -83,7 +84,7 @@ class User_model extends CI_Model
 
             } else {
                 if ($user['active'] != 1) {
-                    $message = "Please, activate yuor profile first!";
+                    $message = "Please, activate your profile first!";
 
                 } else {
                     $this->load->helper('cookie');
