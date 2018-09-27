@@ -11,9 +11,9 @@ $("#login_button").click(function () {
 })
 
 // Register user
-$("#register_form").submit
-(function(e){
+$("#register_form").submit(function(e){
     e.preventDefault();
+    console.log("submitted");
     $.ajax({
         method: "POST",
         url: "/users/register",
@@ -25,6 +25,7 @@ $("#register_form").submit
         }
     })
     .done(function(response){
+        $("#messages").html(response);
     })
 })
 
@@ -40,6 +41,6 @@ $("#login_form").submit(function(e){
         }
     })
     .done(function(response){
-        $("#messages").append(response);
+        $("#messages").html(response);
     })
 })
