@@ -52,6 +52,12 @@ class User_model extends CI_Model
         }
     }
 
+    public function activate_user($id)
+    {
+        $sql = "UPDATE users SET active = 1, activation_key = '' WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+    }
+
     public function get_user_by_email($email)
     {
         $result = [];

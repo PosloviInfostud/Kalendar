@@ -44,6 +44,29 @@ class Users extends CI_Controller
         echo $message;
     }
 
+    public function activate()
+    {
+        $this->load->model('User_model', 'user');
+
+        $data = [
+            "email" => $this->input->get('email'),
+            "activation_key" => $this->input->get('token')
+        ];
+
+        $user = $this->user->get_user_by_email($data['email']);
+        // Check if email is registered
+        if(empty($user)) {
+            echo 'Invalid activation link. Please try again.';
+        // Check if both values match
+        } elseif($data['email'] == $user['email'] && $data['activation_key'] == $user['activation_key']) {
+            $this->user->activate_user($user['id']);
+            url_redirect('/users');
+        // Handle invalid activation link
+        } else {
+            echo 'Invalid activation link.';
+        }
+    }
+
     public function login()
     {
         $this->load->library('form_validation');
