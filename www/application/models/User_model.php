@@ -100,7 +100,7 @@ class User_model extends CI_Model
                     $this->load->library('encryption');
                     $value = bin2hex($this->encryption->create_key(16));
                     $expire = date('Y-m-d h:i:s', strtotime('+2 days'));
-                    $this->generate_login_token($user['id'], $value, $expire);
+                    $this->save_login_token($user['id'], $value, $expire);
                     $cookie= array(
                         'name'   => $name,
                         'value'  => $value,
@@ -120,7 +120,7 @@ class User_model extends CI_Model
         return $message;
     }
 
-    public function generate_login_token($user_id, $value, $expire)
+    public function save_login_token($user_id, $value, $expire)
     {
         $sql = "UPDATE users SET token = ?, token_expiration_time = ? WHERE id = ?";
         $query = $this->db->query($sql, [$value, $expire, $user_id]);
