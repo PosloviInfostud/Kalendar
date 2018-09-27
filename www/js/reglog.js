@@ -2,12 +2,14 @@
 $("#register_button").click(function () {
     $("#login_form").addClass("hide");
     $("#register_form").removeClass("hide");
+    $("#forgot_form").addClass("hide");
 })
 
 // Show login form
 $("#login_button").click(function () {
     $("#register_form").addClass("hide");
     $("#login_form").removeClass("hide");
+    $("#forgot_form").addClass("hide");
 })
 
 // Register user
@@ -42,4 +44,11 @@ $("#login_form").submit(function(e){
     .done(function(response){
         $("#messages").append(response);
     })
+})
+
+//Show Forgot Password form (to enter e-mail to send form for password reset
+$("#forgot_button").click(function(){
+    $("#login_form").addClass("hide");
+    $("#register_form").addClass("hide");
+    $("#forgot_form").removeClass("hide");
 })
