@@ -102,8 +102,8 @@ class User_model extends CI_Model
                     $expire = date('Y-m-d h:i:s', strtotime('+2 days'));
                     $this->generate_login_token($user['id'], $value, $expire);
                     $cookie= array(
-                        'name'   => 'Cloudways-Cookie',
-                        'value'  => 'This is Demonstration of how to set cookie in CI',
+                        'name'   => $name,
+                        'value'  => $value,
                         'expire' => '172800',
                     );
                     
@@ -112,11 +112,7 @@ class User_model extends CI_Model
                         $value => $user['name']
                     ];
                     $this->session->set_userdata($session_data);
-
-
-
-
-                    $message = "Logged in successfully!";
+                    $message = "success";
 
                 }
             }

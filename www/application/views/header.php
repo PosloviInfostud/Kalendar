@@ -30,8 +30,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-            </ul>
 
+            <?php 
+            $this->load->helper('cookie');
+            $cookie = $this->input->cookie('usr-vezba',true);
+            // var_dump($cookie); die;
+            if($cookie != NULL) { ?>
+                <li class="nav-item">
+                    <a class="nav-link inline-block text-white r-0 rounded btn-danger" href="/users/logout">Logout</a>
+                </li>
+            <?php }
+            ?>
+            </ul>
         </div>
     </nav>
 </body>

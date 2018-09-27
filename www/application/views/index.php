@@ -29,7 +29,7 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
 
-            <form id="login_form" class="border border-primary rounded p-3">
+            <form id="login_form" class="border border-primary rounded p-3 hide">
             <button id="forgot_button" type="reset" class="btn btn-warning btn-block p-2">Forgot your password?</button><br>
                 <div class="form-group">
                     <label for="email">E-Mail</label>
