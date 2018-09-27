@@ -29,6 +29,7 @@ $("#register_form").submit(function(e){
         }
     })
     .done(function(response){
+        $("#register_form")[0].reset();
         $("#messages").html(response);
     })
 })
@@ -45,6 +46,7 @@ $("#login_form").submit(function(e){
         }
     })
     .done(function(response){
+        $("#login_form")[0].reset();
         $("#messages").html(response);
     })
 })
