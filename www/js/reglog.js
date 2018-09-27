@@ -29,7 +29,11 @@ $("#register_form").submit(function(e){
         }
     })
     .done(function(response){
-        $("#messages").html(response);
+        if(response === 'success') {
+            window.location.href = "/users"
+        } else {
+            $("#messages").html(response);
+        }
     })
 })
 
