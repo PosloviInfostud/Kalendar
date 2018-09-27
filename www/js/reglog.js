@@ -47,9 +47,47 @@ $("#login_form").submit(function(e){
     })
 })
 
-//Show Forgot Password form (to enter e-mail to send form for password reset
+//Show Forgot Password form (to enter e-mail to send form for password reset)
 $("#forgot_button").click(function(){
     $("#login_form").addClass("hide");
     $("#register_form").addClass("hide");
     $("#forgot_form").removeClass("hide");
+})
+$("#login_form").reset(function(e){
+    e.preventDefault();
+})
+
+//Send forgot password mail
+
+$("#forgot_form").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/send_forgot_password_mail",
+        data: {
+            "email" : $("#forgot_email").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+    })
+})
+
+//Reset password form submit
+
+$("form_reset_password").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/reset_password",
+        data: {
+            "email" : $("#reset_password_email").val(),
+            "password" : $("#reset_password_password").val(),
+            "confirm" : $("#reset_password_confirm").val(),
+            "code" : $("#reset_password_code").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+    })
 })

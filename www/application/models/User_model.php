@@ -100,4 +100,27 @@ class User_model extends CI_Model
         $sql = "UPDATE users SET token = ?, expiration_time = ? WHERE id = ?";
         $query = $this->db->query($sql, [$value, $expire, $user_id]);
     }
+
+    public function set_reset_key($email, $code, $expire)
+    {
+        $sql = "UPDATE users SET reset_key = ?, reset_key_exp = ? WHERE email = ?";
+        $query = $this->db->query($sql, [$code, $expire, $email]);
+    }
+
+    public function reset_password($data)
+    {
+        $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
+        $today = date('Y-m-d h:i:s');
+        $sql = "UPDATE users 
+                SET password = ?  
+                WHERE email LIKE ? AND reset_key LIKE ? AND reset_exp >= ? ";
+        $query = $this->db->query($sql, [$password_hash, $data['email'], $data['reset_key'], $today]);
+        
+        if($this->db->affected_rows() >0) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 }

@@ -25,7 +25,7 @@
             </form>
 
             <form id="login_form" class="border border-primary rounded p-3">
-            <button id="forgot_button" class="btn btn-warning btn-block p-2">Forgot your password?</button><br>
+            <button id="forgot_button" type="reset" class="btn btn-warning btn-block p-2">Forgot your password?</button><br>
                 <div class="form-group">
                     <label for="email">E-Mail</label>
                     <input type="email" name="email" id="login_email" class="form-control">
@@ -42,7 +42,8 @@
                     <label for="email">Please, enter your E-Mail so we can send you link to reset your password!</label><br>
                     <input type="email" class="form-control" name="email" id="forgot_email">
                 </div>
-            <input type="submit" name="submit" id="forgot_submit" class="btn btn-success btn-block" value="Reset Password">            </form>
+                <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
+            </form>
             
         </div>
         <div class="col-3">
