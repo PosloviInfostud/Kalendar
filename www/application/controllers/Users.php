@@ -13,6 +13,8 @@ class Users extends CI_Controller
         $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
         $this->load->library('encryption');
+        $this->load->library('session');
+
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules(
             'email',
@@ -38,7 +40,7 @@ class Users extends CI_Controller
                 "password" => $this->input->post('password')
             ];
             $this->user->create($data);
-            $message = 'Success! Please check your e-mail for the activation link.';
+            $message = 'success';
         }
         // Send response to ajax
         echo $message;

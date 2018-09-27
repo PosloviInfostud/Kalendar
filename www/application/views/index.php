@@ -1,7 +1,12 @@
 <div class="container mt-3">
     <div class="row">
         <div id="show" class="col-9">
-            <div id="messages"></div>
+            <div id="messages">
+            <?php if(!empty($this->session->userdata['message'])) {
+                echo $this->session->userdata['message'];
+                $this->session->unset_userdata('message');
+            } ?>
+            </div>
 
             <form id="register_form" class="border border-info rounded p-3 hide">
                 <div class="form-group">

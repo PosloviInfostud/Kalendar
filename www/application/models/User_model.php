@@ -10,7 +10,14 @@ class User_model extends CI_Model
         $sql = 'INSERT INTO users (name, email, password, activation_key) VALUES (?, ?, ?, ?)';
         $query = $this->db->query($sql, [$data['name'], $data['email'], $password_hash, $activation_key]);
         $this->send_activation_mail($data['email'], $activation_key);
+
+        $session_data = [
+            'message' => 'Success! Please check your e-mail for the activation link.'
+        ];
+
+        $this->session->set_userdata($session_data);
     }
+
     public function send_activation_mail($email, $key)
     {
         // Set SMTP Configuration
