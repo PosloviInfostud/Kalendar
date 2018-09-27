@@ -88,6 +88,7 @@ class User_model extends CI_Model
 
                 } else {
                     $this->load->helper('cookie');
+                    $this->load->library('session');
                     $name = "usr-vezba";
                     $this->load->library('encryption');
                     $value = bin2hex($this->encryption->create_key(16));
@@ -100,11 +101,16 @@ class User_model extends CI_Model
                     );
                     
                     $this->input->set_cookie($cookie);
+                    $session_data = [
+                        $value => $user['name']
+                    ];
+                    $this->session->set_userdata($session_data);
+
+
+
 
                     $message = "Logged in successfully!";
-                    $coookie = $this->input->cookie('Cloudways-Cookie');
-                    var_dump($coookie);
-                    die;
+
                 }
             }
         }
