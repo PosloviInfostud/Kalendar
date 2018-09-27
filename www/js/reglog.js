@@ -1,5 +1,6 @@
 // Show registration form
 $("#register_button").click(function () {
+    $("#messages").empty();
     $("#login_form").addClass("hide");
     $("#register_form").removeClass("hide");
     $("#forgot_form").addClass("hide");
@@ -7,6 +8,7 @@ $("#register_button").click(function () {
 
 // Show login form
 $("#login_button").click(function () {
+    $("#messages").empty();
     $("#register_form").addClass("hide");
     $("#login_form").removeClass("hide");
     $("#forgot_form").addClass("hide");
@@ -27,6 +29,7 @@ $("#register_form").submit(function(e){
         }
     })
     .done(function(response){
+        $("#register_form")[0].reset();
         $("#messages").html(response);
     })
 })
@@ -43,6 +46,7 @@ $("#login_form").submit(function(e){
         }
     })
     .done(function(response){
+        $("#login_form")[0].reset();
         $("#messages").html(response);
     })
 })

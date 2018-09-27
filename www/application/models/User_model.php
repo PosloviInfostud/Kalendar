@@ -52,6 +52,12 @@ class User_model extends CI_Model
         }
     }
 
+    public function activate_user($id)
+    {
+        $sql = "UPDATE users SET active = 1, activation_key = '' WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+    }
+
     public function get_user_by_email($email)
     {
         $result = [];
@@ -64,6 +70,7 @@ class User_model extends CI_Model
 
         return $result;
     }
+ 
     public function login($data)
     {
         $user = $this->get_user_by_email($data['email']);
@@ -77,7 +84,7 @@ class User_model extends CI_Model
 
             } else {
                 if ($user['active'] != 1) {
-                    $message = "Please, activate yuor profile first!";
+                    $message = "Please, activate your profile first!";
 
                 } else {
                     $this->load->helper('cookie');
@@ -97,7 +104,7 @@ class User_model extends CI_Model
 
     public function generate_login_token($user_id, $value, $expire)
     {
-        $sql = "UPDATE users SET token = ?, expiration_time = ? WHERE id = ?";
+        $sql = "UPDATE users SET token = ?, token_expiration_time = ? WHERE id = ?";
         $query = $this->db->query($sql, [$value, $expire, $user_id]);
     }
 
