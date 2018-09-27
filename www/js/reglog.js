@@ -45,7 +45,15 @@ $("#login_form").submit(function(e){
         }
     })
     .done(function(response){
-        $("#messages").html(response);
+        if(response == "success") {
+            $("#register_form").addClass("hide");
+            $("#login_form").addClass("hide");
+            $("#forgot_form").addClass("hide");
+            window.location.href = "/users";
+
+        } else {
+            $("#messages").html(response);
+        }
     })
 })
 
