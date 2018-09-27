@@ -104,7 +104,7 @@ class User_model extends CI_Model
 
     public function generate_login_token($user_id, $value, $expire)
     {
-        $sql = "UPDATE users SET token = ?, expiration_time = ? WHERE id = ?";
+        $sql = "UPDATE users SET token = ?, token_expiration_time = ? WHERE id = ?";
         $query = $this->db->query($sql, [$value, $expire, $user_id]);
     }
 }
