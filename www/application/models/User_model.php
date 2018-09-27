@@ -25,15 +25,15 @@ class User_model extends CI_Model
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.googlemail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'alacanatila@gmail.com',
-            'smtp_pass' => 'Number!00G!',
+            'smtp_user' => 'visnjamarica@gmail.com',
+            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
             'mailtype' => 'html',
             'charset' => 'iso-8859-1'
         ];
         // Set your email information
         $from = [
-            'email' => 'alacanatila@gmail.com',
-            'name' => 'Atila | Vezba-Token'
+            'email' => 'visnjamarica@gmail.com',
+            'name' => 'Visnja | Vezba-Token'
         ];
         $to = array($email);
         $subject = 'Your activation link';

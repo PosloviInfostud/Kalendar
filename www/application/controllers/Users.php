@@ -118,14 +118,14 @@ class Users extends CI_Controller
                     'protocol' => 'smtp',
                     'smtp_host' => 'ssl://smtp.googlemail.com',
                     'smtp_port' => 465,
-                    'smtp_user' => 'alacanatila@gmail.com',
-                    'smtp_pass' => 'Number!00G!',
+                    'smtp_user' => 'visnjamarica@gmail.com',
+                    'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
                     'mailtype' => 'html',
                     'charset' => 'iso-8859-1'
                 ];
                 // Set your email information
                 $from = [
-                    'email' => 'lukamatkovicns@gmail.com',
+                    'email' => 'visnjamarica@gmail.com',
                     'name' => 'Luka Matkovic'
                 ];
                 
