@@ -57,9 +57,6 @@ $("#forgot_button").click(function(){
     $("#register_form").addClass("hide");
     $("#forgot_form").removeClass("hide");
 })
-$("#login_form").reset(function(e){
-    e.preventDefault();
-})
 
 //Send forgot password mail
 
@@ -73,13 +70,13 @@ $("#forgot_form").submit(function(e){
         }
     })
     .done(function(response){
-        console.log(response);
-    })
+        $("#messages").html(response);   
+     })
 })
 
 //Reset password form submit
 
-$("form_reset_password").submit(function(e){
+$("#form_reset_password").submit(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -92,6 +89,6 @@ $("form_reset_password").submit(function(e){
         }
     })
     .done(function(response){
-        console.log(response);
+        $("#msgs").html(response);
     })
 })

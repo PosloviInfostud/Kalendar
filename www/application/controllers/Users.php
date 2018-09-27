@@ -99,6 +99,7 @@ class Users extends CI_Controller
 
         } else {
             $email = $this->input->post('email');
+
             $this->load->model('User_model','user');
 
             if(empty($this->user->get_user_by_email($email))){
@@ -112,12 +113,12 @@ class Users extends CI_Controller
 
                 // Set SMTP Configuration
                 $emailConfig = [
-                    'protocol' => 'smtp', 
-                    'smtp_host' => 'ssl://smtp.googlemail.com', 
-                    'smtp_port' => 465, 
-                    'smtp_user' => '', 
-                    'smtp_pass' => '', 
-                    'mailtype' => 'html', 
+                    'protocol' => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => 465,
+                    'smtp_user' => 'alacanatila@gmail.com',
+                    'smtp_pass' => 'Number!00G!',
+                    'mailtype' => 'html',
                     'charset' => 'iso-8859-1'
                 ];
                 // Set your email information
@@ -164,7 +165,8 @@ class Users extends CI_Controller
                 $message = "E-mail sent successfully!";
             }
         }
-        return $message;
+        echo $message;
+        die();
     }
 
     public function reset_password_form()
@@ -173,7 +175,7 @@ class Users extends CI_Controller
         $data['code'] = $this->input->get('code');
 
         $this->load->view('header');
-        $this->load->view('reset_password');
+        $this->load->view('reset_password', $data);
     }
 
     public function reset_password()
