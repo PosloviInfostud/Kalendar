@@ -91,11 +91,20 @@ class User_model extends CI_Model
                     $name = "usr-vezba";
                     $this->load->library('encryption');
                     $value = bin2hex($this->encryption->create_key(16));
-                    $expire = date('Y-m-d h:i:s', strtotime('+5 days'));
+                    $expire = date('Y-m-d h:i:s', strtotime('+2 days'));
                     $this->generate_login_token($user['id'], $value, $expire);
-                    set_cookie($name, $value, $expire);
+                    $cookie= array(
+                        'name'   => 'Cloudways-Cookie',
+                        'value'  => 'This is Demonstration of how to set cookie in CI',
+                        'expire' => '172800',
+                    );
+                    
+                    $this->input->set_cookie($cookie);
 
                     $message = "Logged in successfully!";
+                    $coookie = $this->input->cookie('Cloudways-Cookie');
+                    var_dump($coookie);
+                    die;
                 }
             }
         }
