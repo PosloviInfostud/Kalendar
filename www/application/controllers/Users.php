@@ -6,6 +6,7 @@ class Users extends CI_Controller
     {
         $this->load->view('header');
         $this->load->view('index');
+        $this->load->view('footer');
     }
 
     public function register()
@@ -220,5 +221,12 @@ class Users extends CI_Controller
         $this->session->sess_destroy();
         url_redirect('/users');
 
+    }
+
+    public function profile()
+    {
+        $this->load->view('header');
+        $this->load->view('profile');
+        $this->load->view('footer');
     }
 }
