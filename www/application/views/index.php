@@ -1,3 +1,10 @@
+<!-- Check if user is logged in -->
+<?php
+    if($this->input->cookie('usr-vezba') != NULL) {
+        url_redirect('/users/profile');
+    }
+?>
+
 <div class="container mt-3">
     <div class="row">
         <div id="show" class="col-9">
@@ -51,8 +58,7 @@
             </form>
 
             <div id="welcome">
-            <?php 
-            $this->load->helper('cookie');
+            <?php
             $cookie = $this->input->cookie('usr-vezba',true);
             if(!empty($this->session->userdata[$cookie])) { ?>
             <p>Welcome, <?= $this->session->userdata[$cookie]; ?>!</p>
