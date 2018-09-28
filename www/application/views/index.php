@@ -49,18 +49,6 @@
                 </div>
                 <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
             </form>
-
-            <div id="welcome">
-            <?php 
-            $this->load->helper('cookie');
-            $cookie = $this->input->cookie('usr-vezba',true);
-            if(!empty($this->session->userdata[$cookie])) { ?>
-            <p>Welcome, <?= $this->session->userdata[$cookie]; ?>!</p>
-
-            <?php } else { ?>
-            <p>Welcome! Please, login in to proceed!</p>
-            <?php } ?>
-            </div>
             
         </div>
         <div class="col-3">

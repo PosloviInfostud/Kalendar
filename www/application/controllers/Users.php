@@ -203,7 +203,12 @@ class Users extends CI_Controller
             $this->load->model('User_model','user');
             
             if ($this->user->reset_password($data) == true) {
-                $message = "Your password has been successfully reseted!";
+                $session_data = [
+                    'message' => "Your password has been successfully reseted! You can now login with your new password!"
+                ];
+                $this->session->set_userdata($session_data);
+
+                $message = "success";
 
             } else {
                 $message = "E-Mail or code may not be correct or 5 days has run out!";

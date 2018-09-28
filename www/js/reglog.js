@@ -55,9 +55,6 @@ $("#login_form").submit(function(e){
     })
     .done(function(response){
         if(response == "success") {
-            $("#register_form").addClass("hide");
-            $("#login_form").addClass("hide");
-            $("#forgot_form").addClass("hide");
             window.location.href = "/users";
 
         } else {
@@ -106,6 +103,11 @@ $("#form_reset_password").submit(function(e){
         }
     })
     .done(function(response){
-        $("#msgs").html(response);
+        if(response === 'success') {
+            window.location.href = "/users"
+        } else {
+            $("#msgs").html(response);
+        }
+
     })
 })
