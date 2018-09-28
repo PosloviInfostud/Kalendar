@@ -30,19 +30,15 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Link</a>
                 </li>
-
-            <?php 
-            $this->load->helper('cookie');
-            $cookie = $this->input->cookie('usr-vezba',true);
-            // var_dump($cookie); die;
-            if($cookie != NULL) { ?>
-                <li class="nav-item">
-                    <a class="nav-link inline-block text-white r-0 rounded btn-danger" href="/users/logout">Logout</a>
-                </li>
-            <?php }
-            ?>
             </ul>
+            <?php 
+                $cookie = $this->input->cookie('usr-vezba',true);
+                if($cookie != NULL) { ?>
+                    <div class="d-inline-flex align-items-center">
+                        <div class="mr-2"><?= $this->session->userdata[$cookie] ?></div>
+                        <div><a class="nav-link inline-block text-white r-0 rounded btn-danger" href="/users/logout">Logout</a></div>
+                </div>
+                <?php }
+                ?>
         </div>
     </nav>
-</body>
-</html>
