@@ -4,6 +4,9 @@ $("#register_button").click(function () {
     $("#login_form").addClass("hide");
     $("#register_form").removeClass("hide");
     $("#forgot_form").addClass("hide");
+    $("#welcome").addClass("hide");
+
+
 })
 
 // Show login form
@@ -12,6 +15,8 @@ $("#login_button").click(function () {
     $("#register_form").addClass("hide");
     $("#login_form").removeClass("hide");
     $("#forgot_form").addClass("hide");
+    $("#welcome").addClass("hide");
+
 })
 
 // Register user
@@ -66,6 +71,8 @@ $("#forgot_button").click(function(){
     $("#login_form").addClass("hide");
     $("#register_form").addClass("hide");
     $("#forgot_form").removeClass("hide");
+        $("#welcome").addClass("hide");
+
 })
 
 //Send forgot password mail
