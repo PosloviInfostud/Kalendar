@@ -77,6 +77,19 @@ class User_model extends CI_Model
 
         return $result;
     }
+
+    public function get_user_by_token($cookie)
+    {
+        $result = [];
+        $sql = "SELECT * FROM users WHERE token = ?";
+        $query = $this->db->query($sql, [$cookie]);
+
+        if ($query->num_rows()) {
+            $result = $query->row_array();
+        }
+
+        return $result;
+    }
  
     public function login($data)
     {
