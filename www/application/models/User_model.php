@@ -188,14 +188,14 @@ class User_model extends CI_Model
 
     }
 
-    public function user_logs($email, $success, $log_desc = NULL)
+    public function user_logs($email, $success, $log_desc = NULL, $log_type = "L")
     {
         // $ip = isset($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:$_SERVER['REMOTE_ADDR'];
         $ip = $_SERVER['REMOTE_ADDR'];
         $browser = $_SERVER['HTTP_USER_AGENT'];
         $sql = "INSERT INTO user_logs 
-                (email, success, log_description, ip_address, user_agent) 
-                VALUES (?, ?, ?, ?, ?)";
-        $query = $this->db->query($sql, [$email, $success, $log_desc, $ip, $browser]);
+                (email, log_type, success, log_description, ip_address, user_agent) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $query = $this->db->query($sql, [$email, $log_type, $success, $log_desc, $ip, $browser]);
     }
 }
