@@ -78,7 +78,7 @@ class User_model extends CI_Model
         $query = $this->db->query($sql, [$email]);
 
         if ($query->num_rows()) {
-            $result = $query->row_array();
+            $result = $query->row_array();s
         }
 
         return $result;
