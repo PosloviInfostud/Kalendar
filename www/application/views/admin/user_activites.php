@@ -7,21 +7,23 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Active</th>
-                    <th scope="col">Registered @</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Success</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">IP address</th>
+                    <th scope="col">Timestamp</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($user_activites as $activity) { ?> 
                     <tr>
-                        <td><?= $activity['name'] ?></td>
                         <td><?= $activity['email'] ?></td>
-                        <td><?= $activity['role'] ?></td>
-                        <td><?= $activity['active'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td><?= $activity['created_at'] ?></td>
+                        <td><?= $activity['log_type'] ?></td>
+                        <td><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td><?= $activity['log_description'] ?></td>
+                        <td><?= $activity['ip_address'] ?></td>
+                        <td><?= $activity['log_time'] ?></td>
                     </tr>
             <?php } ?>
             </tbody>
