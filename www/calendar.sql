@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql:3306
--- Generation Time: Oct 01, 2018 at 01:12 PM
+-- Generation Time: Oct 02, 2018 at 01:00 PM
 -- Server version: 8.0.12
 -- PHP Version: 7.2.8
 
@@ -32,11 +32,11 @@ CREATE TABLE `comments` (
   `id` int(11) NOT NULL,
   `res_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `text` text NOT NULL,
+  `text` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `modified_at` timestamp NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -46,11 +46,11 @@ CREATE TABLE `comments` (
 
 CREATE TABLE `logs` (
   `id` int(11) NOT NULL,
-  `type` varchar(255) NOT NULL,
+  `type` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `value` text NOT NULL,
+  `value` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -66,10 +66,10 @@ CREATE TABLE `reservations` (
   `end_time` timestamp NOT NULL,
   `created_at` timestamp NOT NULL,
   `modified_at` timestamp NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `deleted` tinyint(1) DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -80,10 +80,10 @@ CREATE TABLE `reservations` (
 CREATE TABLE `res_items` (
   `id` int(11) NOT NULL,
   `res_type_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -100,7 +100,7 @@ CREATE TABLE `res_members` (
   `modified_at` timestamp NOT NULL,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
   `notify` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -110,8 +110,8 @@ CREATE TABLE `res_members` (
 
 CREATE TABLE `res_roles` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `res_roles`
@@ -129,10 +129,10 @@ INSERT INTO `res_roles` (`id`, `name`) VALUES
 
 CREATE TABLE `res_types` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
 
 -- --------------------------------------------------------
 
@@ -142,18 +142,27 @@ CREATE TABLE `res_types` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `user_role_id` int(11) NOT NULL DEFAULT '2',
   `active` tinyint(1) NOT NULL DEFAULT '0',
-  `activation_key` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `activation_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `token_expiration_time` timestamp NULL DEFAULT NULL,
-  `reset_key` varchar(255) DEFAULT NULL,
+  `reset_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_key_exp` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `user_role_id`, `active`, `activation_key`, `token`, `token_expiration_time`, `reset_key`, `reset_key_exp`, `created_at`) VALUES
+(2, 'Luka', 'lukamatkovicns@gmail.com', '$2y$10$cZwpq6cryI6a7kutLerTreivtMjUntR9QMf8ejHP8eUveVGzdIwYS', 2, 1, '', '9071789379ebb75c380df18a1d2813e8', '2018-10-04 11:59:03', NULL, NULL, '2018-10-01 13:20:07'),
+(3, 'Second', 'test2@gmail.com', '$2y$10$Ip69RtLBwR/C.q/umDTcAOHATiA13xj4THUyArHYtLlSSlIuy7j4y', 2, 0, '110c33cd2128a15cb5fc4b91b017bd54', '', NULL, NULL, NULL, '2018-10-02 11:45:34'),
+(4, 'Luka', 'lkmtkvc@gmail.com', '$2y$10$a1HBsEYl.dqqbN424IW89O3vrzFc9BbNYGNKayTfIhXh76mXIZV/2', 2, 0, '217d7a0231e5f83c96b1b13e3e3dfd08', '', NULL, NULL, NULL, '2018-10-02 12:57:52');
 
 -- --------------------------------------------------------
 
@@ -163,13 +172,33 @@ CREATE TABLE `users` (
 
 CREATE TABLE `user_logs` (
   `id` int(11) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `log_type` varchar(10) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'L',
   `success` tinyint(1) NOT NULL DEFAULT '1',
-  `ip_address` varchar(255) NOT NULL,
-  `user_agent` varchar(255) NOT NULL,
+  `log_description` text CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+  `ip_address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_agent` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `log_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `user_logs`
+--
+
+INSERT INTO `user_logs` (`id`, `email`, `log_type`, `success`, `log_description`, `ip_address`, `user_agent`, `log_time`) VALUES
+(1, 'lkmtkvc@gmail.com', 'L', 0, 'not registered', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:40:25'),
+(2, 'lukamatkovicns@gmail.com', 'L', 0, 'wrong password', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:43:32'),
+(3, 'test2@gmail.com', 'L', 0, 'profile not yet activated', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:45:46'),
+(4, 'lukamatkovicns@gmail.com', 'L', 1, NULL, '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:48:45'),
+(5, 'lukamatkovicns@gmail.com', 'L', 0, 'wrong password', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0', '2018-10-02 11:50:36'),
+(6, 'tutyuytu@mail.mail', 'L', 0, 'not registered', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0', '2018-10-02 11:52:23'),
+(7, 'lukamatkovicns@gmail.com', 'L', 1, NULL, '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:62.0) Gecko/20100101 Firefox/62.0', '2018-10-02 11:52:54'),
+(8, 'lukamatkovicns@gmail.com', 'L', 0, 'wrong password', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:58:59'),
+(9, 'lukamatkovicns@gmail.com', 'L', 1, NULL, '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 11:59:03'),
+(10, '', 'R', 0, '<p>The Name field is required.</p>\n<p>You have not provided Email.</p>\n<p>The Password field is required.</p>\n<p>The Password Confirmation field is required.</p>\n', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 12:54:12'),
+(11, 'lkmtkvc@gmail.com', 'R', 0, '<p>The Password Confirmation field does not match the Password field.</p>\n', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 12:57:49'),
+(12, 'lkmtkvc@gmail.com', 'R', 1, NULL, '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 12:57:54'),
+(13, '', 'L', 0, '<p>The E-Mail field is required.</p>\n<p>The Password field is required.</p>\n', '172.19.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36', '2018-10-02 12:59:26');
 
 -- --------------------------------------------------------
 
@@ -179,8 +208,8 @@ CREATE TABLE `user_logs` (
 
 CREATE TABLE `user_roles` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_roles`
@@ -314,13 +343,13 @@ ALTER TABLE `res_types`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `user_roles`
@@ -337,7 +366,7 @@ ALTER TABLE `user_roles`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `FK_comments_reservations` FOREIGN KEY (`res_id`) REFERENCES `reservations` (`id`),
-  ADD CONSTRAINT `FK_comments_users` FOREIGN KEY (`user_id`) REFERENCES `res_roles` (`id`);
+  ADD CONSTRAINT `FK_comments_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `logs`

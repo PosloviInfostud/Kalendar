@@ -104,14 +104,30 @@ class User_model extends CI_Model
         if (empty($user)) {
             $message = "Please, register first!";
 
+            $email = $data['email'];
+            $log_desc = "not registered";
+            $this->load->model('User_model', 'user');
+            $this->user->user_logs($email, 0, $log_desc);
+
+
         } else {
             if (password_verify($data['password'], $user['password']) == false) {
                 $message = "Incorrect password";
+
+                $email = $data['email'];
+                $log_desc = "wrong password";
+                $this->load->model('User_model', 'user');
+                $this->user->user_logs($email, 0, $log_desc);
 
             } else {
                 if ($user['active'] != 1) {
                     $message = "Please, activate your profile first!";
 
+                    $email = $data['email'];
+                    $log_desc = "profile not yet activated";
+                    $this->load->model('User_model', 'user');
+                    $this->user->user_logs($email, 0, $log_desc);
+  
                 } else {
                     $this->load->helper('cookie');
                     $this->load->library('session');
@@ -132,6 +148,10 @@ class User_model extends CI_Model
                     ];
                     $this->session->set_userdata($session_data);
                     $message = "success";
+
+                    $email = $data['email'];
+                    $this->load->model('User_model', 'user');
+                    $this->user->user_logs($email, 1);
 
                 }
             }
@@ -166,5 +186,16 @@ class User_model extends CI_Model
             return false;
         }
 
+    }
+
+    public function user_logs($email, $success, $log_desc = NULL, $log_type = "L")
+    {
+        // $ip = isset($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:$_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $browser = $_SERVER['HTTP_USER_AGENT'];
+        $sql = "INSERT INTO user_logs 
+                (email, log_type, success, log_description, ip_address, user_agent) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $query = $this->db->query($sql, [$email, $log_type, $success, $log_desc, $ip, $browser]);
     }
 }
