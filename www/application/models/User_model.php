@@ -63,6 +63,12 @@ class User_model extends CI_Model
     {
         $sql = "UPDATE users SET active = 1, activation_key = '' WHERE id = ?";
         $query = $this->db->query($sql, [$id]);
+
+        $session_data = [
+            'message' => 'Success! Account activated.'
+        ];
+
+        $this->session->set_userdata($session_data);
     }
 
     public function get_user_by_email($email)

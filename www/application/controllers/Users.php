@@ -222,7 +222,6 @@ class Users extends CI_Controller
     {
         $this->load->helper('cookie');
         delete_cookie('usr-vezba');
-        $this->load->library('session');
         $this->session->sess_destroy();
         url_redirect('/users');
 
