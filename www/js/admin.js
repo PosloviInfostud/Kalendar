@@ -40,14 +40,12 @@ $("#update_user").submit(function(e){
             "id" : $("#user_id").val(),
             "name" : $("#user_name").val(),
             "email" : $("#user_email").val(),
-            // "password" : $("#register_password").val(),
-            // "password_confirm" : $("#register_password_confirm").val()
+            "role_id" : $("#user_role").val(),
         }
     })
     .done(function(response){
         if(response === 'success') {
-            // window.location.href = "/users"
-            $("#table").html(response);
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> User updated.</div>');
         } else {
             $("#messages").html(response);
         }
