@@ -14,7 +14,6 @@ class Users extends CI_Controller
         $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
         $this->load->library('encryption');
-        $this->load->library('session');
 
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
         $this->form_validation->set_rules(
@@ -242,5 +241,59 @@ class Users extends CI_Controller
         $this->load->view('header');
         $this->load->view('profile');
         $this->load->view('footer');
+    }
+
+    public function edit()
+    {
+        $this->load->model('User_model', 'user');
+        $id = $this->input->post('user_id');
+        $user = $this->user->get_single_user($id);
+
+        // send view to ajax
+        $form = $this->load->view('users/update', ['user' => $user], TRUE);
+        echo $form;
+        die();
+
+    }
+
+    public function update()
+    {
+        $this->load->model('User_model', 'user');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'required|valid_email|is_unique[users.email]|trim',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => 'You need to use a valid email address.',
+                'is_unique' => 'This %s already exists.'
+            )
+        );
+
+        $message = '';
+
+        if ($this->form_validation->run() == false) {
+            $message = validation_errors();
+            $email = $this->input->post('email');
+            $this->load->model('User_model','user');
+            $this->user->user_logs($email, 0, $message, "R");
+
+        } else {
+            $data = [
+                "name" => $this->input->post('name'),
+                "email" => $this->input->post('email'),
+                "password" => $this->input->post('password')
+            ];
+            $this->user->create($data);
+            $message = 'success';
+            $email = $this->input->post('email');
+            $this->load->model('User_model','user');
+            $this->user->user_logs($email, 1, NULL, "R");
+        }
+        // Send response to ajax
+        echo $message;
     }
 }

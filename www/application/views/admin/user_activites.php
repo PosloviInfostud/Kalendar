@@ -4,7 +4,7 @@
 <?php if(empty($user_activites)) {
         echo 'No entries';
 } else { ?>
-        <table class="table">
+        <table class="table table-text-sm">
             <thead>
                 <tr>
                     <th scope="col">Email</th>
@@ -21,7 +21,7 @@
                         <td><?= $activity['email'] ?></td>
                         <td><?= $activity['log_type'] ?></td>
                         <td><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td><?= $activity['log_description'] ?></td>
+                        <td><?= substr($activity['log_description'],0, 120).'...' ?></td>
                         <td><?= $activity['ip_address'] ?></td>
                         <td><?= $activity['log_time'] ?></td>
                     </tr>

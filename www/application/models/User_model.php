@@ -71,6 +71,19 @@ class User_model extends CI_Model
         $this->session->set_userdata($session_data);
     }
 
+    public function get_single_user($id)
+    {
+        $result = [];
+        $sql = "SELECT * FROM users WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if ($query->num_rows()) {
+            $result = $query->row_array();
+        }
+
+        return $result;
+    }
+
     public function get_user_by_email($email)
     {
         $result = [];
