@@ -4,16 +4,16 @@
 <?php if(empty($reservations)) {
         echo 'No entries';
 } else { ?>
-        <table class="table">
+        <table class="table table-text-sm">
             <thead>
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Item</th>
-                    <th scope="col">Created by</th>
+                    <th scope="col">Owner</th>
                     <th scope="col">Start</th>
                     <th scope="col">End</th>
-                    <th scope="col">Created @</th>
+                    <th scope="col">Created</th>
                     <th scope="col">Members</th>
                     <th scope="col">Deleted</th>
                 </tr>
@@ -21,8 +21,8 @@
             <tbody>
             <?php foreach($reservations as $res) { ?> 
                     <tr>
-                        <td><?= $res['title'] ?></td>
-                        <td><?= $res['description'] ?></td>
+                        <td><?= $res['title'] ?>
+                        <td><?= substr($res['description'], 0, 120).'...' ?></td>
                         <td><?= $res['item_name'] ?></td>
                         <td><?= $res['user_name'] ?></td>
                         <td><?= $res['start_time'] ?></td>
