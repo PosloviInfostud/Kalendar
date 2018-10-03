@@ -198,4 +198,51 @@ class User_model extends CI_Model
                 VALUES (?, ?, ?, ?, ?, ?)";
         $query = $this->db->query($sql, [$email, $log_type, $success, $log_desc, $ip, $browser]);
     }
+
+    public function logs($sql, $values)
+    {
+        $cookie = $this->input->cookie('usr-vezba');
+        $user_id = $this->get_user_by_token($cookie);
+        $sql_arr = explode(' ', $sql);
+        $type = $sql_arr[0]; //log type is the first word of $sql string
+
+        //case INSERT
+
+        if ($type == "INSERT") {
+
+            $table = $sql_arr[2]; //table name is the 3rd word: "INSERT INTO reservations"
+            
+            //column names inside first brackets in $sql
+            $start  = strpos($sql, '(');
+            $end    = strpos($sql, ')');
+            $length = $end - $start;
+            $result = substr($sql, $start + 1, $length - 1);
+            $result_arr = explode(',',$result);
+
+            //creating $value
+            for ($i = 0; $i< count($result_arr); $i++) {
+                $value_arr[] = $result_arr[$i]." = ".$values[$i];
+            }
+            $value = implode(",", $value_arr);
+        }
+
+        //case UPDATE
+
+        elseif ($type == "UPDATE") {
+
+            $table = $sql_arr[1]; //table name is the 2nd word: "UPDATE reservations..."
+
+        } 
+        
+        //case DELETE
+
+        elseif ($type == "DELETE") {
+
+            $table = $sql_arr[2]; //table name is the 3rd word: "DELETE FROM reservations"
+
+        }
+
+        $sql_log = "INSERT INTO logs (user_id, altered_table, type, value) VALUES (?, ?, ?, ?)";
+        $query = $this->db->query($sql, [$user_id, $table, $type, $value]);
+    }
 }
