@@ -190,7 +190,7 @@ class User_model extends CI_Model
         $today = date('Y-m-d h:i:s');
         $sql = "UPDATE users 
                 SET password = ?, reset_key = '', reset_key_exp = ''
-                WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ? ";
+                WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ?";
         $query = $this->db->query($sql, [$password_hash, $data['email'], $data['reset_key'], $today]);
 
         if($this->db->affected_rows() >0) {
