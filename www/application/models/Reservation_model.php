@@ -16,7 +16,6 @@ class Reservation_model extends CI_Model
         }
         print_r($result);
         foreach($result as $user) {
-            echo "<br>".$user['email']."<br>";
             $this->send_members_notification($user);
         }
     }
