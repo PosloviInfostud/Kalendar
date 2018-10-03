@@ -201,4 +201,10 @@ class User_model extends CI_Model
 
     }
 
+    public function update($data)
+    {
+        $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['email'], $data['id']]);
+    }
+
 }

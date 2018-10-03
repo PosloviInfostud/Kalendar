@@ -37,6 +37,7 @@ $("#update_user").submit(function(e){
         method: "POST",
         url: "/users/update",
         data: {
+            "id" : $("#user_id").val(),
             "name" : $("#user_name").val(),
             "email" : $("#user_email").val(),
             // "password" : $("#register_password").val(),
@@ -45,7 +46,8 @@ $("#update_user").submit(function(e){
     })
     .done(function(response){
         if(response === 'success') {
-            window.location.href = "/users"
+            // window.location.href = "/users"
+            $("#table").html(response);
         } else {
             $("#messages").html(response);
         }
