@@ -278,22 +278,16 @@ class Users extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $message = validation_errors();
-            // $email = $this->input->post('email');
-            // $this->load->model('User_model','user');
-            // $this->user->user_logs($email, 0, $message, "R");
 
         } else {
             $data = [
                 "id" => $this->input->post('id'),
                 "name" => $this->input->post('name'),
                 "email" => $this->input->post('email')
-                // "password" => $this->input->post('password')
             ];
+            
             $this->user->update($data);
             $message = 'success';
-            // $email = $this->input->post('email');
-            // $this->load->model('User_model','user');
-            // $this->user->user_logs($email, 1, NULL, "R");
         }
         // Send response to ajax
         echo $message;
