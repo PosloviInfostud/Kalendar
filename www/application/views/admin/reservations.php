@@ -9,6 +9,7 @@
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Item</th>
                     <th scope="col">Created by</th>
                     <th scope="col">Start</th>
                     <th scope="col">End</th>
@@ -22,12 +23,13 @@
                     <tr>
                         <td><?= $res['title'] ?></td>
                         <td><?= $res['description'] ?></td>
+                        <td><?= $res['item_name'] ?></td>
                         <td><?= $res['user_name'] ?></td>
                         <td><?= $res['start_time'] ?></td>
                         <td><?= $res['end_time'] ?></td>
                         <td><?= $res['created_at'] ?></td>
-                        <td><?= $res['description'] ?></td>
-                        <td><?= $user['deleted'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td><button class="btn btn-secondary btn-sm">Members</button></td>
+                        <td><?= $res['deleted'] == 1 ? 'Yes' : 'No' ?></td>
                     </tr>
             <?php } ?>
             </tbody>
