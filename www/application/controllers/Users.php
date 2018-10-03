@@ -35,8 +35,8 @@ class Users extends CI_Controller
         if ($this->form_validation->run() == false) {
             $message = validation_errors();
             $email = $this->input->post('email');
-            $this->load->model('User_model','user');
-            $this->user->user_logs($email, 0, $message, "R");
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 0, $message, "R");
 
         } else {
             $data = [
@@ -47,8 +47,8 @@ class Users extends CI_Controller
             $this->user->create($data);
             $message = 'success';
             $email = $this->input->post('email');
-            $this->load->model('User_model','user');
-            $this->user->user_logs($email, 1, NULL, "R");
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 1, NULL, "R");
         }
         // Send response to ajax
         echo $message;
@@ -86,8 +86,8 @@ class Users extends CI_Controller
         if ($this->form_validation->run() == false) {
             $message = validation_errors();
             $email = $this->input->post('email');
-            $this->load->model('User_model','user');
-            $this->user->user_logs($email, 0, $message);
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 0, $message);
 
         } else {
             $data = [

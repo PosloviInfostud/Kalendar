@@ -106,8 +106,8 @@ class User_model extends CI_Model
 
             $email = $data['email'];
             $log_desc = "not registered";
-            $this->load->model('User_model', 'user');
-            $this->user->user_logs($email, 0, $log_desc);
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 0, $log_desc);
 
 
         } else {
@@ -116,8 +116,8 @@ class User_model extends CI_Model
 
                 $email = $data['email'];
                 $log_desc = "wrong password";
-                $this->load->model('User_model', 'user');
-                $this->user->user_logs($email, 0, $log_desc);
+                $this->load->model('Logs_model', 'logs');
+                $this->logs->user_logs($email, 0, $log_desc);
 
             } else {
                 if ($user['active'] != 1) {
@@ -125,8 +125,8 @@ class User_model extends CI_Model
 
                     $email = $data['email'];
                     $log_desc = "profile not yet activated";
-                    $this->load->model('User_model', 'user');
-                    $this->user->user_logs($email, 0, $log_desc);
+                    $this->load->model('Logs_model', 'logs');
+                    $this->logs->user_logs($email, 0, $log_desc);
   
                 } else {
                     $this->load->helper('cookie');
@@ -150,8 +150,8 @@ class User_model extends CI_Model
                     $message = "success";
 
                     $email = $data['email'];
-                    $this->load->model('User_model', 'user');
-                    $this->user->user_logs($email, 1);
+                    $this->load->model('Logs_model', 'logs');
+                    $this->logs->user_logs($email, 1);
 
                 }
             }
@@ -188,61 +188,4 @@ class User_model extends CI_Model
 
     }
 
-    public function user_logs($email, $success, $log_desc = NULL, $log_type = "L")
-    {
-        // $ip = isset($_SERVER['HTTP_CLIENT_IP'])?$_SERVER['HTTP_CLIENT_IP']:isset($_SERVER['HTTP_X_FORWARDED_FOR'])?$_SERVER['HTTP_X_FORWARDED_FOR']:$_SERVER['REMOTE_ADDR'];
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $browser = $_SERVER['HTTP_USER_AGENT'];
-        $sql = "INSERT INTO user_logs 
-                (email, log_type, success, log_description, ip_address, user_agent) 
-                VALUES (?, ?, ?, ?, ?, ?)";
-        $query = $this->db->query($sql, [$email, $log_type, $success, $log_desc, $ip, $browser]);
-    }
-
-    public function logs($sql, $values)
-    {
-        $cookie = $this->input->cookie('usr-vezba');
-        $user_id = $this->get_user_by_token($cookie);
-        $sql_arr = explode(' ', $sql);
-        $type = $sql_arr[0]; //log type is the first word of $sql string
-
-        //case INSERT
-
-        if ($type == "INSERT") {
-
-            $table = $sql_arr[2]; //table name is the 3rd word: "INSERT INTO reservations"
-            
-            //column names inside first brackets in $sql
-            $start  = strpos($sql, '(');
-            $end    = strpos($sql, ')');
-            $length = $end - $start;
-            $result = substr($sql, $start + 1, $length - 1);
-            $result_arr = explode(',',$result);
-
-            //creating $value
-            for ($i = 0; $i< count($result_arr); $i++) {
-                $value_arr[] = $result_arr[$i]." = ".$values[$i];
-            }
-            $value = implode(",", $value_arr);
-        }
-
-        //case UPDATE
-
-        elseif ($type == "UPDATE") {
-
-            $table = $sql_arr[1]; //table name is the 2nd word: "UPDATE reservations..."
-
-        } 
-        
-        //case DELETE
-
-        elseif ($type == "DELETE") {
-
-            $table = $sql_arr[2]; //table name is the 3rd word: "DELETE FROM reservations"
-
-        }
-
-        $sql_log = "INSERT INTO logs (user_id, altered_table, type, value) VALUES (?, ?, ?, ?)";
-        $query = $this->db->query($sql, [$user_id, $table, $type, $value]);
-    }
 }
