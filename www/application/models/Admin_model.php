@@ -24,7 +24,7 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT u.name, u.email, u.active, u.created_at, r.name as role
+        $sql = "SELECT u.id, u.name, u.email, u.active, u.created_at, r.name as role
                 FROM users as u
                 INNER JOIN user_roles as r ON r.id = u.user_role_id";
         $query = $this->db->query($sql, []);
