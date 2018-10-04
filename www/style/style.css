@@ -11,3 +11,7 @@
 .table-text-sm {
     font-size:13px !important;
 }
+
+.table th {
+    text-align: center;
+ }
