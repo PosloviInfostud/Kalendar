@@ -39,9 +39,7 @@ class Reservation_model extends CI_Model
         ];
         $to = array($email);
         $subject = 'New meeting';
-        $message = "<h2>New Meeting on ".$user['start_time']."</h2>
-                    <p>Dear ".$user['name'].", <br>
-                    We have a meeting in a ".$user['title']." from ".$user['start_time']." until ".$user['start_time'].".<br>See you!";
+        $message = $this->load->view('reservation_invitation_mail', $user, true);
 
         // Load CodeIgniter Email library
         $this->load->library('email', $emailConfig);

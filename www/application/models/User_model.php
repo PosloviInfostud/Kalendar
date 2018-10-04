@@ -9,6 +9,14 @@ class User_model extends CI_Model
         $result = [];
         $sql = 'INSERT INTO users (name, email, password, activation_key) VALUES (?, ?, ?, ?)';
         $query = $this->db->query($sql, [$data['name'], $data['email'], $password_hash, $activation_key]);
+        $this->load->model('Logs_model','logs');
+        $data_log = [
+            'user_id' => $this->db->insert_id(),
+            'table' => 'users',
+            'type' => 'insert',
+            'values' => $data
+        ];
+        $this->logs->insert_log($data_log);
         $this->send_activation_mail($data['email'], $activation_key);
 
         $session_data = [
@@ -63,6 +71,17 @@ class User_model extends CI_Model
     {
         $sql = "UPDATE users SET active = 1, activation_key = '' WHERE id = ?";
         $query = $this->db->query($sql, [$id]);
+
+        $this->load->model('Logs_model','logs');
+        $data_log = [
+            'user_id' => $id,
+            'table' => 'users',
+            'type' => 'update',
+            'values' => [
+                'active' => '1',
+                'activation_key' => '']
+        ];
+        $this->logs->insert_log($data_log);
 
         $session_data = [
             'message' => 'Success! Account activated.'
@@ -176,12 +195,35 @@ class User_model extends CI_Model
     {
         $sql = "UPDATE users SET token = ?, token_expiration_time = ? WHERE id = ?";
         $query = $this->db->query($sql, [$value, $expire, $user_id]);
+
+        $this->load->model('Logs_model','logs');
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'users',
+            'type' => 'update',
+            'values' => [
+                'token' => $value,
+                'token_expiration_time' => $expire,
+            ]
+        ];
+        $this->logs->insert_log($data_log);
     }
 
     public function set_reset_key($email, $code, $expire)
     {
         $sql = "UPDATE users SET reset_key = ?, reset_key_exp = ? WHERE email = ?";
         $query = $this->db->query($sql, [$code, $expire, $email]);
+        $this->load->model('Logs_model','logs');
+        $data_log = [
+            'user_id' => get_user_by_email($email)['id'],
+            'table' => 'users',
+            'type' => 'update',
+            'values' => [
+                'reset_key' => $code,
+                'reset_key_exp' => $expire
+            ]
+        ];
+        $this->logs->insert_log($data_log);
     }
 
     public function reset_password($data)
@@ -198,6 +240,18 @@ class User_model extends CI_Model
         } else {
             return false;
         }
+        $this->load->model('Logs_model','logs');
+        $data_log = [
+            'user_id' => get_user_by_email($data['email'])['id'],
+            'table' => 'users',
+            'type' => 'update',
+            'values' => [
+                'password' => $password_hash,
+                'reset_key' => $data['reset_key'],
+                'reset_key_exp' => ''
+            ]
+        ];
+        $this->logs->insert_log($data_log);
 
     }
 
