@@ -174,7 +174,7 @@ class Users extends CI_Controller
                     show_error($this->email->print_debugger());
                     die;
                 }
-                $message = "E-mail sent successfully!";
+                $message = "E-mail sent successfully! Please, go to your email account and click on the link to enter your new password!";
             }
         }
         echo $message;

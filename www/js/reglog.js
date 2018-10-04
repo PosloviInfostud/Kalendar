@@ -84,7 +84,9 @@ $("#forgot_form").submit(function(e){
         }
     })
     .done(function(response){
-        $("#messages").html(response);   
+        $("#messages").html(response);
+        $("#forgot_form").addClass("hide");
+
      })
 })
 

@@ -14,7 +14,11 @@ class User_model extends CI_Model
             'user_id' => $this->db->insert_id(),
             'table' => 'users',
             'type' => 'insert',
-            'values' => $data
+            'value' => [
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => $password_hash
+            ]
         ];
         $this->logs->insert_log($data_log);
         $this->send_activation_mail($data['email'], $activation_key);
@@ -77,7 +81,7 @@ class User_model extends CI_Model
             'user_id' => $id,
             'table' => 'users',
             'type' => 'update',
-            'values' => [
+            'value' => [
                 'active' => '1',
                 'activation_key' => '']
         ];
@@ -201,7 +205,7 @@ class User_model extends CI_Model
             'user_id' => $user_id,
             'table' => 'users',
             'type' => 'update',
-            'values' => [
+            'value' => [
                 'token' => $value,
                 'token_expiration_time' => $expire,
             ]
@@ -215,10 +219,10 @@ class User_model extends CI_Model
         $query = $this->db->query($sql, [$code, $expire, $email]);
         $this->load->model('Logs_model','logs');
         $data_log = [
-            'user_id' => get_user_by_email($email)['id'],
+            'user_id' => $this->get_user_by_email($email)['id'],
             'table' => 'users',
             'type' => 'update',
-            'values' => [
+            'value' => [
                 'reset_key' => $code,
                 'reset_key_exp' => $expire
             ]
@@ -245,7 +249,7 @@ class User_model extends CI_Model
             'user_id' => get_user_by_email($data['email'])['id'],
             'table' => 'users',
             'type' => 'update',
-            'values' => [
+            'value' => [
                 'password' => $password_hash,
                 'reset_key' => $data['reset_key'],
                 'reset_key_exp' => ''

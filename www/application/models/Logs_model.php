@@ -17,6 +17,6 @@ class Logs_model extends CI_Model
     public function insert_log($data_log)
     {
         $sql_log = "INSERT INTO logs (user_id, altered_table, type, value) VALUES (?, ?, ?, ?)";
-        $query = $this->db->query($sql, [$data_log['user_id'], $data_log['table'], $data_log['type'], $data_log['value']]);
+        $query = $this->db->query($sql_log, [$data_log['user_id'], $data_log['table'], $data_log['type'], json_encode($data_log['value'])]);
     }
 }
