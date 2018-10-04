@@ -248,9 +248,10 @@ class Users extends CI_Controller
         $this->load->model('User_model', 'user');
         $id = $this->input->post('user_id');
         $user = $this->user->get_single_user($id);
+        $roles = $this->user->get_all_user_roles();
 
         // send view to ajax
-        $form = $this->load->view('users/update', ['user' => $user], TRUE);
+        $form = $this->load->view('users/update', ['user' => $user, 'roles' => $roles], TRUE);
         echo $form;
         die();
 
@@ -283,7 +284,9 @@ class Users extends CI_Controller
             $data = [
                 "id" => $this->input->post('id'),
                 "name" => $this->input->post('name'),
-                "email" => $this->input->post('email')
+                "email" => $this->input->post('email'),
+                "role_id" => $this->input->post('role_id'),
+                "active" => $this->input->post('active')
             ];
             
             $this->user->update($data);

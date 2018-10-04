@@ -201,10 +201,22 @@ class User_model extends CI_Model
 
     }
 
+    public function get_all_user_roles()
+    {
+        $result = [];
+
+        $sql = "SELECT * FROM user_roles";
+        $query = $this->db->query($sql, []);
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        return $result;
+    }
+
     public function update($data)
     {
-        $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
-        $query = $this->db->query($sql, [$data['name'], $data['email'], $data['id']]);
+        $sql = "UPDATE users SET name = ?, email = ?, user_role_id = ?, active = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['email'], $data['role_id'], $data['active'], $data['id']]);
     }
 
 }
