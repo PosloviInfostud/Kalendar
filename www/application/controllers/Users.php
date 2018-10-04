@@ -239,7 +239,7 @@ class Users extends CI_Controller
     public function profile()
     {
         $this->load->view('header');
-        $this->load->view('profile');
+        $this->load->view('users/profile');
         $this->load->view('footer');
     }
 
