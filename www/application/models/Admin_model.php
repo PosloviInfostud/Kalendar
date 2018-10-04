@@ -55,4 +55,30 @@ class Admin_model extends CI_Model
         }
         return $result;
     }
+
+    public function get_all_res_items()
+    {
+        $result = [];
+
+        $sql = "SELECT i.id, i.name, i.description, i.res_type_id, t.name as res_type_name, i.created_at
+                FROM res_items as i
+                INNER JOIN res_types as t ON t.id = i.res_type_id";
+        $query = $this->db->query($sql, []);
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        return $result;
+    }
+
+    public function get_all_res_types()
+    {
+        $result = [];
+
+        $sql = "SELECT * FROM res_types";
+        $query = $this->db->query($sql, []);
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        return $result;
+    }
 }

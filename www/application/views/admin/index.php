@@ -1,4 +1,4 @@
-<div class="container mt-5">
+<div class="container my-5">
     <h1 class="mb-5">Admin area</h1>
     <div class="row">
         <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-options" data-name="reservations">Reservations</button></div>
