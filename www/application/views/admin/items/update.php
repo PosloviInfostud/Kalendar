@@ -22,6 +22,7 @@
         </select>
         </div>
     </div>
+    <hr>
     <button type="submit" class="btn btn-block btn-info mt-3">Update</button>
 </form>
 
