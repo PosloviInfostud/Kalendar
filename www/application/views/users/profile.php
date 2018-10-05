@@ -6,8 +6,8 @@
         <div class="container mt-5">
             <h1>Welcome, <?= $this->session->userdata[$cookie]; ?>!</h1>
             <div class="row">
-                <div class="col"><button class="button btn-info btn-block">Create A Reservation</button></div>
-                <div class="col"><button class="button btn-info btn-block">See Current Reservation</button></div>
+                <div class="col"><a href="/reservations/create_reservation" class="btn btn-outline-info btn-block btn-options">Create A Reservation</a></div>
+                <div class="col"><a href="" class="btn btn-outline-info btn-block btn-options">See Current Reservations</a></div>
             </div>
         </div>
     <?php }

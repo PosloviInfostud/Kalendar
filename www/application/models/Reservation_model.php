@@ -59,4 +59,57 @@ class Reservation_model extends CI_Model
             // echo 'Success to send email';
         }
     }
+
+    public function check_free_rooms($data)
+    {
+        $sql = "SELECT id FROM res_items";
+        $query = $this->db->query($sql);
+        $items_arr = $query->result_array();
+        $items = [];
+        $free_arr = [];
+
+        foreach($items_arr as $item) {
+                $items[] = $item['id'];
+        }
+        $sql = "SELECT res_item_id as id FROM reservations GROUP BY res_item_id";
+        $query = $this->db->query($sql);
+        $reserved_arr = $query->result_array(); 
+
+        foreach($reserved_arr as $reserv) {
+                $reserved[] = $reserv['id'];
+        }
+
+        $non_reserved = array_diff($items, $reserved);
+
+        foreach($non_reserved as $item) {
+            $sql = "SELECT id, name FROM res_items WHERE id = ?";
+            $query = $this->db->query($sql, [$item]);
+            if ($query->num_rows()) {
+                $result = $query->row_array();
+            }
+                $free_arr[] = $result;
+        }
+
+        $sql = "SELECT res_items.id, name FROM res_items 
+                INNER JOIN reservations ON res_items.id = reservations.res_item_id 
+                WHERE (? < reservations.start_time OR ? > reservations.end_time) 
+                AND res_items.capacity > ? 
+                ";
+        $query = $this->db->query($sql, [$data['end_time'], $data['start_time'], $data['attendants']]);
+
+        if ($query->num_rows()) {
+            $result_arr = $query->result_array();
+        }
+        foreach ($result_arr as $item) {
+            $free_arr[] = $item;
+        }
+
+        foreach($free_arr as $item) {
+            foreach($item as $key => $value) {
+                $free[] = $value;
+            }
+    }   
+        var_dump($free); die;
+        return $free;
+    }
 }
