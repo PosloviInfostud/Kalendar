@@ -1,21 +1,82 @@
-$("body").on('click', ".btn-options", function() {
+$("body").on('click', ".btn-options", function(e) {
     $(".btn-options").addClass('btn-outline-info').removeClass('btn-info');
     // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
+})
+
+/* VIEWS */
+
+// Load reservations view
+$("body").on('click', '#show_reservations', function() {
     $.ajax({
         method: "POST",
-        url: "/admin/show_view",
-        data: {
-            "name" : $(this).attr("data-name")
-        }
+        url: "/admin/show_reservations"
     })
     .done(function(response) {
         // Load view
         $("#table").html(response);
-
         // Apply datatables on the loaded table
         $('.table').DataTable();
     });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
 
+$("body").on('click', '#show_items', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_items"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+$("body").on('click', '#show_users', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_users"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+$("body").on('click', '#show_user_activites', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_user_activites"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+$("body").on('click', '#show_logs', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_logs"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
     // Set clicked button active
     $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
