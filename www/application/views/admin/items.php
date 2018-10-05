@@ -84,6 +84,3 @@
     </div>
   </div>
 </div>
-
-
-<script src="/js/admin_items.js"></script>

@@ -29,5 +29,3 @@
             </tbody>
         </table>
 <?php } ?>
-
-<script src="/js/admin_users.js"></script>
