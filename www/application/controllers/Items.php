@@ -4,16 +4,26 @@ class Items extends CI_Controller
     public function create()
     {
         $this->load->model('Item_model', 'item');
+        $this->load->library('form_validation');
 
-        $data = [
-            "name" => $this->input->post('name'),
-            "type" => $this->input->post('type'),
-            "description" => $this->input->post('description')
-        ];
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('type', 'Type', 'required');
+        $this->form_validation->set_rules('description', 'Password Confirmation', 'trim');
+
+        $message = '';
+
+        if ($this->form_validation->run() == false) {
+            $message = validation_errors();
+        } else {
+            $data = [
+                "name" => $this->input->post('name'),
+                "type" => $this->input->post('type'),
+                "description" => $this->input->post('description')
+            ];
 
         $this->item->insert($data);
-
         $message = 'success';
+        }
 
         echo $message;
         die();
@@ -36,16 +46,27 @@ class Items extends CI_Controller
     public function update()
     {
         $this->load->model('Item_model', 'item');
+        $this->load->library('form_validation');
 
-        $data = [
-            "id" => $this->input->post('id'),
-            "name" => $this->input->post('name'),
-            "type" => $this->input->post('type'),
-            "description" => $this->input->post('description')
-        ];
-        
-        $this->item->update($data);
-        $message = 'success';
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules('type', 'Type', 'required');
+        $this->form_validation->set_rules('description', 'Password Confirmation', 'trim');
+
+        $message = '';
+
+        if ($this->form_validation->run() == false) {
+            $message = validation_errors();
+        } else {
+            $data = [
+                "id" => $this->input->post('id'),
+                "name" => $this->input->post('name'),
+                "type" => $this->input->post('type'),
+                "description" => $this->input->post('description')
+            ];
+
+            $this->item->update($data);
+            $message = 'success';
+        }
 
         // Send response to ajax
         echo $message;

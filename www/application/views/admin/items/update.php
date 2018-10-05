@@ -1,5 +1,3 @@
-<div id="messages"></div>
-
 <form id="update_item_form">
     <div class="form-group">
         <input type="hidden" class="form-control" name="id" id="update_item_id" value="<?= $item['id'] ?>">
@@ -25,5 +23,3 @@
     <hr>
     <button type="submit" class="btn btn-block btn-info mt-3">Update</button>
 </form>
-
-<script src="/js/admin_items.js"></script>
