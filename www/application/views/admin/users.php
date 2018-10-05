@@ -4,30 +4,28 @@
 <?php if(empty($users)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm">
-            <thead>
+        <table class="table table-text-sm table-condensed table-striped border">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col">Action</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Role</th>
                     <th scope="col">Active</th>
-                    <th scope="col">Registered @</th>
+                    <th scope="col">Registered</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($users as $user) { ?> 
                     <tr>
-                        <td><button class="btn btn-sm btn-info user-edit" data-id="<?= $user['id'] ?>">Edit</button></td>
-                        <td><?= $user['name'] ?></td>
-                        <td><?= $user['email'] ?></td>
-                        <td><?= $user['role'] ?></td>
-                        <td><?= $user['active'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td><?= $user['created_at'] ?></td>
+                        <td class="align-middle text-center"><button class="btn btn-sm btn-info user-edit" data-id="<?= $user['id'] ?>"><i class="fas fa-pencil-alt"></i></button></td>
+                        <td class="align-middle text-center"><?= $user['name'] ?></td>
+                        <td class="align-middle text-center"><?= $user['email'] ?></td>
+                        <td class="align-middle text-center"><?= $user['role'] ?></td>
+                        <td class="align-middle text-center"><?= $user['active'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td class="align-middle text-center"><?= $user['created_at'] ?></td>
                     </tr>
             <?php } ?>
             </tbody>
         </table>
 <?php } ?>
-
-<script src="/js/admin.js"></script>

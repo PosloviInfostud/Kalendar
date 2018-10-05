@@ -18,6 +18,10 @@ class Admin extends CI_Controller
         $table = [];
 
         $reservations = $this->admin->get_all_reservations();
+        $items_data = [
+            'items' => $this->admin->get_all_res_items(),
+            'types' => $this->admin->get_all_res_types()
+        ];
         $users = $this->admin->get_all_users();
         $user_activites = $this->admin->get_all_user_activities();
         $logs = $this->admin->get_all_logs();
@@ -25,6 +29,8 @@ class Admin extends CI_Controller
         // send view to ajax based on the clicked button
         if($option == 'reservations') {
             $table = $this->load->view('admin/reservations', ['reservations' => $reservations], TRUE);
+        } elseif($option == 'items') {
+            $table = $this->load->view('admin/items', $items_data, TRUE);
         } elseif($option == 'users') {
             $table = $this->load->view('admin/users', ['users' => $users], TRUE);
         } elseif($option == 'user-activites') {

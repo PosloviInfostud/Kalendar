@@ -236,7 +236,7 @@ class User_model extends CI_Model
         $today = date('Y-m-d h:i:s');
         $sql = "UPDATE users 
                 SET password = ?, reset_key = '', reset_key_exp = ''
-                WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ? ";
+                WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ?";
         $query = $this->db->query($sql, [$password_hash, $data['email'], $data['reset_key'], $today]);
 
         if($this->db->affected_rows() >0) {
@@ -257,6 +257,24 @@ class User_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
+    }
+
+    public function get_all_user_roles()
+    {
+        $result = [];
+
+        $sql = "SELECT * FROM user_roles";
+        $query = $this->db->query($sql, []);
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        return $result;
+    }
+
+    public function update($data)
+    {
+        $sql = "UPDATE users SET name = ?, email = ?, user_role_id = ?, active = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['email'], $data['role_id'], $data['active'], $data['id']]);
     }
 
 }

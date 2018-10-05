@@ -4,8 +4,8 @@
 <?php if(empty($users)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm">
-            <thead>
+        <table class="table table-text-sm table-condensed table-striped border">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -17,11 +17,11 @@
             <tbody>
             <?php foreach($users as $user) { ?> 
                     <tr>
-                        <td><?= $user['name'] ?></td>
-                        <td><?= $user['email'] ?></td>
-                        <td><?= $user['role'] ?></td>
-                        <td><?= $user['active'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td><?= $user['created_at'] ?></td>
+                        <td class="align-middle text-center"><?= $user['name'] ?></td>
+                        <td class="align-middle text-center"><?= $user['email'] ?></td>
+                        <td class="align-middle text-center"><?= $user['role'] ?></td>
+                        <td class="align-middle text-center"><?= $user['active'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td class="align-middle text-center"><?= $user['created_at'] ?></td>
                     </tr>
             <?php } ?>
             </tbody>

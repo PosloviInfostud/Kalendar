@@ -248,9 +248,10 @@ class Users extends CI_Controller
         $this->load->model('User_model', 'user');
         $id = $this->input->post('user_id');
         $user = $this->user->get_single_user($id);
+        $roles = $this->user->get_all_user_roles();
 
         // send view to ajax
-        $form = $this->load->view('users/update', ['user' => $user], TRUE);
+        $form = $this->load->view('users/update', ['user' => $user, 'roles' => $roles], TRUE);
         echo $form;
         die();
 
@@ -265,7 +266,8 @@ class Users extends CI_Controller
         $this->form_validation->set_rules(
             'email',
             'Email',
-            'required|valid_email|is_unique[users.email]|trim',
+            'required|valid_email|trim',
+            // 'required|valid_email|is_unique[users.email]|trim',
             array(
                 'required' => 'You have not provided %s.',
                 'valid_email' => 'You need to use a valid email address.',
@@ -277,21 +279,18 @@ class Users extends CI_Controller
 
         if ($this->form_validation->run() == false) {
             $message = validation_errors();
-            $email = $this->input->post('email');
-            $this->load->model('User_model','user');
-            $this->user->user_logs($email, 0, $message, "R");
 
         } else {
             $data = [
+                "id" => $this->input->post('id'),
                 "name" => $this->input->post('name'),
                 "email" => $this->input->post('email'),
-                "password" => $this->input->post('password')
+                "role_id" => $this->input->post('role_id'),
+                "active" => $this->input->post('active')
             ];
-            $this->user->create($data);
+            
+            $this->user->update($data);
             $message = 'success';
-            $email = $this->input->post('email');
-            $this->load->model('User_model','user');
-            $this->user->user_logs($email, 1, NULL, "R");
         }
         // Send response to ajax
         echo $message;

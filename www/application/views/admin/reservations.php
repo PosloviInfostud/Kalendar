@@ -4,8 +4,8 @@
 <?php if(empty($reservations)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm">
-            <thead>
+        <table class="table table-text-sm table-condensed table-striped border">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
@@ -21,15 +21,15 @@
             <tbody>
             <?php foreach($reservations as $res) { ?> 
                     <tr>
-                        <td><?= $res['title'] ?>
-                        <td><?= substr($res['description'], 0, 120).'...' ?></td>
-                        <td><?= $res['item_name'] ?></td>
-                        <td><?= $res['user_name'] ?></td>
-                        <td><?= $res['start_time'] ?></td>
-                        <td><?= $res['end_time'] ?></td>
-                        <td><?= $res['created_at'] ?></td>
-                        <td><button class="btn btn-secondary btn-sm">Members</button></td>
-                        <td><?= $res['deleted'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td class="align-middle text-center"><?= $res['title'] ?>
+                        <td class="align-middle"><?= substr($res['description'], 0, 120).'...' ?></td>
+                        <td class="align-middle text-center"><?= $res['item_name'] ?></td>
+                        <td class="align-middle text-center"><?= $res['user_name'] ?></td>
+                        <td class="align-middle text-center"><?= $res['start_time'] ?></td>
+                        <td class="align-middle text-center"><?= $res['end_time'] ?></td>
+                        <td class="align-middle text-center"><?= $res['created_at'] ?></td>
+                        <td class="align-middle text-center"><button class="btn btn-secondary btn-sm">Members</button></td>
+                        <td class="align-middle text-center"><?= $res['deleted'] == 1 ? 'Yes' : 'No' ?></td>
                     </tr>
             <?php } ?>
             </tbody>

@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.body {
+    font-family: 'Roboto', sans-serif !important;
+}
+
 .hide {
     display:none;
 }
@@ -5,3 +11,7 @@
 .table-text-sm {
     font-size:13px !important;
 }
+
+.table th {
+    text-align: center;
+ }

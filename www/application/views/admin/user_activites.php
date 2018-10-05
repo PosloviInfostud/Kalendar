@@ -4,8 +4,8 @@
 <?php if(empty($user_activites)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm">
-            <thead>
+        <table class="table table-text-sm table-condensed table-striped border">
+            <thead class="thead-light">
                 <tr>
                     <th scope="col">Email</th>
                     <th scope="col">Type</th>
@@ -18,12 +18,12 @@
             <tbody>
             <?php foreach($user_activites as $activity) { ?> 
                     <tr>
-                        <td><?= $activity['email'] ?></td>
-                        <td><?= $activity['log_type'] ?></td>
-                        <td><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td><?= substr($activity['log_description'],0, 120).'...' ?></td>
-                        <td><?= $activity['ip_address'] ?></td>
-                        <td><?= $activity['log_time'] ?></td>
+                        <td class="align-middle text-center"><?= $activity['email'] ?></td>
+                        <td class="align-middle text-center"><?= $activity['log_type'] ?></td>
+                        <td class="align-middle text-center"><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
+                        <td class="align-middle"><?= substr($activity['log_description'],0, 120).'...' ?></td>
+                        <td class="align-middle text-center"><?= $activity['ip_address'] ?></td>
+                        <td class="align-middle text-center"><?= $activity['log_time'] ?></td>
                     </tr>
             <?php } ?>
             </tbody>
