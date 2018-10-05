@@ -36,28 +36,19 @@ class Items extends CI_Controller
     public function update()
     {
         $this->load->model('Item_model', 'item');
-        $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $data = [
+            "id" => $this->input->post('id'),
+            "name" => $this->input->post('name'),
+            "type" => $this->input->post('type'),
+            "description" => $this->input->post('description')
+        ];
+        
+        $this->item->update($data);
+        $message = 'success';
 
-        $message = '';
-
-        if ($this->form_validation->run() == false) {
-            $message = validation_errors();
-
-        } else {
-            $data = [
-                "id" => $this->input->post('id'),
-                "name" => $this->input->post('name'),
-                "email" => $this->input->post('email'),
-                "role_id" => $this->input->post('role_id'),
-                "active" => $this->input->post('active')
-            ];
-            
-            $this->user->update($data);
-            $message = 'success';
-        }
         // Send response to ajax
         echo $message;
+        die();
     }
 }

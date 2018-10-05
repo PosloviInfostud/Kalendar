@@ -7,6 +7,12 @@ class Item_model extends CI_Model
         $query = $this->db->query($sql, [$data['type'], $data['name'], $data['description']]);
     }
 
+    public function update($data)
+    {
+        $sql = "UPDATE res_items SET res_type_id = ?, name = ?, description = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['type'], $data['name'], $data['description'], $data['id']]);
+    }
+
     public function get_single_item($id)
     {
         $result = [];

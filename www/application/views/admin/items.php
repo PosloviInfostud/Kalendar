@@ -8,7 +8,7 @@
 <?php if(empty($items)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed table-striped">
+        <table class="table table-text-sm table-condensed table-striped border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
@@ -64,10 +64,26 @@
       </div>
       <div class="modal-footer">
       <button type="button" class="btn btn-info" id="new_item_btn">Create</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancle</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- Edit Item Modal -->
+<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog" aria-labelledby="editItemModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="edit_item_modal_body"></div>
+    </div>
+  </div>
+</div>
+
 
 <script src="/js/admin_items.js"></script>
