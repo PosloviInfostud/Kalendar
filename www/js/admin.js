@@ -1,5 +1,6 @@
 $("body").on('click', ".btn-options", function(e) {
     $(".btn-options").addClass('btn-outline-info').removeClass('btn-info');
+    $("#message").html('');
     // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
 })
 
@@ -97,17 +98,16 @@ $("body").on('click', "#new_item_btn", function(e) {
     })
     .done(function(response){
         if(response === 'success') {
-            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New item created.</div>');
-            $('.modal-backdrop').remove();
+            $("#message").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New item created.</div>');
+            $('#addNewItemModal').modal('hide');
         } else {
-            $("#messages").html(response);
+            $("#insert_error_msg").html(response);
         }
     })
 })
 
 // Load item edit modal
 $("body").on('click', ".item-edit", function() {
-        console.log($(this).attr("data-id"));
         $.ajax({
             method: "POST",
             url: "/items/edit",
@@ -139,9 +139,9 @@ $("body").on('submit', "#update_item_form", function(e) {
     .done(function(response){
         if(response === 'success') {
             $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Item updated.</div>');
-            $('.modal-backdrop').remove();
+            $('#editItemModal').modal('hide');
         } else {
-            $("#messages").html(response);
+            $("#edit_error_msg").html(response);
         }
     })
     // $(this).unbind('submit');
@@ -150,7 +150,7 @@ $("body").on('submit', "#update_item_form", function(e) {
 
 /* USERS */
 
-// Load user edit view
+// Load user edit modal
 $("body").on('click', ".user-edit", function() {
     $.ajax({
         method: "POST",
@@ -160,7 +160,9 @@ $("body").on('click', ".user-edit", function() {
         }
     })
     .done(function(response) {
-        $("#table").html(response);
+        $('#edit_user_modal_body').html(response);
+        // show modal
+        $('#editUserModal').modal('show');
     });
 })
 
@@ -181,8 +183,9 @@ $("body").on('submit', "#update_user", function(e) {
     .done(function(response){
         if(response === 'success') {
             $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> User updated.</div>');
+            $('#editUserModal').modal('hide');
         } else {
-            $("#messages").html(response);
+            $("#edit_error_msg").html(response);
         }
     })
 })

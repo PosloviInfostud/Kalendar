@@ -7,6 +7,7 @@
         <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-options" id="show_user_activites">User Activites</button></div>
         <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-options" id="show_logs">Logs</button></div>
     </div>
+    <div class="my-3" id="message"></div>
     <div class="my-3" id="table"></div>
 </div>
 <script src="/js/admin.js"></script>

@@ -29,3 +29,21 @@
             </tbody>
         </table>
 <?php } ?>
+
+<!-- Edit Item Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit user</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small id="edit_error_msg" class="text-danger"></small>
+        <div id="edit_user_modal_body"></div>
+      </div>
+    </div>
+  </div>
+</div>

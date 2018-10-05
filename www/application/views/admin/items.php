@@ -43,6 +43,7 @@
         </button>
       </div>
       <div class="modal-body">
+      <small id="insert_error_msg" class="text-danger"></small>
         <form>
             <div class="form-group">
                 <label for="item_name">Name <small class="text-muted">(required)</small></label>
@@ -80,7 +81,10 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="edit_item_modal_body"></div>
+      <div class="modal-body">
+        <small id="edit_error_msg" class="text-danger"></small>
+        <div id="edit_item_modal_body"></div>
+      </div>
     </div>
   </div>
 </div>

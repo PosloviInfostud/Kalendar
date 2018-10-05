@@ -1,7 +1,3 @@
-<h3 class="mt-5 mb-3">Edit user</h3>
-
-<div id="messages"></div>
-
 <form id="update_user">
     <div class="form-group">
         <input type="hidden" class="form-control" name="name" id="user_id" value="<?= $user['id'] ?>">
@@ -31,7 +27,5 @@
         </select>
         </div>
     </div>
-    <button type="submit" class="btn btn-info mt-3">Submit</button>
+    <button type="submit" class="btn btn-info mt-3">Update</button>
 </form>
-
-<script src="/js/admin_users.js"></script>
