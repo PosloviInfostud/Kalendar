@@ -4,7 +4,7 @@
 <?php if(empty($users)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed table-striped">
+        <table class="table table-text-sm table-condensed table-striped border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Action</th>
