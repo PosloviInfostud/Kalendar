@@ -70,4 +70,4 @@
   </div>
 </div>
 
-<script src="/js/admin.js"></script>
+<script src="/js/admin_items.js"></script>

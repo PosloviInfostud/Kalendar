@@ -34,4 +34,4 @@
     <button type="submit" class="btn btn-info mt-3">Submit</button>
 </form>
 
-<script src="/js/admin.js"></script>
+<script src="/js/admin_users.js"></script>
