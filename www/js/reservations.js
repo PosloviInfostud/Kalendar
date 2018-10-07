@@ -35,6 +35,28 @@ $("#search_reserved_offices").click(function(e){
     })
     .done(function(response){
         console.log(response);
+        $("#free").html(response);
     })
 })
+
+//submit reservation form
+
+// $("#reservation_submit").click(function(e){
+//     e.preventDefault();
+//     $.ajax({
+//         method: "POST",
+//         url: "/reservations/submit_reservation_form",
+//         data: {
+//             "start_time" : $("#datetime_start").val(),
+//             "end_time" : $("#datetime_end").val(),
+//             "item" : $("input[name='item']:checked").val(),
+//             "title" : $("#reservation_name").val(),
+//             "description" : $("#reservation_description").val(),
+//             "members" : $("input[name='members[]']:checked").val()
+//         }
+//     })
+//     .done(function(response){
+//         console.log(response);
+//     })
+// })
 
