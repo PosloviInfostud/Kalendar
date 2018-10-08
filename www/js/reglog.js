@@ -25,7 +25,7 @@ $("#register_form").submit(function(e){
     console.log("submitted");
     $.ajax({
         method: "POST",
-        url: "/users/register",
+        url: "/reg_log/register",
         data: {
             "name" : $("#register_name").val(),
             "email" : $("#register_email").val(),
@@ -35,7 +35,7 @@ $("#register_form").submit(function(e){
     })
     .done(function(response){
         if(response === 'success') {
-            window.location.href = "/users"
+            window.location.href = "/login"
         } else {
             $("#messages").html(response);
         }
@@ -47,7 +47,7 @@ $("#login_form").submit(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
-        url: "/users/login",
+        url: "/reg_log/login",
         data: {
             "email" : $("#login_email").val(),
             "password" : $("#login_password").val()
@@ -55,7 +55,7 @@ $("#login_form").submit(function(e){
     })
     .done(function(response){
         if(response == "success") {
-            window.location.href = "/users";
+            window.location.href = "/dashboard";
 
         } else {
             $("#messages").html(response);
@@ -78,7 +78,7 @@ $("#forgot_form").submit(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
-        url: "/users/send_forgot_password_mail",
+        url: "/reg_log/send_forgot_password_mail",
         data: {
             "email" : $("#forgot_email").val()
         }
@@ -96,7 +96,7 @@ $("#form_reset_password").submit(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
-        url: "/users/reset_password",
+        url: "/reg_log/reset_password",
         data: {
             "email" : $("#reset_password_email").val(),
             "password" : $("#reset_password_password").val(),
@@ -106,7 +106,7 @@ $("#form_reset_password").submit(function(e){
     })
     .done(function(response){
         if(response === 'success') {
-            window.location.href = "/users"
+            window.location.href = "/login"
         } else {
             $("#msgs").html(response);
         }

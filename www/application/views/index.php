@@ -1,20 +1,15 @@
 <!-- Check if user is logged in -->
 <?php
     if($this->input->cookie('usr-vezba') != NULL) {
-        url_redirect('/users/profile');
+        url_redirect('/dashboard');
     }
 ?>
 
 <div class="container mt-3">
     <div class="row">
         <div id="show" class="col-9">
-            <div id="messages">
-            <?php if(!empty($this->session->userdata['message'])) {
-                echo $this->session->userdata['message'];
-                $this->session->unset_userdata('message');
-            } ?>
-            </div>
-
+            <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
+            <div id="messages"></div>
             <form id="register_form" class="border border-info rounded p-3 hide">
                 <div class="form-group">
                     <label for="exampleInputEmail1">Name</label>

@@ -23,11 +23,9 @@ class User_model extends CI_Model
         $this->logs->insert_log($data_log);
         $this->send_activation_mail($data['email'], $activation_key);
 
-        $session_data = [
-            'message' => 'Success! Please check your e-mail for the activation link.'
-        ];
-
-        $this->session->set_userdata($session_data);
+        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Success! Please check your e-mail for the activation link.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
     }
 
     public function send_activation_mail($email, $key)
@@ -71,7 +69,7 @@ class User_model extends CI_Model
         }
     }
 
-    public function activate_user($id)
+    public function activate($id)
     {
         $sql = "UPDATE users SET active = 1, activation_key = '' WHERE id = ?";
         $query = $this->db->query($sql, [$id]);
@@ -87,11 +85,9 @@ class User_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
-        $session_data = [
-            'message' => 'Success! Account activated.'
-        ];
-
-        $this->session->set_userdata($session_data);
+        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Success! Account activated.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
     }
 
     public function get_single_user($id)

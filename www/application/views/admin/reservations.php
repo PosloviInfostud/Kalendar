@@ -9,7 +9,6 @@
                 <tr>
                     <th scope="col">Title</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Item</th>
                     <th scope="col">Owner</th>
                     <th scope="col">Start</th>
                     <th scope="col">End</th>
@@ -23,7 +22,6 @@
                     <tr>
                         <td class="align-middle text-center"><?= $res['title'] ?>
                         <td class="align-middle"><?= substr($res['description'], 0, 120).'...' ?></td>
-                        <td class="align-middle text-center"><?= $res['item_name'] ?></td>
                         <td class="align-middle text-center"><?= $res['user_name'] ?></td>
                         <td class="align-middle text-center"><?= $res['start_time'] ?></td>
                         <td class="align-middle text-center"><?= $res['end_time'] ?></td>

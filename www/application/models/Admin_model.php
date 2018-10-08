@@ -5,10 +5,7 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $query = $this->db->get('reservations');
-
-        $sql = "SELECT r.title, r.description, i.name as item_name, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM reservations as r
-                INNER JOIN res_items as i ON i.id = r.res_item_id
+        $sql = "SELECT r.title, r.description, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM room_reservations as r
                 INNER JOIN users as u ON u.id = r.user_id;";
 
         $query = $this->db->query($sql, []);
