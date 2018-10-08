@@ -89,8 +89,8 @@ class Reservation_model extends CI_Model
             $reserved_arr = [];
         }
 
-        foreach($reserved_arr as $reserv) {
-                $reserved[] = $reserv['id'];
+        foreach($reserved_arr as $row) {
+                $reserved[] = $row['id'];
         }
 
         $non_reserved = array_diff($items, $reserved);
@@ -199,6 +199,60 @@ class Reservation_model extends CI_Model
         }
 
         return $result;
+    }
+
+    public function search_free_equipment($data)
+    {
+        $sql = "SELECT id FROM equipment 
+                WHERE equipment_type_id = ?";
+        $query = $this->db->query($sql, [$data['type']]);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        } else {
+            $result = [];
+        }
+
+        $all = [];
+        $reserved = [];
+        $free = [];
+
+        foreach($result as $row) {
+            $all[] = $row['id'];
+        }
+
+        $sql = "SELECT equipment_id as id FROM equipment_reservations 
+                INNER JOIN equipment ON equipment.id = equipment_reservations.equipment_id 
+                WHERE equipment.equipment_type_id = ? 
+                GROUP BY equipment_id";
+        $query = $this->db->query($sql, [$data['type']]);
+
+        if ($query->num_rows()) {
+            $reserved_arr = $query->result_array();
+        } else {
+            $reserved_arr = [];
+        }
+
+        foreach($reserved_arr as $row) {
+            $reserved[] = $row['id'];
+        }
+
+        $non_reserved = array_diff($all, $reserved);
+
+        foreach($non_reserved as $item) {
+            $sql = "SELECT id, name, barcode, description 
+                    FROM equipment WHERE id = ?";
+            $query = $this->db->query($sql, [$item]);
+            if ($query->num_rows()) {
+                $result = $query->row_array();
+            }
+            $free[] = $result;
+        }
+
+        // $sql = "SELECT equipment.id, name, barcode, description 
+        //         FROM equipment 
+        //         WHERE (? <  equipment_reservations";
+
     }
 
     public function submit_reservation_equip_form($data)

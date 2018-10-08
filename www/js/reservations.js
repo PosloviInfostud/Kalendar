@@ -41,7 +41,22 @@ $("#search_reserved_offices").click(function(e){
 
 //send ajax requests for equipment type needed
 
-// $("#search_")
+$("#search_equipment").click(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/search_free_equipment",
+        data: {
+            "start_time" : $("#datetime_start").val(),
+            "end_time" : $("#datetime_end").val(),
+            "equipment_type" :  $(".radio_equipment:checked").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+        $("#rest").html(response);
+    })
+})
 
 //submit reservation form
 

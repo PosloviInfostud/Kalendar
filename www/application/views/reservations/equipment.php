@@ -7,13 +7,19 @@
             foreach($equips as $equip) {   ?>
 
                 <div class="custom-control custom-radio">
-                    <input type="radio" class="custom-control-input" id="customRadio<?= $i; ?>" name="item" value="<?= $equip['id'] ?>">
+                    <input type="radio" class="custom-control-input radio_equipment" id="customRadio<?= $i; ?>" name="equipment_type" value="<?= $equip['id'] ?>">
                     <label class="custom-control-label" for="customRadio<?= $i; ?>"><?= $equip['name'] ?></label>
                 </div>
 
             <?php  
             $i++;
             } ?>         
+        </div>
+        <div class="form-group">
+            <p>When?</p>
+            <p>from <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="text-center">
+                to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center">
+        </p>
         </div>
         <button id="search_equipment" class="btn btn-outline-info">Search</button>
     <div id="rest"></div>

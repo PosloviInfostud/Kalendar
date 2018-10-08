@@ -64,6 +64,30 @@ class Reservations extends CI_Controller
         }
     }
 
+    public function search_free_equipment()
+    {
+        $this->load->model('Reservation_model','res');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
+        $this->form_validation->set_rules('end_time','End Time', 'trim|required');
+        //Kako da se stavi da end bude veci od start?
+        $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required');
+
+        if($this->form_validation->run() == false) {
+            echo validation_errors();
+
+        } else {
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "type" => $this->input->post('equipment_type')
+            ];
+        }
+
+        $free_equipment = $this->res->search_free_equipment($data);
+    }
+
     public function submit_reservation_form()
     {
         $this->load->model('Reservation_model','res');
