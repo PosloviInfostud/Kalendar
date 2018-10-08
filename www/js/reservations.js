@@ -20,7 +20,7 @@ $("#datetime_start, #datetime_end").flatpickr({
     dateFormat: "Y-m-d H:i",
 });
 
-//send ajax search request
+//send ajax search request for free rooms
 
 $("#search_reserved_offices").click(function(e){
     e.preventDefault();
@@ -38,6 +38,10 @@ $("#search_reserved_offices").click(function(e){
         $("#free").html(response);
     })
 })
+
+//send ajax requests for equipment type needed
+
+// $("#search_")
 
 //submit reservation form
 

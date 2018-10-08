@@ -14,18 +14,21 @@ class Reservations extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function show_form()
+    public function form_rooms()
     {
-        $option = $this->input->post('name');
+        $this->load->view('header');
+        $this->load->view('reservations/rooms');
+        $this->load->view('footer');
+    }
 
-        if($option == "sala") {
-            $form = $this->load->view('reservations/sala',[], true);
-        } elseif ($option == "oprema") {
-            $form = $this->load->view('reservations/oprema',[], true);
-        }
+    public function form_equip()
+    {
+        $this->load->model('Reservation_model','res');
+        $data['equips'] = $this->res->get_all_equipment();
 
-        echo $form;
-        die();
+        $this->load->view('header');
+        $this->load->view('reservations/equipment', $data);
+        $this->load->view('footer');
     }
 
     public function search_free_rooms()
@@ -69,7 +72,7 @@ class Reservations extends CI_Controller
         $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time','End Time', 'trim|required');
         $this->form_validation->set_rules('attendants','Number of Participants', 'trim|required|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
-        $this->form_validation->set_rules('item','Room', 'trim|required');
+        $this->form_validation->set_rules('room','Room', 'trim|required');
         $this->form_validation->set_rules('title','Event Name', 'trim|required');
         $this->form_validation->set_rules('description','Event Description', 'trim|required');
         $this->form_validation->set_rules('members[]','Attendants', 'trim|required');
@@ -83,13 +86,43 @@ class Reservations extends CI_Controller
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
-                "item" => $this->input->post('item'),
+                "room" => $this->input->post('room'),
                 "title" => $this->input->post('title'),
                 "description" => $this->input->post('description'),
                 "members" => $this->input->post('members')
             ];
 
             $this->res->submit_reservation_form($data);
+
+        }
+    }
+
+    public function submit_reservation_equip_form()
+    {
+        $this->load->model('Reservation_model','res');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
+        $this->form_validation->set_rules('end_time','End Time', 'trim|required');
+        $this->form_validation->set_rules('item','Equipment', 'trim|required');
+        $this->form_validation->set_rules('title','Reservation Name', 'trim|required');
+        $this->form_validation->set_rules('description','Reservation Description', 'trim|required');
+        
+        if($this->form_validation->run() == false) {
+            $message = validation_errors();
+
+            echo $message;
+            
+        } else {
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "item" => $this->input->post('item'),
+                "title" => $this->input->post('title'),
+                "description" => $this->input->post('description')
+            ];
+
+            $this->res->submit_reservation_equip_form($data);
 
         }
     }
