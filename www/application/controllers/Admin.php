@@ -1,6 +1,15 @@
 <?php
 class Admin extends CI_Controller
 {
+    public function __construct()
+    {
+            parent::__construct();
+            $this->load->model('Permission_model', 'permission');
+            $this->load->model('User_model', 'user');
+            $this->permission->is_logged_in();
+            $this->permission->is_admin();
+    }
+
     public function index()
     {
         $this->load->view('header');

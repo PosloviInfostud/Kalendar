@@ -15,7 +15,7 @@ class Reservation_model extends CI_Model
             $result = $query->result_array();
         }
         print_r($result);
-        foreach($result as $user) {
+        foreach ($result as $user) {
             $this->send_members_notification($user);
         }
     }
@@ -63,7 +63,7 @@ class Reservation_model extends CI_Model
     public function check_free_rooms($data)
     {
         $sql = "SELECT id FROM rooms WHERE capacity > ?";
-        $query = $this->db->query($sql,[$data['attendants']]);
+        $query = $this->db->query($sql, [$data['attendants']]);
         if ($query->num_rows()) {
             $items_arr = $query->result_array();
         } else {
@@ -74,34 +74,34 @@ class Reservation_model extends CI_Model
         $reserved = [];
         $free = [];
 
-        foreach($items_arr as $item) {
-                $items[] = $item['id'];
+        foreach ($items_arr as $item) {
+            $items[] = $item['id'];
         }
         $sql = "SELECT room_id as id FROM room_reservations 
                 INNER JOIN rooms ON rooms.id = room_reservations.room_id 
                 WHERE rooms.capacity > ?  
                 GROUP BY room_id";
-        $query = $this->db->query($sql,[$data['attendants']]);
+        $query = $this->db->query($sql, [$data['attendants']]);
 
         if ($query->num_rows()) {
-            $reserved_arr = $query->result_array(); 
+            $reserved_arr = $query->result_array();
         } else {
             $reserved_arr = [];
         }
 
-        foreach($reserved_arr as $reserv) {
-                $reserved[] = $reserv['id'];
+        foreach ($reserved_arr as $reserv) {
+            $reserved[] = $reserv['id'];
         }
 
         $non_reserved = array_diff($items, $reserved);
 
-        foreach($non_reserved as $item) {
+        foreach ($non_reserved as $item) {
             $sql = "SELECT id, name FROM rooms WHERE id = ?";
             $query = $this->db->query($sql, [$item]);
             if ($query->num_rows()) {
                 $result = $query->row_array();
             }
-                $free[] = $result;
+            $free[] = $result;
         }
 
         $sql = "SELECT rooms.id, name FROM rooms 
@@ -124,12 +124,12 @@ class Reservation_model extends CI_Model
 
     public function show_users_for_invitation()
     {
-        $cookie = $this->input->cookie('usr-vezba',true);
-        $this->load->model('User_model','user');
+        $cookie = $this->input->cookie('usr-vezba', true);
+        $this->load->model('User_model', 'user');
         $admin = $this->user->get_user_by_token($cookie)['id'];
-        
+
         $sql = "SELECT id, name FROM users WHERE id != ?";
-        $query = $this->db->query($sql,[$admin]);
+        $query = $this->db->query($sql, [$admin]);
 
         if ($query->num_rows()) {
             $result = $query->result_array();
@@ -141,8 +141,8 @@ class Reservation_model extends CI_Model
 
     public function submit_reservation_form($data)
     {
-        $cookie = $this->input->cookie('usr-vezba',true);
-        $this->load->model('User_model','user');
+        $cookie = $this->input->cookie('usr-vezba', true);
+        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO room_reservations  
@@ -153,7 +153,7 @@ class Reservation_model extends CI_Model
 
         $res_id = $this->db->insert_id();
 
-        $this->load->model('Logs_model','logs');
+        $this->load->model('Logs_model', 'logs');
         $data_log = [
             'user_id' => $user_id,
             'table' => 'room_reservations',
@@ -168,7 +168,7 @@ class Reservation_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
-        foreach($data['members'] as $member) {
+        foreach ($data['members'] as $member) {
             $sql = "INSERT INTO res_members 
                     (res_id, user_id) 
                     VALUES (?, ?)";
@@ -183,7 +183,7 @@ class Reservation_model extends CI_Model
                 ]
             ];
             $this->logs->insert_log($data_log);
-                
+
         }
     }
 
@@ -203,8 +203,8 @@ class Reservation_model extends CI_Model
 
     public function submit_reservation_equip_form($data)
     {
-        $cookie = $this->input->cookie('usr-vezba',true);
-        $this->load->model('User_model','user');
+        $cookie = $this->input->cookie('usr-vezba', true);
+        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO reservations  
@@ -213,7 +213,7 @@ class Reservation_model extends CI_Model
 
         $query = $this->db->query($sql, [$data['item'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description']]);
 
-        $this->load->model('Logs_model','logs');
+        $this->load->model('Logs_model', 'logs');
         $data_log = [
             'user_id' => $user_id,
             'table' => 'reservations',
