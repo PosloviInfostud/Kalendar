@@ -5,6 +5,7 @@ class Admin extends CI_Controller
     {
             parent::__construct();
             $this->load->model('Permission_model', 'permission');
+            $this->load->model('Admin_model', 'admin');
             $this->load->model('User_model', 'user');
             $this->permission->is_logged_in();
             $this->permission->is_admin();
@@ -17,32 +18,47 @@ class Admin extends CI_Controller
         $this->load->view('footer');
     }
 
-    public function show_reservations()
+    public function show_room_reservations()
     {
-        $this->load->model('Admin_model', 'admin');
         $table = [];
-        $reservations = $this->admin->get_all_reservations();
-        $table = $this->load->view('admin/reservations', ['reservations' => $reservations], TRUE);
+        $reservations = $this->admin->get_all_room_reservations();
+        $table = $this->load->view('admin/room_reservations', ['reservations' => $reservations], TRUE);
         echo $table;
         die();
     }
 
-    public function show_items()
+    public function show_equipment_reservations()
     {
-        $this->load->model('Admin_model', 'admin');
         $table = [];
-        $items_data = [
-            'items' => $this->admin->get_all_res_items(),
-            'types' => $this->admin->get_all_res_types()
+        $reservations = $this->admin->get_all_equipment_reservations();
+        $table = $this->load->view('admin/equipment_reservations', ['reservations' => $reservations], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function show_conference_rooms()
+    {
+        $table = [];
+        $rooms = $this->admin->get_all_rooms();
+        $table = $this->load->view('admin/conference_rooms', ['rooms' => $rooms], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function show_equipment()
+    {
+        $table = [];
+        $data = [
+            'equipment' => $this->admin->get_all_equipment(),
+            'types' => $this->admin->get_all_equipment_types()
         ];
-        $table = $this->load->view('admin/items', $items_data, TRUE);
+        $table = $this->load->view('admin/equipment', $data, TRUE);
         echo $table;
         die();
     }
 
     public function show_users()
     {
-        $this->load->model('Admin_model', 'admin');
         $table = [];
         $users = $this->admin->get_all_users();
         $table = $this->load->view('admin/users', ['users' => $users], TRUE);
@@ -52,7 +68,6 @@ class Admin extends CI_Controller
 
     public function show_user_activites()
     {
-        $this->load->model('Admin_model', 'admin');
         $table = [];
         $user_activites = $this->admin->get_all_user_activities();
         $table = $this->load->view('admin/user_activites', ['user_activites' => $user_activites], TRUE);
@@ -62,7 +77,6 @@ class Admin extends CI_Controller
 
     public function show_logs()
     {
-        $this->load->model('Admin_model', 'admin');
         $table = [];
         $logs = $this->admin->get_all_logs();
         $table = $this->load->view('admin/logs', ['logs' => $logs], TRUE);

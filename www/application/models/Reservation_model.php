@@ -89,13 +89,8 @@ class Reservation_model extends CI_Model
             $reserved_arr = [];
         }
 
-<<<<<<< HEAD
         foreach($reserved_arr as $row) {
                 $reserved[] = $row['id'];
-=======
-        foreach ($reserved_arr as $reserv) {
-            $reserved[] = $reserv['id'];
->>>>>>> beeddf221a8c4d44b0e841183db3664ccee67279
         }
 
         $non_reserved = array_diff($items, $reserved);

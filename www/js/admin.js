@@ -1,16 +1,33 @@
 $("body").on('click', ".btn-options", function(e) {
-    $(".btn-options").addClass('btn-outline-info').removeClass('btn-info');
-    $("#message").html('');
+    $(".btn-options, .sub-options").addClass('btn-outline-info').removeClass('btn-info');
+    $("#message, #table").html('');
+    $("#rooms, #items").addClass('hide');
     // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
+})
+
+$("body").on('click', ".sub-options", function(e) {
+    $(".sub-options").addClass('btn-outline-info').removeClass('btn-info');
+})
+
+// Choose between reservation types
+$("body").on('click', "#show_reservations", function() {
+    $("#rooms").removeClass("hide");
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+// Choose between type of lists
+$("body").on('click', "#show_items", function() {
+    $("#items").removeClass("hide");
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
 
 /* VIEWS */
 
-// Load reservations view
-$("body").on('click', '#show_reservations', function() {
+// Load conference room reservations view
+$("body").on('click', '#show_room_res', function() {
     $.ajax({
         method: "POST",
-        url: "/admin/show_reservations"
+        url: "/admin/show_room_reservations"
     })
     .done(function(response) {
         // Load view
@@ -22,10 +39,43 @@ $("body").on('click', '#show_reservations', function() {
     $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
 
-$("body").on('click', '#show_items', function() {
+// Load equipment reservations view
+$("body").on('click', '#show_equipment_res', function() {
     $.ajax({
         method: "POST",
-        url: "/admin/show_items"
+        url: "/admin/show_equipment_reservations"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+// Load conference room list view
+$("body").on('click', '#show_rooms', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_conference_rooms"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+// Load equipment list view
+$("body").on('click', '#show_equipment', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_equipment"
     })
     .done(function(response) {
         // Load view
@@ -48,8 +98,6 @@ $("body").on('click', '#show_users', function() {
         // Apply datatables on the loaded table
         $('.table').DataTable();
     });
-    // Set clicked button active
-    $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
 
 $("body").on('click', '#show_user_activites', function() {
