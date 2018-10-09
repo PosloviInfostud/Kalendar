@@ -57,4 +57,5 @@ $route['profile'] = 'users/profile';
 $route['login'] = 'reg_log';
 $route['logout'] = 'reg_log/logout';
 $route['activate'] = 'reg_log/activate';
+$route['reservations/active'] = 'reservations/active_user_reservations';
 $route['welcome'] = 'test';
