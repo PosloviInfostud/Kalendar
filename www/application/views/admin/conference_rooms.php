@@ -1,7 +1,7 @@
 <div class="row mt-5 mb-3">
     <div class="col-8"><h3>Conference Room List</h3></div>
     <!-- Button to trigger the modal -->
-    <div class="col-4"><button class="btn btn-info float-right" data-toggle="modal" data-target="#addNewRoomModal"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
+    <div class="col-4"><button class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#addNewRoomModal"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
 </div>
 
 <!-- Check if there are any entries in the db -->

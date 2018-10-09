@@ -7,7 +7,6 @@ class Reservations extends CI_Controller
         $this->load->model('Reservation_model', 'res');
         $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
-
     }
 
     public function create_reservation()
@@ -35,7 +34,6 @@ class Reservations extends CI_Controller
 
     public function search_free_rooms()
     {
-
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         //Kako da se stavi da end bude veci od start?
@@ -139,5 +137,12 @@ class Reservations extends CI_Controller
 
             $this->res->submit_reservation_equip_form($data);
         }
+    }
+
+    public function active_user_reservations()
+    {
+        $this->load->view('header');
+        $this->load->view('reservations/active');
+        $this->load->view('footer');
     }
 }

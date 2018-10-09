@@ -32,8 +32,8 @@ class Item_model extends CI_Model
 
     public function insert_equipment($data)
     {
-        $sql = 'INSERT INTO rooms (name, description, capacity) VALUES (?, ?, ?)';
-        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity']]);
+        $sql = 'INSERT INTO equipment (equipment_type_id, barcode, name, description) VALUES (?, ?, ?, ?)';
+        $query = $this->db->query($sql, [$data['type'], $data['barcode'], $data['name'], $data['description']]);
     }
 
     public function update_equipment($data)

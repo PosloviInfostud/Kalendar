@@ -200,13 +200,15 @@ $("body").on('submit', "#update_room_form", function(e) {
 
 // Add new equipment
 $("body").on('click', "#new_equipment_btn", function(e) {
+    // $("#insert_error_msg").empty();
     e.preventDefault();
     $.ajax({
         method: "POST",
         url: "/items/insert_equipment",
         data: {
             "name" : $("#equipment_name").val(),
-            "capacity" : $("#equipment_capacity").val(),
+            "barcode" : $("#equipment_barcode").val(),
+            "type" : $("#equipment_type").val(),
             "description" : $("#equipment_description").val()
         }
     })
@@ -214,6 +216,8 @@ $("body").on('click', "#new_equipment_btn", function(e) {
         if(response === 'success') {
             $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New equipment added.</div>');
             $('#addNewEquipmentModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         } else {
             $("#insert_error_msg").html(response);
         }

@@ -1,7 +1,10 @@
 <div class="row mt-5 mb-3">
     <div class="col-8"><h3>Equipment List</h3></div>
     <!-- Button to trigger the modal -->
-    <div class="col-4"><button class="btn btn-info float-right" data-toggle="modal" data-target="#addNewItemModal"><i class="fas fa-plus-circle mr-1"></i> Add new item</button></div>
+    <div class="col-4">
+      <button class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#addNewEquipmentTypeModal">New type</button>
+      <button class="btn btn-info btn-sm float-right mx-1" data-toggle="modal" data-target="#addNewEquipmentModal"><i class="fas fa-plus-circle mr-1"></i> Add new item</button>
+    </div>
 </div>
 
 <!-- Check if there are any entries in the db -->
@@ -48,6 +51,10 @@
             <div class="form-group">
                 <label for="equipment_name">Name <small class="text-muted">(required)</small></label>
                 <input type="text" class="form-control" id="equipment_name" required>
+            </div>
+            <div class="form-group">
+                <label for="equipment_name">Barcode <small class="text-muted">(required)</small></label>
+                <input type="text" class="form-control" id="equipment_barcode" required>
             </div>
             <div class="form-group">
                 <label for="equipment_type">Type</label>
