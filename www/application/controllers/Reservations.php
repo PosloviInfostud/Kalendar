@@ -1,24 +1,23 @@
 <?php
-class Reservations extends CI_Controller
+class Reservations extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('Reservation_model', 'res');
-        $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
     }
 
     public function create_reservation()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/create_reservation');
         $this->load->view('footer');
     }
 
     public function form_rooms()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/rooms');
         $this->load->view('footer');
     }
@@ -27,7 +26,7 @@ class Reservations extends CI_Controller
     {
         $data['equips'] = $this->res->get_all_equipment();
 
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/equipment', $data);
         $this->load->view('footer');
     }
@@ -141,8 +140,10 @@ class Reservations extends CI_Controller
 
     public function active_user_reservations()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/active');
         $this->load->view('footer');
+
+        $room_res = $this->res->get_room_reservations_by_user($userp['id']);
     }
 }

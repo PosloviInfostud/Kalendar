@@ -125,7 +125,6 @@ class Reservation_model extends CI_Model
     public function show_users_for_invitation()
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $admin = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "SELECT id, name FROM users WHERE id != ?";
@@ -142,7 +141,6 @@ class Reservation_model extends CI_Model
     public function submit_reservation_form($data)
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO room_reservations  
@@ -271,7 +269,6 @@ class Reservation_model extends CI_Model
     public function submit_reservation_equip_form($data)
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO equipment_reservations  
@@ -293,5 +290,10 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+    }
+
+    public function get_room_reservations_by_user($id)
+    {
+        // $sql = 
     }
 }

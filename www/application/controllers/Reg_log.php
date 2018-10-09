@@ -1,16 +1,15 @@
 <?php
-class Reg_log extends CI_Controller
+class Reg_log extends MY_Controller
 {
     public function __construct()
     {
             parent::__construct();
-            $this->load->model('User_model', 'user');
             $this->load->library('form_validation');
     }
 
     public function index()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('index');
         $this->load->view('footer');
     }
@@ -94,7 +93,6 @@ class Reg_log extends CI_Controller
                 "email" => $this->input->post('email'),
                 "password" => $this->input->post('password')
             ];
-            $this->load->model('User_model', 'user');
             $message = $this->user->login($data);
         }
         echo $message;
@@ -184,7 +182,7 @@ class Reg_log extends CI_Controller
         $data['email'] = $this->input->get('email');
         $data['code'] = $this->input->get('code');
 
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reset_password', $data);
     }
 

@@ -1,24 +1,23 @@
 <?php
-class Users extends CI_Controller
+class Users extends MY_Controller
 {
     public function __construct()
     {
             parent::__construct();
-            $this->load->model('User_model', 'user');
             $this->load->model('Permission_model', 'permission');
             $this->permission->is_logged_in();
     }
     
     public function profile()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('users/profile');
         $this->load->view('footer');
     }
 
     public function dashboard()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('users/dashboard');
         $this->load->view('footer');
     }

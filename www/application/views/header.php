@@ -1,8 +1,3 @@
-<?php
-    $token = $this->input->cookie('usr-vezba',true);
-    $user = $this->user->get_user_by_token($token);
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
