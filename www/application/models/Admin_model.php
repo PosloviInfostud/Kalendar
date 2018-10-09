@@ -37,7 +37,7 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT name, description, capacity FROM rooms";
+        $sql = "SELECT id, name, description, capacity FROM rooms";
 
         $query = $this->db->query($sql, []);
 
@@ -77,10 +77,15 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $query = $this->db->get('logs');
+        $sql = "SELECT u.email as user_email, l.altered_table, l.type, l.value, l.created_at FROM logs as l
+                INNER JOIN users as u ON u.id = l.user_id;";
+
+        $query = $this->db->query($sql, []);
+
         if ($query->num_rows()) {
             $result = $query->result_array();
         }
+
         return $result;
     }
 

@@ -130,69 +130,137 @@ $("body").on('click', '#show_logs', function() {
     $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
 
-/* ITEMS */
+/* CONFERENCE ROOMS */
 
-// Add new item
-$("body").on('click', "#new_item_btn", function(e) {
+// Add new conference room
+$("body").on('click', "#new_room_btn", function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
-        url: "/items/create",
+        url: "/items/insert_room",
         data: {
-            "name" : $("#item_name").val(),
-            "type" : $("#item_type").val(),
-            "description" : $("#item_description").val()
+            "name" : $("#room_name").val(),
+            "capacity" : $("#room_capacity").val(),
+            "description" : $("#room_description").val()
         }
     })
     .done(function(response){
         if(response === 'success') {
-            $("#message").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New item created.</div>');
-            $('#addNewItemModal').modal('hide');
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New room added.</div>');
+            $('#addNewRoomModal').modal('hide');
         } else {
             $("#insert_error_msg").html(response);
         }
     })
 })
 
-// Load item edit modal
-$("body").on('click', ".item-edit", function() {
+// Load conference room edit modal
+$("body").on('click', ".room-edit", function() {
         $.ajax({
             method: "POST",
-            url: "/items/edit",
+            url: "/items/edit_room",
             data: {
-                "item_id" : $(this).attr("data-id")
+                "room_id" : $(this).attr("data-id")
             }
         })
         .done(function(response) {
-                $('#edit_item_modal_body').html(response);
+                $('#edit_room_modal_body').html(response);
     
                 // show modal
-                $('#editItemModal').modal('show');
+                $('#editRoomModal').modal('show');
         });
 });
 
-// Update exisitng item
-$("body").on('submit', "#update_item_form", function(e) {
+// Update exisitng conference room
+$("body").on('submit', "#update_room_form", function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
-        url: "/items/update",
+        url: "/items/update_room",
         data: {
-            "id" : $("#update_item_id").val(),
-            "name" : $("#update_item_name").val(),
-            "type" : $("#update_item_type").val(),
-            "description" : $("#update_item_description").val()
+            "id" : $("#update_room_id").val(),
+            "name" : $("#update_room_name").val(),
+            "capacity" : $("#update_room_capacity").val(),
+            "description" : $("#update_room_description").val()
         }
     })
     .done(function(response){
         if(response === 'success') {
-            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Item updated.</div>');
-            $('#editItemModal').modal('hide');
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Room updated.</div>');
+            $("editRoomModal").modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
         } else {
             $("#edit_error_msg").html(response);
         }
     })
-    // $(this).unbind('submit');
+})
+
+/* EQUIPMENT */
+
+// Add new equipment
+$("body").on('click', "#new_equipment_btn", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/insert_equipment",
+        data: {
+            "name" : $("#equipment_name").val(),
+            "capacity" : $("#equipment_capacity").val(),
+            "description" : $("#equipment_description").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New equipment added.</div>');
+            $('#addNewEquipmentModal').modal('hide');
+        } else {
+            $("#insert_error_msg").html(response);
+        }
+    })
+})
+
+// Load equipment edit modal
+$("body").on('click', ".equipment-edit", function() {
+        $.ajax({
+            method: "POST",
+            url: "/items/edit_equipment",
+            data: {
+                "equipment_id" : $(this).attr("data-id")
+            }
+        })
+        .done(function(response) {
+                $('#edit_equipment_modal_body').html(response);
+    
+                // show modal
+                $('#editEquipmentModal').modal('show');
+        });
+});
+
+// Update exisitng equipment
+$("body").on('submit', "#update_equipment_form", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/update_equipment",
+        data: {
+            "id" : $("#update_equipment_id").val(),
+            "name" : $("#update_equipment_name").val(),
+            "barcode" : $("#update_equipment_barcode").val(),
+            "type" : $("#update_equipment_type").val(),
+            "description" : $("#update_equipment_description").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Equipment updated.</div>');
+            $("editEquipmentModal").modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        } else {
+            $("#edit_error_msg").html(response);
+        }
+    })
 })
 
 
