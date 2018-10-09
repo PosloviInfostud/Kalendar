@@ -74,7 +74,7 @@ class Items extends CI_Controller
     public function insert_equipment()
     {
         $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules('capacity', 'Capacity', 'required');
+        $this->form_validation->set_rules('barcode', 'Barcode', 'required|trim');
         $this->form_validation->set_rules('description', 'Description', 'trim');
 
         $message = '';
@@ -84,7 +84,8 @@ class Items extends CI_Controller
         } else {
             $data = [
                 "name" => $this->input->post('name'),
-                "capacity" => $this->input->post('capacity'),
+                "barcode" => $this->input->post('barcode'),
+                "type" => $this->input->post('type'),
                 "description" => $this->input->post('description')
             ];
 
