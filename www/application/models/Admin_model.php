@@ -1,12 +1,43 @@
 <?php
 class Admin_model extends CI_Model
 {
-    public function get_all_reservations()
+    public function get_all_room_reservations()
     {
         $result = [];
 
         $sql = "SELECT r.title, r.description, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM room_reservations as r
                 INNER JOIN users as u ON u.id = r.user_id;";
+
+        $query = $this->db->query($sql, []);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+
+        return $result;
+    }
+
+    public function get_all_equipment_reservations()
+    {
+        $result = [];
+
+        $sql = "SELECT r.description, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM equipment_reservations as r
+                INNER JOIN users as u ON u.id = r.user_id;";
+
+        $query = $this->db->query($sql, []);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+
+        return $result;
+    }
+
+    public function get_all_rooms()
+    {
+        $result = [];
+
+        $sql = "SELECT id, name, description, capacity FROM rooms";
 
         $query = $this->db->query($sql, []);
 
@@ -46,20 +77,25 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $query = $this->db->get('logs');
+        $sql = "SELECT u.email as user_email, l.altered_table, l.type, l.value, l.created_at FROM logs as l
+                INNER JOIN users as u ON u.id = l.user_id;";
+
+        $query = $this->db->query($sql, []);
+
         if ($query->num_rows()) {
             $result = $query->result_array();
         }
+
         return $result;
     }
 
-    public function get_all_res_items()
+    public function get_all_equipment()
     {
         $result = [];
 
-        $sql = "SELECT i.id, i.name, i.description, i.res_type_id, t.name as res_type_name, i.created_at
-                FROM res_items as i
-                INNER JOIN res_types as t ON t.id = i.res_type_id";
+        $sql = "SELECT e.id, e.name, e.barcode, e.description, e.equipment_type_id, t.name as equipment_type_name, e.created_at
+                FROM equipment as e
+                INNER JOIN equipment_types as t ON t.id = e.equipment_type_id";
         $query = $this->db->query($sql, []);
         if ($query->num_rows()) {
             $result = $query->result_array();
@@ -67,11 +103,11 @@ class Admin_model extends CI_Model
         return $result;
     }
 
-    public function get_all_res_types()
+    public function get_all_equipment_types()
     {
         $result = [];
 
-        $sql = "SELECT * FROM res_types";
+        $sql = "SELECT * FROM equipment_types";
         $query = $this->db->query($sql, []);
         if ($query->num_rows()) {
             $result = $query->result_array();

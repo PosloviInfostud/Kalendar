@@ -21,7 +21,7 @@ class User_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
-        $this->send_activation_mail($data['email'], $activation_key);
+        // $this->send_activation_mail($data['email'], $activation_key);
 
         $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Success! Please check your e-mail for the activation link.
@@ -43,7 +43,7 @@ class User_model extends CI_Model
         // Set your email information
         $from = [
             'email' => 'visnjamarica@gmail.com',
-            'name' => 'Visnja | Vezba-Token'
+            'name' => 'Kalendar | INFOSTUD'
         ];
         $to = array($email);
         $subject = 'Your activation link';

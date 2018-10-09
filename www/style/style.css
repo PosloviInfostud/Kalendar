@@ -1,7 +1,18 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300');
 
 .body {
     font-family: 'Roboto', sans-serif !important;
+    font-weight: 300 !important;    
+}
+
+h1, h2, h3 {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 300 !important;
+}
+
+nav, div, p {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 300 !important;
 }
 
 .hide {

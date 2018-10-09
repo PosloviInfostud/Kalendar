@@ -1,4 +1,4 @@
-<h3 class="mt-5 mb-3">List of all reservations</h3>
+<h3 class="mt-5 mb-3">Equipment reservations</h3>
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($reservations)) {
@@ -7,7 +7,6 @@
         <table class="table table-text-sm table-condensed table-striped border">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col">Title</th>
                     <th scope="col">Description</th>
                     <th scope="col">Owner</th>
                     <th scope="col">Start</th>
@@ -20,7 +19,6 @@
             <tbody>
             <?php foreach($reservations as $res) { ?> 
                     <tr>
-                        <td class="align-middle text-center"><?= $res['title'] ?>
                         <td class="align-middle"><?= substr($res['description'], 0, 120).'...' ?></td>
                         <td class="align-middle text-center"><?= $res['user_name'] ?></td>
                         <td class="align-middle text-center"><?= $res['start_time'] ?></td>

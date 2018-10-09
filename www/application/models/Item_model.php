@@ -1,22 +1,24 @@
 <?php
 class Item_model extends CI_Model
 {
-    public function insert($data)
+
+    /* CONFERENCE ROOMS */
+    public function insert_room($data)
     {
-        $sql = 'INSERT INTO res_items (res_type_id, name, description) VALUES (?, ?, ?)';
-        $query = $this->db->query($sql, [$data['type'], $data['name'], $data['description']]);
+        $sql = 'INSERT INTO rooms (name, description, capacity) VALUES (?, ?, ?)';
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity']]);
     }
 
-    public function update($data)
+    public function update_room($data)
     {
-        $sql = "UPDATE res_items SET res_type_id = ?, name = ?, description = ? WHERE id = ?";
-        $query = $this->db->query($sql, [$data['type'], $data['name'], $data['description'], $data['id']]);
+        $sql = "UPDATE rooms SET name = ?, description = ?, capacity = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity'], $data['id']]);
     }
 
-    public function get_single_item($id)
+    public function get_single_room($id)
     {
         $result = [];
-        $sql = "SELECT * FROM res_items WHERE id = ?";
+        $sql = "SELECT * FROM rooms WHERE id = ?";
         $query = $this->db->query($sql, [$id]);
 
         if ($query->num_rows()) {
@@ -26,11 +28,38 @@ class Item_model extends CI_Model
         return $result;
     }
 
-    public function get_all_item_types()
+    /* EQUIPMENT */
+
+    public function insert_equipment($data)
+    {
+        $sql = 'INSERT INTO rooms (name, description, capacity) VALUES (?, ?, ?)';
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity']]);
+    }
+
+    public function update_equipment($data)
+    {
+        $sql = "UPDATE equipment SET name = ?, description = ?, barcode = ?, equipment_type_id = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['barcode'], $data['type'], $data['id']]);
+    }
+
+    public function get_single_equipment($id)
+    {
+        $result = [];
+        $sql = "SELECT * FROM equipment WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if ($query->num_rows()) {
+            $result = $query->row_array();
+        }
+
+        return $result;
+    }
+
+    public function get_all_equipment_types()
     {
         $result = [];
 
-        $sql = "SELECT * FROM res_types";
+        $sql = "SELECT * FROM equipment_types";
         $query = $this->db->query($sql, []);
         if ($query->num_rows()) {
             $result = $query->result_array();
