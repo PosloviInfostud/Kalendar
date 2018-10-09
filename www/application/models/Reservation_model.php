@@ -292,8 +292,11 @@ class Reservation_model extends CI_Model
         $this->logs->insert_log($data_log);
     }
 
-    public function get_room_reservations_by_user($id)
+    public function room_reservations_by_user($id)
     {
-        // $sql = 
+        // $sql = 'SELECT room_id, res.user_id as owner, res.title, res.description, res.start_time, res.end_time FROM room_reservations as res
+        //         INNER JOIN rooms ON rooms.id = res.room_id
+        //         INNER JOIN res_members as m ON m.user_id = ?
+        //         WHERE m.user_id = ?'
     }
 }

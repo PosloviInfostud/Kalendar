@@ -8,6 +8,13 @@ class Reservations extends MY_Controller
         $this->load->library('form_validation');
     }
 
+    public function index()
+    {
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/index');
+        $this->load->view('footer');
+    }
+
     public function create_reservation()
     {
         $this->load->view('header', $this->user_data);
@@ -138,12 +145,37 @@ class Reservations extends MY_Controller
         }
     }
 
-    public function active_user_reservations()
+    public function show_room_reservations()
+    {
+        $table = [];
+        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function show_equipment_reservations()
+    {
+        $table = [];
+        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function room_reservations_by_user()
+    {
+
+        
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/user_room_res');
+        $this->load->view('footer');
+    }
+
+    public function equipment_reservations_by_user()
     {
         $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/active');
+        $this->load->view('reservations/user_equipment_res');
         $this->load->view('footer');
-
-        $room_res = $this->res->get_room_reservations_by_user($userp['id']);
     }
 }
