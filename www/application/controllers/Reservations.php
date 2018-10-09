@@ -80,6 +80,9 @@ class Reservations extends CI_Controller
         }
 
         $free_equipment = $this->res->search_free_equipment($data);
+        $view = $this->load->view('reservations/free_equipment',["items" => $free_equipment], true);
+
+        echo $view;
     }
 
     public function submit_reservation_form()
@@ -116,8 +119,7 @@ class Reservations extends CI_Controller
     {
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('item', 'Equipment', 'trim|required');
-        $this->form_validation->set_rules('title', 'Reservation Name', 'trim|required');
+        $this->form_validation->set_rules('equipment_id', 'Equipment', 'trim|required');
         $this->form_validation->set_rules('description', 'Reservation Description', 'trim|required');
 
         if($this->form_validation->run() == false) {
@@ -129,8 +131,7 @@ class Reservations extends CI_Controller
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
-                "item" => $this->input->post('item'),
-                "title" => $this->input->post('title'),
+                "equipment_id" => $this->input->post('equipment_id'),
                 "description" => $this->input->post('description')
             ];
 

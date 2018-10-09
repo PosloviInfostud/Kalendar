@@ -248,11 +248,24 @@ class Reservation_model extends CI_Model
             }
             $free[] = $result;
         }
+        $sql = "SELECT equipment.id, name, barcode, equipment.description 
+                FROM equipment 
+                INNER JOIN equipment_reservations ON equipment.id = equipment_reservations.equipment_id 
+                WHERE (? < equipment_reservations.start_time OR ? > equipment_reservations.start_time)
+                AND equipment.equipment_type_id = ? 
+                GROUP BY equipment_id";
+        $query = $this->db->query($sql, [$data['end_time'], $data['start_time'], $data['type']]);
 
-        // $sql = "SELECT equipment.id, name, barcode, description 
-        //         FROM equipment 
-        //         WHERE (? <  equipment_reservations";
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        } else {
+            $result = [];
+        }
+        foreach($result as $row) {
+            $free[] = $row;
+        }
 
+        return $free;
     }
 
     public function submit_reservation_equip_form($data)
@@ -261,22 +274,21 @@ class Reservation_model extends CI_Model
         $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
-        $sql = "INSERT INTO reservations  
-                (res_item_id, user_id, start_time, end_time, title, description) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO equipment_reservations  
+                (equipment_id, user_id, start_time, end_time, description) 
+                VALUES (?, ?, ?, ?, ?)";
 
-        $query = $this->db->query($sql, [$data['item'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description']]);
+        $query = $this->db->query($sql, [$data['equipment_id'], $user_id, $data['start_time'], $data['end_time'], $data['description']]);
 
         $this->load->model('Logs_model', 'logs');
-        $data_log = [
+         $data_log = [
             'user_id' => $user_id,
-            'table' => 'reservations',
+            'table' => 'equipment_reservations',
             'type' => 'insert',
             'value' => [
-                'res_item_id' => $data['item'],
+                'equipment_id' => $data['equipment_id'],
                 'start_time' => $data['start_time'],
                 'end_time' => $data['end_time'],
-                'title' => $data['title'],
                 'description' => $data['description']
             ]
         ];
