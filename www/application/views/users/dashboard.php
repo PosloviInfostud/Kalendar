@@ -5,6 +5,4 @@
         <div class="col"><a href="/reservations/create_reservation" class="btn btn-outline-info btn-lg btn-block btn-options">Create A Reservation</a></div>
         <div class="col"><a href="/reservations/active" class="btn btn-outline-info btn-lg btn-block btn-options">See Current Reservations</a></div>
     </div>
-    <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
-
 </div>
