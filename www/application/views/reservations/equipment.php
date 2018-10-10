@@ -13,7 +13,7 @@
 
             <?php  
             $i++;
-            } ?>         
+            } ?>
         </div>
         <div class="form-group">
             <p>When?</p>

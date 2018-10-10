@@ -1,24 +1,30 @@
 <?php
-class Reservations extends CI_Controller
+class Reservations extends MY_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('Reservation_model', 'res');
-        $this->load->model('User_model', 'user');
         $this->load->library('form_validation');
+    }
+
+    public function index()
+    {
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/index');
+        $this->load->view('footer');
     }
 
     public function create_reservation()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/create_reservation');
         $this->load->view('footer');
     }
 
     public function form_rooms()
     {
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/rooms');
         $this->load->view('footer');
     }
@@ -27,7 +33,7 @@ class Reservations extends CI_Controller
     {
         $data['equips'] = $this->res->get_all_equipment();
 
-        $this->load->view('header');
+        $this->load->view('header', $this->user_data);
         $this->load->view('reservations/equipment', $data);
         $this->load->view('footer');
     }
@@ -139,10 +145,37 @@ class Reservations extends CI_Controller
         }
     }
 
-    public function active_user_reservations()
+    public function show_room_reservations()
     {
-        $this->load->view('header');
-        $this->load->view('reservations/active');
+        $table = [];
+        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function show_equipment_reservations()
+    {
+        $table = [];
+        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function room_reservations_by_user()
+    {
+
+        
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/user_room_res');
+        $this->load->view('footer');
+    }
+
+    public function equipment_reservations_by_user()
+    {
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/user_equipment_res');
         $this->load->view('footer');
     }
 }

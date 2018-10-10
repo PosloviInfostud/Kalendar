@@ -94,7 +94,6 @@ class Reservation_model extends CI_Model
     public function show_users_for_invitation()
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $admin = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "SELECT id, name FROM users WHERE id != ?";
@@ -111,7 +110,6 @@ class Reservation_model extends CI_Model
     public function submit_reservation_form($data)
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO room_reservations  
@@ -245,7 +243,6 @@ class Reservation_model extends CI_Model
     public function submit_reservation_equip_form($data)
     {
         $cookie = $this->input->cookie('usr-vezba', true);
-        $this->load->model('User_model', 'user');
         $user_id = $this->user->get_user_by_token($cookie)['id'];
 
         $sql = "INSERT INTO equipment_reservations  
@@ -273,5 +270,13 @@ class Reservation_model extends CI_Model
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
 
         url_redirect('/dashboard');
+    }
+
+    public function room_reservations_by_user($id)
+    {
+        // $sql = 'SELECT room_id, res.user_id as owner, res.title, res.description, res.start_time, res.end_time FROM room_reservations as res
+        //         INNER JOIN rooms ON rooms.id = res.room_id
+        //         INNER JOIN res_members as m ON m.user_id = ?
+        //         WHERE m.user_id = ?'
     }
 }
