@@ -309,7 +309,8 @@ class Reservation_model extends CI_Model
         $result = [];
         $sql = 'SELECT mem.user_id, mem.res_role_id, u.name, u.email FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id
-                WHERE mem.res_id = ?';
+                WHERE mem.res_id = 6
+                ORDER BY mem.res_role_id ASC';
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
