@@ -4,7 +4,6 @@
     </h1>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
     <div class="row p-3 mb-3 text-center align-items-center border-bottom">
-        <div class="col"><strong>ID</strong></div>
         <div class="col"><strong>Status</strong></div>
         <div class="col"><strong>Where</strong></div>
         <div class="col-4">Title</div>
@@ -15,7 +14,6 @@
 <?php
 foreach($meetings as $meeting) { ?>
     <div data-id="" class="row p-3 mb-2 text-center align-items-center text-white meeting-card <?= ($meeting['user_id'] == $meeting['creator_id']) ? 'bg-info' : 'bg-secondary' ?>">
-        <div class="col"><?= $meeting['res_id'] ?></div>
         <div class="col"><?= strtotime($meeting['start_time']) < time() ? 'ongoing' : 'upcoming' ?></div>
         <div class="col"><?= $meeting['room_name'] ?></div>
         <div class="col-4"><?= $meeting['title'] ?></div>
