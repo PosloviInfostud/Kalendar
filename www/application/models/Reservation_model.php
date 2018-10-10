@@ -274,9 +274,47 @@ class Reservation_model extends CI_Model
 
     public function room_reservations_by_user($id)
     {
-        // $sql = 'SELECT room_id, res.user_id as owner, res.title, res.description, res.start_time, res.end_time FROM room_reservations as res
-        //         INNER JOIN rooms ON rooms.id = res.room_id
-        //         INNER JOIN res_members as m ON m.user_id = ?
-        //         WHERE m.user_id = ?'
+        $result = [];
+        $sql = 'SELECT mem.res_id, mem.user_id, mem.res_role_id, res.room_id, room.name as room_name, res.user_id as creator_id, u.name as created_by, res.title, res.description, res.start_time, res.end_time FROM res_members as mem
+                INNER JOIN room_reservations as res ON res.id = mem.res_id
+                INNER JOIN users as u ON res.user_id = u.id
+                INNER JOIN rooms as room ON room.id = res.room_id
+                WHERE mem.user_id = 13 AND res.end_time >= NOW()
+                ORDER BY res.start_time ASC';
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+            return $result;
+        }
+    }
+
+    public function equipment_reservations_by_user($id)
+    {
+        $result = [];
+        $sql = 'SELECT res.id, res.equipment_id, res.start_time, res.end_time, res.description, e.name as item_name, type.name as item_type FROM equipment_reservations as res
+                INNER JOIN equipment as e ON e.id = res.equipment_id
+                INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
+                WHERE res.user_id = ?';
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+            return $result;
+        }
+    }
+
+    public function get_reservation_members($id)
+    {
+        $result = [];
+        $sql = 'SELECT mem.user_id, mem.res_role_id, u.name, u.email FROM res_members AS mem
+                INNER JOIN users AS u ON u.id = mem.user_id
+                WHERE mem.res_id = ?';
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+            return $result;
+        }
     }
 }

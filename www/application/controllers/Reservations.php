@@ -165,17 +165,26 @@ class Reservations extends MY_Controller
 
     public function room_reservations_by_user()
     {
-
-        
+        $meetings = $this->res->room_reservations_by_user($this->user_data['user']['id']);
         $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/user_room_res');
+        $this->load->view('reservations/user_meetings', ['meetings' => $meetings]);
         $this->load->view('footer');
+    }
+
+    public function get_reservation_members()
+    {
+        $reservation_id = $this->input->post('reservation_id');
+        $members = $this->res->get_reservation_members($reservation_id);
+        $modal = $this->load->view('reservations/members_modal', ['members' => $members], TRUE);
+        echo $modal;
+        die();
     }
 
     public function equipment_reservations_by_user()
     {
+        $equipment = $this->res->equipment_reservations_by_user($this->user_data['user']['id']);
         $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/user_equipment_res');
+        $this->load->view('reservations/user_equipment', ['equipment' => $equipment]);
         $this->load->view('footer');
     }
 }
