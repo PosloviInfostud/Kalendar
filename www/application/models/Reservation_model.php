@@ -66,9 +66,10 @@ class Reservation_model extends CI_Model
         $free = [];
         $sql = "SELECT rooms.id FROM rooms 
                 INNER JOIN room_reservations ON rooms.id = room_reservations.room_id 
-                WHERE (room_reservations.start_time <= ? AND room_reservations.end_time > ?) OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?) 
+                WHERE (room_reservations.start_time < ? AND room_reservations.end_time > ?) OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?) 
                 GROUP BY room_id";
-            $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time']]);
+        $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time']]);
+            
             if($query->num_rows()) {
                 $result = $query->result_array();
             } else {
@@ -78,25 +79,35 @@ class Reservation_model extends CI_Model
                 $reserved_arr[] = $row['id'];
             }
         $reserved = implode(",", $reserved_arr);
-        // echo $reserved; die;
-        $sql = "SELECT id, name FROM rooms 
-                WHERE id NOT IN ('".$reserved."') 
-                AND capacity > ?";
-        $query = $this->db->query($sql,[$data['attendants']]);
-        if($query->num_rows()) {
+
+        if ($reserved == "") {
+            $sql = "SELECT id, name FROM rooms WHERE capacity > ?";
+            $query = $this->db->query($sql,[$data['attendants']]);
+
+            if($query->num_rows()) {
             $free = $query->result_array();
+            }
+            
         } else {
-            $free = [];
+            $sql = "SELECT id, name FROM rooms 
+            WHERE id NOT IN (".$reserved.")  
+            AND capacity > ?";
+            $query = $this->db->query($sql,[$data['attendants']]);
+
+            if($query->num_rows()) {
+            $free = $query->result_array();
+            }
         }
-        return $free; die;
+
+        return $free;
     }
 
     public function show_users_for_invitation()
     {
-        $cookie = $this->input->cookie('usr-vezba', true);
-        $admin = $this->user->get_user_by_token($cookie)['id'];
+        $cookie = $this->user_data['token'];
+        $admin = $this->user_data['user']['id'];
 
-        $sql = "SELECT id, name FROM users WHERE id != ?";
+        $sql = "SELECT id, name, email FROM users WHERE id != ?";
         $query = $this->db->query($sql, [$admin]);
 
         if ($query->num_rows()) {
@@ -106,11 +117,26 @@ class Reservation_model extends CI_Model
         return $result;
 
     }
+    public function check_if_room_is_free($data)
+    {
+        $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
+                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
+                AND room_id = ? "; 
+        $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room_id']]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        if ($result['reserved'] == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     public function submit_reservation_form($data)
     {
-        $cookie = $this->input->cookie('usr-vezba', true);
-        $user_id = $this->user->get_user_by_token($cookie)['id'];
+        $user_id = $this->user_data['user']['id'];
 
         $sql = "INSERT INTO room_reservations  
                 (room_id, user_id, start_time, end_time, title, description) 
@@ -118,7 +144,7 @@ class Reservation_model extends CI_Model
 
         $query = $this->db->query($sql, [$data['room'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description']]);
 
-        $res_id = $this->db->insert_id();
+        $data['res_id'] = $this->db->insert_id();
 
         $this->load->model('Logs_model', 'logs');
         $data_log = [
@@ -134,7 +160,16 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
-        $data['members'][] = $user_id;
+        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            Success! Your reservation has been created!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        $this->insert_reservation_members($data);
+        $this->insert_creator_into_res_members($res_id, $user_id);
+    }
+
+    public function insert_reservation_members($data)
+    {   
+        $res_id = $data['res_id'];
         foreach ($data['members'] as $member) {
             $sql = "INSERT INTO res_members 
                     (res_id, user_id) 
@@ -150,13 +185,26 @@ class Reservation_model extends CI_Model
                 ]
             ];
             $this->logs->insert_log($data_log);
+        }
+    }
 
-            $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Success! Your reservation has been created!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-
-            url_redirect('/dashboard');
-            }
+    public function insert_creator_into_res_members($res_id, $user_id)
+    {
+        $sql = "INSERT INTO res_members 
+        (res_id, user_id, res_role_id) 
+        VALUES (?, ?, ?)";
+        $query = $this->db->query($sql, [$res_id, $user_id, 1]);
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'insert',
+            'value' => [
+                'res_id' => $res_id,
+                'member' => $user_id,
+                'role_id' => 1
+            ]
+        ];
+        $this->logs->insert_log($data_log);
     }
 
     public function get_all_equipment()
@@ -174,70 +222,46 @@ class Reservation_model extends CI_Model
     }
 
     public function search_free_equipment($data)
-    {
-        $sql = "SELECT id FROM equipment 
-                WHERE equipment_type_id = ?";
-        $query = $this->db->query($sql, [$data['type']]);
-
-        if ($query->num_rows()) {
-            $result = $query->result_array();
-        } else {
-            $result = [];
-        }
-
-        $all = [];
-        $reserved = [];
+    {   
+        $reserved_arr = [];
         $free = [];
-
-        foreach($result as $row) {
-            $all[] = $row['id'];
-        }
-
-        $sql = "SELECT equipment_id as id FROM equipment_reservations 
-                INNER JOIN equipment ON equipment.id = equipment_reservations.equipment_id 
-                WHERE equipment.equipment_type_id = ? 
+        $sql = "SELECT equipment.id AS id FROM equipment 
+                INNER JOIN equipment_reservations ON equipment.id = equipment_reservations.equipment_id  
+                WHERE (equipment_reservations.start_time < ? AND equipment_reservations.end_time > ?) OR (equipment_reservations.start_time < ? AND equipment_reservations.start_time >= ?) 
+                AND equipment_type_id = ? 
                 GROUP BY equipment_id";
-        $query = $this->db->query($sql, [$data['type']]);
-
-        if ($query->num_rows()) {
-            $reserved_arr = $query->result_array();
-        } else {
-            $reserved_arr = [];
-        }
-
-        foreach($reserved_arr as $row) {
-            $reserved[] = $row['id'];
-        }
-
-        $non_reserved = array_diff($all, $reserved);
-
-        foreach($non_reserved as $item) {
-            $sql = "SELECT id, name, barcode, description 
-                    FROM equipment WHERE id = ?";
-            $query = $this->db->query($sql, [$item]);
-            if ($query->num_rows()) {
-                $result = $query->row_array();
-            }
-            $free[] = $result;
-        }
-        $sql = "SELECT equipment.id, name, barcode, equipment.description 
-                FROM equipment 
-                INNER JOIN equipment_reservations ON equipment.id = equipment_reservations.equipment_id 
-                WHERE (? < equipment_reservations.start_time OR ? > equipment_reservations.start_time)
-                AND equipment.equipment_type_id = ? 
-                GROUP BY equipment_id";
-        $query = $this->db->query($sql, [$data['end_time'], $data['start_time'], $data['type']]);
-
-        if ($query->num_rows()) {
+        $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['type']]);
+        
+        if($query->num_rows()) {
             $result = $query->result_array();
         } else {
             $result = [];
         }
-        foreach($result as $row) {
-            $free[] = $row;
+        foreach ($result as $row) {
+            $reserved_arr[] = $row['id'];
         }
+    $reserved = implode(",", $reserved_arr); 
 
-        return $free;
+    if ($reserved == "") {
+        $sql = "SELECT id, barcode, name, description FROM  equipment 
+                WHERE equipment_type_id = ? ";
+        $query = $this->db->query($sql, [$data['type']]);
+
+        if($query->num_rows()) {
+            $free = $query->result_array();
+        }
+    } 
+    else {
+        $sql = "SELECT id, barcode, name, description FROM  equipment 
+                WHERE id NOT IN (".$reserved.") 
+                AND equipment_type_id = ? ";
+        $query = $this->db->query($sql, [$data['type']]);
+
+        if($query->num_rows()) {
+            $free = $query->result_array();
+        }
+    }
+    return $free;
     }
 
     public function submit_reservation_equip_form($data)
@@ -268,8 +292,6 @@ class Reservation_model extends CI_Model
         $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
         Success! Your reservation has been created!
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-
-        url_redirect('/dashboard');
     }
 
     public function room_reservations_by_user($id)
