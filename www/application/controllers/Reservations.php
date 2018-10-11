@@ -7,6 +7,7 @@ class Reservations extends MY_Controller
         $this->load->model('Reservation_model', 'res');
         $this->load->model('Beautify_model', 'beautify');
         $this->load->library('form_validation');
+        $this->load->helper('link_helper');
     }
 
     public function index()
@@ -30,6 +31,15 @@ class Reservations extends MY_Controller
         $this->load->view('footer');
     }
 
+    public function form_specific_room()
+    {
+        $this->load->model('Admin_model','admin');
+        $rooms = $this->admin->get_all_rooms();
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/specific_room',["rooms" => $rooms]);
+        $this->load->view('footer');
+    }
+
     public function form_equip()
     {
         $data['equips'] = $this->res->get_all_equipment();
@@ -47,10 +57,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|required|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
 
         if($this->form_validation->run() == false) {
-            $message = validation_errors();
-
-            echo $message;
-
+            echo validation_errors();
         } else {
 
             $data = [
@@ -66,6 +73,38 @@ class Reservations extends MY_Controller
 
             echo $view;
         }
+    }
+
+    public function load_calendar_for_room()
+    {
+        $data['room_id'] = $this->input->post('room');
+        $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
+
+        echo $view;
+    }
+
+    public function search_free_termins_for_specific_room()
+    {
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
+        //Kako da se stavi da end bude veci od start?
+        $this->form_validation->set_rules('room_id', 'Room', 'trim');
+
+        if ($this->form_validation->run() == false) {
+            echo validation_errors();
+        } else {
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "room_id" => $this->input->post('room_id')
+            ];
+
+        $free = $this->res->check_if_room_is_free($data);
+
+        echo $free;
+
+        }
+
     }
 
     public function search_free_equipment()
@@ -96,16 +135,14 @@ class Reservations extends MY_Controller
     {
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|required|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
+        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
         $this->form_validation->set_rules('room', 'Room', 'trim|required');
         $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
-        $this->form_validation->set_rules('description', 'Event Description', 'trim|required');
+        $this->form_validation->set_rules('description', 'Event Description', 'trim');
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required');
 
         if($this->form_validation->run() == false) {
-            $message = validation_errors();
-
-            echo $message;
+            echo validation_errors();
 
         } else {
             $data = [
