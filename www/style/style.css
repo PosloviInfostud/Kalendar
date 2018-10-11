@@ -23,6 +23,10 @@ nav, div, p {
     font-size:13px !important;
 }
 
+.text-sm {
+    font-size:13px !important;
+}
+
 .table th {
     text-align: center;
  }
