@@ -5,6 +5,7 @@ class Admin extends MY_Controller
     {
             parent::__construct();
             $this->load->model('Permission_model', 'permission');
+            $this->load->model('Beautify_model', 'beautify');
             $this->load->model('Admin_model', 'admin');
             $this->permission->is_logged_in();
             $this->permission->is_admin();
@@ -47,11 +48,18 @@ class Admin extends MY_Controller
     public function show_equipment()
     {
         $table = [];
-        $data = [
-            'equipment' => $this->admin->get_all_equipment(),
-            'types' => $this->admin->get_all_equipment_types()
-        ];
-        $table = $this->load->view('admin/equipment', $data, TRUE);
+        $equipment = $this->admin->get_all_equipment();
+        $types = $this->admin->get_all_equipment_types();
+        $table = $this->load->view('admin/equipment', ['equipment' => $equipment, 'types' => $types], TRUE);
+        echo $table;
+        die();
+    }
+
+    public function show_equipment_types()
+    {
+        $table = [];
+        $types = $this->admin->get_all_equipment_types();
+        $table = $this->load->view('admin/equipment_types', ['types' => $types], TRUE);
         echo $table;
         die();
     }

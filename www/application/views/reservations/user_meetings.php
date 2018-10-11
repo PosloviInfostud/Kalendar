@@ -4,22 +4,22 @@
     </h1>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
     <div class="row p-3 mb-3 text-center align-items-center border-bottom">
-        <div class="col"><strong>Status</strong></div>
+        <div class="col-1"><strong>Status</strong></div>
+        <div class="col-3">When</div>
         <div class="col"><strong>Where</strong></div>
         <div class="col-4">Title</div>
         <div class="col">#</div>
         <div class="col">Created by</div>
-        <div class="col">When</div>
     </div>
 <?php
 foreach($meetings as $meeting) { ?>
-    <div data-id="" class="row p-3 mb-2 text-center align-items-center text-white meeting-card <?= ($meeting['user_id'] == $meeting['creator_id']) ? 'bg-info' : 'bg-secondary' ?>">
-        <div class="col"><?= strtotime($meeting['start_time']) < time() ? 'ongoing' : 'upcoming' ?></div>
+    <div data-id="" class="text-sm row p-3 mb-2 text-center align-items-center text-white meeting-card <?= ($meeting['user_id'] == $meeting['creator_id']) ? 'bg-info' : 'bg-secondary' ?>">
+        <div class="col-1"><?= $meeting['status'] ?></div>
+        <div class="col-3"><?= $meeting['start_time'] ?></div>
         <div class="col"><?= $meeting['room_name'] ?></div>
         <div class="col-4"><?= $meeting['title'] ?></div>
         <div class="col"><button class="btn btn-sm btn-outline-light members-btn" data-id="<?= $meeting['res_id'] ?>">members</button></div>
         <div class="col"><?= ($meeting['user_id'] == $meeting['creator_id']) ? 'me' : $meeting['created_by'] ?></div>
-        <div class="col"><?= $meeting['start_time'] ?></div>
     </div>
 <?php } ?>
 <div class="my-3 float-right"><a href="/reservations">Back to my reservations</a></div>

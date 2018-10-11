@@ -5,13 +5,20 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT r.title, r.description, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM room_reservations as r
+        $sql = "SELECT r.title, 
+                r.description, 
+                u.name as user_name, 
+                r.start_time, 
+                r.end_time, 
+                r.created_at, 
+                r.deleted 
+                FROM room_reservations as r
                 INNER JOIN users as u ON u.id = r.user_id;";
 
         $query = $this->db->query($sql, []);
 
         if ($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->room_reservations_view_data($query->result_array());
         }
 
         return $result;
@@ -21,13 +28,19 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT r.description, u.name as user_name, r.start_time, r.end_time, r.created_at, r.deleted FROM equipment_reservations as r
+        $sql = "SELECT r.description, 
+                u.name as user_name, 
+                r.start_time, 
+                r.end_time, 
+                r.created_at, 
+                r.deleted 
+                FROM equipment_reservations as r
                 INNER JOIN users as u ON u.id = r.user_id;";
 
         $query = $this->db->query($sql, []);
 
         if ($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->equipment_reservations_view_data($query->result_array());
         }
 
         return $result;
@@ -42,7 +55,7 @@ class Admin_model extends CI_Model
         $query = $this->db->query($sql, []);
 
         if ($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->preview_description($query->result_array());
         }
 
         return $result;
@@ -98,7 +111,7 @@ class Admin_model extends CI_Model
                 INNER JOIN equipment_types as t ON t.id = e.equipment_type_id";
         $query = $this->db->query($sql, []);
         if ($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->preview_description($query->result_array());
         }
         return $result;
     }

@@ -1,12 +1,18 @@
 $("body").on('click', ".btn-options", function(e) {
     $(".btn-options, .sub-options").addClass('btn-outline-info').removeClass('btn-info');
     $("#message, #table").html('');
-    $("#rooms, #items").addClass('hide');
+    $("#rooms, #items, #equipment").addClass('hide');
     // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
 })
 
 $("body").on('click', ".sub-options", function(e) {
     $(".sub-options").addClass('btn-outline-info').removeClass('btn-info');
+    $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
+    $("#equipment").addClass('hide');
+})
+
+$("body").on('click', ".equip-options", function(e) {
+    $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
 })
 
 // Choose between reservation types
@@ -19,6 +25,13 @@ $("body").on('click', "#show_reservations", function() {
 $("body").on('click', "#show_items", function() {
     $("#items").removeClass("hide");
     $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+// Choose between equipment items and types
+$("body").on('click', "#show_equipment", function() {
+    $("#equipment").removeClass("hide");
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+    $("#message, #table").html('');
 })
 
 /* VIEWS */
@@ -72,10 +85,39 @@ $("body").on('click', '#show_rooms', function() {
 })
 
 // Load equipment list view
-$("body").on('click', '#show_equipment', function() {
+$("body").on('click', '#show_equip_items', function() {
     $.ajax({
         method: "POST",
         url: "/admin/show_equipment"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+    // Set clicked button active
+    $(this).addClass('btn-info').removeClass('btn-outline-info');
+})
+
+$("body").on('click', '#show_users', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_users"
+    })
+    .done(function(response) {
+        // Load view
+        $("#table").html(response);
+        // Apply datatables on the loaded table
+        $('.table').DataTable();
+    });
+})
+
+// Load equipment types view
+$("body").on('click', '#show_item_types', function() {
+    $.ajax({
+        method: "POST",
+        url: "/admin/show_equipment_types"
     })
     .done(function(response) {
         // Load view
@@ -259,6 +301,74 @@ $("body").on('submit', "#update_equipment_form", function(e) {
         if(response === 'success') {
             $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Equipment updated.</div>');
             $("editEquipmentModal").modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        } else {
+            $("#edit_error_msg").html(response);
+        }
+    })
+})
+
+/* EQUIPMENT TYPE */
+
+// Add new equipment type
+$("body").on('click', "#new_type_btn", function(e) {
+    // $("#insert_error_msg").empty();
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/insert_type",
+        data: {
+            "name" : $("#type_name").val(),
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New type added.</div>');
+            $('#addNewTypeModal').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        } else {
+            $("#insert_error_msg").html(response);
+        }
+    })
+})
+
+// Load equipment type edit modal
+$("body").on('click', ".type-edit", function() {
+        $.ajax({
+            method: "POST",
+            url: "/items/edit_type",
+            data: {
+                "type_id" : $(this).attr("data-id")
+            }
+        })
+        .done(function(response) {
+                $('#edit_type_modal_body').html(response);
+    
+                // show modal
+                $('#editTypeModal').modal('show');
+        });
+});
+
+// Update exisitng type
+$("body").on('submit', "#update_type_form", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/update_type",
+        data: {
+            "id" : $("#update_type_id").val(),
+            "name" : $("#update_type_name").val(),
+            "barcode" : $("#update_type_barcode").val(),
+            "type" : $("#update_type_type").val(),
+            "description" : $("#update_type_description").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Type updated.</div>');
+            $("editTypeModal").modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
         } else {

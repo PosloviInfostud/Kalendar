@@ -55,6 +55,20 @@ class Item_model extends CI_Model
         return $result;
     }
 
+        /* EQUIPMENT */
+
+        public function insert_type($data)
+        {
+            $sql = 'INSERT INTO equipment_types (name) VALUES (?)';
+            $query = $this->db->query($sql, [$data['name']]);
+        }
+    
+        public function update_type($data)
+        {
+            $sql = "UPDATE equipment_types SET name = ? WHERE id = ?";
+            $query = $this->db->query($sql, [$data['name'], $data['id']]);
+        }
+
     public function get_all_equipment_types()
     {
         $result = [];
@@ -64,6 +78,19 @@ class Item_model extends CI_Model
         if ($query->num_rows()) {
             $result = $query->result_array();
         }
+        return $result;
+    }
+
+    public function get_single_equipment_type($id)
+    {
+        $result = [];
+        $sql = "SELECT * FROM equipment_types WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if ($query->num_rows()) {
+            $result = $query->row_array();
+        }
+
         return $result;
     }
 }

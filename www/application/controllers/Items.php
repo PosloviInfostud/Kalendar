@@ -138,4 +138,58 @@ class Items extends CI_Controller
         echo $message;
         die();
     }
+
+    public function insert_type()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $message = '';
+
+        if($this->form_validation->run() == false) {
+            $message = validation_errors();
+        } else {
+            $data = [
+                "name" => $this->input->post('name'),
+            ];
+        $this->item->insert_type($data);
+        $message = 'success';
+        }
+
+        echo $message;
+        die();
+    }
+
+    public function edit_type()
+    {
+        $id = $this->input->post('type_id');
+        $data = [
+            'type' => $this->item->get_single_equipment_type($id)
+        ];
+
+        // send view to ajax
+        $form = $this->load->view('admin/items/update_type', $data, TRUE);
+        echo $form;
+        die();
+    }
+
+    public function update_type()
+    {
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+
+        $message = '';
+
+        if ($this->form_validation->run() == false) {
+            $message = validation_errors();
+        } else {
+            $data = [
+                "id" => $this->input->post('id'),
+                "name" => $this->input->post('name'),
+            ];
+
+            $this->item->update_type($data);
+            $message = 'success';
+        }
+        // Send response to ajax
+        echo $message;
+        die();
+    }
 }

@@ -5,6 +5,7 @@ class Reservations extends MY_Controller
     {
         parent::__construct();
         $this->load->model('Reservation_model', 'res');
+        $this->load->model('Beautify_model', 'beautify');
         $this->load->library('form_validation');
         $this->load->helper('link_helper');
     }
@@ -229,7 +230,7 @@ class Reservations extends MY_Controller
 
     public function equipment_reservations_by_user()
     {
-        $equipment = $this->res->equipment_reservations_by_user($this->user_data['user']['id']);
+        $equipment = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/user_equipment', ['equipment' => $equipment]);
         $this->load->view('footer');

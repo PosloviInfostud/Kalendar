@@ -19,7 +19,7 @@ nav, div, p {
     display:none;
 }
 
-.table-text-sm {
+.table-text-sm, .text-sm {
     font-size:13px !important;
 }
 

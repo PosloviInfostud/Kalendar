@@ -299,7 +299,15 @@ class Reservation_model extends CI_Model
     public function room_reservations_by_user($id)
     {
         $result = [];
-        $sql = 'SELECT mem.res_id, mem.user_id, mem.res_role_id, res.room_id, room.name as room_name, res.user_id as creator_id, u.name as created_by, res.title, res.description, res.start_time, res.end_time FROM res_members as mem
+        $sql = 'SELECT mem.res_id,
+         mem.user_id, mem.res_role_id, 
+         res.room_id, room.name as room_name, 
+         res.user_id as creator_id, u.name as created_by, 
+         res.title,
+          res.description, 
+         res.start_time, 
+         res.end_time
+          FROM res_members as mem
                 INNER JOIN room_reservations as res ON res.id = mem.res_id
                 INNER JOIN users as u ON res.user_id = u.id
                 INNER JOIN rooms as room ON room.id = res.room_id
@@ -308,7 +316,7 @@ class Reservation_model extends CI_Model
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->user_meetings_view_data($query->result_array());
             return $result;
         }
     }
@@ -316,14 +324,21 @@ class Reservation_model extends CI_Model
     public function equipment_reservations_by_user($id)
     {
         $result = [];
-        $sql = 'SELECT res.id, res.equipment_id, res.start_time, res.end_time, res.description, e.name as item_name, type.name as item_type FROM equipment_reservations as res
+        $sql = 'SELECT res.id, 
+                res.equipment_id, 
+                res.start_time, 
+                res.end_time, 
+                res.description, 
+                e.name as item_name, 
+                type.name as item_type 
+                FROM equipment_reservations as res
                 INNER JOIN equipment as e ON e.id = res.equipment_id
                 INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
-                WHERE res.user_id = ?';
+                WHERE res.user_id IN ?';
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
-            $result = $query->result_array();
+            $result = $this->beautify->user_equipment_view_data($query->result_array());
             return $result;
         }
     }
