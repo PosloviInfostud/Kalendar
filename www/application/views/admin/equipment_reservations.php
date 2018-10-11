@@ -19,7 +19,7 @@
             <tbody>
             <?php foreach($reservations as $res) { ?> 
                     <tr>
-                        <td class="align-middle"><?= substr($res['description'], 0, 120).'...' ?></td>
+                        <td class="align-middle"><?= $res['description'] ?></td>
                         <td class="align-middle text-center"><?= $res['user_name'] ?></td>
                         <td class="align-middle text-center"><?= $res['start_time'] ?></td>
                         <td class="align-middle text-center"><?= $res['end_time'] ?></td>

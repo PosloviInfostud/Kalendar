@@ -1,8 +1,7 @@
 <div class="row mt-5 mb-3">
-    <div class="col-8"><h3>Equipment List</h3></div>
+    <div class="col-8"><h3>Items List</h3></div>
     <!-- Button to trigger the modal -->
     <div class="col-4">
-      <button class="btn btn-secondary btn-sm float-right" data-toggle="modal" data-target="#addNewEquipmentTypeModal">New type</button>
       <button class="btn btn-info btn-sm float-right mx-1" data-toggle="modal" data-target="#addNewEquipmentModal"><i class="fas fa-plus-circle mr-1"></i> Add new item</button>
     </div>
 </div>
@@ -26,9 +25,9 @@
                     <tr>
                         <td class="align-middle text-center"><button class="btn btn-sm btn-info equipment-edit" data-id="<?= $item['id'] ?>"><i class="fas fa-pencil-alt"></i></button></td>
                         <td class="align-middle text-center"><?= $item['name'] ?></td>
-                        <td class="align-middle text-center"><?= ucwords($item['equipment_type_name']) ?></td>
+                        <td class="align-middle text-center"><?= $item['equipment_type_name'] ?></td>
                         <td class="align-middle text-center"><?= $item['barcode'] ?></td>
-                        <td class="align-middle"><?= substr($item['description'], 0, 120).'...' ?></td>
+                        <td class="align-middle"><?= $item['description'] ?></td>
                     </tr>
             <?php } ?>
             </tbody>

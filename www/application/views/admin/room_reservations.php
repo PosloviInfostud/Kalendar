@@ -14,20 +14,18 @@
                     <th scope="col">End</th>
                     <th scope="col">Created</th>
                     <th scope="col">Members</th>
-                    <th scope="col">Deleted</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($reservations as $res) { ?> 
                     <tr>
                         <td class="align-middle text-center"><?= $res['title'] ?>
-                        <td class="align-middle"><?= substr($res['description'], 0, 120).'...' ?></td>
+                        <td class="align-middle"><?= $res['description'] ?></td>
                         <td class="align-middle text-center"><?= $res['user_name'] ?></td>
                         <td class="align-middle text-center"><?= $res['start_time'] ?></td>
                         <td class="align-middle text-center"><?= $res['end_time'] ?></td>
                         <td class="align-middle text-center"><?= $res['created_at'] ?></td>
                         <td class="align-middle text-center"><button class="btn btn-secondary btn-sm">Members</button></td>
-                        <td class="align-middle text-center"><?= $res['deleted'] == 1 ? 'Yes' : 'No' ?></td>
                     </tr>
             <?php } ?>
             </tbody>

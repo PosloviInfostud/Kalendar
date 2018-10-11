@@ -22,7 +22,7 @@
                     <tr>
                     <td class="align-middle text-center"><button class="btn btn-sm btn-info room-edit" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i></button></td>
                     <td class="align-middle text-center"><?= $room['name'] ?></td>
-                        <td class="align-middle"><?= substr($room['description'], 0, 120).'...' ?></td>
+                        <td class="align-middle"><?= $room['description'] ?></td>
                         <td class="align-middle text-center"><?= $room['capacity'] ?></td>
                     </tr>
             <?php } ?>

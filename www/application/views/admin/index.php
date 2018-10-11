@@ -14,7 +14,12 @@
     </div>
     <div class="row my-4 hide" id="items">
         <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_rooms">Conference Room List</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_equipment">Equipment List</button></div>
+        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_equipment">Equipment</button></div>
+    </div>
+    <div class="row my-4 hide" id="equipment">
+        <div class="col-6"></div>
+        <div class="col-3"><button type="button" class="btn btn-block btn-outline-info equip-options" id="show_equip_items">Items</button></div>
+        <div class="col-3"><button type="button" class="btn btn-block btn-outline-info equip-options" id="show_item_types">Types</button></div>
     </div>
 
     <div class="my-3" id="message"></div>
