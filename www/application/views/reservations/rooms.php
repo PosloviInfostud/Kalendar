@@ -4,7 +4,7 @@
         <p>When is your meeting?</p>
         From <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="text-center">
          to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center">
-         for <input type="number" name="attendants" id="attendants" min=2 max=50 step=1> people.
+         for <input type="number" name="attendants" id="attendants" step=1> people.
         <button id="search_reserved_offices" class="btn btn-outline-info">Search</button>
         <div id="free"></div>
     </form>

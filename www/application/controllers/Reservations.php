@@ -53,16 +53,20 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         //Kako da se stavi da end bude veci od start?
-        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|required|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
+        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
 
         if($this->form_validation->run() == false) {
             echo validation_errors();
         } else {
+            $attendants = $this->input->post('attendants');
+            if(empty($attendants)) {
+                $attendants = 2;
+            }
 
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
-                "attendants" => $this->input->post('attendants')
+                "attendants" => $attendants
             ];
 
             $rooms = $this->res->check_free_rooms($data);
@@ -141,7 +145,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required');
 
         if($this->form_validation->run() == false) {
-            echo validation_errors();
+            $message['error'] = validation_errors();
 
         } else {
             $data = [
@@ -152,10 +156,16 @@ class Reservations extends MY_Controller
                 "description" => $this->input->post('description'),
                 "members" => $this->input->post('members')
             ];
+            if($this->res->check_if_room_is_free($data)) {
+                $this->res->submit_reservation_form($data);
+                $message['success'] = "success";
 
-            $this->res->submit_reservation_form($data);
+            } else {
+                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+            }
 
         }
+        echo json_encode($message);
     }
 
     public function submit_reservation_equip_form()

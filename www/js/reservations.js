@@ -84,7 +84,7 @@ $("#search_free_termins").click(function(e){
         data: {
             "start_time" : $("#datetime_start").val(),
             "end_time" : $("#datetime_end").val(),
-            "room_id" : $("#room_id").val()
+            "room" : $("#room_id").val()
         }
     })
     .done(function(response){
@@ -109,7 +109,15 @@ $("body").on('click', "#reservation_submit", function(e) {
         }
     })
     .done(function(response){
-        $("#show_errors").html(response);
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#show_errors").html(msg.error);
+        }
+        if(msg.success) {
+            window.location.href = "/dashboard";
+        }
     })
 })
 

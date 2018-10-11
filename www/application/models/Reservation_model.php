@@ -122,7 +122,7 @@ class Reservation_model extends CI_Model
         $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
                 WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
                 AND room_id = ? "; 
-        $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room_id']]);
+        $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
 
         if($query->num_rows()) {
             $result = $query->row_array();
@@ -145,6 +145,7 @@ class Reservation_model extends CI_Model
         $query = $this->db->query($sql, [$data['room'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description']]);
 
         $data['res_id'] = $this->db->insert_id();
+        $data['admin'] = $user_id;
 
         $this->load->model('Logs_model', 'logs');
         $data_log = [
@@ -164,12 +165,13 @@ class Reservation_model extends CI_Model
             Success! Your reservation has been created!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         $this->insert_reservation_members($data);
-        $this->insert_creator_into_res_members($res_id, $user_id);
+        $this->insert_creator_into_res_members($data['res_id'], $user_id);
     }
 
     public function insert_reservation_members($data)
     {   
         $res_id = $data['res_id'];
+        $user_id = $data['admin'];
         foreach ($data['members'] as $member) {
             $sql = "INSERT INTO res_members 
                     (res_id, user_id) 
