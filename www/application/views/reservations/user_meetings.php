@@ -6,7 +6,7 @@
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($meetings)) {
-        echo 'No entries';
+        echo 'No reservations..';
 } else { ?>
 
     <div class="row p-3 mb-3 text-center align-items-center border-bottom">

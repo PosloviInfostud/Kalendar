@@ -5,7 +5,7 @@
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($equipment)) {
-        echo 'No entries';
+        echo 'No reservations..';
 } else { ?>
 
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
