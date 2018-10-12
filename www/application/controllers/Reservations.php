@@ -49,6 +49,15 @@ class Reservations extends MY_Controller
         $this->load->view('footer');
     }
 
+    public function form_specific_equip()
+    {
+        $this->load->model('Admin_model','admin');
+        $equipment = $this->admin->get_all_rooms();
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/specific_equipment',["equipment" => $equipment]);
+        $this->load->view('footer');
+    }
+
     public function search_free_rooms()
     {
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
@@ -82,6 +91,8 @@ class Reservations extends MY_Controller
     public function load_calendar_for_room()
     {
         $data['room_id'] = $this->input->post('room');
+        $data['users'] = $this->res->show_users_for_invitation();
+
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
         echo $view;
@@ -192,7 +203,7 @@ class Reservations extends MY_Controller
                 $message['success'] = "success";
                             
             } else {
-                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+                $message['error'] = "Did you change termin? Please, search again free equipment according to your time!";
             }
 
         }
