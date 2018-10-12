@@ -4,6 +4,8 @@ class Reservations extends MY_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('Permission_model', 'permission');
+        $this->permission->is_logged_in();
         $this->load->model('Reservation_model', 'res');
         $this->load->model('Beautify_model', 'beautify');
         $this->load->library('form_validation');
@@ -233,6 +235,25 @@ class Reservations extends MY_Controller
         $equipment = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/user_equipment', ['equipment' => $equipment]);
+        $this->load->view('footer');
+    }
+
+    public function single_room_reservation($id)
+    {
+        $meeting = $this->res->single_room_reservation($id);
+        $members = $this->res->get_reservation_members($id);
+        $user_id = $this->user_data['user']['id'];
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/meetings/single_view', ['meeting' => $meeting, 'members' => $members, 'user_id' => $user_id]);
+        $this->load->view('footer');
+    }
+
+    public function single_equipment_reservation($id)
+    {
+        $equipment = $this->res->single_equipment_reservation($id);
+        $user_id = $this->user_data['user']['id'];
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/equipment/single_view', ['equipment' => $equipment, 'user_id' => $user_id]);
         $this->load->view('footer');
     }
 }

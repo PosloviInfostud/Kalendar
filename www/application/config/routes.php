@@ -58,5 +58,8 @@ $route['login'] = 'reg_log';
 $route['logout'] = 'reg_log/logout';
 $route['activate'] = 'reg_log/activate';
 $route['reservations/meetings'] = 'reservations/room_reservations_by_user';
+$route['reservations/meetings/(:num)'] = 'reservations/single_room_reservation/$1';
 $route['reservations/equipment'] = 'reservations/equipment_reservations_by_user';
+$route['reservations/equipment/(:num)'] = 'reservations/single_equipment_reservation/$1';
+
 $route['welcome'] = 'test';

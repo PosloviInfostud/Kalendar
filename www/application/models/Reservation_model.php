@@ -311,8 +311,33 @@ class Reservation_model extends CI_Model
                 INNER JOIN room_reservations as res ON res.id = mem.res_id
                 INNER JOIN users as u ON res.user_id = u.id
                 INNER JOIN rooms as room ON room.id = res.room_id
-                WHERE mem.user_id = 13 AND res.end_time >= NOW()
+                WHERE mem.user_id = ? AND res.end_time >= NOW()
                 ORDER BY res.start_time ASC';
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $this->beautify->user_meetings_view_data($query->result_array());
+            return $result;
+        }
+    }
+
+    public function single_room_reservation($id)
+    {
+        $result = [];
+        $sql = 'SELECT res.id, 
+                res.user_id AS creator_id, 
+                u.name AS creator_name, 
+                res.start_time, 
+                res.end_time, 
+                res.created_at, 
+                res.room_id, 
+                room.name, 
+                res.title, 
+                res.description 
+                FROM room_reservations AS res
+                INNER JOIN users as u ON res.user_id = u.id
+                INNER JOIN rooms as room ON room.id = res.room_id
+                WHERE res.id = ?';
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -343,12 +368,35 @@ class Reservation_model extends CI_Model
         }
     }
 
+    public function single_equipment_reservation($id)
+    {
+        $result = [];
+        $sql = 'SELECT res.id, 
+                res.equipment_id, 
+                res.start_time, 
+                res.end_time, 
+                res.description, 
+                res.user_id, 
+                e.name as item_name, 
+                type.name as item_type 
+                FROM equipment_reservations as res
+                INNER JOIN equipment as e ON e.id = res.equipment_id
+                INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
+                WHERE e.id = ?';
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $this->beautify->user_equipment_view_data($query->result_array());
+            return $result;
+        }
+    }
+
     public function get_reservation_members($id)
     {
         $result = [];
         $sql = 'SELECT mem.user_id, mem.res_role_id, u.name, u.email FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id
-                WHERE mem.res_id = 6
+                WHERE mem.res_id = ?
                 ORDER BY mem.res_role_id ASC';
         $query = $this->db->query($sql, [$id]);
 
