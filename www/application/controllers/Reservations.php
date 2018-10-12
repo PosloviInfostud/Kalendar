@@ -129,12 +129,13 @@ class Reservations extends MY_Controller
                 "end_time" => $this->input->post('end_time'),
                 "type" => $this->input->post('equipment_type')
             ];
+            $free_equipment = $this->res->search_free_equipment($data);
+            $view = $this->load->view('reservations/free_equipment',["items" => $free_equipment], true);
+    
+            echo $view;
         }
 
-        $free_equipment = $this->res->search_free_equipment($data);
-        $view = $this->load->view('reservations/free_equipment',["items" => $free_equipment], true);
 
-        echo $view;
     }
 
     public function submit_reservation_form()
@@ -179,9 +180,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('description', 'Reservation Description', 'trim|required');
 
         if($this->form_validation->run() == false) {
-            $message = validation_errors();
-
-            echo $message;
+            $message['error'] = validation_errors();
 
         } else {
             $data = [
@@ -190,9 +189,16 @@ class Reservations extends MY_Controller
                 "equipment_id" => $this->input->post('equipment_id'),
                 "description" => $this->input->post('description')
             ];
+            if($this->res->check_if_equipment_is_free($data)) {
+                $this->res->submit_reservation_equip_form($data);
+                $message['success'] = "success";
+                            
+            } else {
+                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+            }
 
-            $this->res->submit_reservation_equip_form($data);
         }
+        echo json_encode($message);
     }
 
     public function show_room_reservations()

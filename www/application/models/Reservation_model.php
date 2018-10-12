@@ -4,17 +4,16 @@ class Reservation_model extends CI_Model
     public function invite_members($res_id)
     {
         $result = [];
-        $sql = 'SELECT users.name, users.email, reservations.start_time, reservations.end_time, reservations.title, reservations.description
+        $sql = 'SELECT users.name, users.email, room_reservations.start_time, room_reservations.end_time, room_reservations.title, room_reservations.description
          FROM res_members 
          INNER JOIN users ON users.id = res_members.user_id 
-         INNER JOIN reservations ON reservations.id = res_members.res_id 
-         INNER JOIN res_items ON reservations.res_item_id = res_items.id
+         INNER JOIN room_reservations ON room_reservations.id = res_members.res_id 
+         INNER JOIN rooms ON room_reservations.room_id = rooms.id
          WHERE res_members.res_role_id = 2 AND res_members.res_id = ?';
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
             $result = $query->result_array();
         }
-        print_r($result);
         foreach ($result as $user) {
             $this->send_members_notification($user);
         }
@@ -123,6 +122,23 @@ class Reservation_model extends CI_Model
                 WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
                 AND room_id = ? "; 
         $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        if ($result['reserved'] == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function check_if_equipment_is_free($data)
+    {
+        $sql = "SELECT COUNT(*) AS reserved FROM equipment_reservations 
+                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
+                AND equipment_id = ? ";
+        $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['equipment_id']]);
 
         if($query->num_rows()) {
             $result = $query->row_array();
@@ -268,8 +284,7 @@ class Reservation_model extends CI_Model
 
     public function submit_reservation_equip_form($data)
     {
-        $cookie = $this->input->cookie('usr-vezba', true);
-        $user_id = $this->user->get_user_by_token($cookie)['id'];
+        $user_id = $this->user_data['user']['id'];
 
         $sql = "INSERT INTO equipment_reservations  
                 (equipment_id, user_id, start_time, end_time, description) 
