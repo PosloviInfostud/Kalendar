@@ -54,7 +54,7 @@ class Reservations extends MY_Controller
     public function form_specific_equip()
     {
         $this->load->model('Admin_model','admin');
-        $equipment = $this->admin->get_all_rooms();
+        $equipment = $this->admin->get_all_equipment();
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/specific_equipment',["equipment" => $equipment]);
         $this->load->view('footer');
@@ -96,6 +96,15 @@ class Reservations extends MY_Controller
         $data['users'] = $this->res->show_users_for_invitation();
 
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
+
+        echo $view;
+    }
+
+    public function load_calendar_for_item()
+    {
+        $data['equipment_id'] = $this->input->post('equipment_id');
+
+        $view = $this->load->view('reservations/load_calendar_for_item', $data, true);
 
         echo $view;
     }
