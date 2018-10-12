@@ -31,4 +31,20 @@ class Permission_model extends CI_Model
             url_redirect('/dashboard');
         }
     }
+
+    public function is_member_of_reservation($members, $user_id)
+    {
+        $members_id = [];
+        foreach($members as $mem) {
+            $members_id[] = $mem['user_id'];
+        }
+
+        if (!in_array($user_id, $members_id)) {
+            // Notification
+            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Wrong request!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            url_redirect('/reservations/meetings');
+        }
+    }
 }

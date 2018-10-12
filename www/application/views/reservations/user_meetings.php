@@ -1,8 +1,6 @@
 <div class="container mt-5">
-    <h1>
-        My meetings
-    </h1>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
+    <h1>My meetings</h1>
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($meetings)) {

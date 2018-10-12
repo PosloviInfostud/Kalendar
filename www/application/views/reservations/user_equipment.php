@@ -1,14 +1,12 @@
 <div class="container mt-5">
-    <h1>
-        Equipment reservations
-    </h1>
+    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
+    <h1>Equipment reservations</h1>
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($equipment)) {
         echo 'No reservations..';
 } else { ?>
 
-    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
     <div class="row p-3 mb-3 text-center align-items-center border-bottom">
         <div class="col-1">#</div>
         <div class="col">What</div>
