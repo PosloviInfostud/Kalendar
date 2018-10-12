@@ -1,8 +1,12 @@
 <div class="container mt-5">
-    <h1>
-        My meetings
-    </h1>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
+    <h1>My meetings</h1>
+
+<!-- Check if there are any entries in the db -->
+<?php if(empty($meetings)) {
+        echo 'No reservations..';
+} else { ?>
+
     <div class="row p-3 mb-3 text-center align-items-center border-bottom">
         <div class="col-1"><strong>#</strong></div>
         <div class="col-1"><strong>Status</strong></div>
@@ -63,3 +67,5 @@ foreach($meetings as $meeting) { ?>
 </div>
 
 <script src="/js/meetings.js"></script>
+
+<?php } ?>

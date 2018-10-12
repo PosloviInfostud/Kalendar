@@ -267,8 +267,15 @@ class Reservations extends MY_Controller
     public function single_room_reservation($id)
     {
         $meeting = $this->res->single_room_reservation($id);
+        // Check if a reservation exists with that id
+        if(empty($meeting)) {
+            url_redirect('/error_404');
+        }
         $members = $this->res->get_reservation_members($id);
         $user_id = $this->user_data['user']['id'];
+
+        // Check if user is a member of the given reservation
+        $this->permission->is_member_of_reservation($members, $user_id);
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/meetings/single_view', ['meeting' => $meeting, 'members' => $members, 'user_id' => $user_id]);
         $this->load->view('footer');
@@ -276,8 +283,16 @@ class Reservations extends MY_Controller
 
     public function single_equipment_reservation($id)
     {
-        $equipment = $this->res->single_equipment_reservation($id);
         $user_id = $this->user_data['user']['id'];
+        $equipment = $this->res->single_equipment_reservation($id);
+        // Check if reservation exists for that id
+        if(empty($equipment)) {
+            url_redirect('/error_404');
+        // Check if it's the user's reservation
+        } elseif($equipment[0]['user_id'] != $user_id) {
+            echo 'Not your reservation.';
+            die();
+        }
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/equipment/single_view', ['equipment' => $equipment, 'user_id' => $user_id]);
         $this->load->view('footer');
