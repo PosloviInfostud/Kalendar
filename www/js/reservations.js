@@ -58,7 +58,7 @@ $("#search_equipment").click(function(e){
     })
 })
 
-//send ajax search request for free schedule for sepecific room
+//send ajax search request for free schedule for specific room
 
 $("select.select_room").change(function(e){
     $.ajax({
@@ -92,9 +92,9 @@ $("#search_free_termins").click(function(e){
     })
 })
 
-//submit reservation form
+//submit room reservation form
 
-$("body").on('click', "#reservation_submit", function(e) {
+$("body").on('click', "#reservation_room_submit", function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -106,6 +106,7 @@ $("body").on('click', "#reservation_submit", function(e) {
             "title" : $("#reservation_name").val(),
             "description" : $("#reservation_description").val(),
             "members" : $("#members").val()
+
         }
     })
     .done(function(response){
@@ -121,5 +122,31 @@ $("body").on('click', "#reservation_submit", function(e) {
     })
 })
 
+//submit equipment reservation form
+
+$("body").on('click', "#reservation_equipment_submit", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/submit_reservation_equip_form",
+        data: {
+            "start_time" : $("#datetime_start").val(),
+            "end_time" : $("#datetime_end").val(),
+            "description" : $("#reservation_description").val(),
+            "equipment_id" : $(".radio_equipment_id:checked").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#show_errors").html(msg.error);
+        }
+        if(msg.success) {
+            window.location.href = "/dashboard";
+        }
+    })
+})
 
 

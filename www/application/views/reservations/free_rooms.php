@@ -41,7 +41,7 @@
     
         
             </div>
-            <input type="submit" name="submit" id="reservation_submit" class="btn btn-block btn-success" value="Reserve!">
+            <input type="submit" name="submit" id="reservation_room_submit" class="btn btn-block btn-success" value="Reserve!">
 
     <?php 
     }
