@@ -26,3 +26,7 @@ nav, div, p {
 .table th {
     text-align: center;
  }
+
+.text-white {
+    color: white !important;
+}

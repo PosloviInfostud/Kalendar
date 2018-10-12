@@ -14,5 +14,4 @@
     </div>
     <div id="show"></div>
     <script src="/js/reservations.js"></script>
-
 </div>
