@@ -151,18 +151,11 @@ $("select.select_item").change(function(e){
 
 
 //submit equipment reservation form
-
-$("body").on('click', "#reservation_equipment_submit", function(e) {
-    e.preventDefault();
+function submit_equipment_reservation(data) {
     $.ajax({
         method: "POST",
         url: "/reservations/submit_reservation_equip_form",
-        data: {
-            "start_time" : $("#datetime_start").val(),
-            "end_time" : $("#datetime_end").val(),
-            "description" : $("#reservation_description").val(),
-            "equipment_id" : $(".radio_equipment_id:checked").val()
-        }
+        data: data
     })
     .done(function(response){
         console.log(response);
@@ -175,6 +168,24 @@ $("body").on('click', "#reservation_equipment_submit", function(e) {
             window.location.href = "/dashboard";
         }
     })
-})
+}
 
+$("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
+    e.preventDefault();
+    data =  {};
+    data.start_time =  $("#datetime_start").val();
+    data.end_time =  $("#datetime_end").val();
+    data.description =  $("#reservation_description").val();
+    data.equipment_id =  $(".radio_equipment_id:checked").val();
+    submit_equipment_reservation(data);
+    })
 
+$("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
+    e.preventDefault();
+    data =  {};
+    data.start_time =  $("#datetime_start").val();
+    data.end_time =  $("#datetime_end").val();
+    data.description =  $("#reservation_description").val();
+    data.equipment_id =  $(".select_item option:selected").val();
+    submit_equipment_reservation(data);
+    })

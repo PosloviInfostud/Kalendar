@@ -119,7 +119,7 @@ class Reservation_model extends CI_Model
     public function check_if_room_is_free($data)
     {
         $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
-                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
+                WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
                 AND room_id = ? "; 
         $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
 
@@ -134,12 +134,13 @@ class Reservation_model extends CI_Model
     }
 
     public function check_if_equipment_is_free($data)
-    {
+    {  
         $sql = "SELECT COUNT(*) AS reserved FROM equipment_reservations 
-                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
-                AND equipment_id = ? ";
+                WHERE 
+                ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?))
+                AND
+                 equipment_id = ? ";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['equipment_id']]);
-
         if($query->num_rows()) {
             $result = $query->row_array();
         }
