@@ -1,6 +1,6 @@
 <div class="container mt-5">
-    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
     <h1>Equipment reservations</h1>
+    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($equipment)) {

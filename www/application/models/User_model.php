@@ -2,6 +2,47 @@
 
 class User_model extends CI_Model
 {
+    public function register()
+    {
+        $this->load->library('encryption');
+
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'required|valid_email|is_unique[users.email]|trim',
+            array(
+                'required' => 'You have not provided %s.',
+                'valid_email' => 'You need to use a valid email address.',
+                'is_unique' => 'This %s already exists.'
+            )
+        );
+        $this->form_validation->set_rules('password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]');
+
+        $message = [];
+
+        if ($this->form_validation->run() == false) {
+            $message['error'] = validation_errors();
+            $email = $this->input->post('email');
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 0, $message, "R");
+
+        } else {
+            $data = [
+                "name" => $this->input->post('name'),
+                "email" => $this->input->post('email'),
+                "password" => $this->input->post('password')
+            ];
+            $message['user_id'] = $this->create($data);
+            $message['success'] = 'success';
+            $email = $this->input->post('email');
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->user_logs($email, 1, NULL, "R");
+
+        }
+        return $message;
+    }
     public function create($data)
     {
         $activation_key = bin2hex($this->encryption->create_key(16));
@@ -26,6 +67,8 @@ class User_model extends CI_Model
         $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
             Success! Please check your e-mail for the activation link.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        // user_id neccessary for register_by_invitation function in Reg_log controller
+        return $data_log['user_id'];
     }
 
     public function send_activation_mail($email, $key)

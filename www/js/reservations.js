@@ -1,18 +1,3 @@
-//show reservation forms
-
-$(".btn-options").click(function(){
-    $.ajax({
-        method: "POST",
-        url: "/reservations/show_form",
-        data: {
-            "name" : $(this).attr("data-name")
-        }
-    })
-    .done(function(response){
-        $("#show").html(response);
-    })
-})
-
 //load flatpickr
 
 $("#datetime_start, #datetime_end").flatpickr({
@@ -20,10 +5,55 @@ $("#datetime_start, #datetime_end").flatpickr({
     dateFormat: "Y-m-d H:i",
 });
 
-//load select2 plugin
+//load select2 plugin - single
 
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+
+});
+
+//load select2 plugin - multiple
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2(
+                {
+            tags: true,
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                var count = 0
+                var existsVar = false;
+                //check if there is any option already
+                if($('#keywords option').length > 0){
+                    $('#keywords option').each(function(){
+                        if ($(this).text().toUpperCase() == term.toUpperCase()) {
+                            existsVar = true
+                            return false;
+                        }else{
+                            existsVar = false
+                        }
+                    });
+                    if(existsVar){
+                        return null;
+                    }
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newTag: true
+                    }
+                }
+                //since select has 0 options, add new without comparing
+                else{
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newTag: true
+                    }
+                }
+            },
+            maximumInputLength: 50, // only allow terms up to 50 characters long
+            closeOnSelect: true
+        }
+
+    );
 
 });
 
@@ -151,18 +181,11 @@ $("select.select_item").change(function(e){
 
 
 //submit equipment reservation form
-
-$("body").on('click', "#reservation_equipment_submit", function(e) {
-    e.preventDefault();
+function submit_equipment_reservation(data) {
     $.ajax({
         method: "POST",
         url: "/reservations/submit_reservation_equip_form",
-        data: {
-            "start_time" : $("#datetime_start").val(),
-            "end_time" : $("#datetime_end").val(),
-            "description" : $("#reservation_description").val(),
-            "equipment_id" : $(".radio_equipment_id:checked").val()
-        }
+        data: data
     })
     .done(function(response){
         console.log(response);
@@ -175,6 +198,24 @@ $("body").on('click', "#reservation_equipment_submit", function(e) {
             window.location.href = "/dashboard";
         }
     })
-})
+}
 
+$("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
+    e.preventDefault();
+    data =  {};
+    data.start_time =  $("#datetime_start").val();
+    data.end_time =  $("#datetime_end").val();
+    data.description =  $("#reservation_description").val();
+    data.equipment_id =  $(".radio_equipment_id:checked").val();
+    submit_equipment_reservation(data);
+    })
 
+$("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
+    e.preventDefault();
+    data =  {};
+    data.start_time =  $("#datetime_start").val();
+    data.end_time =  $("#datetime_end").val();
+    data.description =  $("#reservation_description").val();
+    data.equipment_id =  $(".select_item option:selected").val();
+    submit_equipment_reservation(data);
+    })

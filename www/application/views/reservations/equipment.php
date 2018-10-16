@@ -22,6 +22,7 @@
         </p>
         </div>
         <button id="search_equipment" class="btn btn-outline-info">Search</button>
+    <div id="show_errors"><?php echo validation_errors(); ?></div>
     <div id="rest"></div>
     </form>
 </div>

@@ -12,12 +12,7 @@
         <textarea class="form-control" name="description" id="reservation_description"></textarea>
     </div>
 
-        <input type="submit" name="submit" id="reservation_equipment_submit" class="btn btn-block btn-success" value="Reserve!">
+        <input type="submit" name="submit" id="reservation_equipment_submit_by_item" class="btn btn-block btn-success" value="Reserve!">
          
 <script src="/js/reservations.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
 
-    });
-</script>

@@ -3,11 +3,11 @@ class Beautify_model extends CI_Model
 {
     public function user_meetings_view_data($data)
     {
-        $result = array();
+        $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
-            $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
+            $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
             $result[$key]['created_at'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
             $result[$key]['description'] = ucfirst($value['description']);
             if (strtotime($value['start_time']) < time()) {
@@ -21,7 +21,7 @@ class Beautify_model extends CI_Model
 
     public function user_equipment_view_data($data)
     {
-        $result = array();
+        $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
@@ -39,7 +39,7 @@ class Beautify_model extends CI_Model
 
     public function room_reservations_view_data($data)
     {
-        $result = array();
+        $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
@@ -53,7 +53,7 @@ class Beautify_model extends CI_Model
 
     public function equipment_reservations_view_data($data)
     {
-        $result = array();
+        $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
@@ -67,10 +67,22 @@ class Beautify_model extends CI_Model
 
     public function preview_description($data)
     {
-        $result = array();
+        $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['description'] = substr(ucfirst($value['description']), 0, 120);
+        }
+        return $result;
+    }
+
+    public function upcoming_meetings_data($data)
+    {
+        $result = [];
+        foreach($data as $key => $value) {
+            $result[$key] = $value;
+            $result[$key]['start_time'] = date('H:i', strtotime($value['start_time']));
+            $result[$key]['end_time'] = date('H:i', strtotime($value['end_time']));
+            $result[$key]['duration'] = round(abs(strtotime($value['end_time']) - strtotime($value['start_time'])) / 60,2);
         }
         return $result;
     }

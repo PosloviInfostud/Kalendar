@@ -1,5 +1,3 @@
-<div id="show_errors"><?php echo validation_errors(); ?></div>
-
         <div class="form-group">
             <p>Which one do you want to reserve?</p>
             <?php
@@ -23,5 +21,5 @@
             <label for="description">Why do you need it?</label>
             <textarea class="form-control" name="description" id="reservation_description"></textarea>
         </div>
-        <input type="submit" name="submit" id="reservation_equipment_submit" class="btn btn-block btn-success" value="Reserve!">
+        <input type="submit" name="submit" id="reservation_equipment_submit_by_date" class="btn btn-block btn-success" value="Reserve!">
 

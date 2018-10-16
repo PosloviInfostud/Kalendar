@@ -13,3 +13,8 @@
         $url = "http://localhost:8090/users/reset_password_form?email=$email&code=$code";
         return $url;    
     }
+    function invitation_registration_link($email, $token)
+    {
+        $url = "http://localhost:8090/reg_log/registration_by_invitation_form?email=$email&code=$token";
+        return $url;  
+    }

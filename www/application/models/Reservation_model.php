@@ -119,7 +119,7 @@ class Reservation_model extends CI_Model
     public function check_if_room_is_free($data)
     {
         $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
-                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
+                WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
                 AND room_id = ? "; 
         $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
 
@@ -134,12 +134,13 @@ class Reservation_model extends CI_Model
     }
 
     public function check_if_equipment_is_free($data)
-    {
+    {  
         $sql = "SELECT COUNT(*) AS reserved FROM equipment_reservations 
-                WHERE (start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?) 
-                AND equipment_id = ? ";
+                WHERE 
+                ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?))
+                AND
+                 equipment_id = ? ";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['equipment_id']]);
-
         if($query->num_rows()) {
             $result = $query->row_array();
         }
@@ -153,6 +154,8 @@ class Reservation_model extends CI_Model
     public function submit_reservation_form($data)
     {
         $user_id = $this->user_data['user']['id'];
+        
+        $data = $this->check_members_reg($data);
 
         $sql = "INSERT INTO room_reservations  
                 (room_id, user_id, start_time, end_time, title, description) 
@@ -182,13 +185,132 @@ class Reservation_model extends CI_Model
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         $this->insert_reservation_members($data);
         $this->insert_creator_into_res_members($data['res_id'], $user_id);
+        $this->insert_unregistered_members($data);
+        $this->invite_members($data['res_id']);
+        $this->invite_unregistered_members($data['res_id']);
+    }
+
+    public function check_members_reg($data)
+    {
+        $data['unregistered'] = [];
+        $data['registered'] = [];
+        foreach($data['members'] as $member) {
+            $sql = "SELECT id FROM users WHERE email = ?";
+            $query = $this->db->query($sql, [$member]);
+
+            if($query->num_rows() == 0) {
+                $data['unregistered'][] = $member;
+            } else {
+                $result = $query->row_array();
+                $data['registered'][] = $result['id'];
+            }
+        }
+        return $data;
+    }
+
+    public function insert_unregistered_members($data)
+    {
+        $this->load->library('encryption');
+        $res_id = $data['res_id'];
+        $user_id = $data['admin'];
+        foreach($data['unregistered'] as $unregistered) {
+
+            $invite_token = bin2hex($this->encryption->create_key(16));
+            $expire = date('Y-m-d h:i:s', strtotime('+2 days'));
+
+            $sql = "INSERT INTO pending_users 
+                    (email, res_id, invited_by, invite_token, invite_token_exp) 
+                    VALUES (?, ?, ?, ?, ?)";
+            $query = $this->db->query($sql, [$unregistered, $res_id, $user_id, $invite_token, $expire]);
+
+            $data_log = [
+                'user_id' => $user_id,
+                'table' => 'pending_users',
+                'type' => 'insert',
+                'value' => [
+                    'email' => $unregistered,
+                    'res_id' => $res_id,
+                    'invite_token' => $invite_token,
+                    'invite_token_exp' => $expire
+                ]
+            ];
+            $this->logs->insert_log($data_log);
+        }
+    }
+
+    public function invite_unregistered_members($res_id)
+    {
+        $result = [];
+        $sql = 'SELECT 
+                users.name as admin_name, 
+                users.email as admin_mail, 
+                room_reservations.start_time as start, 
+                room_reservations.end_time as end, 
+                room_reservations.title as title, 
+                rooms.name as room,
+                pending_users.email as email,
+                pending_users.invite_token as token,
+                pending_users.invite_token_exp as exp
+                FROM pending_users 
+                INNER JOIN users ON users.id = pending_users.invited_by 
+                INNER JOIN room_reservations ON room_reservations.id = pending_users.res_id 
+                INNER JOIN rooms ON room_reservations.room_id = rooms.id
+                WHERE pending_users.res_id = ?';
+        $query = $this->db->query($sql, [$res_id]);
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        foreach ($result as $user) {
+            $this->send_invitation_mail($user);
+        }
+    }
+
+    public function send_invitation_mail($user)
+    {
+        $email = $user['email'];
+        // Set SMTP Configuration
+        $emailConfig = [
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'visnjamarica@gmail.com',
+            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1'
+        ];
+        // Set your email information
+        $from = [
+            'email' => 'visnjamarica@gmail.com',
+            'name' => 'Visnja | Vezba-Token'
+        ];
+        $to = array($email);
+        $subject = 'New meeting|Invitation for Registration';
+        $message = $this->load->view('registration_invitation_mail', $user, true);
+
+        // Load CodeIgniter Email library
+        $this->load->library('email', $emailConfig);
+        // Sometimes you have to set the new line character for better result
+        $this->email->set_newline("\r\n");
+        // Set email preferences
+        $this->email->from($from['email'], $from['name']);
+        $this->email->to($to);
+        $this->email->subject($subject);
+        $this->email->message($message);
+        // Ready to send email and check whether the email was successfully sent
+        if (!$this->email->send()) {
+            // Raise error message
+            show_error($this->email->print_debugger());
+        } else {
+            // Show success notification or other things here
+            // echo 'Success to send email';
+        }
     }
 
     public function insert_reservation_members($data)
     {   
         $res_id = $data['res_id'];
         $user_id = $data['admin'];
-        foreach ($data['members'] as $member) {
+        foreach ($data['registered'] as $member) {
             $sql = "INSERT INTO res_members 
                     (res_id, user_id) 
                     VALUES (?, ?)";
@@ -205,6 +327,8 @@ class Reservation_model extends CI_Model
             $this->logs->insert_log($data_log);
         }
     }
+
+
 
     public function insert_creator_into_res_members($res_id, $user_id)
     {
@@ -419,5 +543,47 @@ class Reservation_model extends CI_Model
             $result = $query->result_array();
             return $result;
         }
+    }
+
+    public function new_registered_member($user_id, $token)
+    {
+        $result = [];
+        $sql = "SELECT res_id FROM pending_users WHERE invite_token = ? ";
+        $query = $this->db->query($sql, [$token]);
+        if ($query->num_rows()){
+            $result = $query->row_array();
+        }
+        $res_id = $result['res_id'];
+        
+        $sql = "INSERT INTO res_members (res_id, user_id) 
+                VALUES (?, ?)";
+        $query = $this->db->query($sql, [$res_id, $user_id]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'insert',
+            'value' => [
+                'res_id' => $res_id,
+                'member' => $user_id
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+
+        $sql = "UPDATE pending_users 
+                SET registered = 1, invite_token = '', modified_at = NOW() 
+                WHERE invite_token = ?";
+        $query = $this->db->query($sql, [$token]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'pending_users',
+            'type' => 'update',
+            'value' => [
+                'registered' => "1",
+                'invite_token' => ""
+            ]
+        ];
+        $this->logs->insert_log($data_log);
     }
 }
