@@ -13,29 +13,38 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <link rel="stylesheet" href="/style/style.css">
-    <title><?= isset($title) ? "$title" : "Kalendar | Infostud" ?></title>
+    <?= isset($header) ? "$header" : NULL ?>
+    <title><?= isset($title) ? "$title | Kalendar" : "Kalendar | Infostud" ?></title>
 </head>
 <body>
+<!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Kalendar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
             </ul>
             <?php
-                if($token != NULL) { ?>
+                if($user_data['token'] != NULL) { ?>
                     <div class="row align-items-center">
                         <div class="col"><a href="/dashboard"><i class="fas fa-home fa-lg text-secondary"></i></a></div>
                         <div class="col"><a href="/profile"><i class="far fa-user-circle fa-lg text-secondary"></i></a></div>
-                        <?= ($user['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
+                        <?= ($user_data['user']['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
                         <div class="col"><a class="btn btn-danger btn-sm" href="/logout">Logout</a></div>
                     </div>
                 <?php }
                 ?>
         </div>
     </nav>
+<!-- CONTENT -->
+    <?php $this->load->view($content, isset($content_data) ? $content_data : NULL); ?>
+<!-- FOOTER -->
+    <?= isset($footer) ? "$footer" : NULL ?>
+    <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+</body>
+</html>

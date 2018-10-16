@@ -7,7 +7,7 @@ class Beautify_model extends CI_Model
         foreach($data as $key => $value) {
             $result[$key] = $value;
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
-            $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
+            $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
             $result[$key]['created_at'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
             $result[$key]['description'] = ucfirst($value['description']);
             if (strtotime($value['start_time']) < time()) {
