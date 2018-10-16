@@ -7,18 +7,16 @@ services:
           - 8090:80
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
-          - ../www:/var/www/
+          - ../:/var/www/
         depends_on:
           - php
-
     php:
         build: .docker/php
         container_name: calendar_php
         volumes:
-          - ../www:/var/www/
+          - ../:/var/www/
         depends_on:
           - mysql
-
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
         container_name: calendar_phpmyadmin
@@ -29,7 +27,6 @@ services:
             - 8091:80
         links:
             - mysql
-
     mysql:
          image: mysql
          command: mysqld --default-authentication-plugin=mysql_native_password
@@ -44,6 +41,5 @@ services:
            MYSQL_DATABASE: calendar
            MYSQL_USER: root
            MYSQL_PASSWORD: root
-
 volumes:
     calendar-data:
