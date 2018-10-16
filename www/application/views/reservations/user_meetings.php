@@ -1,24 +1,25 @@
 <div class="container mt-5">
-    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
     <h1>My meetings</h1>
+    <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
+
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($meetings)) {
         echo 'No reservations..';
 } else { ?>
 
-    <div class="row p-3 mb-3 text-center align-items-center border-bottom">
+    <div class="row py-3 mb-3 text-center align-items-center border-bottom">
         <div class="col-1"><strong>#</strong></div>
         <div class="col-1"><strong>Status</strong></div>
         <div class="col-3">When</div>
         <div class="col"><strong>Where</strong></div>
-        <div class="col-4">Title</div>
+        <div class="col-3">Title</div>
         <div class="col-1">#</div>
         <div class="col-1">Created by</div>
     </div>
 <?php
 foreach($meetings as $meeting) { ?>
-    <div class="text-sm row p-3 mb-2 text-center align-items-center text-white meeting-card <?= ($meeting['user_id'] == $meeting['creator_id']) ? 'bg-info' : 'bg-secondary' ?>">
+    <div class="text-sm row py-2 mb-2 text-center align-items-center text-white meeting-card <?= ($meeting['user_id'] == $meeting['creator_id']) ? 'bg-info' : 'bg-secondary' ?>">
         <div class="col-1"><a href="/reservations/meetings/<?= $meeting['res_id'] ?>"><i class="far fa-clipboard fa-lg text-white"></i></a></div>
         <div class="col-1"><?= $meeting['status'] ?></div>
         <div class="col-3"><?= $meeting['start_time'] ?></div>
