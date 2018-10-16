@@ -1,18 +1,3 @@
-//show reservation forms
-
-$(".btn-options").click(function(){
-    $.ajax({
-        method: "POST",
-        url: "/reservations/show_form",
-        data: {
-            "name" : $(this).attr("data-name")
-        }
-    })
-    .done(function(response){
-        $("#show").html(response);
-    })
-})
-
 //load flatpickr
 
 $("#datetime_start, #datetime_end").flatpickr({
@@ -20,10 +5,55 @@ $("#datetime_start, #datetime_end").flatpickr({
     dateFormat: "Y-m-d H:i",
 });
 
-//load select2 plugin
+//load select2 plugin - single
 
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
+
+});
+
+//load select2 plugin - multiple
+$(document).ready(function() {
+    $('.js-example-basic-multiple').select2(
+                {
+            tags: true,
+            createTag: function (params) {
+                var term = $.trim(params.term);
+                var count = 0
+                var existsVar = false;
+                //check if there is any option already
+                if($('#keywords option').length > 0){
+                    $('#keywords option').each(function(){
+                        if ($(this).text().toUpperCase() == term.toUpperCase()) {
+                            existsVar = true
+                            return false;
+                        }else{
+                            existsVar = false
+                        }
+                    });
+                    if(existsVar){
+                        return null;
+                    }
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newTag: true
+                    }
+                }
+                //since select has 0 options, add new without comparing
+                else{
+                    return {
+                        id: params.term,
+                        text: params.term,
+                        newTag: true
+                    }
+                }
+            },
+            maximumInputLength: 50, // only allow terms up to 50 characters long
+            closeOnSelect: true
+        }
+
+    );
 
 });
 

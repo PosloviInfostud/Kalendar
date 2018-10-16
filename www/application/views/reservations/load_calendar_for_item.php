@@ -15,9 +15,4 @@
         <input type="submit" name="submit" id="reservation_equipment_submit_by_item" class="btn btn-block btn-success" value="Reserve!">
          
 <script src="/js/reservations.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.js-example-basic-multiple').select2();
 
-    });
-</script>

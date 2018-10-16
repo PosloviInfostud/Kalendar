@@ -34,10 +34,11 @@ $("#register_form").submit(function(e){
         }
     })
     .done(function(response){
-        if(response === 'success') {
+        msg = JSON.parse(response);
+        if(msg.success === 'success') {
             window.location.href = "/login"
         } else {
-            $("#messages").html(response);
+            $("#messages").html(msg.error);
         }
     })
 })
@@ -111,5 +112,28 @@ $("#form_reset_password").submit(function(e){
             $("#msgs").html(response);
         }
 
+    })
+})
+
+// Register user
+$("#register_by_invite_form").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reg_log/register_by_invitation",
+        data: {
+            "name" : $("#register_name").val(),
+            "email" : $("#register_email").val(),
+            "password" : $("#register_password").val(),
+            "password_confirm" : $("#register_password_confirm").val(),
+            "token" : $("#token").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            window.location.href = "/login"
+        } else {
+            $("#messages").html(response);
+        }
     })
 })

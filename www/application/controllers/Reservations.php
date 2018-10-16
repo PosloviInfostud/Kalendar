@@ -166,8 +166,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('room', 'Room', 'trim|required');
         $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
-        $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required');
-
+        $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
 

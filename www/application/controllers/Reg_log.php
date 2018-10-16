@@ -16,45 +16,13 @@ class Reg_log extends MY_Controller
 
     public function register()
     {
-        $this->load->library('encryption');
+        $message = $this->user->register();
 
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules(
-            'email',
-            'Email',
-            'required|valid_email|is_unique[users.email]|trim',
-            array(
-                'required' => 'You have not provided %s.',
-                'valid_email' => 'You need to use a valid email address.',
-                'is_unique' => 'This %s already exists.'
-            )
-        );
-        $this->form_validation->set_rules('password', 'Password', 'required|trim');
-        $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]');
-
-        $message = '';
-
-        if ($this->form_validation->run() == false) {
-            $message = validation_errors();
-            $email = $this->input->post('email');
-            $this->load->model('Logs_model', 'logs');
-            $this->logs->user_logs($email, 0, $message, "R");
-
-        } else {
-            $data = [
-                "name" => $this->input->post('name'),
-                "email" => $this->input->post('email'),
-                "password" => $this->input->post('password')
-            ];
-            $this->user->create($data);
-            $message = 'success';
-            $email = $this->input->post('email');
-            $this->load->model('Logs_model', 'logs');
-            $this->logs->user_logs($email, 1, NULL, "R");
-        }
-        // Send response to ajax
-        echo $message;
+        echo json_encode($message);
     }
+
+
+
 
     public function activate()
     {
@@ -226,5 +194,24 @@ class Reg_log extends MY_Controller
         $this->load->helper('cookie');
         delete_cookie('usr-vezba');
         url_redirect('/login');
+    }
+
+    public function registration_by_invitation_form()
+    {
+        $data['email'] = $this->input->get('email');
+        $data['token'] = $this->input->get('code');
+
+        $this->load->view('header', $this->user_data);
+        $this->load->view('registration_by_invitation', $data);
+    }
+
+    public function register_by_invitation()
+    {
+        $token = $this->input->post('token');
+        $user_id = $this->user->register()['user_id']; 
+        $this->load->model('User_model','user');
+        $this->user->activate($user_id);
+        $this->load->model('Reservation_model','res');
+        $this->res->new_registered_member($user_id, $token);
     }
 }
