@@ -7,14 +7,14 @@ services:
           - 8090:80
         volumes:
           - .docker/config/vhosts:/etc/apache2/sites-enabled
-          - ../:/var/www/
+          - ../www:/var/www/
         depends_on:
           - php
     php:
         build: .docker/php
         container_name: calendar_php
         volumes:
-          - ../:/var/www/
+          - ../www:/var/www/
         depends_on:
           - mysql
     phpmyadmin:
