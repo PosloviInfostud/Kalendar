@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <?= $this->layouts->print_header_includes() ?>
     <link rel="stylesheet" href="/style/style.css">
-    <?= isset($header) ? "$header" : NULL ?>
-    <title><?= isset($title) ? "$title | Kalendar" : "Kalendar | Infostud" ?></title>
+    <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body>
 <!-- NAVBAR -->
@@ -29,11 +29,11 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <?php
-                if($user_data['token'] != NULL) { ?>
+                if($this->user_data['token'] != NULL) { ?>
                     <div class="row align-items-center">
                         <div class="col"><a href="/dashboard"><i class="fas fa-home fa-lg text-secondary"></i></a></div>
                         <div class="col"><a href="/profile"><i class="far fa-user-circle fa-lg text-secondary"></i></a></div>
-                        <?= ($user_data['user']['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
+                        <?= ($this->user_data['user']['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
                         <div class="col"><a class="btn btn-danger btn-sm" href="/logout">Logout</a></div>
                     </div>
                 <?php }
@@ -41,9 +41,9 @@
         </div>
     </nav>
 <!-- CONTENT -->
-    <?php $this->load->view($content, isset($content_data) ? $content_data : NULL); ?>
+    <?= $content_for_layout ?>
 <!-- FOOTER -->
-    <?= isset($footer) ? "$footer" : NULL ?>
+    <?= $this->layouts->print_header_includes() ?>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
 </body>

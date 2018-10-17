@@ -17,13 +17,13 @@ class Users extends MY_Controller
 
     public function dashboard()
     {
-        $data = [
-            'title' => 'Dashboard',
-            'content' => 'users/dashboard',
-            'user_data' => $this->user_data
-        ];
+        $this->layouts->set_title('Dashboard');                      
+        $this->layouts->view('users/dashboard');
 
-        $this->load->view($this->layout, $data);
+        // $this->load->view('header');
+        // $this->load->view('users/dashboard');
+        // $this->load->view('footer');
+
     }
 
     public function edit()
