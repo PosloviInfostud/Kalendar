@@ -121,9 +121,7 @@ class Reservations extends MY_Controller
         $free = $this->res->check_if_room_is_free($data);
 
         echo $free;
-
         }
-
     }
 
     public function search_free_equipment()
@@ -144,11 +142,9 @@ class Reservations extends MY_Controller
             ];
             $free_equipment = $this->res->search_free_equipment($data);
             $view = $this->load->view('reservations/free_equipment',["items" => $free_equipment], true);
-    
+            
             echo $view;
         }
-
-
     }
 
     public function submit_reservation_form()

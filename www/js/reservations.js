@@ -1,8 +1,64 @@
-//load flatpickr
+/* Flatpickr */
 
-$("#datetime_start, #datetime_end").flatpickr({
-    enableTime: true,
+// Load flatpickr for room reservations
+let fpRoomStartDate = $("#datetime_start").flatpickr({
     dateFormat: "Y-m-d H:i",
+    minDate: new Date(),
+    // defaultDate: new Date(),
+    enableTime: true,
+    time_24hr: true,
+    minTime: "08:00",
+    maxTime: "18:00",
+    altInput: true,
+    altInputClass: '',
+    altFormat: "D @ H:i (d/n)",
+    onOpen: [function(dateStr, dateObj) {
+        this.set("defaultDate", new Date());
+    }],
+    onChange: [function(dateStr, dateObj) {
+            fpRoomEndDate.set("minDate", dateObj);
+    }]
+});
+
+let fpRoomEndDate = $("#datetime_end").flatpickr({
+    dateFormat: "Y-m-d H:i",
+    minDate: new Date(),
+    enableTime: true,
+    noCalendar: true,
+    time_24hr: true,
+    minTime: "08:00",
+    maxTime: "18:00",
+    altInput: true,
+    altInputClass: '',
+	altFormat: "H:i",
+});
+
+// Load flatpickr for equipment reservations
+let fpItemStartDate = $("#item_datetime_start").flatpickr({
+    dateFormat: "Y-m-d H:i",
+    minDate: new Date(),
+    // defaultDate: new Date(),
+    enableTime: true,
+    time_24hr: true,
+    altInput: true,
+    altInputClass: '',
+    altFormat: "d/m/y @ H:i",
+    onOpen: [function(dateStr, dateObj) {
+        this.set("defaultDate", new Date());
+    }],
+    onChange: [function(dateStr, dateObj) {
+            fpItemEndDate.set("minDate", dateObj);
+    }]
+});
+
+let fpItemEndDate = $("#item_datetime_end").flatpickr({
+    dateFormat: "Y-m-d H:i",
+    minDate: new Date(),
+    enableTime: true,
+    time_24hr: true,
+    altInput: true,
+    altInputClass: '',
+	altFormat: "d/m/y @ H:i",
 });
 
 //load select2 plugin - single
