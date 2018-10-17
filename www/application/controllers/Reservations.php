@@ -319,6 +319,7 @@ class Reservations extends MY_Controller
         $data['name'] = $this->input->post('name');
         $data['role_id'] = $this->input->post('role_id');
         $data['role_name'] = $this->input->post('role_name');
+        $data['creator'] = $this->input->post('creator');
 
         $view = $this->load->view('reservations/meetings/update_user_role', $data, true);
 
@@ -330,6 +331,7 @@ class Reservations extends MY_Controller
         $data['user_id'] = $this->input->post('user_id');
         $data['res_id'] = $this->input->post('res_id');
         $data['role_id'] = $this->input->post('res_role_id');
+        $data['creator'] = $this->input->post('creator');
         $this->res->update_user_role($data);
     }
 
@@ -339,6 +341,15 @@ class Reservations extends MY_Controller
         $data['member'] = $this->input->post('user_id');
         $data['creator'] = $this->input->post('creator');
         $this->res->delete_res_member($data);
+    }
+
+    public function show_add_new_member_form()
+    {
+        $data['res_id'] = $this->input->post('res_id');
+        $data['users'] = $this->res->get_users_not_res_members($data['res_id']);
+        $view = $this->load->view('reservations/meetings/add_new_member_form', $data, true);
+
+        echo $view;
     }
 
     public function update_room_reservation()

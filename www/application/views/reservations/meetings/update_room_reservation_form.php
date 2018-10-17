@@ -50,9 +50,16 @@
                     <th scope="row"><?= $i ?></th>
                     <td class="text-center"><?= $member['name'] ?></td>
                     <td><?= $member['email'] ?></td>
+
+                    <!-- Check who is creator of the reservation and unabling his update or deletion -->
+                    <?php if($meeting['creator_id'] != $member['user_id']) { ?>
                     <td><?= $member['role'] ?></td>
-                    <td><button class="btn btn-info btn-sm float-right mx-1 role_edit" data-roleid="<?= $member['res_role_id'] ?>"  data-rolename="<?= $member['role'] ?>"data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"><i class="fas fa-marker"></i></button></td>
+                    <td><button class="btn btn-info btn-sm float-right mx-1 role_edit" data-roleid="<?= $member['res_role_id'] ?>"  data-rolename="<?= $member['role'] ?>"data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"  data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-marker"></i></button></td>
                     <td><button class="btn btn-danger btn-sm float-left mx-1 member_delete" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-minus-circle"></i></button></td>
+                    <?php }  else { ?>
+                    <td colspan="3" class="text-center">CREATOR (cannot be updated or deleted)</td>
+                    <?php } ?>
+                    
                     </tr>
                     <?php $i++; } ?> 
 
@@ -62,14 +69,14 @@
         <!-- Delete Reservation Member Errors -->
         <div id="del_error_msg" class="text-danger"></div>
         <div class="form-group">
-            <button class="btn btn-info float-right mx-4 my-2" data-toggle="modal" data-target="#addNewMember"><i class="fas fa-plus-circle mr-1"></i> Add new member</button>
+            <button id="btn_add_new_member" class="btn btn-info float-right mx-4 my-2" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>"><i class="fas fa-plus-circle mr-1"></i> Add new member</button>
         </div>
 
         <input type="submit" name="submit" id="form_update_room_reservation_submit" class="btn btn-block btn-success" value="Update">
 
     </form>
 </div>
-<!-- Edit User Role -->
+<!-- Edit Member Role -->
 <div class="modal fade" id="editUserRoleModal" tabindex="-1" role="dialog" aria-labelledby="editUserRoleModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -82,6 +89,24 @@
       <div class="modal-body">
         <small id="edit_error_msg" class="text-danger"></small>
         <div id="edit_user_role_modal_body"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add New Member -->
+<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add new member to this meeting</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <small id="add_member_error_msg" class="text-danger"></small>
+        <div id="add_member_modal_body"></div>
       </div>
     </div>
   </div>

@@ -9,6 +9,8 @@
         </div>
         <input type="hidden" name="user_id" id="update_user_role_form_user_id" value="<?= $user_id ?>">
         <input type="hidden" name="res_id" id="update_user_role_form_res_id" value="<?= $res_id ?>">
+        <input type="hidden" name="creator" id="update_user_role_form_creator" value="<?= $creator ?>">
+
         <input type="submit" value="Change role" class="btn btn-info col-6">
     </form>
 </div>

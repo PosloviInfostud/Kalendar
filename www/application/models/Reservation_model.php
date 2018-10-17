@@ -103,7 +103,6 @@ class Reservation_model extends CI_Model
 
     public function show_users_for_invitation()
     {
-        $cookie = $this->user_data['token'];
         $admin = $this->user_data['user']['id'];
 
         $sql = "SELECT id, name, email FROM users WHERE id != ?";
@@ -590,22 +589,31 @@ class Reservation_model extends CI_Model
 
     public function update_user_role($data)
     {
-        $sql = "UPDATE res_members SET res_role_id = ? WHERE res_id = ? AND user_id = ?";
-        $query = $this->db->query($sql, [$data['role_id'], $data['res_id'], $data['user_id']]);
+        if($data['creator'] == $data['user_id']) {
+            $message['error'] = "You cannot change the role for the creator of the meeting!";
 
-        $user_id = $this->user_data['user']['id'];
-        $data_log = [
-            'user_id' => $user_id,
-            'table' => 'res_members',
-            'type' => 'update',
-            'value' => [
-                'res_id' => $data['res_id'],
-                'user_id' => $data['user_id'],
-                'res_role_id' => $data['role_id']
-            ]
-        ];
-        $this->load->model('Logs_model', 'logs');
-        $this->logs->insert_log($data_log);
+        } else {
+            $sql = "UPDATE res_members SET res_role_id = ? WHERE res_id = ? AND user_id = ?";
+            $query = $this->db->query($sql, [$data['role_id'], $data['res_id'], $data['user_id']]);
+    
+            $user_id = $this->user_data['user']['id'];
+            $data_log = [
+                'user_id' => $user_id,
+                'table' => 'res_members',
+                'type' => 'update',
+                'value' => [
+                    'res_id' => $data['res_id'],
+                    'user_id' => $data['user_id'],
+                    'res_role_id' => $data['role_id']
+                ]
+            ];
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->insert_log($data_log);
+
+            $message['success'] = "success";
+        }
+        echo json_encode($message);
+
 
     }
 
@@ -636,5 +644,30 @@ class Reservation_model extends CI_Model
             $message['success'] = "success";
         }
         echo json_encode($message);
+    }
+
+    function get_users_not_res_members($id)
+    {
+        $members = [];
+        $result = [];
+        $sql = "SELECT user_id FROM res_members WHERE res_id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        foreach ($result as $row) {
+            $members[] = $row['user_id'];
+        }
+        $members = implode(",", $members);
+
+        $sql = "SELECT id, name, email FROM users WHERE id NOT IN (".$members.")";
+        $query = $this->db->query($sql);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+
+        return $result;
     }
 }

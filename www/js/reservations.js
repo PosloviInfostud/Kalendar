@@ -232,7 +232,9 @@ $("body").on('click','.role_edit', function(e) {
             res_id: $(this).attr("data-res"),
             name: $(this).attr("data-name"),
             role_id: $(this).attr("data-roleid"),
-            role_name: $(this).attr("data-rolename")
+            role_name: $(this).attr("data-rolename"),
+            creator : $(this).attr("data-creator")
+
         }
     }).done(function(response) {
         $('#edit_user_role_modal_body').html(response);
@@ -251,7 +253,8 @@ $("body").on('submit', '#update_user_role_form', function(e) {
         data: {
             "res_id" : $("#update_user_role_form_res_id").val(),
             "user_id" : $("#update_user_role_form_user_id").val(),
-            "res_role_id" : $("#select_role").val()
+            "res_role_id" : $("#select_role").val(),
+            "creator" : $("#update_user_role_form_creator").val()
         }
     }).done(function(response){
         location.reload();
@@ -282,4 +285,21 @@ $("body").on('click', '.member_delete', function(e) {
             }
         })
     }
+})
+
+//add new member show form modal
+
+$("body").on('click', '#btn_add_new_member', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/show_add_new_member_form",
+        data: {
+            'res_id': $(this).attr("data-res")
+        }
+    }).done(function(response){
+        $('#add_member_modal_body').html(response);
+        // show modal
+        $('#addMemberModal').modal('show');   
+    })
 })
