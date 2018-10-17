@@ -296,4 +296,62 @@ class Reservations extends MY_Controller
         $this->load->view('reservations/equipment/single_view', ['equipment' => $equipment, 'user_id' => $user_id]);
         $this->load->view('footer');
     }
+
+    public function update_room_reservation_form($id)
+    {
+        $meeting = $this->res->single_room_reservation($id);
+        // Check if a reservation exists with that id
+        if(empty($meeting)) {
+            url_redirect('/error_404');
+        }
+        $members = $this->res->get_reservation_members($id);
+        $this->load->model('Admin_model','admin');
+        $rooms = $this->admin->get_all_rooms();
+        $user_id = $this->user_data['user']['id'];
+
+        // Check if user is a member of the given reservation
+        $this->permission->is_member_of_reservation($members, $user_id);
+        $this->load->view('header', $this->user_data);
+        $this->load->view('reservations/meetings/update_room_reservation_form', ['meeting' => $meeting[0], 'members' => $members, 'user_id' => $user_id, 'rooms' => $rooms]);
+        $this->load->view('footer');
+    }
+
+    public function show_update_user_role_form()
+    {
+        $data['user_id'] = $this->input->post('user_id');
+        $data['res_id'] = $this->input->post('res_id');
+        $data['name'] = $this->input->post('name');
+        $data['role_id'] = $this->input->post('role_id');
+        $data['role_name'] = $this->input->post('role_name');
+
+        $view = $this->load->view('reservations/meetings/update_user_role', $data, true);
+
+        echo $view;
+    }
+
+    public function update_user_role()
+    {
+        $data['user_id'] = $this->input->post('user_id');
+        $data['res_id'] = $this->input->post('res_id');
+        $data['role_id'] = $this->input->post('res_role_id');
+        $this->res->update_user_role($data);
+    }
+
+    public function delete_res_member()
+    {
+        $data['res'] = $this->input->post('res_id');
+        $data['member'] = $this->input->post('user_id');
+        $data['creator'] = $this->input->post('creator');
+        $this->res->delete_res_member($data);
+    }
+
+    public function update_room_reservation()
+    {
+
+    }
+
+    public function delete_room_reservation($id)
+    {
+
+    }
 }

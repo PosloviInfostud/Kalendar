@@ -533,9 +533,10 @@ class Reservation_model extends CI_Model
     public function get_reservation_members($id)
     {
         $result = [];
-        $sql = 'SELECT mem.user_id, mem.res_role_id, u.name, u.email FROM res_members AS mem
-                INNER JOIN users AS u ON u.id = mem.user_id
-                WHERE mem.res_id = ?
+        $sql = 'SELECT mem.user_id, mem.res_role_id, r.name AS role, u.name, u.email FROM res_members AS mem
+                INNER JOIN users AS u ON u.id = mem.user_id 
+                INNER JOIN res_roles AS r ON r.id = mem.res_role_id
+                WHERE mem.res_id = ? AND mem.deleted = 0 
                 ORDER BY mem.res_role_id ASC';
         $query = $this->db->query($sql, [$id]);
 
@@ -585,5 +586,55 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+    }
+
+    public function update_user_role($data)
+    {
+        $sql = "UPDATE res_members SET res_role_id = ? WHERE res_id = ? AND user_id = ?";
+        $query = $this->db->query($sql, [$data['role_id'], $data['res_id'], $data['user_id']]);
+
+        $user_id = $this->user_data['user']['id'];
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'update',
+            'value' => [
+                'res_id' => $data['res_id'],
+                'user_id' => $data['user_id'],
+                'res_role_id' => $data['role_id']
+            ]
+        ];
+        $this->load->model('Logs_model', 'logs');
+        $this->logs->insert_log($data_log);
+
+    }
+
+    public function delete_res_member($data)
+    {
+        if($data['creator'] == $data['member']) {
+            $message['error'] = "You cannot delete the creator of the meeting!";
+
+        } else {
+            $sql = "UPDATE res_members 
+                    SET deleted = 1 
+                    WHERE res_id = ? AND user_id = ?";
+            $query = $this->db->query($sql, [$data['res'], $data['member']]);
+
+            $user_id = $this->user_data['user']['id'];
+            $data_log = [
+                'user_id' => $user_id,
+                'table' => 'res_members',
+                'type' => 'delete',
+                'value' => [
+                    'res_id' => $data['res'],
+                    'user_id' => $data['member'],
+                ]
+            ];
+            $this->load->model('Logs_model', 'logs');
+            $this->logs->insert_log($data_log);
+            
+            $message['success'] = "success";
+        }
+        echo json_encode($message);
     }
 }

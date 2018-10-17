@@ -219,3 +219,67 @@ $("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
     data.equipment_id =  $(".select_item option:selected").val();
     submit_equipment_reservation(data);
     })
+
+//load update user reservation role form modal
+
+$("body").on('click','.role_edit', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/show_update_user_role_form",
+        data: {
+            user_id: $(this).attr("data-user"),
+            res_id: $(this).attr("data-res"),
+            name: $(this).attr("data-name"),
+            role_id: $(this).attr("data-roleid"),
+            role_name: $(this).attr("data-rolename")
+        }
+    }).done(function(response) {
+        $('#edit_user_role_modal_body').html(response);
+        // show modal
+        $('#editUserRoleModal').modal('show');    
+    })
+})
+
+//submit update user reservation role
+
+$("body").on('submit', '#update_user_role_form', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/update_user_role",
+        data: {
+            "res_id" : $("#update_user_role_form_res_id").val(),
+            "user_id" : $("#update_user_role_form_user_id").val(),
+            "res_role_id" : $("#select_role").val()
+        }
+    }).done(function(response){
+        location.reload();
+    })
+})
+
+//click on delete reservation member button
+
+$("body").on('click', '.member_delete', function(e) {
+    e.preventDefault();
+    if (!confirm("Are you sure you want to delete this user from this meeting? Notification email will be sent.")) {
+        return false;
+    } else {
+        $.ajax({
+            method: "POST",
+            url: "/reservations/delete_res_member",
+            data: {
+                "res_id" : $(this).attr("data-res"),
+                "user_id" : $(this).attr("data-user"),
+                "creator" : $(this).attr("data-creator")
+            }
+        }).done(function(response){
+            msg = JSON.parse(response);
+            if(msg.error) {
+                $("#del_error_msg").html(msg.error);
+            } else {
+                location.reload();
+            }
+        })
+    }
+})
