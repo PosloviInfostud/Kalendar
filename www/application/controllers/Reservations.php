@@ -268,8 +268,13 @@ class Reservations extends MY_Controller
         $this->permission->is_member_of_reservation($members, $user_id);
 
         // Build and load view
+        $data = [
+            'meeting' => $meeting,
+            'members' => $members,
+            'user_id' => $user_id
+        ];
         $this->layouts->set_title($meeting[0]['title']);
-        $this->layouts->view('reservations/meetings/single_view', ['meeting' => $meeting, 'members' => $members, 'user_id' => $user_id]);
+        $this->layouts->view('reservations/meetings/single_view', $data);
     }
 
     public function single_equipment_reservation($id)
