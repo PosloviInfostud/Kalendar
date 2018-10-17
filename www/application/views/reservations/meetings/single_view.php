@@ -8,7 +8,7 @@
         </div>
         <div>
             <?php if($user_id == $meeting[0]['creator_id']) { ?>
-                <a href="#"><button class="btn btn-info">Edit</button></a><a href="#"><button class="btn btn-danger ml-2">Delete</button></a>
+                <a href="/reservations/update_room_reservation_form/<?= $meeting[0]['id'] ?>"><button class="btn btn-info">Edit</button></a><a href="/reservations/delete_room_reservation/<?= $meeting[0]['id'] ?>"><button class="btn btn-danger ml-2">Delete</button></a>
             <?php } ?>
         </div>
     </div>
