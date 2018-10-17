@@ -13,9 +13,8 @@ class Admin extends MY_Controller
 
     public function index()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('admin/index');
-        $this->load->view('footer');
+        $this->layouts->set_title('Admin Dashboard');
+        $this->layouts->view('admin/index');
     }
 
     public function show_room_reservations()

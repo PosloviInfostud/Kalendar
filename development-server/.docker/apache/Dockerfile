@@ -16,4 +16,5 @@ ServerName localhost \
 ' /etc/apache2/apache2.conf
 EXPOSE 80 443
 RUN rm -f /run/apache2/apache2.pid
+RUN ln -fs /usr/share/zoneinfo/Europe/Belgrade /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 CMD apachectl  -DFOREGROUND -e info

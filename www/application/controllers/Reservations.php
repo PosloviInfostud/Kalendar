@@ -14,50 +14,43 @@ class Reservations extends MY_Controller
 
     public function index()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/index');
-        $this->load->view('footer');
+        $this->layouts->set_title('Reservations');
+        $this->layouts->view('reservations/index');
     }
 
     public function create_reservation()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/create_reservation');
-        $this->load->view('footer');
+        $this->layouts->set_title('Make a New Reservation');
+        $this->layouts->view('reservations/create_reservation');
     }
 
     public function form_rooms()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/rooms');
-        $this->load->view('footer');
+        $this->layouts->set_title('Room Reservation');
+        $this->layouts->view('reservations/rooms');
     }
 
     public function form_specific_room()
     {
         $this->load->model('Admin_model','admin');
         $rooms = $this->admin->get_all_rooms();
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/specific_room',["rooms" => $rooms]);
-        $this->load->view('footer');
+        $this->layouts->set_title('Room Reservation');
+        $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
     }
 
     public function form_equip()
     {
         $data['equips'] = $this->res->get_all_equipment();
-
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/equipment', $data);
-        $this->load->view('footer');
+        $this->layouts->set_title('Equipment Reservation');
+        $this->layouts->view('reservations/equipment', $data);
     }
 
     public function form_specific_equip()
     {
         $this->load->model('Admin_model','admin');
         $equipment = $this->admin->get_all_equipment();
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/specific_equipment',["equipment" => $equipment]);
-        $this->load->view('footer');
+        $this->layouts->set_title('Item Reservation');
+        $this->layouts->view('reservations/specific_equipment',["equipment" => $equipment]);
     }
 
     public function search_free_rooms()
@@ -241,9 +234,8 @@ class Reservations extends MY_Controller
     public function room_reservations_by_user()
     {
         $meetings = $this->res->room_reservations_by_user($this->user_data['user']['id']);
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/user_meetings', ['meetings' => $meetings]);
-        $this->load->view('footer');
+        $this->layouts->set_title('Active Reservations');
+        $this->layouts->view('reservations/user_meetings', ['meetings' => $meetings]);
     }
 
     public function get_reservation_members()
@@ -258,9 +250,8 @@ class Reservations extends MY_Controller
     public function equipment_reservations_by_user()
     {
         $equipment = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/user_equipment', ['equipment' => $equipment]);
-        $this->load->view('footer');
+        $this->layouts->set_title('Active Reservations');
+        $this->layouts->view('reservations/user_equipment', ['equipment' => $equipment]);
     }
 
     public function single_room_reservation($id)
@@ -275,9 +266,15 @@ class Reservations extends MY_Controller
 
         // Check if user is a member of the given reservation
         $this->permission->is_member_of_reservation($members, $user_id);
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/meetings/single_view', ['meeting' => $meeting, 'members' => $members, 'user_id' => $user_id]);
-        $this->load->view('footer');
+
+        // Build and load view
+        $data = [
+            'meeting' => $meeting,
+            'members' => $members,
+            'user_id' => $user_id
+        ];
+        $this->layouts->set_title($meeting[0]['title']);
+        $this->layouts->view('reservations/meetings/single_view', $data);
     }
 
     public function single_equipment_reservation($id)
@@ -292,9 +289,8 @@ class Reservations extends MY_Controller
             echo 'Not your reservation.';
             die();
         }
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/equipment/single_view', ['equipment' => $equipment, 'user_id' => $user_id]);
-        $this->load->view('footer');
+        $this->layouts->set_title($equipment[0]['item_name'] . ' Reservation');
+        $this->layouts->view('reservations/equipment/single_view', ['equipment' => $equipment[0], 'user_id' => $user_id]);
     }
 
     public function update_room_reservation_form($id)

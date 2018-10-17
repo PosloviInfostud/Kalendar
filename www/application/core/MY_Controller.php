@@ -1,6 +1,8 @@
 <?php
 class MY_Controller extends CI_Controller
 {
+    public $layout;
+
     public function __construct()
     {
         parent::__construct();
@@ -12,5 +14,7 @@ class MY_Controller extends CI_Controller
             'token' => $token,
             'user' => $user_data
         ];
+        
+        $this->load->library('Layouts');
     }
 }

@@ -8,6 +8,7 @@ RUN apt-get update \
 
 RUN docker-php-ext-install mysqli
 
+COPY datetime-conf.ini /usr/local/etc/php/conf.d/datetime-conf.ini
 COPY php.ini /etc/php/7.2.3/php.ini
 COPY php-fpm-pool.conf /etc/php/7.2.3/pool.d/www.conf
 
@@ -18,6 +19,8 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     echo "fr_FR.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
+
+RUN ln -fs /usr/share/zoneinfo/Europe/Belgrade /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
 
 WORKDIR /var/www
 ##</romaricp>##
