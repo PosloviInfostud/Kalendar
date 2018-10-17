@@ -14,7 +14,7 @@ class MY_Controller extends CI_Controller
             'token' => $token,
             'user' => $user_data
         ];
-
-        $this->layout = 'layout/master';
+        
+        $this->load->library('Layouts');
     }
 }

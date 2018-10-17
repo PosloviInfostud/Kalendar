@@ -9,23 +9,12 @@ class Admin extends MY_Controller
             $this->load->model('Admin_model', 'admin');
             $this->permission->is_logged_in();
             $this->permission->is_admin();
-
-            $this->layout = 'layout/admin';
     }
 
     public function index()
     {
-        $data = [
-            'title' => 'Dashboard',
-            'content' => 'admin/index',
-            'user_data' => $this->user_data
-        ];
-
-        $this->load->view($this->layout, $data);
-
-        // $this->load->view('header', $this->user_data);
-        // $this->load->view('admin/index');
-        // $this->load->view('footer');
+        $this->layouts->set_title('Admin Dashboard');
+        $this->layouts->view('admin/index');
     }
 
     public function show_room_reservations()

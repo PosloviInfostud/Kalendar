@@ -28,11 +28,11 @@
             <ul class="navbar-nav mr-auto">
             </ul>
             <?php
-                if($token != NULL) { ?>
+                if($this->user_data['token'] != NULL) { ?>
                     <div class="row align-items-center">
                         <div class="col"><a href="/dashboard"><i class="fas fa-home fa-lg text-secondary"></i></a></div>
                         <div class="col"><a href="/profile"><i class="far fa-user-circle fa-lg text-secondary"></i></a></div>
-                        <?= ($user['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
+                        <?= ($this->user_data['user']['user_role_id'] == 1) ? '<div class="col"><a href="/admin"><i class="fas fa-wrench fa-lg text-danger"></i></a></div>' : '' ?>
                         <div class="col"><a class="btn btn-danger btn-sm" href="/logout">Logout</a></div>
                     </div>
                 <?php }

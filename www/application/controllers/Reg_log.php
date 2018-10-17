@@ -9,9 +9,8 @@ class Reg_log extends MY_Controller
 
     public function index()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('index');
-        $this->load->view('footer');
+        $this->layouts->set_title('Reservations');
+        $this->layouts->view('index');
     }
 
     public function register()
@@ -147,11 +146,13 @@ class Reg_log extends MY_Controller
 
     public function reset_password_form()
     {
-        $data['email'] = $this->input->get('email');
-        $data['code'] = $this->input->get('code');
+        $data = [
+            'email' => $this->input->get('email'),
+            'code' => $this->input->get('code')
+        ];
 
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reset_password', $data);
+        $this->layouts->set_title('Reset Password');
+        $this->layouts->view('reset_password', $data);
     }
 
     public function reset_password()
@@ -198,18 +199,19 @@ class Reg_log extends MY_Controller
 
     public function registration_by_invitation_form()
     {
-        $data['email'] = $this->input->get('email');
-        $data['token'] = $this->input->get('code');
+        $data = [
+            'email' => $this->input->get('email'),
+            'token' => $this->input->get('code')
+        ];
 
-        $this->load->view('header', $this->user_data);
-        $this->load->view('registration_by_invitation', $data);
+        $this->layouts->set_title('Registration by Invite');
+        $this->layouts->view('registration_by_invitation', $data);
     }
 
     public function register_by_invitation()
     {
         $token = $this->input->post('token');
         $user_id = $this->user->register()['user_id']; 
-        $this->load->model('User_model','user');
         $this->user->activate($user_id);
         $this->load->model('Reservation_model','res');
         $this->res->new_registered_member($user_id, $token);

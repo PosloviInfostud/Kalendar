@@ -10,20 +10,15 @@ class Users extends MY_Controller
     
     public function profile()
     {
-        $this->load->view('header', $this->user_data);
-        $this->load->view('users/profile');
-        $this->load->view('footer');
+        $this->layouts->set_title('User Profile');
+        $this->layouts->view('users/profile');
     }
 
     public function dashboard()
     {
-        $data = [
-            'title' => 'Dashboard',
-            'content' => 'users/dashboard',
-            'user_data' => $this->user_data
-        ];
+        $this->layouts->set_title('Dashboard');
+        $this->layouts->view('users/dashboard');
 
-        $this->load->view($this->layout, $data);
     }
 
     public function edit()
