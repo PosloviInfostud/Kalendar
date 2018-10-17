@@ -5,16 +5,15 @@
         <p class="bg-danger">No free rooms for this time. Try again. </p>
         <?php
     } else {
-
         $i=1; 
-        foreach($rooms as $room) {   ?>
+        foreach($rooms as $room) { ?>
     
             <div class="custom-control custom-radio">
                 <input type="radio" id="customRadio<?= $i; ?>" name="room" value="<?= $room['id'] ?>" class="custom-control-input room_radio" enabled>
                 <label for="customRadio<?= $i; ?>" class="custom-control-label"><?= $room['name'] ?></label>
             </div>
     
-        <?php  
+        <?php
         $i++;
         } ?> 
             <div class="form-group">
