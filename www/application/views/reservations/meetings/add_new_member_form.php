@@ -1,15 +1,17 @@
 <div class="container">
     <form id="add_new_member_form">
-            <p>Who do you want to invite?</p>
-            <div class="form-group">
-            <select class="js-example-basic-multiple form-control" name="members[]" id="members" multiple="multiple">
+        <p>Who do you want to invite?</p>
+        <div class="form-group">
+            <select class="js-example-basic-multiple form-control d-block" name="members[]" id="members" multiple="multiple">
 
             <?php foreach($users as $user) { ?>
-                <option value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
+                <option class="d-block" value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
             <?php  } ?> 
 
             </select>
         </div>
+        <input type="hidden" name="res_id" id="res_id" value="<?= $res_id ?>">
+        <input type="submit" value="Invite" class="btn btn-success btn-block">
     </form>
 </div>
 <script>
