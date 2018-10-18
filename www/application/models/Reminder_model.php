@@ -14,7 +14,7 @@ class Reminder_model extends CI_Model
                 res.end_time 
                 FROM room_reservations as res
                 INNER JOIN rooms as room ON room.id = res.room_id
-                WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 15 MINUTE)
+                WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 59 MINUTE)
                 AND res.start_time > NOW()
                 AND res.reminder_sent = 0';
         $query = $this->db->query($sql, []);
@@ -54,44 +54,35 @@ class Reminder_model extends CI_Model
         $data = [];
 
         foreach($ext_meetings as $meeting) {
+            $emails = [];
             // Extract emails for a given meeting
             foreach($meeting['members'] as $member) {
                 $emails[] = $member['email'];
             }
-            $data = [
+            $meeting_details = [
                 'room' => $meeting['room_name'],
                 'title' => $meeting['title'],
                 'start_time' => $meeting['start_time'],
                 'duration' => $meeting['duration'],
                 'description' => $meeting['description']
             ];
-            $this->send_notification_mail($emails, $data);
-            
+
+            // Prepare mail
+            $email_details = $this->prepare_mails($meeting_details);
+
+            // Add mails to queue
+            $this->mail->add_mail_to_queue($emails, $email_details);
         }
     }
 
-    public function send_notification_mail($emails, $data)
+    public function prepare_mails($data)
     {
-        // Set SMTP Configuration
-        $emailConfig = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'visnjamarica@gmail.com',
-            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        ];
+        $email_details = [];
+
         // Set your email information
-        $from = [
-            'email' => 'visnjamarica@gmail.com',
-            'name' => 'Kalendar | INFOSTUD'
-        ];
-        $to = $emails;
-        $subject = '[Reminder] Your meeting in '.$data['room'].' is about to start!';
-        //  $message = 'Type your gmail message here'; // use this line to send text email.
-        // load view file called "welcome_message" in to a $message variable as a html string.
-        $message = '<html>
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = '[Reminder] Your meeting in '.$data['room'].' is about to start!';
+        $email_details['message'] = '<html>
                         <head>
                             <title>Your meeting in '.$data['room'].' is about to start!</title>
                         </head>
@@ -103,23 +94,8 @@ class Reminder_model extends CI_Model
                             <p><strong>About:</strong> '. $data['description'].'</p>
                         </body>
                     </html>';
-        // Load CodeIgniter Email library
-        $this->load->library('email', $emailConfig);
-        // Sometimes you have to set the new line character for better result
-        $this->email->set_newline("\r\n");
-        // Set email preferences
-        $this->email->from($from['email'], $from['name']);
-        $this->email->to($to);
-        $this->email->subject($subject);
-        $this->email->message($message);
-        // Ready to send email and check whether the email was successfully sent
-        if (!$this->email->send()) {
-            // Raise error message
-            show_error($this->email->print_debugger());
-        } else {
-            // Show success notification or other things here
-            // echo 'Success to send email';
-        }
+
+        return $email_details;
     }
 
     public function mark_meetings_as_sent($meetings)

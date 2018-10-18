@@ -5,6 +5,7 @@ class Reg_log extends MY_Controller
     {
             parent::__construct();
             $this->load->library('form_validation');
+            $this->load->model('Mail_model', 'mail');
     }
 
     public function index()
@@ -19,9 +20,6 @@ class Reg_log extends MY_Controller
 
         echo json_encode($message);
     }
-
-
-
 
     public function activate()
     {
@@ -86,57 +84,31 @@ class Reg_log extends MY_Controller
                 $expire = date('Y-m-d h:i:s', strtotime('+5 days'));
                 $this->user->set_reset_key($email, $code, $expire);
 
-                // Set SMTP Configuration
-                $emailConfig = [
-                    'protocol' => 'smtp',
-                    'smtp_host' => 'ssl://smtp.googlemail.com',
-                    'smtp_port' => 465,
-                    'smtp_user' => 'visnjamarica@gmail.com',
-                    'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
-                    'mailtype' => 'html',
-                    'charset' => 'iso-8859-1'
-                ];
-                // Set your email information
-                $from = [
-                    'email' => 'visnjamarica@gmail.com',
-                    'name' => 'Luka Matkovic'
-                ];
-                
-                $to = array($email);
-                $subject = 'Reset Password';
+                // Prepare mail
+
                 $this->load->helper('link_helper');
-
                 $password_link = reset_password_link($email, $code);
-                $email_message = '
-                <html>
-                    <head>
-                        <title>Reset Password</title>
-                    </head>
-                    <body>
-                        <h2>Reset Password</h2>
-                        <p>Please click the link below to fill in your new password.</p>
-                        <p>
-                            <a href="'.$password_link.'">Reset My Password</a>
-                        </p>
-                    </body>
-                </html>';
 
-                // Load CodeIgniter Email library
+                $email_details = [];
 
-                $this->load->library('email', $emailConfig);
-                // Sometimes you have to set the new line character for better result
-                $this->email->set_newline("\r\n");
-                // Set email preferences
-                $this->email->from($from['email'], $from['name']);
-                $this->email->to($to);
-                $this->email->subject($subject);
-                $this->email->message($email_message);
-                // Ready to send email and check whether the email was successfully sent
-                if (!$this->email->send()) {
-                    // Raise error message
-                    show_error($this->email->print_debugger());
-                    die;
-                }
+                $email_details['from'] = 'visnjamarica@gmail.com';
+                $email_details['subject'] = 'Reset Password';
+                $email_details['message'] = $message = '<html>
+                                                            <head>
+                                                                <title>Reset Password</title>
+                                                            </head>
+                                                            <body>
+                                                                <h2>Reset Password</h2>
+                                                                <p>Please click the link below to fill in your new password.</p>
+                                                                <p>
+                                                                    <a href="'.$password_link.'">Reset My Password</a>
+                                                                </p>
+                                                            </body>
+                                                        </html>';
+                
+                // Add email to queue
+                $this->mail->add_mail_to_queue(array($email), $email_details);
+
                 $message = "E-mail sent successfully! Please, go to your email account and click on the link to enter your new password!";
             }
         }
