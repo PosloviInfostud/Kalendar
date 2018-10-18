@@ -670,4 +670,92 @@ class Reservation_model extends CI_Model
 
         return $result;
     }
+
+    public function check_if_member_already_invited($data)
+    {
+        foreach($data['registered'] as $member) {
+            $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
+                    WHERE user_id = ? AND room_id = ?";
+            $query = $this->db->query($sql, [$member, $data['res_id']]);
+
+            if($query->num_rows()) {
+                $result = $query->row_array();
+            }
+
+            if ($result['reserved'] == 1) {
+                $this->removeElement($data['registered'], $member);
+            }
+        }
+
+        return $data;
+    }
+    
+    public function removeElement($array,$value) 
+    {
+        if (($key = array_search($value, $array)) !== false) {
+        unset($array[$key]);
+        }
+        return $array;
+    }
+
+    public function update_room_reservation($data)
+    {
+        $sql = "UPDATE room_reservations 
+                SET room_id = ?, start_time = ?, end_time = ?, modified_at = NOW(), title = ?, description = ? 
+                WHERE id = ?";
+        $query = $this->db->query($sql, [$data['room'], $data['start_time'], $data['end_time'], $data['title'], $data['description'], $data['id']]);
+
+        $user_id = $this->user_data['user']['id'];
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'room_reservations',
+            'type' => 'update',
+            'value' => [
+                'room_id' => $data['room'],
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'title' => $data['title'],
+                'description' => $data['description']
+            ]
+        ];
+        $this->load->model('Logs_model', 'logs');
+        $this->logs->insert_log($data_log);
+    }
+
+    public function check_if_room_is_free_for_update($data)
+    {
+        $sql = "SELECT COUNT(*) AS reserved FROM room_reservations 
+                WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
+                AND room_id = ? AND id != ?"; 
+        $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room'], $data['id']]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        if ($result['reserved'] == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delete_room_reservation($id)
+    {
+       $sql = "UPDATE room_reservations 
+                SET deleted = 1, modified_at = NOW()
+                WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        $user_id = $this->user_data['user']['id'];
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'room_reservations',
+            'type' => 'delete',
+            'value' => [
+                'id' => $id
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+    }
+
 }

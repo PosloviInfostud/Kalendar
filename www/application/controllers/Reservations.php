@@ -8,6 +8,7 @@ class Reservations extends MY_Controller
         $this->permission->is_logged_in();
         $this->load->model('Reservation_model', 'res');
         $this->load->model('Beautify_model', 'beautify');
+        $this->load->model('Logs_model','logs');
         $this->load->library('form_validation');
         $this->load->helper('link_helper');
     }
@@ -265,7 +266,7 @@ class Reservations extends MY_Controller
 
         // Build and load view
         $data = [
-            'meeting' => $meeting,
+            'meeting' => $meeting[0],
             'members' => $members,
             'user_id' => $user_id
         ];
@@ -348,13 +349,51 @@ class Reservations extends MY_Controller
         echo $view;
     }
 
+    public function add_new_member()
+    {
+        $data['members'] = $this->input->post('members');
+        $data['res_id'] = $this->input->post('res_id');
+        $data['admin'] = $this->user_data['user']['id'];
+        $data = $this->res->check_members_reg($data);
+        $data = $this->res->check_if_member_already_invited($data);
+        $this->res->insert_unregistered_members($data);
+        $this->res->invite_unregistered_members($data['res_id']);
+        $this->res->insert_reservation_members($data);
+        $this->res->invite_members($data['res_id']);
+    }
+
     public function update_room_reservation()
     {
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
+        $this->form_validation->set_rules('room', 'Room', 'trim|required');
+        $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
+        $this->form_validation->set_rules('description', 'Event Description', 'trim');
+        if($this->form_validation->run() == false) {
+            $message['error'] = validation_errors();
 
-    }
+        } else {
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "room" => $this->input->post('room'),
+                "title" => $this->input->post('title'),
+                "description" => $this->input->post('description'),
+                "id" => $this->input->post('res')
+            ];
+            if($this->res->check_if_room_is_free_for_update($data)) {
+                $this->res->update_room_reservation($data);
+                $message['success'] = $data['id'];
+
+            } else {
+                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+            }
+
+        }
+        echo json_encode($message);    }
 
     public function delete_room_reservation($id)
     {
-
+        $this->res->delete_room_reservation($id);
     }
 }

@@ -359,3 +359,57 @@ $("body").on('click', '#btn_add_new_member', function(e) {
         $('#addMemberModal').modal('show');   
     })
 })
+
+//add new member form submit
+
+$("body").on('submit','#add_new_member_form', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/add_new_member",
+        data: {
+            "members": $("#members").val(),
+            "res_id" : $("#res_id").val()
+        }
+
+    }).done(function(response){
+        console.log(response);
+    })
+})
+
+//submit reservation update form
+
+$("#form_update_room_reservation").submit(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/update_room_reservation",
+        data: {
+            start_time : $("#datetime_start").val(),
+            end_time :  $("#datetime_end").val(),
+            room : $(".select_room option:selected").val(),
+            title : $("#reservation_name").val(),
+            description : $("#reservation_description").val(),
+            res : $("#res").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#show_errors").html(msg.error);
+        }
+        if(msg.success) {
+            window.location.href = "/reservations/meetings/"+msg.success;
+        }
+    })
+})
+
+//confirm delete reservation
+
+$("#del_res_btn").click(function(){
+    if (!confirm("Are you sure you want to delete this reservation? Notification email will be sent.")) {
+        return false;
+    }   
+});
