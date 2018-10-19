@@ -8,8 +8,9 @@ class Reservations extends MY_Controller
         $this->permission->is_logged_in();
         $this->load->model('Reservation_model', 'res');
         $this->load->model('Beautify_model', 'beautify');
-        $this->load->model('Logs_model','logs');
+        $this->load->model('Logs_model', 'logs');
         $this->load->library('form_validation');
+        $this->load->library('encryption');
         $this->load->helper('link_helper');
     }
 
@@ -438,6 +439,6 @@ class Reservations extends MY_Controller
     public function delete_equipment_reservation($id)
     {
         $this->res->delete_equipment_reservation($id);
-        url_redirect('/dashboard');
+        url_redirect('/reservations/equipment');
     }
 }

@@ -16,6 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <?= $this->layouts->print_header_includes() ?>
     <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/public/css/app.css">
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body>
@@ -46,5 +47,6 @@
     <?= $this->layouts->print_header_includes() ?>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/public/js/app.js"></script>
 </body>
 </html>

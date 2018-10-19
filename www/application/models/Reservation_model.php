@@ -9,7 +9,7 @@ class Reservation_model extends CI_Model
          INNER JOIN users ON users.id = res_members.user_id 
          INNER JOIN room_reservations ON room_reservations.id = res_members.res_id 
          INNER JOIN rooms ON room_reservations.room_id = rooms.id
-         WHERE res_members.res_role_id = 2 AND res_members.res_id = ?';
+         WHERE res_members.res_role_id = 2 AND res_members.res_id = ? AND deleted = 0';
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
             $result = $query->result_array();
@@ -135,7 +135,6 @@ class Reservation_model extends CI_Model
         $data['res_id'] = $this->db->insert_id();
         $data['admin'] = $user_id;
 
-        $this->load->model('Logs_model', 'logs');
         $data_log = [
             'user_id' => $user_id,
             'table' => 'room_reservations',
@@ -179,7 +178,6 @@ class Reservation_model extends CI_Model
 
     public function insert_unregistered_members($data)
     {
-        $this->load->library('encryption');
         $res_id = $data['res_id'];
         $user_id = $data['admin'];
         foreach($data['unregistered'] as $unregistered) {
@@ -357,7 +355,6 @@ class Reservation_model extends CI_Model
 
         $query = $this->db->query($sql, [$data['equipment_id'], $user_id, $data['start_time'], $data['end_time'], $data['description']]);
 
-        $this->load->model('Logs_model', 'logs');
          $data_log = [
             'user_id' => $user_id,
             'table' => 'equipment_reservations',
@@ -384,7 +381,7 @@ class Reservation_model extends CI_Model
          res.room_id, room.name as room_name, 
          res.user_id as creator_id, u.name as created_by, 
          res.title,
-          res.description, 
+         res.description, 
          res.start_time, 
          res.end_time
           FROM res_members as mem
@@ -478,7 +475,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN users AS u ON u.id = mem.user_id 
                 INNER JOIN res_roles AS r ON r.id = mem.res_role_id
                 WHERE mem.res_id = ? AND mem.deleted = 0 
-                ORDER BY mem.res_role_id ASC';
+                ORDER BY mem.id ASC';
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -535,7 +532,7 @@ class Reservation_model extends CI_Model
             $message['error'] = "You cannot change the role for the creator of the meeting!";
 
         } else {
-            $sql = "UPDATE res_members SET res_role_id = ? WHERE res_id = ? AND user_id = ?";
+            $sql = "UPDATE res_members SET res_role_id = ?, modified_at = NOW()  WHERE res_id = ? AND user_id = ?";
             $query = $this->db->query($sql, [$data['role_id'], $data['res_id'], $data['user_id']]);
     
             $user_id = $this->user_data['user']['id'];
@@ -549,7 +546,6 @@ class Reservation_model extends CI_Model
                     'res_role_id' => $data['role_id']
                 ]
             ];
-            $this->load->model('Logs_model', 'logs');
             $this->logs->insert_log($data_log);
 
             $message['success'] = "success";
@@ -566,7 +562,7 @@ class Reservation_model extends CI_Model
 
         } else {
             $sql = "UPDATE res_members 
-                    SET deleted = 1 
+                    SET deleted = 1, modified_at = NOW() 
                     WHERE res_id = ? AND user_id = ?";
             $query = $this->db->query($sql, [$data['res'], $data['member']]);
 
@@ -580,7 +576,6 @@ class Reservation_model extends CI_Model
                     'user_id' => $data['member'],
                 ]
             ];
-            $this->load->model('Logs_model', 'logs');
             $this->logs->insert_log($data_log);
             
             $message['success'] = "success";
@@ -697,6 +692,10 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+        //Send e-mail notification
+        $members = $this->get_all_reservation_mails($id);
+        $reservation = $this->single_room_reservation($id);
+        $this->send_cancelled_meeting_mail($members, $reservation);
     }
 
     public function check_if_equipment_is_free_for_update($data)
@@ -754,6 +753,46 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+    }
+
+    public function send_cancelled_meeting_mail($members, $reservation)
+    {
+        // Prepare mail
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = 'Cancelled meeting';
+        $email_details['message'] = $this->load->view('mails/cancelled_meeting_mail', ['members' => $members, 'reservation'=>$reservation], TRUE);
+
+        // Add email to queue
+        $this->mail->add_mail_to_queue($members, $email_details);
+    }
+
+    public function get_all_reservation_mails($id)
+    {
+        $result = [];
+        $members = [];
+        $sql = "SELECT users.email FROM res_members
+                INNER JOIN users ON users.id = res_members.user_id 
+                WHERE res_members.res_id = ? AND res_members.deleted = 0";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        foreach ($result as $member) {
+            $members[] = $member['email'];
+        }
+
+        $sql = "SELECT email FROM pending_users WHERE res_id = ? AND registered = 0";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        foreach ($result as $member) {
+            $members[] = $member['email'];
+        }
+
+        return $members;
     }
 
 }
