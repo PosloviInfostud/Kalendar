@@ -944,7 +944,7 @@ module.exports = {
   */
 
   options: {
-    prefix: '',
+    prefix: 'vm-',
     important: false,
     separator: ':',
   },
