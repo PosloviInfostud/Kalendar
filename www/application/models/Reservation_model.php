@@ -718,7 +718,6 @@ class Reservation_model extends CI_Model
                 'description' => $data['description']
             ]
         ];
-        $this->load->model('Logs_model', 'logs');
         $this->logs->insert_log($data_log);
     }
 
@@ -750,6 +749,63 @@ class Reservation_model extends CI_Model
         $data_log = [
             'user_id' => $user_id,
             'table' => 'room_reservations',
+            'type' => 'delete',
+            'value' => [
+                'id' => $id
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+    }
+
+    public function check_if_equipment_is_free_for_update($data)
+    {  
+        $sql = "SELECT COUNT(*) AS reserved FROM equipment_reservations 
+                WHERE 
+                ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?))
+                AND equipment_id = ? AND id != ?";
+        $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['equip_id'], $data['res_id']]);
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        if ($result['reserved'] == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function update_equip($data)
+    {
+        $sql = "UPDATE equipment_reservations SET start_time = ?, end_time = ?, description = ?, modified_at = NOW() 
+                WHERE id = ?";
+        $query = $this->db->query($sql, [$data['start_time'], $data['end_time'], $data['description'], $data['res_id']]);
+
+        $user_id = $this->user_data['user']['id'];
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'equipment_reservations',
+            'type' => 'update',
+            'value' => [
+                'id' => $data['res_id'],
+                'start_time' => $data['start_time'],
+                'end_time' => $data['end_time'],
+                'description' => $data['description']
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+    }
+
+    public function delete_equipment_reservation($id)
+    {
+       $sql = "UPDATE equipment_reservations 
+                SET deleted = 1, modified_at = NOW()
+                WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        $user_id = $this->user_data['user']['id'];
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'equipment_reservations',
             'type' => 'delete',
             'value' => [
                 'id' => $id

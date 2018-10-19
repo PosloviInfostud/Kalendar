@@ -28,6 +28,10 @@ class Beautify_model extends CI_Model
         $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
+            //old format needed for reservation update
+            $result[$key]['starttime'] = $result[$key]['start_time'];
+            $result[$key]['endtime'] = $result[$key]['end_time'];
+            //new format needed for reservation view
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
             $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
             $result[$key]['full_description'] = ucfirst($value['description']);

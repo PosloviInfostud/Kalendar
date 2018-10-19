@@ -1,3 +1,5 @@
+
+$(document).ready(function() {
 /* Flatpickr */
 
 // Load flatpickr for room reservations
@@ -59,17 +61,11 @@ let fpItemEndDate = $("#item_datetime_end").flatpickr({
     altInput: true,
     altInputClass: '',
 	altFormat: "d/m/y @ H:i",
-});
-
-//load select2 plugin - single
-
-$(document).ready(function() {
-    $('.js-example-basic-single').select2();
-
-});
+});});
 
 //load select2 plugin - multiple
 $(document).ready(function() {
+    $('.js-example-basic-single').select2();
     $('.js-example-basic-multiple').select2(
                 {
             tags: true,
@@ -410,6 +406,59 @@ $("#form_update_room_reservation").submit(function(e){
 
 $("#del_res_btn").click(function(){
     if (!confirm("Are you sure you want to delete this reservation? Notification email will be sent.")) {
+        return false;
+    }   
+});
+
+//load update equipment form modal
+
+$("body").on('click','#edit_equip_btn', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/show_update_equip_form",
+        data: {
+            equip: $(this).attr("data-equip")
+        }
+    }).done(function(response) {
+        $('#edit_equip_modal_body').html(response);
+        // show modal
+        $('#editEquipModal').modal('show');    
+    })
+})
+
+//submit equipment update form
+
+$("#update_equipment_submit").click(function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/update_equipment",
+        data: {
+            start_time : $("#item_datetime_start").val(),
+            end_time :  $("#item_datetime_end").val(),
+            description : $("#reservation_description").val(),
+            equip_id : $("#equip_id").val(),
+            res_id : $("#res_id").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#show_errors").html(msg.error);
+        }
+        if(msg.success) {
+            window.location.href = "/reservations/equipment/"+msg.success;
+        }
+    })
+})
+
+//confirm delete equipment reservation
+
+$("#delete_equip_btn").click(function(){
+    if (!confirm("Are you sure you want to delete this reservation?")) {
         return false;
     }   
 });

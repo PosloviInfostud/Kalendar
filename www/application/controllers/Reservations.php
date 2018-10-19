@@ -395,5 +395,49 @@ class Reservations extends MY_Controller
     public function delete_room_reservation($id)
     {
         $this->res->delete_room_reservation($id);
+        url_redirect('/dashboard');
+    }
+
+    public function show_update_equip_form()
+    {
+        $id = $this->input->post('equip');
+        $data['equipment'] = $this->res->single_equipment_reservation($id)[0];
+        $view = $this->load->view('reservations/equipment/update_equip_form', $data, true);
+
+        echo $view;
+    }
+
+    public function update_equipment()
+    {
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
+
+        if($this->form_validation->run() == false) {
+            $message['error'] = validation_errors();
+
+        } else {
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "equip_id" => $this->input->post('equip_id'),
+                "res_id" => $this->input->post('res_id'),
+                "description" => $this->input->post('description')
+            ];
+            if($this->res->check_if_equipment_is_free_for_update($data)) {
+                $this->res->update_equip($data);
+                $message['success'] = $data['res_id'];
+                            
+            } else {
+                $message['error'] = "Did you change termin? Please, search again free equipment according to your time!";
+            }
+
+        }
+        echo json_encode($message); 
+    }
+
+    public function delete_equipment_reservation($id)
+    {
+        $this->res->delete_equipment_reservation($id);
+        url_redirect('/dashboard');
     }
 }
