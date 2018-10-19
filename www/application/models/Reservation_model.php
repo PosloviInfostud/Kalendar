@@ -20,43 +20,13 @@ class Reservation_model extends CI_Model
     }
     public function send_members_notification($user)
     {
-        $email = $user['email'];
-        // Set SMTP Configuration
-        $emailConfig = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'visnjamarica@gmail.com',
-            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        ];
-        // Set your email information
-        $from = [
-            'email' => 'visnjamarica@gmail.com',
-            'name' => 'Visnja | Vezba-Token'
-        ];
-        $to = array($email);
-        $subject = 'New meeting';
-        $message = $this->load->view('reservation_invitation_mail', $user, true);
+        // Prepare mail
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = 'New meeting';
+        $email_details['message'] = $this->load->view('reservation_invitation_mail', $user, TRUE);
 
-        // Load CodeIgniter Email library
-        $this->load->library('email', $emailConfig);
-        // Sometimes you have to set the new line character for better result
-        $this->email->set_newline("\r\n");
-        // Set email preferences
-        $this->email->from($from['email'], $from['name']);
-        $this->email->to($to);
-        $this->email->subject($subject);
-        $this->email->message($message);
-        // Ready to send email and check whether the email was successfully sent
-        if (!$this->email->send()) {
-            // Raise error message
-            show_error($this->email->print_debugger());
-        } else {
-            // Show success notification or other things here
-            // echo 'Success to send email';
-        }
+        // Add email to queue
+        $this->mail->add_mail_to_queue(array($user['email']), $email_details);
     }
 
     public function check_free_rooms($data)
@@ -266,43 +236,15 @@ class Reservation_model extends CI_Model
 
     public function send_invitation_mail($user)
     {
-        $email = $user['email'];
-        // Set SMTP Configuration
-        $emailConfig = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'visnjamarica@gmail.com',
-            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        ];
-        // Set your email information
-        $from = [
-            'email' => 'visnjamarica@gmail.com',
-            'name' => 'Visnja | Vezba-Token'
-        ];
-        $to = array($email);
-        $subject = 'New meeting|Invitation for Registration';
-        $message = $this->load->view('registration_invitation_mail', $user, true);
+        // Prepare email
+        $email_details = [];
 
-        // Load CodeIgniter Email library
-        $this->load->library('email', $emailConfig);
-        // Sometimes you have to set the new line character for better result
-        $this->email->set_newline("\r\n");
-        // Set email preferences
-        $this->email->from($from['email'], $from['name']);
-        $this->email->to($to);
-        $this->email->subject($subject);
-        $this->email->message($message);
-        // Ready to send email and check whether the email was successfully sent
-        if (!$this->email->send()) {
-            // Raise error message
-            show_error($this->email->print_debugger());
-        } else {
-            // Show success notification or other things here
-            // echo 'Success to send email';
-        }
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = 'New Meeting/Invitation for Registration';
+        $email_details['message'] = $this->load->view('registration_invitation_mail', $user, TRUE);
+
+        // Add email to queue
+        $this->mail->add_mail_to_queue(array($user['email']), $email_details);
     }
 
     public function insert_reservation_members($data)
