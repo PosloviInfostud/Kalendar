@@ -439,7 +439,8 @@ class Reservation_model extends CI_Model
                 FROM equipment_reservations as res
                 INNER JOIN equipment as e ON e.id = res.equipment_id
                 INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
-                WHERE res.user_id IN ?';
+                WHERE res.user_id IN ?
+                AND res.end_time > NOW()';
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
