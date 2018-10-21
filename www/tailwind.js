@@ -46,6 +46,16 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   'transparent': 'transparent',
 
+  'main-darkest-grey' : '#22313F',
+  'main-darkest' : '#192D4D',
+  'main-darker' : '#315999',
+  'main-darkish' : '#4177cc',
+  'main-dark' : '#4A86E6',
+  'main' : '#5295FF',
+  'main-light' : '#86B5FF',
+  'main-lighter' : '#BAD5FF',
+  'main-lightest' : '#EEF4FF',
+
   'black': '#22292f',
   'grey-darkest': '#3d4852',
   'grey-darker': '#606f7b',
@@ -194,6 +204,8 @@ module.exports = {
 
   fonts: {
     'sans': [
+      'Fira Sans',
+      'Barlow',
       'system-ui',
       'BlinkMacSystemFont',
       '-apple-system',
@@ -202,7 +214,6 @@ module.exports = {
       'Oxygen',
       'Ubuntu',
       'Cantarell',
-      'Fira Sans',
       'Droid Sans',
       'Helvetica Neue',
       'sans-serif',
@@ -259,6 +270,8 @@ module.exports = {
     '3xl': '1.875rem',  // 30px
     '4xl': '2.25rem',   // 36px
     '5xl': '3rem',      // 48px
+    '6xl': '4rem',
+    '7xl': '5rem',
   },
 
 
@@ -480,6 +493,7 @@ module.exports = {
     '10': '2.5rem',
     '12': '3rem',
     '16': '4rem',
+    '20': '5rem',
     '24': '6rem',
     '32': '8rem',
     '48': '12rem',
@@ -644,6 +658,7 @@ module.exports = {
 
   padding: {
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -679,6 +694,7 @@ module.exports = {
   margin: {
     'auto': 'auto',
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -713,6 +729,7 @@ module.exports = {
 
   negativeMargin: {
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -872,7 +889,7 @@ module.exports = {
     borderStyle: ['responsive'],
     borderWidths: ['responsive'],
     cursor: ['responsive'],
-    display: ['responsive'],
+    display: ['responsive', 'group-hover', 'hover'],
     flexbox: ['responsive'],
     float: ['responsive'],
     fonts: ['responsive'],

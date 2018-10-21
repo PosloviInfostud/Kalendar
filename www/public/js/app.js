@@ -1,1 +1,3 @@
-console.log("one"),console.log("two");
+$("#phone_menu_btn").on("click", function () {
+    $("#secondary_nav").slideToggle();
+});

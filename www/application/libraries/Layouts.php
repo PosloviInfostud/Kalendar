@@ -18,7 +18,7 @@ class Layouts
         $this->title_for_layout = $title;
     }
 
-    public function view($view_name, $params = [], $layout = 'master')
+    public function view($view_name, $params = [], $layout = 'master_tailwind')
     {
         // Handle the site's title. If NULL, don't add anything. If not, add a separator and append the title.
         if ($this->title_for_layout !== NULL) { 
