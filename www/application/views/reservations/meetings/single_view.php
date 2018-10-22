@@ -9,8 +9,8 @@
         <div>
             <?php foreach ($members as $member) {
                 if($user_id == $member['user_id'] && $member['res_role_id'] == 1) { ?>
-                <a href="/reservations/update_room_reservation_form/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
-                <a href="/reservations/delete_room_reservation/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
+                <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
+                <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
             <?php } } ?>
         </div>
     </div>
@@ -98,7 +98,7 @@
 </div>
 
 <!-- Add New Member -->
-<div class="modal fade" id="addMemberModal" tabindex="-1" role="dialog" aria-labelledby="addMemberModal" aria-hidden="true">
+<div class="modal fade" id="addMemberModal" role="dialog" aria-labelledby="addMemberModal" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -7,6 +7,7 @@ class Reservations extends MY_Controller
         $this->load->model('Permission_model', 'permission');
         $this->permission->is_logged_in();
         $this->load->model('Reservation_model', 'res');
+        $this->load->model('Mail_model', 'mail');
         $this->load->model('Beautify_model', 'beautify');
         $this->load->model('Logs_model', 'logs');
         $this->load->library('form_validation');
@@ -42,7 +43,7 @@ class Reservations extends MY_Controller
 
     public function form_equip()
     {
-        $data['equips'] = $this->res->get_all_equipment();
+        $data['equips'] = $this->res->get_all_equipment_types();
         $this->layouts->set_title('Equipment Reservation');
         $this->layouts->view('reservations/equipment', $data);
     }
@@ -396,7 +397,7 @@ class Reservations extends MY_Controller
     public function delete_room_reservation($id)
     {
         $this->res->delete_room_reservation($id);
-        url_redirect('/dashboard');
+        url_redirect('/reservations/meetings');
     }
 
     public function show_update_equip_form()
