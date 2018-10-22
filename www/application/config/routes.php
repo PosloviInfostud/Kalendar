@@ -60,9 +60,17 @@ $route['logout'] = 'reg_log/logout';
 $route['activate'] = 'reg_log/activate';
 $route['reset_password'] = 'reg_log/reset_password_form';
 $route['register_by_invite'] = 'reg_log/registration_by_invitation_form';
+$route['reservations/create'] = 'reservations/create_reservation';
+$route['reservations/meeting/create_by_date'] = 'reservations/form_rooms';
+$route['reservations/meeting/create_by_room'] = 'reservations/form_specific_room';
+$route['reservations/equipment/create_by_date'] = 'reservations/form_equip';
+$route['reservations/equipment/create_by_item'] = 'reservations/form_specific_equip';
 $route['reservations/meetings'] = 'reservations/room_reservations_by_user';
 $route['reservations/meetings/(:num)'] = 'reservations/single_room_reservation/$1';
+$route['reservations/meetings/edit/(:num)'] = 'reservations/update_room_reservation_form/$1';
+$route['reservations/meetings/delete/(:num)'] = 'reservations/delete_room_reservation/$1';
 $route['reservations/equipment'] = 'reservations/equipment_reservations_by_user';
 $route['reservations/equipment/(:num)'] = 'reservations/single_equipment_reservation/$1';
+$route['reservations/equipment/delete/(:num)'] = 'reservations/delete_equipment_reservation/$1';
 
 $route['welcome'] = 'test';
