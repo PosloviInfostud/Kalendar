@@ -9,7 +9,7 @@ class Reservation_model extends CI_Model
          INNER JOIN users ON users.id = res_members.user_id 
          INNER JOIN room_reservations ON room_reservations.id = res_members.res_id 
          INNER JOIN rooms ON room_reservations.room_id = rooms.id
-         WHERE res_members.res_role_id = 2 AND res_members.res_id = ? AND deleted = 0';
+         WHERE res_members.res_role_id = 2 AND res_members.res_id = ? AND room_reservations.deleted = 0';
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
             $result = $query->result_array();

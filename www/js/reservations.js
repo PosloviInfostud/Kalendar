@@ -136,13 +136,12 @@ $("#search_equipment").click(function(e){
         method: "POST",
         url: "/reservations/search_free_equipment",
         data: {
-            "start_time" : $("#datetime_start").val(),
-            "end_time" : $("#datetime_end").val(),
+            "start_time" : $("#item_datetime_start").val(),
+            "end_time" : $("#item_datetime_end").val(),
             "equipment_type" :  $(".radio_equipment:checked").val()
         }
     })
     .done(function(response){
-        console.log(response);
         $("#rest").html(response);
     })
 })
@@ -150,7 +149,6 @@ $("#search_equipment").click(function(e){
 //send ajax search request for free schedule for specific room
 $("select.select_room").change(function(e){
     room = $(".select_room option:selected").val();
-    console.log(room);
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_room",
@@ -255,18 +253,18 @@ function submit_equipment_reservation(data) {
 $("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
     e.preventDefault();
     data =  {};
-    data.start_time =  $("#datetime_start").val();
-    data.end_time =  $("#datetime_end").val();
+    data.start_time =  $("#item_datetime_start").val();
+    data.end_time =  $("#item_datetime_end").val();
     data.description =  $("#reservation_description").val();
-    data.equipment_id =  $(".radio_equipment_id:checked").val();
+    data.equipment_id =  $(".radio_equipment_id:checked").val(); 
     submit_equipment_reservation(data);
     })
 
 $("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
     e.preventDefault();
     data =  {};
-    data.start_time =  $("#datetime_start").val();
-    data.end_time =  $("#datetime_end").val();
+    data.start_time =  $("#item_datetime_start").val();
+    data.end_time =  $("#item_datetime_end").val();
     data.description =  $("#reservation_description").val();
     data.equipment_id =  $(".select_item option:selected").val();
     submit_equipment_reservation(data);
