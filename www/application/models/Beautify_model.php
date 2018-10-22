@@ -94,4 +94,12 @@ class Beautify_model extends CI_Model
         }
         return $result;
     }
+
+    public function removeElement($array,$value) 
+    {
+        if (($key = array_search($value, $array)) !== false) {
+        unset($array[$key]);
+        }
+        return $array;
+    }
 }

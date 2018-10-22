@@ -43,7 +43,7 @@ class Reservations extends MY_Controller
 
     public function form_equip()
     {
-        $data['equips'] = $this->res->get_all_equipment();
+        $data['equips'] = $this->res->get_all_equipment_types();
         $this->layouts->set_title('Equipment Reservation');
         $this->layouts->view('reservations/equipment', $data);
     }
