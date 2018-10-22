@@ -7,6 +7,7 @@ class Reservations extends MY_Controller
         $this->load->model('Permission_model', 'permission');
         $this->permission->is_logged_in();
         $this->load->model('Reservation_model', 'res');
+        $this->load->model('Mail_model', 'mail');
         $this->load->model('Beautify_model', 'beautify');
         $this->load->model('Logs_model', 'logs');
         $this->load->library('form_validation');

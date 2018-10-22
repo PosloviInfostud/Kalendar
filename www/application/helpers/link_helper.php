@@ -15,6 +15,6 @@
     }
     function invitation_registration_link($email, $token)
     {
-        $url = "http://localhost:8090/register-by-invite?email=$email&code=$token";
+        $url = "http://localhost:8090/regsiter_by_invite?email=$email&code=$token";
         return $url;  
     }
