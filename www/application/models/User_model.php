@@ -17,7 +17,7 @@ class User_model extends CI_Model
                 'is_unique' => 'This %s already exists.'
             )
         );
-        $this->form_validation->set_rules('password', 'Password', 'required|trim');
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]');
         $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]');
 
         $message = [];
