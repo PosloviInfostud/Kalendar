@@ -5,16 +5,16 @@
     }
     function user_activation_link($email, $key)
     {
-        $url = "http://localhost:8090/activate?email=$email&token=$key";
+        $url = base_url("activate?email=$email&token=$key");
         return $url;
     }
     function reset_password_link($email, $code)
     {
-        $url = "http://localhost:8090/reset_password?email=$email&code=$code";
+        $url = base_url("reset_password?email=$email&code=$code");
         return $url;    
     }
     function invitation_registration_link($email, $token)
     {
-        $url = "http://localhost:8090/regsiter_by_invite?email=$email&code=$token";
+        $url = base_url("/regsiter_by_invite?email=$email&code=$token");
         return $url;  
     }

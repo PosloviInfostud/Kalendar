@@ -399,7 +399,7 @@ class Reservations extends MY_Controller
     public function delete_room_reservation($id)
     {
         $this->res->delete_room_reservation($id);
-        url_redirect('/dashboard');
+        url_redirect('/reservations/meetings');
     }
 
     public function show_update_equip_form()

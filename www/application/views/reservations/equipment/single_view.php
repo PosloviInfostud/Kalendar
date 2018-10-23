@@ -9,7 +9,7 @@
         <div>
             <?php if($user_id == $equipment['user_id']) { ?>
                 <button data-equip="<?= $equipment['id'] ?>" id="edit_equip_btn" class="btn btn-info">Edit</button>
-                <a href="/reservations/delete_equipment_reservation/<?= $equipment['id'] ?>"><button id="delete_equip_btn" class="btn btn-danger ml-2">Delete</button></a>
+                <a href="/reservations/equipment/delete/<?= $equipment['id'] ?>"><button id="delete_equip_btn" class="btn btn-danger ml-2">Delete</button></a>
             <?php } ?>
         </div>
     </div>
