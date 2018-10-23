@@ -393,6 +393,7 @@ $("#form_update_room_reservation").submit(function(e){
         console.log(msg);
         if (msg.error) {
             $("#show_errors").html(msg.error);
+            $("#show_errors").addClass("alert alert-danger");
         }
         if(msg.success) {
             window.location.href = "/reservations/meetings/"+msg.success;

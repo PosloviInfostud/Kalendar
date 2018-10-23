@@ -58,13 +58,22 @@ class Reservations extends MY_Controller
 
     public function search_free_rooms()
     {
+        $date = date('Y-m-d h:i:s', time());
+
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        //Kako da se stavi da end bude veci od start?
         $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
 
         if($this->form_validation->run() == false) {
             echo validation_errors();
+            die;
+        } 
+        if($this->input->post('start_time') < $date) {
+                echo "Change start time. You have to reserve in advance";
+        } 
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            echo "Check start and end time again. End time has to be greater than start time.";
+
         } else {
             $attendants = $this->input->post('attendants');
             if(empty($attendants)) {
@@ -107,13 +116,22 @@ class Reservations extends MY_Controller
 
     public function search_free_termins_for_specific_room()
     {
+        $date = date('Y-m-d h:i:s', time());
+
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        //Kako da se stavi da end bude veci od start?
         $this->form_validation->set_rules('room_id', 'Room', 'trim');
 
         if ($this->form_validation->run() == false) {
             echo validation_errors();
+            die;
+        } 
+        if($this->input->post('start_time') < $date) {
+                echo "Change start time. You have to reserve in advance";
+        } 
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            echo "Check start and end time again. End time has to be greater than start time.";
+
         } else {
             $data = [
                 "start_time" => $this->input->post('start_time'),
@@ -129,15 +147,19 @@ class Reservations extends MY_Controller
 
     public function search_free_equipment()
     {
+        var_dump($date);
         $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time','End Time', 'trim|required');
-        //Kako da se stavi da end bude veci od start?
         $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required');
 
         if($this->form_validation->run() == false) {
             echo validation_errors();
 
+        } 
+        elseif($this->input->post('start_time')< $date) {
+            echo "Change start time.";
         } else {
+            echo $this->input->post('start_time'); die;
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
@@ -152,6 +174,8 @@ class Reservations extends MY_Controller
 
     public function submit_reservation_form()
     {
+        $date = date('Y-m-d h:i:s', time());
+
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
@@ -159,8 +183,15 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
+
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
+        } 
+        elseif($this->input->post('start_time') < $date) {
+            $message['error'] = "Change start time. You have to reserve in advance";
+        } 
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
 
         } else {
             $data = [
@@ -176,7 +207,7 @@ class Reservations extends MY_Controller
                 $message['success'] = "success";
 
             } else {
-                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+                $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
             }
 
         }
@@ -205,7 +236,7 @@ class Reservations extends MY_Controller
                 $message['success'] = "success";
                             
             } else {
-                $message['error'] = "Did you change termin? Please, search again free equipment according to your time!";
+                $message['error'] = "Unfortunately, the item is not available at that time! Check again.";
             }
 
         }
@@ -368,13 +399,22 @@ class Reservations extends MY_Controller
 
     public function update_room_reservation()
     {
+        $date = date('Y-m-d h:i:s', time());
+        
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('room', 'Room', 'trim|required');
         $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
+
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
+        } 
+        elseif($this->input->post('start_time') < $date) {
+            $message['error'] = "Change start time. You have to reserve in advance";
+        } 
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
 
         } else {
             $data = [
@@ -390,11 +430,12 @@ class Reservations extends MY_Controller
                 $message['success'] = $data['id'];
 
             } else {
-                $message['error'] = "Did you change termin? Please, search again free conference rooms according to your time!";
+                $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
             }
 
         }
-        echo json_encode($message);    }
+        echo json_encode($message);    
+    }
 
     public function delete_room_reservation($id)
     {
@@ -432,7 +473,7 @@ class Reservations extends MY_Controller
                 $message['success'] = $data['res_id'];
                             
             } else {
-                $message['error'] = "Did you change termin? Please, search again free equipment according to your time!";
+                $message['error'] = "Unfortunately, the item is not available at that time! Check again.";
             }
 
         }
