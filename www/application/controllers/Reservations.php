@@ -262,6 +262,7 @@ class Reservations extends MY_Controller
         }
         $members = $this->res->get_reservation_members($id);
         $user_id = $this->user_data['user']['id'];
+        $editors = $this->res->get_all_editors($id);
 
         // Check if user is a member of the given reservation
         $this->permission->is_member_of_reservation($members, $user_id);
@@ -270,7 +271,8 @@ class Reservations extends MY_Controller
         $data = [
             'meeting' => $meeting[0],
             'members' => $members,
-            'user_id' => $user_id
+            'user_id' => $user_id,
+            'editors' => $editors
         ];
         $this->layouts->set_title($meeting[0]['title']);
         $this->layouts->view('reservations/meetings/single_view', $data);

@@ -7,11 +7,10 @@
             </h1>
         </div>
         <div>
-            <?php foreach ($members as $member) {
-                if($user_id == $member['user_id'] && $member['res_role_id'] == 1) { ?>
-                <a href="/reservations/update_room_reservation_form/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
-                <a href="/reservations/delete_room_reservation/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
-            <?php } } ?>
+            <?php if (in_array($user_id, $editors)) { ?>
+            <a href="/reservations/update_room_reservation_form/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
+            <a href="/reservations/delete_room_reservation/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
+            <?php } ?>
         </div>
     </div>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
@@ -47,8 +46,7 @@
                         <th scope="col">Name</th>
                         <th scope="col">Email</th>
                         <th scope="col">Role</th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th colspan="2"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,6 +55,9 @@
                     <th scope="row"><?= $i ?></th>
                     <td class="text-center"><?= $member['name'] ?></td>
                     <td><?= $member['email'] ?></td>
+                    
+                    <!-- If user is an editor, he can edit roles for other members -->
+                    <?php if (in_array($user_id, $editors)) {  ?>
 
                     <!-- Check who is creator of the reservation and unabling his update or deletion -->
                     <?php if($meeting['creator_id'] != $member['user_id']) { ?>
@@ -66,7 +67,14 @@
                     <?php }  else { ?>
                     <td colspan="3" class="text-center">CREATOR (cannot be updated or deleted)</td>
                     <?php } ?>
+
+                    <?php } else { ?>
+                    <td><?= $member['role'] ?></td>
+                    <td colspan="2"></td>
+
+                    <?php } ?>     
                     
+
                     </tr>
                     <?php $i++; } ?> 
 
@@ -76,7 +84,10 @@
 <!-- Delete Reservation Member Errors -->
 <div id="del_error_msg" class="text-danger"></div>
 <div class="form-group">
+<!-- If user is an editor, he can add new members -->
+<?php if (in_array($user_id, $editors)) { ?>
     <button id="btn_add_new_member" class="btn btn-info float-right mx-4 my-2" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>"><i class="fas fa-plus-circle mr-1"></i> Add new member</button>
+<?php } ?>
 </div>
 
 <!-- Edit Member Role -->

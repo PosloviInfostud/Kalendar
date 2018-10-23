@@ -789,4 +789,19 @@ class Reservation_model extends CI_Model
         return $members;
     }
 
+    public function get_all_editors($id)
+    {
+        $editors = [];
+        $sql = "SELECT user_id FROM res_members WHERE res_role_id = 1 AND res_id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        foreach($result as $row) {
+            $editors[] = $row['user_id'];
+        }
+        return $editors;
+    }
+
 }
