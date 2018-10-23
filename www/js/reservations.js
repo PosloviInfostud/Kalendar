@@ -39,7 +39,7 @@ let fpRoomEndDate = $("#datetime_end").flatpickr({
 let fpItemStartDate = $("#item_datetime_start").flatpickr({
     dateFormat: "Y-m-d H:i",
     minDate: new Date(),
-    // defaultDate: new Date(),
+    defaultDate: new Date(),
     enableTime: true,
     time_24hr: true,
     altInput: true,
@@ -62,6 +62,8 @@ let fpItemEndDate = $("#item_datetime_end").flatpickr({
     altInputClass: '',
 	altFormat: "d/m/y @ H:i",
 });});
+
+
 
 //load select2 plugin - multiple
 $(document).ready(function() {
@@ -409,23 +411,6 @@ $("#del_res_btn").click(function(){
     }   
 });
 
-//load update equipment form modal
-
-$("body").on('click','#edit_equip_btn', function(e) {
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/reservations/show_update_equip_form",
-        data: {
-            equip: $(this).attr("data-equip")
-        }
-    }).done(function(response) {
-        $('#edit_equip_modal_body').html(response);
-        // show modal
-        $('#editEquipModal').modal('show');    
-    })
-})
-
 //submit equipment update form
 
 $("#update_equipment_submit").click(function(e){
@@ -434,8 +419,8 @@ $("#update_equipment_submit").click(function(e){
         method: "POST",
         url: "/reservations/update_equipment",
         data: {
-            start_time : $("#item_datetime_start").val(),
-            end_time :  $("#item_datetime_end").val(),
+            start_time : $("#update_item_datetime_start").val(),
+            end_time :  $("#update_item_datetime_end").val(),
             description : $("#reservation_description").val(),
             equip_id : $("#equip_id").val(),
             res_id : $("#res_id").val()

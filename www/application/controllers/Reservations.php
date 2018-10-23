@@ -147,19 +147,23 @@ class Reservations extends MY_Controller
 
     public function search_free_equipment()
     {
-        var_dump($date);
+        $date = date('Y-m-d h:i:s', time());
+
         $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time','End Time', 'trim|required');
         $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required');
 
         if($this->form_validation->run() == false) {
             echo validation_errors();
-
+            die;
         } 
-        elseif($this->input->post('start_time')< $date) {
-            echo "Change start time.";
+        if($this->input->post('start_time') < $date) {
+                echo "Change start time. You have to reserve in advance";
+        } 
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            echo "Check start and end time again. End time has to be greater than start time.";
+
         } else {
-            echo $this->input->post('start_time'); die;
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
@@ -216,6 +220,8 @@ class Reservations extends MY_Controller
 
     public function submit_reservation_equip_form()
     {
+        $date = date('Y-m-d h:i:s', time());
+
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('equipment_id', 'Equipment', 'trim|required');
@@ -224,6 +230,11 @@ class Reservations extends MY_Controller
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
 
+        } elseif($this->input->post('start_time') < $date) {
+            $message['error'] = "Change start time. You have to reserve in advance";
+        }
+        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
         } else {
             $data = [
                 "start_time" => $this->input->post('start_time'),
@@ -443,13 +454,10 @@ class Reservations extends MY_Controller
         url_redirect('/reservations/meetings');
     }
 
-    public function show_update_equip_form()
+    public function show_update_equip_form($id)
     {
-        $id = $this->input->post('equip');
         $data['equipment'] = $this->res->single_equipment_reservation($id)[0];
-        $view = $this->load->view('reservations/equipment/update_equip_form', $data, true);
-
-        echo $view;
+        $this->layouts->view('reservations/equipment/update_equip_form', $data);
     }
 
     public function update_equipment()
@@ -459,6 +467,9 @@ class Reservations extends MY_Controller
 
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
+
+        } elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
+            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
 
         } else {
             $data = [
