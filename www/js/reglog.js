@@ -85,8 +85,16 @@ $("#forgot_form").submit(function(e){
         }
     })
     .done(function(response){
-        $("#messages").html(response);
-        $("#forgot_form").addClass("hide");
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#forgot_messages").html(msg.error);
+        }
+        if(msg.success) {
+            $("#forgot_messages").html(msg.success);
+            $("#forgot_input").addClass("hide");
+            }
 
      })
 })

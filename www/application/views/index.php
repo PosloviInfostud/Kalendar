@@ -44,12 +44,15 @@
                 <input type="submit" id="login_submit" class="btn btn-primary">
             </form>
 
-            <form id="forgot_form" class="border border-warning rounded p-3 hide">
-                <div class="form-group">
-                    <label for="email">Please, enter your E-Mail so we can send you link to reset your password!</label><br>
-                    <input type="email" class="form-control" name="email" id="forgot_email">
+            <form id="forgot_form" class="border border-warning rounded p-2 hide">
+                <div id="forgot_input" >
+                    <div class="form-group">
+                        <label for="email">Please, enter your E-Mail so we can send you link to reset your password!</label><br>
+                        <input type="email" class="form-control" name="email" id="forgot_email">
+                    </div>
+                    <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
                 </div>
-                <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
+                <div id="forgot_messages" class="p-2"></div>
             </form>
             
         </div>

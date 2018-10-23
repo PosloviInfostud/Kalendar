@@ -1,4 +1,11 @@
-<div id="reset_password_form_window" class="col-sm-6 mx-auto border border-primary rounded p-3">
+<?php if(isset($error)) { ?>
+<div class="jumbotron">
+    <div class="alert alert-danger">
+    <p class="text-center"><?= $error ?></p>
+    </div>
+</div>
+<?php } else { ?>
+    <div id="reset_password_form_window" class="col-sm-6 mx-auto border border-primary rounded p-3">
     <form id="form_reset_password">
         <div class="form-group">
             <label for="email">E-Mail</label><br>
@@ -16,5 +23,7 @@
             <input type="submit" name="submit" id="reset_password_submit" class="btn btn-success btn-block" value="Reset Password">
     </form>
     <div id="msgs"></div>
-</div>
+    </div>
+<?php } ?>
+
 <script src="/js/reglog.js"></script>

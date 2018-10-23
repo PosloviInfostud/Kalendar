@@ -241,6 +241,17 @@ class User_model extends CI_Model
         $this->logs->insert_log($data_log);
     }
 
+    public function check_reset_token($data)
+    {
+        $sql = "SELECT id FROM users WHERE email = ? AND reset_key = ?";
+        $query = $this->db->query($sql, [$data['email'], $data['code']]);
+
+        if($query->num_rows()>0) { 
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function reset_password($data)
     {
         $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
@@ -250,14 +261,9 @@ class User_model extends CI_Model
                 WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ?";
         $query = $this->db->query($sql, [$password_hash, $data['email'], $data['reset_key'], $today]);
 
-        if($this->db->affected_rows() >0) {
-            return true;
-        } else {
-            return false;
-        }
         $this->load->model('Logs_model','logs');
         $data_log = [
-            'user_id' => get_user_by_email($data['email'])['id'],
+            'user_id' => $this->get_user_by_email($data['email'])['id'],
             'table' => 'users',
             'type' => 'update',
             'value' => [
@@ -286,6 +292,18 @@ class User_model extends CI_Model
     {
         $sql = "UPDATE users SET name = ?, email = ?, user_role_id = ?, active = ? WHERE id = ?";
         $query = $this->db->query($sql, [$data['name'], $data['email'], $data['role_id'], $data['active'], $data['id']]);
+    }
+
+    public function check_invite_token($data)
+    {
+        $sql = "SELECT id FROM pending_users WHERE email = ? AND invite_token = ?";
+        $query = $this->db->query($sql, [$data['email'], $data['token']]);
+
+        if($query->num_rows()>0) { 
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

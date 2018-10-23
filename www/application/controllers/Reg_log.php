@@ -6,6 +6,7 @@ class Reg_log extends MY_Controller
             parent::__construct();
             $this->load->library('form_validation');
             $this->load->model('Mail_model', 'mail');
+            $this->load->model('User_model', 'user');
     }
 
     public function index()
@@ -68,7 +69,7 @@ class Reg_log extends MY_Controller
         $this->form_validation->set_rules('email','E-Mail','trim|required|valid_email');
 
         if($this->form_validation->run() == FALSE) {
-            $message = validation_errors();
+            $message['error'] = validation_errors();
 
         } else {
             $email = $this->input->post('email');
@@ -76,7 +77,7 @@ class Reg_log extends MY_Controller
             $this->load->model('User_model','user');
 
             if(empty($this->user->get_user_by_email($email))){
-                $message = "Please, register first!";
+                $message['error'] = "Please, register first!";
             }
             else {
                 $this->load->library('encryption');
@@ -93,26 +94,15 @@ class Reg_log extends MY_Controller
 
                 $email_details['from'] = 'visnjamarica@gmail.com';
                 $email_details['subject'] = 'Reset Password';
-                $email_details['message'] = $message = '<html>
-                                                            <head>
-                                                                <title>Reset Password</title>
-                                                            </head>
-                                                            <body>
-                                                                <h2>Reset Password</h2>
-                                                                <p>Please click the link below to fill in your new password.</p>
-                                                                <p>
-                                                                    <a href="'.$password_link.'">Reset My Password</a>
-                                                                </p>
-                                                            </body>
-                                                        </html>';
+                $email_details['message'] = $this->load->view('mails/reset_password_mail', ['password_link' => $password_link], true);
                 
                 // Add email to queue
                 $this->mail->add_mail_to_queue(array($email), $email_details);
 
-                $message = "E-mail sent successfully! Please, go to your email account and click on the link to enter your new password!";
+                $message['success'] = "E-mail sent successfully! Please, go to your email account and click on the link to enter your new password!";
             }
         }
-        echo $message;
+        echo json_encode($message);
         die();
     }
 
@@ -122,7 +112,9 @@ class Reg_log extends MY_Controller
             'email' => $this->input->get('email'),
             'code' => $this->input->get('code')
         ];
-
+        if($this->user->check_reset_token($data) == false || $data['code'] == "") {
+            $data['error'] = "E-mail and code do not fit. Try again!";
+        }
         $this->layouts->set_title('Reset Password');
         $this->layouts->view('reset_password', $data);
     }
@@ -144,20 +136,15 @@ class Reg_log extends MY_Controller
                 "password" => $this->input->post('password'),
                 "reset_key" => $this->input->post('code')
             ];
-
-            $this->load->model('User_model','user');
             
-            if ($this->user->reset_password($data) == true) {
-                $session_data = [
-                    'message' => "Your password has been successfully reseted! You can now login with your new password!"
-                ];
-                $this->session->set_userdata($session_data);
+            $this->user->reset_password($data);
+            $session_data = [
+                'flash_message' => "Your password has been successfully reseted! You can now login with your new password!"
+            ];
+            $this->session->set_flashdata($session_data);
 
-                $message = "success";
+            $message = "success";
 
-            } else {
-                $message = "E-Mail or code may not be correct or 5 days has run out!";
-            }
         }
         echo $message;
     }
@@ -175,7 +162,9 @@ class Reg_log extends MY_Controller
             'email' => $this->input->get('email'),
             'token' => $this->input->get('code')
         ];
-
+        if($this->user->check_invite_token($data) == false || $data['token'] == "") {
+            $data['error'] = "E-mail and code do not fit. Try again!";
+        }
         $this->layouts->set_title('Registration by Invite');
         $this->layouts->view('registration_by_invitation', $data);
     }
