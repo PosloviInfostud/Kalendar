@@ -405,7 +405,7 @@ class Reservations extends MY_Controller
         $this->res->insert_unregistered_members($data);
         $this->res->invite_unregistered_members($data['res_id']);
         $this->res->insert_reservation_members($data);
-        $this->res->invite_members($data['res_id']);
+        $this->res->invite_new_members($data['res_id'], $data['registered']);
     }
 
     public function update_room_reservation()

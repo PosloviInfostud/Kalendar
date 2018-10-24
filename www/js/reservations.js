@@ -369,7 +369,7 @@ $("body").on('submit','#add_new_member_form', function(e) {
         }
 
     }).done(function(response){
-        console.log(response);
+        location.reload();
     })
 })
 
