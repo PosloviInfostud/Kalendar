@@ -306,4 +306,33 @@ class User_model extends CI_Model
         }
     }
 
+    public function change_user_notifications($user_id, $notify)
+    {
+        $sql = "UPDATE users SET notify = ?, modified_at = NOW() WHERE id = ?";
+        $query = $this->db->query($sql, [$notify, $user_id]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'users',
+            'type' => 'update',
+            'value' => [
+                'notify' => $notify,
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+
+        $sql = "UPDATE res_members SET notify =?, modified_at = NOW() WHERE user_id = ?";
+        $query = $this->db->query($sql, [$notify, $user_id]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'update',
+            'value' => [
+                'notify' => $notify,
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+    }
+
 }

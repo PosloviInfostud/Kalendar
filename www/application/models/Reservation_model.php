@@ -289,17 +289,25 @@ class Reservation_model extends CI_Model
         $res_id = $data['res_id'];
         $user_id = $data['admin'];
         foreach ($data['registered'] as $member) {
+            $sql = "SELECT notify FROM users WHERE id = ?";
+            $query = $this->db->query($sql, [$member]);
+            if ($query->num_rows()) {
+                $result = $query->row_array();
+            }
+            $notify = $result['notify'];
+
             $sql = "INSERT INTO res_members 
-                    (res_id, user_id) 
-                    VALUES (?, ?)";
-            $query = $this->db->query($sql, [$res_id, $member]);
+                    (res_id, user_id, notify) 
+                    VALUES (?, ?, ?)";
+            $query = $this->db->query($sql, [$res_id, $member, $notify]);
             $data_log = [
                 'user_id' => $user_id,
                 'table' => 'res_members',
                 'type' => 'insert',
                 'value' => [
                     'res_id' => $res_id,
-                    'member' => $member
+                    'member' => $member,
+                    'notify' => $notify
                 ]
             ];
             $this->logs->insert_log($data_log);

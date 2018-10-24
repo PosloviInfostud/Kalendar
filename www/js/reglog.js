@@ -145,3 +145,38 @@ $("#register_by_invite_form").submit(function(e){
         }
     })
 })
+
+//edit user notifications show form modal
+
+$("body").on('click', '#change_notification', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/show_change_notifications_form",
+        data: {
+            'id': $(this).attr("data-user"),
+            'notify' : $(this).attr("data-notify")
+        }
+    }).done(function(response){
+        $('#notify_modal_body').html(response);
+        // show modal
+        $('#notifyModal').modal('show');   
+    })
+})
+
+//edit user notifications form submit
+
+$("body").on('submit','#update_notifications_form', function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/change_notifications",
+        data: {
+            "notify": $("#update_notifications_form_notify").val(),
+            "user_id" : $("#update_notifications_form_user_id").val()
+        }
+
+    }).done(function(response){
+        location.reload();
+    })
+})
