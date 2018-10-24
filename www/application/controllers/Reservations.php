@@ -348,8 +348,8 @@ class Reservations extends MY_Controller
         $rooms = $this->admin->get_all_rooms();
         $user_id = $this->user_data['user']['id'];
 
-        // Check if user is a member of the given reservation
-        $this->permission->is_member_of_reservation($members, $user_id);
+        // Check if user is an editor of the given reservation
+        $this->permission->is_editor_of_reservation($id, $user_id);
         $this->load->view('header', $this->user_data);
         $this->load->view('reservations/meetings/update_room_reservation_form', ['meeting' => $meeting[0], 'members' => $members, 'user_id' => $user_id, 'rooms' => $rooms]);
         $this->load->view('footer');
@@ -456,7 +456,16 @@ class Reservations extends MY_Controller
 
     public function show_update_equip_form($id)
     {
+        $user_id = $this->user_data['user']['id'];
         $data['equipment'] = $this->res->single_equipment_reservation($id)[0];
+        // Check if reservation exists for that id
+        if(empty($data['equipment'])) {
+            url_redirect('/error_404');
+        // Check if it's the user's reservation
+        } elseif($data['equipment']['user_id'] != $user_id) {
+            echo 'Not your reservation.';
+            die();
+        }        
         $this->layouts->view('reservations/equipment/update_equip_form', $data);
     }
 
