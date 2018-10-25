@@ -906,4 +906,35 @@ class Reservation_model extends CI_Model
         return $editors;
     }
 
+    public function get_if_member_is_notified($res_id, $user_id)
+    {
+        $sql = "SELECT not_update, not_remind FROM res_members WHERE res_id = ? AND user_id = ?";
+        $query = $this->db->query($sql, [$res_id, $user_id]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        $notify['update'] = $result['not_update'];
+        $notify['remind'] = $result['not_remind'];
+
+        return $notify;
+    }
+
+    public function change_member_notifications($user_id, $res_id, $notify, $column)
+    {
+        $sql = "UPDATE res_members SET ".$column." = ?, modified_at = NOW() WHERE user_id = ? AND res_id = ?";
+        $query = $this->db->query($sql, [$notify, $user_id, $res_id]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'update',
+            'value' => [
+                'res_id' => $res_id,
+                $column => $notify
+                ]
+        ];
+        $this->logs->insert_log($data_log);       
+    }
+
 }

@@ -15,12 +15,32 @@
     </div>
     <div class="row mt-1">
         <div class="col-2"><b>Notify me:</b></div>
-        <?php if ($this->user_data['user']['notify'] == 1) { ?>
-            <div class="col-10">Yes
-        <?php } else { ?>
-            <div class="col-10">No
-        <?php } ?>
-                (  <button id="change_notification" data-user="<?= $this->user_data['user']['id'] ?>" data-notify="<?= $this->user_data['user']['notify'] ?>" class="btn btn-sm btn-outline-secondary">Change Mail Notification</button>  )
+            <div class="form-group">
+
+                <div class="form-control">
+                <?php if($this->user_data['user']['not_create'] == 1) { ?>
+                    <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> when new meeting is created
+                <?php } else { ?>
+                    <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>"> when new meeting is created
+                <?php } ?>
+                </div>
+
+                <div class="form-control">
+                <?php if($this->user_data['user']['not_update'] == 1) { ?>
+                    <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> when a meeting is updated or cancelled
+                <?php } else { ?>
+                    <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>"> when a meeting is updated or cancelled
+                <?php } ?>
+                </div>
+
+                <div class="form-control">
+                <?php if($this->user_data['user']['not_remind'] == 1) { ?>
+                    <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> to remind me meeting starts in 15 minutes
+                <?php } else { ?>
+                    <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>"> to remind me meeting starts in 15 minutes
+                <?php } ?>
+                </div>
+            </div>
             </div>
     </div>
 </div>

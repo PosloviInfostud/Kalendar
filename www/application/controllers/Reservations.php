@@ -305,6 +305,7 @@ class Reservations extends MY_Controller
         $members = $this->res->get_reservation_members($id);
         $user_id = $this->user_data['user']['id'];
         $editors = $this->res->get_all_editors($id);
+        $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
         // Check if user is a member of the given reservation
         $this->permission->is_member_of_reservation($members, $user_id);
@@ -314,7 +315,8 @@ class Reservations extends MY_Controller
             'meeting' => $meeting[0],
             'members' => $members,
             'user_id' => $user_id,
-            'editors' => $editors
+            'editors' => $editors,
+            'notify' => $notify
         ];
         $this->layouts->set_title($meeting[0]['title']);
         $this->layouts->view('reservations/meetings/single_view', $data);
@@ -504,5 +506,14 @@ class Reservations extends MY_Controller
     {
         $this->res->delete_equipment_reservation($id);
         url_redirect('/reservations/equipment');
+    }
+
+    public function change_member_notifications()
+    {
+        $user_id = $this->input->post('user_id');
+        $notify = $this->input->post('value');
+        $column = $this->input->post('column');
+        $res_id = $this->input->post('res_id');
+        $this->res->change_member_notifications($user_id, $res_id, $notify, $column);
     }
 }

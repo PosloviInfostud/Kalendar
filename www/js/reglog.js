@@ -146,37 +146,24 @@ $("#register_by_invite_form").submit(function(e){
     })
 })
 
-//edit user notifications show form modal
+//edit user notifications checkboxes
 
-$("body").on('click', '#change_notification', function(e) {
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/users/show_change_notifications_form",
-        data: {
-            'id': $(this).attr("data-user"),
-            'notify' : $(this).attr("data-notify")
-        }
-    }).done(function(response){
-        $('#notify_modal_body').html(response);
-        // show modal
-        $('#notifyModal').modal('show');   
-    })
-})
-
-//edit user notifications form submit
-
-$("body").on('submit','#update_notifications_form', function(e) {
-    e.preventDefault();
+$(".notify").change(function(){
+    if($(this).is(":checked")) {
+        value = 1;
+    } else {
+        value = 0;
+    }
     $.ajax({
         method: "POST",
         url: "/users/change_notifications",
         data: {
-            "notify": $("#update_notifications_form_notify").val(),
-            "user_id" : $("#update_notifications_form_user_id").val()
+            column: $(this).attr("name"),
+            value: value,
+            user_id: $(this).attr("data-user")
         }
-
     }).done(function(response){
-        location.reload();
+        console.log(response);
     })
 })
+

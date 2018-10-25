@@ -446,3 +446,26 @@ $("#delete_equip_btn").click(function(){
         return false;
     }   
 });
+
+//edit member notifications checkboxes for specific reservation
+
+$(".notify").change(function(){
+    if($(this).is(":checked")) {
+        value = 1;
+    } else {
+        value = 0;
+    }
+    $.ajax({
+        method: "POST",
+        url: "/reservations/change_member_notifications",
+        data: {
+            column: $(this).attr("name"),
+            value: value,
+            user_id: $(this).attr("data-user"),
+            res_id: $(this).attr("data-res")
+        }
+    }).done(function(response){
+        console.log(response);
+    })
+})
+

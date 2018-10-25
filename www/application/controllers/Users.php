@@ -76,20 +76,11 @@ class Users extends MY_Controller
         echo $message;
     }
 
-    public function show_change_notifications_form()
-    {
-        $user_id = $this->input->post('id');
-        $notify = $this->input->post('notify');
-
-        $modal = $this->load->view('users/update_notifications.php', ['user'=> $user_id, 'notify'=>$notify], true);
-
-        echo $modal;
-    }
-
     public function change_notifications()
     {
         $user_id = $this->input->post('user_id');
-        $notify = $this->input->post('notify');
-        $this->user->change_user_notifications($user_id, $notify);
+        $notify = $this->input->post('value');
+        $column = $this->input->post('column');
+        $this->user->change_user_notifications($user_id, $notify, $column);
     }
 }
