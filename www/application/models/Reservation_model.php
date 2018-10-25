@@ -16,7 +16,8 @@ class Reservation_model extends CI_Model
                 INNER JOIN rooms ON res.room_id = rooms.id
                 WHERE mem.res_role_id = 2 
                 AND mem.res_id = ? 
-                AND res.deleted = 0";
+                AND res.deleted = '0' 
+                AND u.not_create = '1'";
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
             $result = $query->result_array();
@@ -43,7 +44,8 @@ class Reservation_model extends CI_Model
                     INNER JOIN rooms ON res.room_id = rooms.id
                     WHERE u.id = ?
                     AND mem.res_id = ? 
-                    AND res.deleted = 0";
+                    AND res.deleted = '0' 
+                    AND u.not_create = '1'";
             $query = $this->db->query($sql, [$user, $res_id]);
             if ($query->num_rows()) {
             $result = $query->row_array();
@@ -289,17 +291,18 @@ class Reservation_model extends CI_Model
         $res_id = $data['res_id'];
         $user_id = $data['admin'];
         foreach ($data['registered'] as $member) {
-            $sql = "SELECT notify FROM users WHERE id = ?";
+            $sql = "SELECT not_update, not_remind FROM users WHERE id = ?";
             $query = $this->db->query($sql, [$member]);
             if ($query->num_rows()) {
                 $result = $query->row_array();
             }
-            $notify = $result['notify'];
+            $notify['update'] = $result['not_update'];
+            $notify['remind'] = $result['not_remind'];
 
             $sql = "INSERT INTO res_members 
-                    (res_id, user_id, notify) 
-                    VALUES (?, ?, ?)";
-            $query = $this->db->query($sql, [$res_id, $member, $notify]);
+                    (res_id, user_id, not_update, not_remind) 
+                    VALUES (?, ?, ?, ?)";
+            $query = $this->db->query($sql, [$res_id, $member, $notify['update'], $notify['remind']]);
             $data_log = [
                 'user_id' => $user_id,
                 'table' => 'res_members',
@@ -307,7 +310,8 @@ class Reservation_model extends CI_Model
                 'value' => [
                     'res_id' => $res_id,
                     'member' => $member,
-                    'notify' => $notify
+                    'not_update' => $notify['update'],
+                    'not_remind' => $notify['remind']
                 ]
             ];
             $this->logs->insert_log($data_log);
@@ -644,7 +648,11 @@ class Reservation_model extends CI_Model
             $this->load->model('User_model','user');
             $member = $this->user->get_single_user($data['member']);
             $reservation = $this->single_room_reservation($data['res'])[0];
-            $this->send_delete_member_mail($member, $reservation);
+            $notify = $this->get_if_member_is_notified($data['res'], $data['member']);
+
+            if($notify['not_update'] == 1) {
+                $this->send_delete_member_mail($member, $reservation);
+            }
             
             $message['success'] = "success";
         }
@@ -863,12 +871,13 @@ class Reservation_model extends CI_Model
     public function get_all_reservation_mails($id)
     {
         $result = [];
+        $pending = [];
         $members = [];
         $sql = "SELECT u.email FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id 
                 WHERE mem.res_id = ? 
-                AND mem.deleted = 0 
-                AND mem.notify = 1";
+                AND mem.deleted = '0' 
+                AND mem.not_update = '1'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -882,9 +891,9 @@ class Reservation_model extends CI_Model
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
-            $result = $query->result_array();
+            $pending = $query->result_array();
         }
-        foreach ($result as $member) {
+        foreach ($pending as $member) {
             $members[] = $member['email'];
         }
 
