@@ -123,7 +123,6 @@ $("#search_reserved_offices").click(function(e){
         }
     })
     .done(function(response){
-        console.log(response);
         $("#free").html(response);
     })
 })
@@ -165,7 +164,6 @@ $("select.select_room").change(function(e){
 var room;
 $("body").on('change click', "input.room_radio", function(e) {
     room = $(this).val();
-    console.log(room);
 })
 
 //submit room reservation form
@@ -176,6 +174,7 @@ $("body").on('click', "#reservation_room_submit_by_date", function(e) {
     data.start_time = $("#datetime_start").val();
     data.end_time =  $("#datetime_end").val();
     data.room =  room;
+    data.frequency = $("#res_frequency").val();
     data.title = $("#reservation_name").val();
     data.description = $("#reservation_description").val();
     data.members = $("#members").val();
@@ -188,6 +187,7 @@ $("body").on('click', "#reservation_room_submit_by_room", function(e) {
     data.start_time = $("#datetime_start").val();
     data.end_time =  $("#datetime_end").val();
     data.room =  room;
+    data.frequency = $("#res_frequency").val();
     data.title = $("#reservation_name").val();
     data.description = $("#reservation_description").val();
     data.members = $("#members").val();
@@ -208,7 +208,7 @@ function submit_room_reservation(data) {
             $("#show_errors").html(msg.error);
         }
         if(msg.success) {
-            window.location.href = "/dashboard";
+            window.location.href = "/reservations/meetings";
         }
     })
 }

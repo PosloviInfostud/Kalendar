@@ -20,26 +20,33 @@ class User_model extends CI_Model
         $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]');
         $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]');
 
-        $message = [];
-
-        if ($this->form_validation->run() == false) {
-            $message['error'] = validation_errors();
-            $email = $this->input->post('email');
-            $this->load->model('Logs_model', 'logs');
-            $this->logs->user_logs($email, 0, $message, "R");
-
-        } else {
+        if ($this->form_validation->run())
+        {
             $data = [
                 "name" => $this->input->post('name'),
                 "email" => $this->input->post('email'),
                 "password" => $this->input->post('password')
             ];
             $message['user_id'] = $this->create($data);
-            $message['success'] = 'success';
+            $message['status'] = 'success';
+            $message['errors'] = 'No errors';
             $email = $this->input->post('email');
-            $this->load->model('Logs_model', 'logs');
             $this->logs->user_logs($email, 1, NULL, "R");
+        }
+        else
+        {
+            $errors = array();
+            // Loop through $_POST and get the keys
+            foreach ($this->input->post() as $key => $value)
+            {
+                // Add the error message for this field
+                $errors[$key] = form_error($key);
+            }
+            $message['errors'] = array_filter($errors); // Some might be empty
+            $message['status'] = 'form_error';
 
+            $email = $this->input->post('email');
+            $this->logs->user_logs($email, 0, $message, "R");
         }
         return $message;
     }
@@ -114,7 +121,6 @@ class User_model extends CI_Model
         if ($query->num_rows()) {
             $result = $query->row_array();
         }
-
         return $result;
     }
 
@@ -127,7 +133,6 @@ class User_model extends CI_Model
         if ($query->num_rows()) {
             $result = $query->row_array();
         }
-
         return $result;
     }
 
@@ -140,7 +145,6 @@ class User_model extends CI_Model
         if ($query->num_rows()) {
             $result = $query->row_array();
         }
-
         return $result;
     }
  
@@ -148,58 +152,53 @@ class User_model extends CI_Model
     {
         $user = $this->get_user_by_email($data['email']);
 
+        // Initiate the return message
+        $message = [
+            'status' => 'user_error',
+            'error' => ''
+        ];
+
         if (empty($user)) {
-            $message = "Please, register first!";
-
+            $message['error'] = "Please, register first!";
             $email = $data['email'];
-            $log_desc = "not registered";
             $this->load->model('Logs_model', 'logs');
-            $this->logs->user_logs($email, 0, $log_desc);
-
+            $this->logs->user_logs($email, 0, $message);
 
         } else {
             if (password_verify($data['password'], $user['password']) == false) {
-                $message = "Incorrect password";
-
+                $message['error'] = "Incorrect password";
                 $email = $data['email'];
-                $log_desc = "wrong password";
                 $this->load->model('Logs_model', 'logs');
-                $this->logs->user_logs($email, 0, $log_desc);
+                $this->logs->user_logs($email, 0, $message);
 
             } else {
                 if ($user['active'] != 1) {
-                    $message = "Please, activate your profile first!";
+                    $message['error'] = "Please, activate your profile first!";
 
                     $email = $data['email'];
-                    $log_desc = "profile not yet activated";
                     $this->load->model('Logs_model', 'logs');
-                    $this->logs->user_logs($email, 0, $log_desc);
+                    $this->logs->user_logs($email, 0, $message);
   
                 } else {
-                    $this->load->helper('cookie');
-                    $this->load->library('session');
                     $name = "usr-vezba";
                     $this->load->library('encryption');
                     $value = bin2hex($this->encryption->create_key(16));
                     $expire = date('Y-m-d h:i:s', strtotime('+2 days'));
                     $this->save_login_token($user['id'], $value, $expire);
-                    $cookie= array(
+                    $cookie = array(
                         'name'   => $name,
                         'value'  => $value,
                         'expire' => '172800',
                     );
-                    
+
                     $this->input->set_cookie($cookie);
-                    $session_data = [
-                        $value => $user['name']
-                    ];
-                    $this->session->set_userdata($session_data);
-                    $message = "success";
+                    
+                    $message['status'] = "success";
+                    $message['error'] = "No errors.";
 
                     $email = $data['email'];
                     $this->load->model('Logs_model', 'logs');
                     $this->logs->user_logs($email, 1);
-
                 }
             }
         }

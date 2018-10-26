@@ -12,21 +12,26 @@
             <div id="messages"></div>
             <form id="register_form" class="border border-info rounded p-3 hide">
                 <div class="form-group">
+                    <?php echo form_error('email'); ?>
                     <label for="exampleInputEmail1">Name</label>
                     <input type="text" class="form-control" name="name" id="register_name">
+                    <small id="register_name_err" class="form-text text-danger error_box"></small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
                     <input type="email" class="form-control" name="email" id="register_email">
+                    <small id="register_email_err" class="form-text text-danger error_box"></small>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
                     <input type="password" class="form-control" id="register_password">
+                    <small id="register_password_err" class="form-text text-danger error_box"></small>
                 </div>
                 <div class="form-group">
 
                     <label for="exampleInputPassword1">Confirm Password</label>
                     <input type="password" class="form-control" id="register_password_confirm">
+                    <small id="register_password_confirm_err" class="form-text text-danger error_box"></small>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -36,10 +41,12 @@
                 <div class="form-group">
                     <label for="email">E-Mail</label>
                     <input type="email" name="email" id="login_email" class="form-control">
+                    <small id="login_email_err" class="form-text text-danger error_box"></small>
                 </div>
                 <div class="form-group">
                     <label for="password" name="password" id="password">Password</label>
                     <input type="password" name="password" id="login_password" class="form-control">
+                    <small id="login_password_err" class="form-text text-danger error_box"></small>
                 </div>
                 <input type="submit" id="login_submit" class="btn btn-primary">
             </form>
@@ -48,6 +55,7 @@
                 <div class="form-group">
                     <label for="email">Please, enter your E-Mail so we can send you link to reset your password!</label><br>
                     <input type="email" class="form-control" name="email" id="forgot_email">
+                    <small id="forgot_email_err" class="form-text text-danger error_box"></small>
                 </div>
                 <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
             </form>
