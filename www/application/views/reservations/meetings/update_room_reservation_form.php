@@ -16,6 +16,7 @@
         </div>
 
         /mesto za kalendar/
+        <div id="show_errors"></div>
 
         <div class="form-froup border rounded border-info p-3 m-3">
             <p>When?</p>

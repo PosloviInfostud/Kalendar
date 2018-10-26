@@ -5,6 +5,7 @@ class Users extends MY_Controller
     {
             parent::__construct();
             $this->load->model('Permission_model', 'permission');
+            $this->load->model('Logs_model','logs');
             $this->permission->is_logged_in();
     }
     
@@ -73,5 +74,13 @@ class Users extends MY_Controller
         }
         // Send response to ajax
         echo $message;
+    }
+
+    public function change_notifications()
+    {
+        $user_id = $this->input->post('user_id');
+        $notify = $this->input->post('value');
+        $column = $this->input->post('column');
+        $this->user->change_user_notifications($user_id, $notify, $column);
     }
 }

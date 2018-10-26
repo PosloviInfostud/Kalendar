@@ -58,6 +58,7 @@
                     <small id="forgot_email_err" class="form-text text-danger error_box"></small>
                 </div>
                 <input type="submit" name="submit" id="forgot_submit" class="btn btn-warning btn-block" value="Reset Password">
+                </div>
             </form>
             
         </div>

@@ -39,6 +39,28 @@
         <div class="col-2"><b>Description:</b></div>
         <div class="col-10"><?= (empty($meeting['description'])) ? 'No description' : $meeting['description'] ?></div>
     </div>
+    <div class="row mt-1">
+        <div class="col-2"><b>Notify me:</b></div>
+            <div class="form-group">
+
+                <div class="form-control">
+                <?php if($notify['update'] == 1) { ?>
+                    <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> when a meeting is updated or cancelled
+                <?php } else { ?>
+                    <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" > when a meeting is updated or cancelled
+                <?php } ?>
+                </div>
+
+                <div class="form-control">
+                <?php if($notify['remind'] == 1) { ?>
+                    <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> to remind me meeting starts in 15 minutes
+                <?php } else { ?>
+                    <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>"> to remind me meeting starts in 15 minutes
+                <?php } ?>
+                </div>
+            </div>
+        </div>
+    </div>
     <hr>
     <div class="row mt-1">
     <div>

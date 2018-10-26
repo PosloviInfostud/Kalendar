@@ -32,7 +32,8 @@ class Reminder_model extends CI_Model
                 FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id
                 WHERE mem.res_id = ?
-                AND mem.deleted = 0";
+                AND mem.deleted = '0' 
+                AND mem.not_remind = '1'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
