@@ -17,7 +17,7 @@ class Reminder_model extends CI_Model
                 WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 59 MINUTE)
                 AND res.start_time > NOW()
                 AND res.reminder_sent = 0
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, []);
         if($query->num_rows()) {
             $result = $this->beautify->upcoming_meetings_data($query->result_array());
@@ -86,19 +86,8 @@ class Reminder_model extends CI_Model
         // Set your email information
         $email_details['from'] = 'visnjamarica@gmail.com';
         $email_details['subject'] = '[Reminder] Your meeting in '.$data['room'].' is about to start!';
-        $email_details['message'] = '<html>
-                        <head>
-                            <title>Your meeting in '.$data['room'].' is about to start!</title>
-                        </head>
-                        <body>
-                            <h2>'.$data['title'].'</h2>
-                            <p><strong>When:</strong> '.$data['start_time'].'</p>
-                            <p><strong>Where:</strong> '.$data['room'].'</p>
-                            <p><strong>Duration:</strong> '.$data['duration'].' mins</p>
-                            <p><strong>About:</strong> '. $data['description'].'</p>
-                        </body>
-                    </html>';
-
+        $email_details['message'] = $this->load->view('mails/meeting_reminder', $data, true);
+        
         return $email_details;
     }
 
