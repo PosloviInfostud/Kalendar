@@ -22,7 +22,11 @@ class Mail_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT id, send_from, send_to, subject, message
+        $sql = "SELECT id, 
+                send_from, 
+                send_to, 
+                subject, 
+                message
                 FROM mail_queue
                 WHERE status = 'pending'
                 ORDER BY created_at ASC

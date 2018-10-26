@@ -11,7 +11,7 @@ class Logs_model extends CI_Model
         $sql = "INSERT INTO user_logs 
                 (email, log_type, success, log_description, ip_address, user_agent) 
                 VALUES (?, ?, ?, ?, ?, ?)";
-        $query = $this->db->query($sql, [$email, $log_type, $success, $log_desc, $ip, $browser]);
+        $query = $this->db->query($sql, [$email, $log_type, $success, json_encode($log_desc), $ip, $browser]);
     }
 
     public function insert_log($data_log)

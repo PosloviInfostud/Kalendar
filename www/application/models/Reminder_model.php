@@ -5,7 +5,7 @@ class Reminder_model extends CI_Model
     {
         // Get meetings that start in the next 15 minutes
         $result = [];
-        $sql = 'SELECT res.id as reservation_id, 
+        $sql = "SELECT res.id as reservation_id, 
                 res.room_id, 
                 room.name AS room_name, 
                 res.title, 
@@ -16,7 +16,8 @@ class Reminder_model extends CI_Model
                 INNER JOIN rooms as room ON room.id = res.room_id
                 WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 59 MINUTE)
                 AND res.start_time > NOW()
-                AND res.reminder_sent = 0';
+                AND res.reminder_sent = 0
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, []);
         if($query->num_rows()) {
             $result = $this->beautify->upcoming_meetings_data($query->result_array());
@@ -27,9 +28,12 @@ class Reminder_model extends CI_Model
     public function get_meeting_members($id)
     {
         $result = [];
-        $sql = 'SELECT u.name, u.email FROM res_members AS mem
+        $sql = "SELECT u.name, u.email 
+                FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id
-                WHERE mem.res_id = ?';
+                WHERE mem.res_id = ?
+                AND mem.deleted = '0' 
+                AND mem.not_remind = '1'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -82,19 +86,8 @@ class Reminder_model extends CI_Model
         // Set your email information
         $email_details['from'] = 'visnjamarica@gmail.com';
         $email_details['subject'] = '[Reminder] Your meeting in '.$data['room'].' is about to start!';
-        $email_details['message'] = '<html>
-                        <head>
-                            <title>Your meeting in '.$data['room'].' is about to start!</title>
-                        </head>
-                        <body>
-                            <h2>'.$data['title'].'</h2>
-                            <p><strong>When:</strong> '.$data['start_time'].'</p>
-                            <p><strong>Where:</strong> '.$data['room'].'</p>
-                            <p><strong>Duration:</strong> '.$data['duration'].' mins</p>
-                            <p><strong>About:</strong> '. $data['description'].'</p>
-                        </body>
-                    </html>';
-
+        $email_details['message'] = $this->load->view('mails/meeting_reminder', $data, true);
+        
         return $email_details;
     }
 

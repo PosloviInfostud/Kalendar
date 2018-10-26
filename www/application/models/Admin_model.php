@@ -13,7 +13,8 @@ class Admin_model extends CI_Model
                 r.created_at, 
                 r.deleted 
                 FROM room_reservations as r
-                INNER JOIN users as u ON u.id = r.user_id;";
+                INNER JOIN users as u ON u.id = r.user_id
+                WHERE r.deleted = 0;";
 
         $query = $this->db->query($sql, []);
 
@@ -35,7 +36,8 @@ class Admin_model extends CI_Model
                 r.created_at, 
                 r.deleted 
                 FROM equipment_reservations as r
-                INNER JOIN users as u ON u.id = r.user_id;";
+                INNER JOIN users as u ON u.id = r.user_id
+                WHERE r.deleted = 0;";
 
         $query = $this->db->query($sql, []);
 
@@ -65,7 +67,12 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT u.id, u.name, u.email, u.active, u.created_at, r.name as role
+        $sql = "SELECT u.id, 
+                u.name, 
+                u.email, 
+                u.active, 
+                u.created_at, 
+                r.name as role
                 FROM users as u
                 INNER JOIN user_roles as r ON r.id = u.user_role_id";
         $query = $this->db->query($sql, []);
@@ -90,7 +97,12 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT u.email as user_email, l.altered_table, l.type, l.value, l.created_at FROM logs as l
+        $sql = "SELECT u.email as user_email, 
+                l.altered_table, 
+                l.type, 
+                l.value, 
+                l.created_at 
+                FROM logs as l
                 INNER JOIN users as u ON u.id = l.user_id;";
 
         $query = $this->db->query($sql, []);
@@ -106,7 +118,13 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT e.id, e.name, e.barcode, e.description, e.equipment_type_id, t.name as equipment_type_name, e.created_at
+        $sql = "SELECT e.id, 
+                e.name, 
+                e.barcode, 
+                e.description, 
+                e.equipment_type_id, 
+                t.name as equipment_type_name, e
+                .created_at
                 FROM equipment as e
                 INNER JOIN equipment_types as t ON t.id = e.equipment_type_id";
         $query = $this->db->query($sql, []);

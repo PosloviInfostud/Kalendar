@@ -1,3 +1,10 @@
+<?php if(isset($error)) { ?>
+<div class="jumbotron">
+    <div class="alert alert-danger">
+    <p class="text-center"><?= $error ?></p>
+    </div>
+</div>
+<?php } else { ?>
 <div class="jumbotron">
     <form id="register_by_invite_form" class="border border-info rounded p-3">
         <div class="form-group">
@@ -20,5 +27,5 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-<script src="/js/reglog.js">
-</script>
+<?php } ?>
+<script src="/js/reglog.js"></script>
