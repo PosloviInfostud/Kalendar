@@ -207,7 +207,6 @@ class Reservations extends MY_Controller
             } else {
                 $message['error'] = "Did you change termin? Please, search again free equipment according to your time!";
             }
-
         }
         echo json_encode($message);
     }

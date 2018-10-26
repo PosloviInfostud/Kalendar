@@ -16,13 +16,9 @@ class Users extends MY_Controller
 
     public function dashboard()
     {
+        $this->session->set_flashdata('flash_message', $this->alerts->render('red', 'Uh-oh!', 'Lorem ipsum dolor sit amet consectetur, adipisicing elite.'));
         $this->layouts->set_title('Dashboard');
-        $this->layouts->add_header_include('js/test.js');
-        $this->layouts->add_header_include('css/test.css');
-        $this->layouts->add_footer_include('js/test.js');
-        $this->layouts->add_footer_include('css/test.css');
         $this->layouts->view('users/dashboard');
-
     }
 
     public function edit()
