@@ -1,4 +1,7 @@
-        <div class="form-group">
+<?php if(empty($items)) { ?>
+    <div class="alert alert-warning">Sorry, nothing is available at the moment! Check again!</div>
+<?php }  else { ?>
+    <div class="form-group">
             <p>Which one do you want to reserve?</p>
             <?php
             $i = 99999;
@@ -22,4 +25,22 @@
             <textarea class="form-control" name="description" id="reservation_description"></textarea>
         </div>
         <input type="submit" name="submit" id="reservation_equipment_submit_by_date" class="btn btn-block btn-success" value="Reserve!">
+<?php }     ?>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="equip_reservation_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Update</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="reservation_equipment_submit_by_date_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="reservation_equipment_submit_by_date_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/reservations.js"></script>

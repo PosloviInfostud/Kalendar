@@ -29,7 +29,24 @@
         </select>
     </div>
     <input type="submit" name="submit" id="reservation_room_submit_by_room" class="btn btn-block btn-success" value="Reserve!">
-         
+
+            
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="room_reservation_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Room Reservation</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="reservation_room_submit_by_room_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="reservation_room_submit_by_room_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>      
+
 <script src="/js/reservations.js"></script>
 <script>
 $(document).ready(function() {
