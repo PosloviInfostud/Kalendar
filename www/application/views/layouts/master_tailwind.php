@@ -12,16 +12,16 @@
 <body class="font-sans bg-grey-lighter font-light">
 <!-- Navigation -->
     <div>
-        <div class="bg-main-darkest-grey">
+        <div class="bg-primary-darkest">
             <div class="sm:container mx-auto px-4">
-                <div class="flex items-center sm:justify-between py-6">
+                <div class="flex items-center sm:justify-between py-4">
                     <div class="w-1/4 sm:hidden">
                         <div class="fill-current h-6 w-6 text-grey-light cursor-pointer" id="phone_menu_btn">
                             <?= file_get_contents("public/icons/menu.svg") ?>
                         </div>
                     </div>
-                    <div class="w-1/2 sm:w-auto text-2xl text-center text-grey-light">
-                        Kalendar
+                    <div class="w-1/2 sm:w-auto text-lg text-center text-grey-light font-medium tracking-wide uppercase">
+                        Kalendar <span class="text-xs text-primary-dark">infostud</span>
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
@@ -45,14 +45,15 @@
                 </div>
             </div>
         </div>
+        <div class="h-1 bg-primary sm:hidden"></div>
 
         <!-- Secondary Nav -->
-        <div class="hidden bg-main-darkest-grey sm:block sm:bg-main sm:font-normal border-b border-main-dark" id="secondary_nav">
+        <div class="hidden bg-primary-darkest sm:block sm:bg-primary sm:font-normal border-b border-primary-dark" id="secondary_nav">
             <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm md:text-base">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-white no-underline flex items-center py-4 sm:border-b-4 border-main-dark">
+                            <a href="#" class="text-white no-underline flex items-center py-4 sm:border-b-4 border-primary-dark">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
@@ -60,7 +61,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-main-dark hover:text-white">
+                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
@@ -68,7 +69,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-main-dark hover:text-white">
+                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
@@ -78,7 +79,7 @@
                     </div>
                     <div>
                         <div class="sm:flex sm:justify-end text-sm md:text-base">
-                            <button class="w-full sm:w-auto bg-transparent hover:bg-white text-grey-light  py-2 px-4 md:px-8 my-4 border-2 border-grey-light hover:text-main-light hover:border-transparent hover:bg-white rounded">
+                            <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-3 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
                                 New Reservation
                             </button>
                         </div>
@@ -90,18 +91,19 @@
 
     <!-- Content section -->
     <div class="container mx-auto sm:px-4 py-4 mb-4">
+        <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
         <div class="flex text-sm text-black pb-4 px-2 sm:px-0">
             <span>Reservations</span>
             <div class="fill-current h-2 w-2 mx-1 -mt-px">
                 <?= file_get_contents("public/icons/chevron-right.svg") ?>
             </div>
-            <span class="text-main font-normal">Dashboard</span>
+            <span class="text-primary font-normal">Dashboard</span>
         </div>
         <div class="bg-white border sm:rounded shadow py-4 sm:px-4 mb-4">
-            <div class="md:flex px-2 sm:px-0">
-                <div class="md:w-1/2 md:border-r md:mr-2">
+            <div class="md:flex px-2 mx-4 sm:px-0">
+                <div class="md:w-1/2 md:border-r md:mr-4">
                     <div class="flex py-4">
-                        <div class="w-1/3 uppercase text-main font-medium">
+                        <div class="w-1/3 uppercase text-primary font-medium">
                             Meetings
                         </div>
                         <div class="w-1/3 text-grey font-normal">
@@ -130,7 +132,7 @@
 
                 <div class="md:w-1/2 md:-ml-4">
                     <div class="flex py-4 md:pl-6">
-                        <div class="w-1/3 uppercase text-main font-medium">
+                        <div class="w-1/3 uppercase text-primary font-medium">
                             Equipment
                         </div>
                         <div class="w-1/3 text-grey font-normal">
@@ -162,13 +164,13 @@
         <div class="hidden md:flex -mx-2">
             <div class="w-1/2 px-2">
                 <div class="bg-white rounded border shadow">
-                    <h3 class="uppercase text-main font-medium text-base py-4 px-4">Meetings Calendar</h3>
+                    <h3 class="uppercase text-primary font-medium text-base py-4 px-4">Meetings Calendar</h3>
                     <div class="h-64"><!--Placeholder --></div>
                 </div>
             </div>
             <div class="w-1/2 px-2">
                 <div class="bg-white rounded border shadow">
-                <h3 class="uppercase text-main font-medium text-base py-4 px-4">Items Calendar</h3>
+                <h3 class="uppercase text-primary font-medium text-base py-4 px-4">Items Calendar</h3>
                 <div class="h-64"><!--Placeholder --></div>
                 </div>
             </div>
