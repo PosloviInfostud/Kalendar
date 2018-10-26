@@ -1,5 +1,27 @@
 {
     "/public/css/app.css": "/public/css/app.css",
     "/public/js/app.js": "/public/js/app.js",
-    "/public/img/test.png": "/public/img/test.png"
+    "/public/img/test.png": "/public/img/test.png",
+    "/public/icons/arrow-left-circle.svg": "/public/icons/arrow-left-circle.svg",
+    "/public/icons/arrow-right-circle.svg": "/public/icons/arrow-right-circle.svg",
+    "/public/icons/calendar-full.svg": "/public/icons/calendar-full.svg",
+    "/public/icons/chart-bars.svg": "/public/icons/chart-bars.svg",
+    "/public/icons/chevron-down-circle.svg": "/public/icons/chevron-down-circle.svg",
+    "/public/icons/chevron-down.svg": "/public/icons/chevron-down.svg",
+    "/public/icons/chevron-left-circle.svg": "/public/icons/chevron-left-circle.svg",
+    "/public/icons/chevron-left.svg": "/public/icons/chevron-left.svg",
+    "/public/icons/chevron-right-circle.svg": "/public/icons/chevron-right-circle.svg",
+    "/public/icons/chevron-right.svg": "/public/icons/chevron-right.svg",
+    "/public/icons/chevron-up-circle.svg": "/public/icons/chevron-up-circle.svg",
+    "/public/icons/chevron-up.svg": "/public/icons/chevron-up.svg",
+    "/public/icons/cog.svg": "/public/icons/cog.svg",
+    "/public/icons/database.svg": "/public/icons/database.svg",
+    "/public/icons/enter.svg": "/public/icons/enter.svg",
+    "/public/icons/laptop-phone.svg": "/public/icons/laptop-phone.svg",
+    "/public/icons/menu.svg": "/public/icons/menu.svg",
+    "/public/icons/plus-circle.svg": "/public/icons/plus-circle.svg",
+    "/public/icons/tag.svg": "/public/icons/tag.svg",
+    "/public/icons/tools.svg": "/public/icons/tools.svg",
+    "/public/icons/user.svg": "/public/icons/user.svg",
+    "/public/icons/users.svg": "/public/icons/users.svg"
 }

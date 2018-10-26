@@ -46,15 +46,22 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   'transparent': 'transparent',
 
-  'main-darkest-grey' : '#22313F',
-  'main-darkest' : '#192D4D',
-  'main-darker' : '#315999',
-  'main-darkish' : '#4177cc',
-  'main-dark' : '#4A86E6',
-  'main' : '#5295FF',
-  'main-light' : '#86B5FF',
-  'main-lighter' : '#BAD5FF',
-  'main-lightest' : '#EEF4FF',
+  'smoke-darkest': 'rgba(0, 0, 0, 0.9)',
+  'smoke-darker': 'rgba(0, 0, 0, 0.75)',
+  'smoke-dark': 'rgba(0, 0, 0, 0.6)',
+  'smoke': 'rgba(0, 0, 0, 0.5)',
+  'smoke-light': 'rgba(0, 0, 0, 0.4)',
+  'smoke-lighter': 'rgba(0, 0, 0, 0.25)',
+  'smoke-lightest': 'rgba(0, 0, 0, 0.1)',
+
+  'primary-darkest-grey' : '#22313F',
+  'primary-darkest' : '#11283B',
+  'primary-darker' : '#215077',
+  'primary-dark' : '#3279B2',
+  'primary' : '#3786C6',
+  'primary-light' : '#73AAD7',
+  'primary-lighter' : '#AFCFE8',
+  'primary-lightest' : '#EBF3F9',
 
   'black': '#22292f',
   'grey-darkest': '#3d4852',
@@ -72,6 +79,7 @@ let colors = {
   'red': '#e3342f',
   'red-light': '#ef5753',
   'red-lighter': '#f9acaa',
+  'red-alert': '#ffe4e4',
   'red-lightest': '#fcebea',
 
   'orange-darkest': '#462a16',
@@ -80,6 +88,7 @@ let colors = {
   'orange': '#f6993f',
   'orange-light': '#faad63',
   'orange-lighter': '#fcd9b6',
+  'orange-alert': '#fbebdb',
   'orange-lightest': '#fff5eb',
 
   'yellow-darkest': '#453411',
@@ -88,6 +97,7 @@ let colors = {
   'yellow': '#ffed4a',
   'yellow-light': '#fff382',
   'yellow-lighter': '#fff9c2',
+  'yellow-alert': '#fffce3',
   'yellow-lightest': '#fcfbeb',
 
   'green-darkest': '#0f2f21',
@@ -96,6 +106,7 @@ let colors = {
   'green': '#38c172',
   'green-light': '#51d88a',
   'green-lighter': '#a2f5bf',
+  'green-alert': '#d1f5dd',
   'green-lightest': '#e3fcec',
 
   'teal-darkest': '#0d3331',
@@ -104,6 +115,7 @@ let colors = {
   'teal': '#4dc0b5',
   'teal-light': '#64d5ca',
   'teal-lighter': '#a0f0ed',
+  'teal-alert': '#d8f3f1',
   'teal-lightest': '#e8fffe',
 
   'blue-darkest': '#12283a',
@@ -112,6 +124,7 @@ let colors = {
   'blue': '#3490dc',
   'blue-light': '#6cb2eb',
   'blue-lighter': '#bcdefa',
+  'blue-alert': '#ddefff',
   'blue-lightest': '#eff8ff',
 
   'indigo-darkest': '#191e38',
@@ -411,6 +424,7 @@ module.exports = {
     '0': '0',
     '2': '2px',
     '4': '4px',
+    '6': '6px',
     '8': '8px',
   },
 
@@ -608,6 +622,7 @@ module.exports = {
   */
 
   maxWidth: {
+    '2xs': '10rem',
     'xs': '20rem',
     'sm': '30rem',
     'md': '40rem',
