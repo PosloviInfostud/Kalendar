@@ -16,5 +16,6 @@ class MY_Controller extends CI_Controller
         ];
         
         $this->load->library('Layouts');
+        $this->load->library('Alerts');
     }
 }
