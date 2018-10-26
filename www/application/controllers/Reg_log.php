@@ -99,7 +99,7 @@ class Reg_log extends MY_Controller
                 $email_details = [];
                 $email_details['from'] = 'visnjamarica@gmail.com';
                 $email_details['subject'] = 'Reset Password';
-                $email_details['message'] = $this->load->view('mails/reset_password_body', ['password_link' => $password_link], true);
+                $email_details['message'] = $this->load->view('mails/reset_password_mail', ['password_link' => $password_link], true);
                 
                 // Add email to queue
                 $this->mail->add_mail_to_queue(array($email), $email_details);
@@ -137,7 +137,9 @@ class Reg_log extends MY_Controller
             'email' => $this->input->get('email'),
             'code' => $this->input->get('code')
         ];
-
+        if($this->user->check_reset_token($data) == false || $data['code'] == "") {
+            $data['error'] = "E-mail and code do not fit. Try again!";
+        }
         $this->layouts->set_title('Reset Password');
         $this->layouts->view('reset_password', $data);
     }
@@ -185,33 +187,6 @@ class Reg_log extends MY_Controller
         header('Content-type: application/json');
         echo json_encode($response);
         exit();
-
-        /////////////////////////////////////////////////////////////////////////////////
-
-        // if ($this->form_validation->run() == false) {
-        //     $message = validation_errors();
-        // } else {
-        //     $data = [
-        //         "email" => $this->input->post('email'),
-        //         "password" => $this->input->post('password'),
-        //         "reset_key" => $this->input->post('code')
-        //     ];
-
-        //     $this->load->model('User_model', 'user');
-
-        //     if ($this->user->reset_password($data) == true) {
-        //         $session_data = [
-        //             'message' => "Your password has been successfully reseted! You can now login with your new password!"
-        //         ];
-        //         $this->session->set_userdata($session_data);
-
-        //         $message = "success";
-
-        //     } else {
-        //         $message = "E-Mail or code may not be correct or 5 days has run out!";
-        //     }
-        // }
-        // echo $message;
     }
 
     public function logout()
@@ -226,7 +201,9 @@ class Reg_log extends MY_Controller
             'email' => $this->input->get('email'),
             'token' => $this->input->get('code')
         ];
-
+        if($this->user->check_invite_token($data) == false || $data['token'] == "") {
+            $data['error'] = "E-mail and code do not fit. Try again!";
+        }
         $this->layouts->set_title('Registration by Invite');
         $this->layouts->view('registration_by_invitation', $data);
     }

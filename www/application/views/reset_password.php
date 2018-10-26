@@ -22,5 +22,6 @@
             <input type="submit" name="submit" id="reset_password_submit" class="btn btn-success btn-block" value="Reset Password">
     </form>
     <div id="msgs"></div>
-</div>
+    </div>
+
 <script src="/js/reglog.js"></script>

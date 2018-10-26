@@ -47,4 +47,22 @@ class Permission_model extends CI_Model
             url_redirect('/reservations/meetings');
         }
     }
+
+    public function is_editor_of_reservation($id, $user_id)
+    {
+        $sql = "SELECT res_role_id FROM res_members WHERE res_id = ? AND user_id = ? AND deleted = 0";
+        $query = $this->db->query($sql, [$id, $user_id]);
+
+        if ($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        $role = $result['res_role_id'];
+        if ($role != 1) {
+            // Notification
+            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                Wrong request!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            url_redirect('/reservations/meetings');
+        }
+    }
 }

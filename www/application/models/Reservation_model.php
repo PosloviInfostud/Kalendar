@@ -16,8 +16,9 @@ class Reservation_model extends CI_Model
                 INNER JOIN rooms ON res.room_id = rooms.id
                 WHERE mem.res_role_id = 2 
                 AND mem.res_id = ? 
-                AND res.deleted = 0
-                AND res.parent = 0";
+                AND res.parent = '0'
+                AND res.deleted = '0' 
+                AND u.not_create = '1'";
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
             $result = $query->result_array();
@@ -26,6 +27,35 @@ class Reservation_model extends CI_Model
             $this->send_members_notification($user);
         }
     }
+
+    public function invite_new_members($res_id, $registered)
+    {
+        $result = [];
+
+        foreach ($registered as $user) {
+            $sql = "SELECT u.name, 
+                    u.email, 
+                    res.start_time, 
+                    res.end_time, 
+                    res.title, 
+                    res.description
+                    FROM res_members AS mem 
+                    INNER JOIN users AS u ON u.id = mem.user_id 
+                    INNER JOIN room_reservations AS res ON res.id = mem.res_id 
+                    INNER JOIN rooms ON res.room_id = rooms.id
+                    WHERE u.id = ?
+                    AND mem.res_id = ? 
+                    AND res.deleted = '0' 
+                    AND u.not_create = '1'";
+            $query = $this->db->query($sql, [$user, $res_id]);
+            if ($query->num_rows()) {
+            $result = $query->row_array();
+            }
+
+            $this->send_members_notification($result);
+        }
+    }
+
     public function send_members_notification($user)
     {
         // Prepare mail
@@ -366,17 +396,27 @@ class Reservation_model extends CI_Model
         $res_id = $data['res_id'];
         $user_id = $data['admin'];
         foreach ($data['registered'] as $member) {
+            $sql = "SELECT not_update, not_remind FROM users WHERE id = ?";
+            $query = $this->db->query($sql, [$member]);
+            if ($query->num_rows()) {
+                $result = $query->row_array();
+            }
+            $notify['update'] = $result['not_update'];
+            $notify['remind'] = $result['not_remind'];
+
             $sql = "INSERT INTO res_members 
-                    (res_id, user_id) 
-                    VALUES (?, ?)";
-            $query = $this->db->query($sql, [$res_id, $member]);
+                    (res_id, user_id, not_update, not_remind) 
+                    VALUES (?, ?, ?, ?)";
+            $query = $this->db->query($sql, [$res_id, $member, $notify['update'], $notify['remind']]);
             $data_log = [
                 'user_id' => $user_id,
                 'table' => 'res_members',
                 'type' => 'insert',
                 'value' => [
                     'res_id' => $res_id,
-                    'member' => $member
+                    'member' => $member,
+                    'not_update' => $notify['update'],
+                    'not_remind' => $notify['remind']
                 ]
             ];
             $this->logs->insert_log($data_log);
@@ -517,8 +557,8 @@ class Reservation_model extends CI_Model
                 INNER JOIN res_frequency as freq ON res.frequency_id = freq.id
                 WHERE mem.user_id = ? 
                 AND res.end_time >= NOW()
-                AND res.deleted = 0
-                AND (res.recurring = 0 OR res.parent != 0)
+                AND res.deleted = '0'
+                AND (res.recurring = '0' OR res.parent != '0')
                 ORDER BY res.start_time ASC";
         $query = $this->db->query($sql, [$id]);
 
@@ -550,7 +590,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN rooms as room ON room.id = res.room_id
                 INNER JOIN res_frequency as freq ON res.frequency_id = freq.id
                 WHERE res.id = ?
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -574,7 +614,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
                 WHERE res.user_id IN ?
                 AND res.end_time > NOW()
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -598,7 +638,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN equipment AS e ON e.id = res.equipment_id
                 INNER JOIN equipment_types AS type ON type.id = e.equipment_type_id
                 WHERE res.id = ?
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -697,7 +737,6 @@ class Reservation_model extends CI_Model
         }
         echo json_encode($message);
 
-
     }
 
     public function delete_res_member($data)
@@ -722,6 +761,14 @@ class Reservation_model extends CI_Model
                 ]
             ];
             $this->logs->insert_log($data_log);
+            $this->load->model('User_model','user');
+            $member = $this->user->get_single_user($data['member']);
+            $reservation = $this->single_room_reservation($data['res'])[0];
+            $notify = $this->get_if_member_is_notified($data['res'], $data['member']);
+
+            if($notify['not_update'] == 1) {
+                $this->send_delete_member_mail($member, $reservation);
+            }
             
             $message['success'] = "success";
         }
@@ -775,7 +822,6 @@ class Reservation_model extends CI_Model
         return $data;
     }
 
-
     public function update_room_reservation($data)
     {
         $sql = "UPDATE room_reservations 
@@ -797,6 +843,10 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+        //Send e-mail notification
+        $members = $this->get_all_reservation_mails($data['id']);
+        $reservation = $this->single_room_reservation($data['id'])[0];
+        $this->send_updated_meeting_mail($members, $reservation);
     }
 
     public function check_if_room_is_free_for_update($data)
@@ -839,7 +889,7 @@ class Reservation_model extends CI_Model
         $this->logs->insert_log($data_log);
         //Send e-mail notification
         $members = $this->get_all_reservation_mails($id);
-        $reservation = $this->single_room_reservation($id);
+        $reservation = $this->single_room_reservation($id)[0];
         $this->send_cancelled_meeting_mail($members, $reservation);
     }
 
@@ -913,14 +963,37 @@ class Reservation_model extends CI_Model
         $this->mail->add_mail_to_queue($members, $email_details);
     }
 
+    public function send_updated_meeting_mail($members, $reservation)
+    {
+        // Prepare mail
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = 'Meeting Updated';
+        $email_details['message'] = $this->load->view('mails/updated_meeting_mail', ['members' => $members, 'reservation'=>$reservation], TRUE);
+
+        // Add email to queue
+        $this->mail->add_mail_to_queue($members, $email_details);
+    }
+
+    public function send_delete_member_mail($member, $reservation)
+    {
+        // Prepare mail
+        $email_details['from'] = 'visnjamarica@gmail.com';
+        $email_details['subject'] = 'Cancelled meeting';
+        $email_details['message'] = $this->load->view('mails/deleted_member_mail', ['member' => $member, 'reservation'=> $reservation], TRUE);
+        // Add email to queue
+        $this->mail->add_mail_to_queue(array($member['email']), $email_details);
+    }
+
     public function get_all_reservation_mails($id)
     {
         $result = [];
+        $pending = [];
         $members = [];
         $sql = "SELECT u.email FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id 
                 WHERE mem.res_id = ? 
-                AND mem.deleted = 0";
+                AND mem.deleted = '0' 
+                AND mem.not_update = '1'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -934,9 +1007,9 @@ class Reservation_model extends CI_Model
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
-            $result = $query->result_array();
+            $pending = $query->result_array();
         }
-        foreach ($result as $member) {
+        foreach ($pending as $member) {
             $members[] = $member['email'];
         }
 
@@ -965,12 +1038,42 @@ class Reservation_model extends CI_Model
                 res.start_time
                 FROM room_reservations AS res
                 WHERE res.parent = ?
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
             $result = $query->result_array();
             return $result;
         }
+    }
+    public function get_if_member_is_notified($res_id, $user_id)
+    {
+        $sql = "SELECT not_update, not_remind FROM res_members WHERE res_id = ? AND user_id = ?";
+        $query = $this->db->query($sql, [$res_id, $user_id]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        $notify['update'] = $result['not_update'];
+        $notify['remind'] = $result['not_remind'];
+
+        return $notify;
+    }
+
+    public function change_member_notifications($user_id, $res_id, $notify, $column)
+    {
+        $sql = "UPDATE res_members SET ".$column." = ?, modified_at = NOW() WHERE user_id = ? AND res_id = ?";
+        $query = $this->db->query($sql, [$notify, $user_id, $res_id]);
+
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'update',
+            'value' => [
+                'res_id' => $res_id,
+                $column => $notify
+                ]
+        ];
+        $this->logs->insert_log($data_log);       
     }
 }
