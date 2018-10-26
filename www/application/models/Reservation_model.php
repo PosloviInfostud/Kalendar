@@ -16,6 +16,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN rooms ON res.room_id = rooms.id
                 WHERE mem.res_role_id = 2 
                 AND mem.res_id = ? 
+                AND res.parent = '0'
                 AND res.deleted = '0' 
                 AND u.not_create = '1'";
         $query = $this->db->query($sql, [$res_id]);
@@ -66,6 +67,18 @@ class Reservation_model extends CI_Model
         $this->mail->add_mail_to_queue(array($user['email']), $email_details);
     }
 
+    public function get_reservation_frequencies()
+    {
+        $result = [];
+        $sql = "SELECT * FROM res_frequency";
+        $query = $this->db->query($sql, []);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        return $result;
+    }
+
     public function check_free_rooms($data)
     {
         $reserved_arr = [];
@@ -107,7 +120,6 @@ class Reservation_model extends CI_Model
             $free = $query->result_array();
             }
         }
-
         return $free;
     }
 
@@ -164,17 +176,55 @@ class Reservation_model extends CI_Model
 
     public function submit_reservation_form($data)
     {
+        $period = [];
+        $parent_id = [];
         $user_id = $this->user_data['user']['id'];
-        
         $data = $this->check_members_reg($data);
 
-        $sql = "INSERT INTO room_reservations  
-                (room_id, user_id, start_time, end_time, title, description) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+        // Build the insert SQL
+        $sql = "INSERT INTO room_reservations
+                (room_id, user_id, start_time, end_time, title, description, recurring, frequency_id, parent) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        $freq = $data['frequency'];
 
-        $query = $this->db->query($sql, [$data['room'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description']]);
+        // Check if it's a one-time or recurring 
+        if($freq == '1') {
+            // It's a one-time thing
+            $query = $this->db->query($sql, [$data['room'], $user_id, $data['start_time'], $data['end_time'], $data['title'], $data['description'], FALSE, $freq, 0]);
+            $parent_id = $this->db->insert_id();
+        } else {
+            // Recurring reservations
+            $period = [];
+            // daily
+            if($freq == '2') {
+                $period = $this->get_reccuring_dates($data, '1', 'D', '1');
+            // weekly
+            } elseif($freq == '3') {
+                $period = $this->get_reccuring_dates($data, '1', 'W', '1');
+            // bi-weekly
+            } elseif($freq == '4') {
+                $period = $this->get_reccuring_dates($data, '2', 'W', '1');
+            // monthly
+            } elseif($freq == '5') {
+                $period = $this->get_reccuring_dates($data, '1', 'M', '3');
+            }
 
-        $data['res_id'] = $this->db->insert_id();
+            // Create parent reservation
+            $query = $this->db->query($sql, [$data['room'], $user_id, $period['first_start_date'], $period['last_end_date'], $data['title'], $data['description'], TRUE, $freq, 0]);
+            $parent_id = $this->db->insert_id();
+
+            // Create child reservations
+            foreach($period['reservations'] as $res) {
+                $query = $this->db->query($sql, [$data['room'], $user_id, $res['start'], $res['end'], $data['title'], $data['description'], TRUE, $freq, $parent_id]);
+                $data['res_id'] = $this->db->insert_id();
+                $data['admin'] = $user_id;
+                $this->insert_reservation_members($data);
+                $this->insert_creator_into_res_members($data['res_id'], $user_id);
+            }
+        }
+
+        $data['res_id'] = $parent_id;
         $data['admin'] = $user_id;
 
         $data_log = [
@@ -216,6 +266,61 @@ class Reservation_model extends CI_Model
             }
         }
         return $data;
+    }
+
+    public function get_reccuring_dates($data, $step, $unit, $period)
+    {
+        $result = [];
+
+        $reservation_start = new DateTime($data['start_time']);
+        $reservation_end = new DateTime($data['end_time']);
+
+        // Define holidays here (day-month format)
+        $holidays = array(
+            '01-01'
+        );
+
+        // Set how long it runs
+        $repeat_end = new DateTime(date('Y-m-d H:i:s', strtotime("+$period months", strtotime($data['start_time']))));
+
+        // How often it should repeat
+        $interval = new DateInterval("P{$step}{$unit}");
+
+        // Generate the dates
+        $period_start_dates = new DatePeriod($reservation_start, $interval, $repeat_end);
+        $period_end_dates = new DatePeriod($reservation_end, $interval, $repeat_end);
+
+        // Combine the date arrays into one
+        foreach ($period_start_dates as $key => $date ) {
+            
+            $dayOfWeek = $date->format('N');
+            if( $dayOfWeek < 6 ){
+                // If the day of the week is not a pre-defined holiday
+                $format = $date->format('d-m');
+                if(!in_array( $format, $holidays)){
+                    //Add the valid day to our days array
+                    $result['reservations'][$key]['start'] = $date->format('Y-m-d H:i:s');
+                }
+            }
+        }
+        foreach ($period_end_dates as $key => $date) {
+            $dayOfWeek = $date->format('N');
+            if( $dayOfWeek < 6 ){
+                // If the day of the week is not a pre-defined holiday
+                $format = $date->format('d-m');
+                if(!in_array( $format, $holidays)){
+                    //Add the valid day to our days array
+                    $result['reservations'][$key]['end'] = $date->format('Y-m-d H:i:s');
+                }
+            }
+        }
+        // Add extra data needed for parent reservation
+        $last_element = end($result['reservations']);
+        $result['first_start_date'] = $data['start_time'];
+        $result['last_end_date'] = $last_element['end'];
+
+        // Return the end result
+        return $result;
     }
 
     public function insert_unregistered_members($data)
@@ -441,14 +546,19 @@ class Reservation_model extends CI_Model
                 res.title,
                 res.description, 
                 res.start_time, 
-                res.end_time
+                res.end_time,
+                res.recurring,
+                res.frequency_id,
+                freq.name AS frequency_name
                 FROM res_members as mem
                 INNER JOIN room_reservations as res ON res.id = mem.res_id
                 INNER JOIN users as u ON res.user_id = u.id
                 INNER JOIN rooms as room ON room.id = res.room_id
+                INNER JOIN res_frequency as freq ON res.frequency_id = freq.id
                 WHERE mem.user_id = ? 
                 AND res.end_time >= NOW()
-                AND mem.deleted = 0
+                AND res.deleted = '0'
+                AND (res.recurring = '0' OR res.parent != '0')
                 ORDER BY res.start_time ASC";
         $query = $this->db->query($sql, [$id]);
 
@@ -470,11 +580,17 @@ class Reservation_model extends CI_Model
                 res.room_id, 
                 room.name, 
                 res.title, 
-                res.description 
+                res.description,
+                res.recurring,
+                res.parent,
+                res.frequency_id,
+                freq.name AS frequency_name
                 FROM room_reservations AS res
                 INNER JOIN users as u ON res.user_id = u.id
                 INNER JOIN rooms as room ON room.id = res.room_id
-                WHERE res.id = ?";
+                INNER JOIN res_frequency as freq ON res.frequency_id = freq.id
+                WHERE res.id = ?
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -498,7 +614,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN equipment_types as type ON type.id = e.equipment_type_id
                 WHERE res.user_id IN ?
                 AND res.end_time > NOW()
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -522,7 +638,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN equipment AS e ON e.id = res.equipment_id
                 INNER JOIN equipment_types AS type ON type.id = e.equipment_type_id
                 WHERE res.id = ?
-                AND res.deleted = 0";
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -915,6 +1031,21 @@ class Reservation_model extends CI_Model
         return $editors;
     }
 
+    public function get_child_reservations_dates($id)
+    {
+        $result = [];
+        $sql = "SELECT res.id, 
+                res.start_time
+                FROM room_reservations AS res
+                WHERE res.parent = ?
+                AND res.deleted = '0'";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()) {
+            $result = $query->result_array();
+            return $result;
+        }
+    }
     public function get_if_member_is_notified($res_id, $user_id)
     {
         $sql = "SELECT not_update, not_remind FROM res_members WHERE res_id = ? AND user_id = ?";
@@ -945,5 +1076,4 @@ class Reservation_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);       
     }
-
 }

@@ -86,10 +86,11 @@ class Reservations extends MY_Controller
                 "attendants" => $attendants
             ];
 
+            $frequencies = $this->res->get_reservation_frequencies();
             $rooms = $this->res->check_free_rooms($data);
             $users = $this->res->show_users_for_invitation();
 
-            $view = $this->load->view('reservations/free_rooms', ["rooms" => $rooms, "users" => $users], true);
+            $view = $this->load->view('reservations/free_rooms', ["rooms" => $rooms, "users" => $users, "frequencies" => $frequencies], true);
 
             echo $view;
         }
@@ -184,6 +185,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
         $this->form_validation->set_rules('room', 'Room', 'trim|required');
+        $this->form_validation->set_rules('frequency', 'Frequency', 'required');
         $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
@@ -201,6 +203,7 @@ class Reservations extends MY_Controller
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
+                "frequency" => $this->input->post('frequency'),
                 "room" => $this->input->post('room'),
                 "title" => $this->input->post('title'),
                 "description" => $this->input->post('description'),
@@ -249,28 +252,27 @@ class Reservations extends MY_Controller
             } else {
                 $message['error'] = "Unfortunately, the item is not available at that time! Check again.";
             }
-
         }
         echo json_encode($message);
     }
 
-    public function show_room_reservations()
-    {
-        $table = [];
-        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
-        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
-        echo $table;
-        die();
-    }
+    // public function show_room_reservations()
+    // {
+    //     $table = [];
+    //     $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+    //     $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+    //     echo $table;
+    //     die();
+    // }
 
-    public function show_equipment_reservations()
-    {
-        $table = [];
-        $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
-        $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
-        echo $table;
-        die();
-    }
+    // public function show_equipment_reservations()
+    // {
+    //     $table = [];
+    //     $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
+    //     $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
+    //     echo $table;
+    //     die();
+    // }
 
     public function room_reservations_by_user()
     {
@@ -297,6 +299,8 @@ class Reservations extends MY_Controller
 
     public function single_room_reservation($id)
     {
+        $child_dates = [];
+
         $meeting = $this->res->single_room_reservation($id);
         // Check if a reservation exists with that id
         if(empty($meeting)) {
@@ -307,6 +311,10 @@ class Reservations extends MY_Controller
         $editors = $this->res->get_all_editors($id);
         $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
+        if($meeting[0]['recurring'] == 1) {
+            $child_dates = $this->res->get_child_reservations_dates($id);
+        }
+
         // Check if user is a member of the given reservation
         $this->permission->is_member_of_reservation($members, $user_id);
 
@@ -316,6 +324,7 @@ class Reservations extends MY_Controller
             'members' => $members,
             'user_id' => $user_id,
             'editors' => $editors,
+            'child_dates' => $child_dates,
             'notify' => $notify
         ];
         $this->layouts->set_title($meeting[0]['title']);
@@ -447,7 +456,7 @@ class Reservations extends MY_Controller
             }
 
         }
-        echo json_encode($message);    
+        echo json_encode($message);
     }
 
     public function delete_room_reservation($id)

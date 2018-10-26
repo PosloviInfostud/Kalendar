@@ -125,7 +125,6 @@ $("#search_reserved_offices").click(function(e){
         }
     })
     .done(function(response){
-        console.log(response);
         $("#free").html(response);
     })
 })
@@ -167,7 +166,6 @@ $("select.select_room").change(function(e){
 var room;
 $("body").on('change click', "input.room_radio", function(e) {
     room = $(this).val();
-    console.log(room);
 })
 
 
@@ -276,7 +274,7 @@ function submit_room_reservation(data) {
             $("#show_errors").html(msg.error);
         }
         if(msg.success) {
-            window.location.href = "/dashboard";
+            window.location.href = "/reservations/meetings";
         }
     })
 }

@@ -27,3 +27,12 @@ $("body").on('click', ".meeting-view", function() {
             $('#show_meeting_body').html(response);
     });
 })
+
+$(document).ready(function(){
+    $("#filter_list_input").on("keyup", function() {
+      let value = $(this).val().toLowerCase();
+      $(".reservation_boxes").filter(function() {
+        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+      });
+    });
+  });
