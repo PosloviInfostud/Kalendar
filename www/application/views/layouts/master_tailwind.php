@@ -111,7 +111,7 @@
     </div>
 
     <!-- Content section -->
-    <div class="container mx-auto sm:px-4 py-4 mb-4">
+    <div class="mx-auto max-w-2/5xl lg:px-4 py-4 mb-4">
         <!-- Flash notifications -->
         <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
         <!-- Error messages -->
@@ -129,12 +129,6 @@
     <!-- Footer section -->
     <?= $this->layouts->print_footer_includes() ?>
     </body>
+    <script src="/js/calendar.js"></script>
     <!-- <script src="/public/js/app.js"></script> -->
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#calendar').fullCalendar({
-                contentHeight: "auto"
-            });
-        });
-    </script>
 </html>

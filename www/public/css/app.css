@@ -4473,6 +4473,10 @@ table {
   max-width: 70rem;
 }
 
+.max-w-2\/5xl {
+  max-width: 75rem;
+}
+
 .max-w-3xl {
   max-width: 80rem;
 }
@@ -11095,6 +11099,10 @@ table {
     max-width: 70rem;
   }
 
+  .sm\:max-w-2\/5xl {
+    max-width: 75rem;
+  }
+
   .sm\:max-w-3xl {
     max-width: 80rem;
   }
@@ -17685,6 +17693,10 @@ table {
 
   .md\:max-w-2xl {
     max-width: 70rem;
+  }
+
+  .md\:max-w-2\/5xl {
+    max-width: 75rem;
   }
 
   .md\:max-w-3xl {
@@ -24279,6 +24291,10 @@ table {
     max-width: 70rem;
   }
 
+  .lg\:max-w-2\/5xl {
+    max-width: 75rem;
+  }
+
   .lg\:max-w-3xl {
     max-width: 80rem;
   }
@@ -30869,6 +30885,10 @@ table {
 
   .xl\:max-w-2xl {
     max-width: 70rem;
+  }
+
+  .xl\:max-w-2\/5xl {
+    max-width: 75rem;
   }
 
   .xl\:max-w-3xl {

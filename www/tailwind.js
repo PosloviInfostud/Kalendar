@@ -638,6 +638,7 @@ module.exports = {
     'lg': '50rem',
     'xl': '60rem',
     '2xl': '70rem',
+    '2/5xl': '75rem',
     '3xl': '80rem',
     '4xl': '90rem',
     '5xl': '100rem',

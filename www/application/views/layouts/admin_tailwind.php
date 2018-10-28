@@ -98,10 +98,10 @@
                             </div>
                             <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-indigo shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium font-sm">Meetings</span></li>
+                                    <li class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Meetings</li>
                                     <li><a href="#conference-rooms" id="show_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Conference room list</a></li>
                                     </li>
-                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium font-sm">Equipment</span></li>
+                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Equipment</span></li>
                                     <li>
                                         <ul class="list-reset text-sm">
                                             <li><a href="#items" id="show_equip_items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
