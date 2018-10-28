@@ -7,6 +7,5 @@
 </div>
 <div id="table">
     <div class="bg-white border-x sm:border-y sm:rounded shadow py-4">
-        
-    </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit quam hic ut distinctio eius, ea nobis quos repudiandae expedita illo, magnam necessitatibus eaque maiores, corrupti corporis similique esse laborum dolorum?</p>    </div>
 </div>
