@@ -25,21 +25,36 @@
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
-                            <div class="fill-current h-6 w-6 text-grey-light mr-4 sm:mr-0">
-                                <a href="/admin" class="appearance-none no-underline text-grey-light"><?= file_get_contents("public/icons/cog.svg") ?></a>
-                            </div>
-                            <div class="hidden sm:block sm:flex sm:items-center ml-2">
-                                <a href="/admin" class="no-underline text-grey-light"><span class="text-grey-light text-sm mr-6">Admin area</span></a>
-                            </div>
-                            <div class="fill-current h-6 w-6 text-grey-light">
-                                <a href="/profile" class="no-underline text-grey-light"><?= file_get_contents("public/icons/user.svg") ?></a>
-                            </div>
-                            <div class="hidden sm:block sm:flex sm:items-center ml-2">
-                                <a href="/profile" class="no-underline text-grey-light"><span class="text-grey-light text-sm mr-1">Profile</span></a>
-                                <div class="fill-current h-3 w-3 -mt-1 text-grey-light opacity-50">
-                                    <a href="/profile" class="no-underline text-grey-light"><?= file_get_contents("public/icons/chevron-down.svg") ?></a>
+                            <a href="/dashboard" class="no-underline text-grey-light hover:text-indigo">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                       <?= file_get_contents("public/icons/cog.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
+                                        <span class="text-sm">Members area</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
+                            <a href="/profile" class="no-underline text-grey-light hover:text-indigo">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                        <?= file_get_contents("public/icons/user.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
+                                        <span class="text-sm">Profile</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/logout" class="no-underline text-grey-light hover:text-indigo">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6">
+                                        <?= file_get_contents("public/icons/exit.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1">
+                                        <span class="text-sm">Logout</span>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +68,7 @@
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm md:text-base">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-white no-underline flex items-center py-4 sm:border-b-4 border-indigo-light">
+                            <a href="/admin" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
                             <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
@@ -69,8 +84,8 @@
                             </div>
                             <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Meetings</a></li>
-                                    <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Equipment</a></li>
+                                    <li><a href="#meetings" id="show_room_res" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Meetings</a></li>
+                                    <li><a href="#equipment" id="show_equipment_res" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Equipment</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -81,16 +96,16 @@
                             </div>
                                 <span>Items</span>
                             </div>
-                            <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
+                            <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-indigo shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><span class="bg-indigo-lighter no-underline px-4 py-2 block text-white">Meetings</span></li>
-                                    <li><a href="#" class="no-underline px-4 py-2 block text-indigo text-sm hover:bg-grey-lighter">Conference room list</a></li>
+                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium font-sm">Meetings</span></li>
+                                    <li><a href="#conference-rooms" id="show_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Conference room list</a></li>
                                     </li>
-                                    <li><span class="bg-indigo-lighter no-underline px-4 py-2 block text-white">Equipment</span></li>
+                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium font-sm">Equipment</span></li>
                                     <li>
                                         <ul class="list-reset text-sm">
-                                            <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
-                                            <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Item types</a></li>
+                                            <li><a href="#items" id="show_equip_items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
+                                            <li><a href="#item-types" id="show_item_types" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Item types</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -105,13 +120,13 @@
                             </div>
                             <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of users</a></li>
-                                    <li><a href="#" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">User activites</a></li>
+                                    <li><a href="#users" id="show_users" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">List of users</a></li>
+                                    <li><a href="#user-activities" id="show_user_activites" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">User activites</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
+                            <a href="#" id="show_logs" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
                             <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/database.svg") ?>
                             </div>
@@ -126,140 +141,21 @@
 
     <!-- Content section -->
     <div class="container mx-auto sm:px-4 py-4 mb-4">
+        <!-- Flash notifications -->
         <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
-        <div class="flex text-sm text-black pb-4 px-2 sm:px-0">
-            <span>Admin</span>
-            <div class="fill-current h-2 w-2 mx-1 -mt-px">
-                <?= file_get_contents("public/icons/chevron-right.svg") ?>
+        <!-- Error messages -->
+        <div id="alert_box" class="hidden">
+            <div class="bg-red-alert border-l-4 border-red text-red-dark p-4 mb-5 mt-1 shadow relative" role="alert">
+                <p class="font-bold uppercase mb-2">Attention</p>
+                <p id="messages"></p>
+                <span class="absolute pin-t pin-b pin-r px-4 py-3">
+                    <svg id="close_alert" class="fill-current h-6 w-6 text-red opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                </span>
             </div>
-            <span class="text-indigo font-normal">Dashboard</span>
         </div>
-        <div class="bg-white border sm:rounded shadow py-4 sm:px-4 mb-4">
-            <div class="">
-            </div>
-
-            <div class="md:flex px-2 sm:px-0">
-                <div class="md:w-1/2 md:border-r md:mr-2 md:py-4 md:px-4">
-                    <div class="flex py-4">
-                        <div class="w-1/2 uppercase text-indigo font-medium">
-                            Meetings
-                        </div>
-                        <div class="w-1/4 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/4">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-1/2">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/users.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/4 font-normal text-grey-darkest text-6xl">
-                            12
-                        </div>
-                        <div class="w-1/4">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:w-1/2 md:-ml-4 md:py-4 md:px-4">
-                    <div class="flex py-4 md:pl-6">
-                        <div class="w-1/2 uppercase text-indigo font-medium">
-                            Equipment
-                        </div>
-                        <div class="w-1/4 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/4">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center md:pl-6">
-                        <div class="w-1/2">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/laptop-phone.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/4 font-normal text-grey-darkest text-6xl">
-                            3
-                        </div>
-                        <div class="w-1/4">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="md:flex px-2 sm:px-0">
-                <div class="md:w-1/2 md:border-r md:border-t md:mr-2 md:py-4 md:px-4">
-                    <div class="flex py-4">
-                        <div class="w-1/2 uppercase text-indigo font-medium">
-                            Conference Rooms
-                        </div>
-                        <div class="w-1/4 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/4">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-1/2">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/enter.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/4 font-normal text-grey-darkest text-6xl">
-                            8
-                        </div>
-                        <div class="w-1/4">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:w-1/2 md:-ml-4 md:py-4 md:px-4 md:border-t">
-                    <div class="flex py-4 md:pl-6">
-                        <div class="w-1/2 uppercase text-indigo font-medium">
-                            Items
-                        </div>
-                        <div class="w-1/4 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/4">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center md:pl-6">
-                        <div class="w-1/2">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/tag.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/4 font-normal text-grey-darkest text-6xl">
-                            25
-                        </div>
-                        <div class="w-1/4">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
+        <?= $content_for_layout ?>
+    <div class="mt-6"><a href="#" id="load-modal" class="no-underline text-grey text-sm">Dare to click me?</a></div>
     </div>
-    <div><a href="#" id="load-modal">hello</a></div>
     <!-- Modal -->
     <div class="hidden" id="modal">
         <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
@@ -280,6 +176,7 @@
         </div>
     </div>
     <!-- Footer section -->
+    <script src="/js/admin.js"></script>
     <script src="/public/js/app.js"></script>
 </body>
 </html>

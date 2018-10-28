@@ -1,28 +1,12 @@
-<div class="container my-5">
-    <h1 class="mb-5">Admin area</h1>
-    <div class="row">
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-lg btn-options" id="show_reservations">Reservations</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-lg btn-options" id="show_items">Items</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-lg btn-options" id="show_users">Users</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-lg btn-options" id="show_user_activites">User Activites</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info btn-lg btn-options" id="show_logs">Logs</button></div>
+<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+    <span>Admin</span>
+    <div class="fill-current h-2 w-2 mx-1 -mt-px">
+        <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <div class="row my-4 hide" id="rooms">
-        <hr>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_room_res">Conference Room Reservations</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_equipment_res">Equipment Reservations</button></div>
-    </div>
-    <div class="row my-4 hide" id="items">
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_rooms">Conference Room List</button></div>
-        <div class="col"><button type="button" class="btn btn-block btn-outline-info sub-options" id="show_equipment">Equipment</button></div>
-    </div>
-    <div class="row my-4 hide" id="equipment">
-        <div class="col-6"></div>
-        <div class="col-3"><button type="button" class="btn btn-block btn-outline-info equip-options" id="show_equip_items">Items</button></div>
-        <div class="col-3"><button type="button" class="btn btn-block btn-outline-info equip-options" id="show_item_types">Types</button></div>
-    </div>
-
-    <div class="my-3" id="message"></div>
-    <div class="my-3" id="table"></div>
+    <span class="text-primary font-normal">Dashboard</span>
 </div>
-<script src="/js/admin.js"></script>
+<div id="table">
+    <div class="bg-white border-x sm:border-y sm:rounded shadow py-4">
+        
+    </div>
+</div>

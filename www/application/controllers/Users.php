@@ -12,14 +12,17 @@ class Users extends MY_Controller
     public function profile()
     {
         $this->layouts->set_title('User Profile');
-        $this->layouts->view('users/profile');
+        $this->layouts->view('users/profile', array(), 'master_tailwind');
     }
 
     public function dashboard()
     {
-        $this->session->set_flashdata('flash_message', $this->alerts->render('red', 'Uh-oh!', 'Lorem ipsum dolor sit amet consectetur, adipisicing elite.'));
         $this->layouts->set_title('Dashboard');
-        $this->layouts->view('users/dashboard');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->view('users/dashboard', array(), 'master_tailwind');
     }
 
     public function edit()

@@ -1,5 +1,4 @@
 <?php
-
 class User_model extends CI_Model
 {
     public function register()
@@ -70,10 +69,10 @@ class User_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
         $this->send_activation_mail($data['email'], $activation_key);
+        // Set notfication
+        $msg = $this->alerts->render('teal', 'Success', 'You have successfully registered. A verification link has been sent to your email account.');
+        $this->session->set_flashdata('flash_message', $msg);
 
-        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Success! Please check your e-mail for the activation link.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
         // user_id neccessary for register_by_invitation function in Reg_log controller
         return $data_log['user_id'];
     }
@@ -85,7 +84,7 @@ class User_model extends CI_Model
 
         $email_details['from'] = 'visnjamarica@gmail.com';
         $email_details['subject'] = 'Your activation link';
-        $email_details['message'] = $message = "Click on the link below to activate your account: <b />" . user_activation_link($email, $key);
+        $email_details['message'] = "Click on the link below to activate your account: <b />" . user_activation_link($email, $key);
 
         // Add email to queue
         $this->mail->add_mail_to_queue(array($email), $email_details);
@@ -107,9 +106,9 @@ class User_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
-        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Success! Account activated.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        // Set notification
+        $msg = $this->alerts->render('teal', 'Account activated', 'Your account has been activated successfully. You can now login.');
+        $this->session->set_flashdata('flash_message', $msg);
     }
 
     public function get_single_user($id)
@@ -256,8 +255,12 @@ class User_model extends CI_Model
         $password_hash = password_hash($data['password'], PASSWORD_DEFAULT);
         $today = date('Y-m-d h:i:s');
         $sql = "UPDATE users 
-                SET password = ?, reset_key = '', reset_key_exp = ''
-                WHERE email LIKE ? AND reset_key LIKE ? AND reset_key_exp >= ?";
+                SET password = ?, 
+                reset_key = NULL, 
+                reset_key_exp = NULL
+                WHERE email LIKE ? 
+                AND reset_key LIKE ? 
+                AND reset_key_exp >= ?";
         $query = $this->db->query($sql, [$password_hash, $data['email'], $data['reset_key'], $today]);
 
         $this->load->model('Logs_model','logs');
@@ -272,7 +275,6 @@ class User_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
-
     }
 
     public function get_all_user_roles()

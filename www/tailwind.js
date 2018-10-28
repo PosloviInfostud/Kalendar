@@ -63,6 +63,15 @@ let colors = {
   'primary-lighter' : '#AFCFE8',
   'primary-lightest' : '#EBF3F9',
 
+  // Infostud blue
+  // 'primary-darkest' : '#003448',
+  // 'primary-darker' : '#00688F',
+  // 'primary-dark' : '#009DD7',
+  // 'primary' : '#00AEEF',
+  // 'primary-light' : '#4DC6F4',
+  // 'primary-lighter' : '#99DFF9',
+  // 'primary-lightest' : '#E6F7FD',
+
   'black': '#22292f',
   'grey-darkest': '#3d4852',
   'grey-darker': '#606f7b',

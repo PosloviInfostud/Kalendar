@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <?= $this->layouts->print_header_includes() ?>
+    <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/public/css/app.css">
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
@@ -25,21 +27,38 @@
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
-                            <div class="fill-current h-6 w-6 text-grey-light mr-4 sm:mr-0">
-                                <a href="/admin" class="no-underline text-grey-light"><?= file_get_contents("public/icons/cog.svg") ?></a>
-                            </div>
-                            <div class="hidden sm:block sm:flex sm:items-center ml-2">
-                                <a href="/admin" class="no-underline text-grey-light"><span class="text-grey-light text-sm mr-6">Admin area</span></a>
-                            </div>
-                            <div class="fill-current h-6 w-6 text-grey-light">
-                                <a href="#" class="no-underline text-grey-light"><?= file_get_contents("public/icons/user.svg") ?></a>
-                            </div>
-                            <div class="hidden sm:block sm:flex sm:items-center ml-2">
-                                <a href="/profile" class="no-underline text-grey-light"><span class="text-grey-light text-sm mr-1">Profile</span></a>
-                                <div class="fill-current h-3 w-3 -mt-1 text-grey-light opacity-50">
-                                    <a href="/profile" class="no-underline text-grey-light"><?= file_get_contents("public/icons/chevron-down.svg") ?></a>
+                        <?php if($this->user_data['user']['user_role_id'] == 1) { ?>
+                            <a href="/admin" class="no-underline text-grey-light hover:text-primary">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                       <?= file_get_contents("public/icons/cog.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
+                                       <span class="text-sm">Admin area</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
+                        <?php } ?>
+                            <a href="/profile" class="no-underline text-grey-light hover:text-primary">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                        <?= file_get_contents("public/icons/user.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
+                                        <span class="text-sm">Profile</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="/logout" class="no-underline text-grey-light hover:text-primary">
+                                <div class="flex justify-end">
+                                    <div class="fill-current h-6 w-6">
+                                        <?= file_get_contents("public/icons/exit.svg") ?>
+                                    </div>
+                                    <div class="hidden sm:block sm:flex sm:items-center ml-1">
+                                        <span class="text-sm">Logout</span>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +72,7 @@
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm md:text-base">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-white no-underline flex items-center py-4 sm:border-b-4 border-primary-dark">
+                            <a href="/dashboard" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
@@ -61,7 +80,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                            <a href="reservations/meetings" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
@@ -69,7 +88,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                            <a href="reservations/equipment" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
@@ -79,9 +98,11 @@
                     </div>
                     <div>
                         <div class="sm:flex sm:justify-end text-sm md:text-base">
-                            <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-3 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
-                                New Reservation
-                            </button>
+                            <a href="/reservations/create">
+                                <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-3 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
+                                    New Reservation
+                                </button>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -91,92 +112,29 @@
 
     <!-- Content section -->
     <div class="container mx-auto sm:px-4 py-4 mb-4">
+        <!-- Flash notifications -->
         <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
-        <div class="flex text-sm text-black pb-4 px-2 sm:px-0">
-            <span>Reservations</span>
-            <div class="fill-current h-2 w-2 mx-1 -mt-px">
-                <?= file_get_contents("public/icons/chevron-right.svg") ?>
-            </div>
-            <span class="text-primary font-normal">Dashboard</span>
-        </div>
-        <div class="bg-white border sm:rounded shadow py-4 sm:px-4 mb-4">
-            <div class="md:flex px-2 mx-4 sm:px-0">
-                <div class="md:w-1/2 md:border-r md:mr-4">
-                    <div class="flex py-4">
-                        <div class="w-1/3 uppercase text-primary font-medium">
-                            Meetings
-                        </div>
-                        <div class="w-1/3 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/3">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="w-1/3">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/users.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/3 font-normal text-grey-darkest text-6xl">
-                            12
-                        </div>
-                        <div class="w-1/3">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:w-1/2 md:-ml-4">
-                    <div class="flex py-4 md:pl-6">
-                        <div class="w-1/3 uppercase text-primary font-medium">
-                            Equipment
-                        </div>
-                        <div class="w-1/3 text-grey font-normal">
-                            Total
-                        </div>
-                        <div class="w-1/3">
-                            
-                        </div>
-                    </div>
-                    <div class="flex items-center md:pl-6">
-                        <div class="w-1/3">
-                            <div class="fill-current h-20 w-20 text-grey">
-                                <?= file_get_contents("public/icons/laptop-phone.svg") ?>
-                            </div>
-                        </div>
-                        <div class="w-1/3 font-normal text-grey-darkest text-6xl">
-                            3
-                        </div>
-                        <div class="w-1/3">
-                            <div class="fill-current h-12 w-12 text-grey">
-                                <a href="#" class="text-grey"><?= file_get_contents("public/icons/arrow-right-circle.svg") ?></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
-    <!-- Calendars -->
-        <div class="hidden md:flex -mx-2">
-            <div class="w-1/2 px-2">
-                <div class="bg-white rounded border shadow">
-                    <h3 class="uppercase text-primary font-medium text-base py-4 px-4">Meetings Calendar</h3>
-                    <div class="h-64"><!--Placeholder --></div>
-                </div>
-            </div>
-            <div class="w-1/2 px-2">
-                <div class="bg-white rounded border shadow">
-                <h3 class="uppercase text-primary font-medium text-base py-4 px-4">Items Calendar</h3>
-                <div class="h-64"><!--Placeholder --></div>
-                </div>
+        <!-- Error messages -->
+        <div id="alert_box" class="hidden">
+            <div class="bg-red-alert border-l-4 border-red text-red-dark p-4 mb-5 mt-1 shadow relative" role="alert">
+                <p class="font-bold uppercase mb-2">Attention</p>
+                <p id="messages"></p>
+                <span class="absolute pin-t pin-b pin-r px-4 py-3">
+                    <svg id="close_alert" class="fill-current h-6 w-6 text-red opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+                </span>
             </div>
         </div>
+        <?= $content_for_layout ?>
     </div>
     <!-- Footer section -->
-    <script src="/public/js/app.js"></script>
-</body>
+    <?= $this->layouts->print_footer_includes() ?>
+    </body>
+    <!-- <script src="/public/js/app.js"></script> -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#calendar').fullCalendar({
+
+            });
+        });
+    </script>
 </html>
