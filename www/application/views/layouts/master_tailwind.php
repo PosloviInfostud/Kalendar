@@ -133,7 +133,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#calendar').fullCalendar({
-
+                contentHeight: "auto"
             });
         });
     </script>
