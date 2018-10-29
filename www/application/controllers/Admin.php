@@ -14,7 +14,7 @@ class Admin extends MY_Controller
     public function index()
     {
         $this->layouts->set_title('Admin Dashboard');
-        $this->layouts->view('admin/index');
+        $this->layouts->view('admin/index', array(), ('admin_tailwind'));
     }
 
     public function show_room_reservations()

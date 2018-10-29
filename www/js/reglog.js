@@ -1,20 +1,41 @@
-// Show registration form
-$("#register_button").click(function () {
-    $("#messages").empty();
-    $("#login_form").addClass("hide");
-    $("#register_form").removeClass("hide");
-    $("#forgot_form").addClass("hide");
-    $("#welcome").addClass("hide");
+// Mobile menu
+$("#phone_menu_btn").on("click", function () {
+    $("#secondary_nav").slideToggle();
+});
+
+// Modal function
+$("#load-modal, #close-modal").on('click', function () {
+    $("#modal").toggle('slow');
+});
+
+// Show register form
+$('*[data-link="register"]').click(function() {
+    $("#alert_box").hide();
+    $('*[data-section="login"]').addClass("hidden");
+    $('*[data-section="forgot"]').addClass("hidden");
+    $('*[data-section="register"]').removeClass("hidden");
 })
 
 // Show login form
-$("#login_button").click(function () {
-    $("#messages").empty();
-    $("#register_form").addClass("hide");
-    $("#login_form").removeClass("hide");
-    $("#forgot_form").addClass("hide");
-    $("#welcome").addClass("hide");
+$('*[data-link="login"]').click(function() {
+    $("#alert_box").hide();
+    $('*[data-section="register"]').addClass("hidden");
+    $('*[data-section="forgot"]').addClass("hidden");
+    $('*[data-section="login"]').removeClass("hidden");
 })
+
+// Show forgot password form
+$('*[data-link="forgot"]').click(function() { 
+    $("#alert_box").hide();
+    $('*[data-section="register"]').addClass("hidden");
+    $('*[data-section="login"]').addClass("hidden");
+    $('*[data-section="forgot"]').removeClass("hidden");
+})
+
+// Close the alert box
+$("#close_alert").on('click', function () {
+    $("#alert_box").fadeToggle('slow');
+});
 
 // Register user
 $("#register_form").submit(function (e) {
@@ -31,7 +52,8 @@ $("#register_form").submit(function (e) {
         })
         .done(function (response) {
             $(".error_box").empty();
-            $("#messages").empty();
+            $("#alert_box").hide();
+
             if (response['status'] == 'success') {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
@@ -40,6 +62,7 @@ $("#register_form").submit(function (e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
+                $("#alert_box").fadeToggle();
             }
         })
 })
@@ -47,6 +70,8 @@ $("#register_form").submit(function (e) {
 //Login user
 $("#login_form").submit(function (e) {
     e.preventDefault();
+    $(".error_box").empty();
+    $("#alert_box").hide();
     $.ajax({
             method: "POST",
             url: "/reg_log/login",
@@ -57,7 +82,6 @@ $("#login_form").submit(function (e) {
         })
         .done(function (response) {
             $(".error_box").empty();
-            $("#messages").empty();
             if (response['status'] == 'success') {
                 window.location.href = "/dashboard";
             } else if (response['status'] == 'form_error') {
@@ -66,20 +90,15 @@ $("#login_form").submit(function (e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
+                $("#alert_box").fadeToggle();
             }
         })
 })
 
-//Show Forgot Password form (to enter e-mail to send form for password reset)
-$("#forgot_button").click(function () {
-    $("#login_form").addClass("hide");
-    $("#register_form").addClass("hide");
-    $("#forgot_form").removeClass("hide");
-    $("#welcome").addClass("hide");
-})
-
 //Send forgot password mail
 $("#forgot_form").submit(function (e) {
+    $(".error_box").empty();
+    $("#alert_box").hide();
     e.preventDefault();
     $.ajax({
             method: "POST",
@@ -90,7 +109,7 @@ $("#forgot_form").submit(function (e) {
         })
         .done(function (response) {
             $(".error_box").empty();
-            $("#messages").empty();
+            $("#alert_box").hide();
             if (response['status'] == 'success') {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
@@ -99,12 +118,15 @@ $("#forgot_form").submit(function (e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
+                $("#alert_box").fadeToggle();
             }
         })
 })
 
 //Reset password form submit
 $("#form_reset_password").submit(function (e) {
+    $(".error_box").empty();
+    $("#alert_box").hide();
     e.preventDefault();
     $.ajax({
             method: "POST",
@@ -117,6 +139,8 @@ $("#form_reset_password").submit(function (e) {
             }
         })
         .done(function (response) {
+            $(".error_box").empty();
+            $("#alert_box").hide();
             if (response['status'] == 'success') {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
@@ -125,6 +149,7 @@ $("#form_reset_password").submit(function (e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
+                $("#alert_box").fadeToggle();
             }
         })
 })
@@ -152,8 +177,7 @@ $("#register_by_invite_form").submit(function (e) {
         })
 })
 
-//edit user notifications checkboxes
-
+// Edit user notifications checkboxes
 $(".notify").change(function(){
     if($(this).is(":checked")) {
         value = 1;

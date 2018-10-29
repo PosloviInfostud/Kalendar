@@ -1,27 +1,31 @@
-<div class="container">
-    <div id="messages" class="col-sm-6 mx-auto"></div>
-</div>
-<div id="reset_password_form_window" class="col-sm-6 mx-auto border border-primary rounded p-3">
-    <form id="form_reset_password">
-        <div class="form-group">
-            <label for="email">E-Mail</label><br>
-            <input type="email" class="form-control" name="email" id="reset_password_email" value="<?= $email; ?>" disabled>
-            <small id="reset_email_err" class="form-text text-danger error_box"></small>
-        </div>
-        <div class="form-group">
-            <label for="password">Your New Password</label><br>
-            <input type="password" class="form-control" name="password" id="reset_password_password">
-            <small id="reset_password_err" class="form-text text-danger error_box"></small>
-        </div>
-        <div class="form-group">
-            <label for="confirm">Confirm Your New Password</label><br>
-            <input type="password" class="form-control" name="confirm" id="reset_password_confirm">
-            <small id="reset_password_confirm_err" class="form-text text-danger error_box"></small>
-        </div>
-            <input type="hidden" name="code" id="reset_password_code" value="<?= $code; ?>">
-            <input type="submit" name="submit" id="reset_password_submit" class="btn btn-success btn-block" value="Reset Password">
-    </form>
-    <div id="msgs"></div>
+<div class="bg-white rounded shadow">
+    <div class="border-b py-8 text-black text-center text-xl uppercase">
+        <span data-section="login" class="font-bold">Reset Password</span>
     </div>
-
-<script src="/js/reglog.js"></script>
+    
+    <div class="bg-grey-lightest px-10 py-10">
+        <form id="form_reset_password">
+            <div class="mb-3">
+                <input type="email" class="border w-full p-3" name="email" id="reset_password_email" value="<?= $email; ?>" disabled>
+                <small id="reset_email_err" class="error_box text-xs text-red font-normal"></small>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="border w-full p-3" name="password" id="reset_password_password" placeholder="Your new password">
+                <small id="reset_password_err" class="error_box text-xs text-red font-normal"></small>
+            </div>
+            <div class="mb-6">
+                <input type="password" class="border w-full p-3" name="confirm" id="reset_password_confirm" placeholder="Confirm your new password">
+                <small id="reset_confirm_err" class="error_box text-xs text-red font-normal"></small>
+            </div>
+                <input type="hidden" name="code" id="reset_password_code" value="<?= $code; ?>">
+                <input type="submit" name="submit" id="reset_password_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold tracking-wider" value="Reset Password">
+        </form>
+    </div>
+    <div class="border-t px-10 py-6">
+        <div data-section="login">
+            <div class="flex justify-end">
+                <a href="/login"><button data-link="login" class="font-bold text-primary hover:text-primary-dark no-underline">Back to Login</button></a>
+            </div>
+        </div>
+    </div>
+</div>
