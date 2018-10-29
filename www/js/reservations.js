@@ -438,32 +438,56 @@ $("body").on('submit', '#update_user_role_form', function(e) {
     })
 })
 
+//=====================================================================================================
 //click on delete reservation member button
 
-$("body").on('click', '.member_delete', function(e) {
-    e.preventDefault();
-    if (!confirm("Are you sure you want to delete this user from this meeting? Notification email will be sent.")) {
-        return false;
-    } else {
-        $.ajax({
-            method: "POST",
-            url: "/reservations/delete_res_member",
-            data: {
-                "res_id" : $(this).attr("data-res"),
-                "user_id" : $(this).attr("data-user"),
-                "creator" : $(this).attr("data-creator")
-            }
-        }).done(function(response){
-            msg = JSON.parse(response);
-            if(msg.error) {
-                $("#del_error_msg").html(msg.error);
-            } else {
-                location.reload();
-            }
-        })
-    }
-})
+var deleteMemberConfirmModal = function(callback) {
+    
+    $("body").on('click', '.member_delete', function(e) {
+        e.preventDefault();
+        data = {};
+        data.res_id = $(this).attr("data-res");
+        data.user_id = $(this).attr("data-user");
+        data.creator = $(this).attr("data-creator");
+        $("#delete_member_confirm_modal").modal("show");
+        $("#delete_member_confirm_modal-body").html(
+            "Are you sure you want to remove this member from meeting?"
+        )
+    });
 
+    $("body").on("click", "#delete_member_confirm_modal-btn-yes", function(){
+        callback(true, data);
+        $("#delete_member_confirm_modal").modal('hide');
+      });
+      
+      $("body").on("click", "#delete_member_confirm_modal-btn-no", function(){
+          callback(false, data);
+        $("#delete_member_confirm_modal").modal('hide');
+      });
+    }
+
+    deleteMemberConfirmModal(function(confirm, data) {
+        if(confirm) {
+            console.log($(this).attr("data-res"));
+            $.ajax({
+                method: "POST",
+                url: "/reservations/delete_res_member",
+                data: data
+            }).done(function(response){
+                msg = JSON.parse(response);
+                if(msg.error) {
+                    $("#del_error_msg").html(msg.error);
+                } else {
+                    location.reload();
+                }
+            })        
+        } else {
+            return false;
+        }
+    })
+
+
+//=============================================================================================
 //add new member show form modal
 
 $("body").on('click', '#btn_add_new_member', function(e) {
@@ -527,15 +551,40 @@ $("#form_update_room_reservation").submit(function(e){
         }
     })
 })
-
+//=============================================================================================
 //confirm delete reservation
 
-$("#del_res_btn").click(function(){
-    if (!confirm("Are you sure you want to delete this reservation? Notification email will be sent.")) {
-        return false;
-    }   
-});
+var deleteReservationConfirmModal = function(callback) {
+    
+    $("body").on('click', '#del_res_btn', function(e) {
+        e.preventDefault();
+        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal-body").html(
+            "Are you sure you want to cancel this meeting?"
+        )
+    });
 
+    $("body").on("click", "#delete_reservation_confirm_modal-btn-yes", function(){
+        callback(true);
+        $("#delete_reservation_confirm_modal").modal('hide');
+      });
+      
+      $("body").on("click", "#delete_reservation_confirm_modal-btn-no", function(){
+          callback(false);
+        $("#delete_reservation_confirm_modal").modal('hide');
+      });
+    }
+
+    deleteReservationConfirmModal(function(confirm) {
+        if(confirm == false) {
+            e.preventDefault();
+        } else {
+            return true;
+        }
+    })
+
+
+//========================================================================================
 //submit equipment update form
 
 var confirmEquipUpdate = function(callback){

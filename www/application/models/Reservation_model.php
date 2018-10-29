@@ -766,7 +766,7 @@ class Reservation_model extends CI_Model
             $reservation = $this->single_room_reservation($data['res'])[0];
             $notify = $this->get_if_member_is_notified($data['res'], $data['member']);
 
-            if($notify['not_update'] == 1) {
+            if($notify['update'] == 1) {
                 $this->send_delete_member_mail($member, $reservation);
             }
             

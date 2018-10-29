@@ -168,3 +168,40 @@
     </div>
   </div>
 </div>
+
+<!-- Delete Member Confirmation Modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="delete_member_confirm_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Member Deelete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="delete_member_confirm_modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_member_confirm_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="delete_member_confirm_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Reservation Confirmation Modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="delete_reservation_confirm_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Reservation Deelete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="delete_reservation_confirm_modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_reservation_confirm_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="delete_reservation_confirm_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
