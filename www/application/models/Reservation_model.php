@@ -86,8 +86,9 @@ class Reservation_model extends CI_Model
         $sql = "SELECT rooms.id 
                 FROM rooms 
                 INNER JOIN room_reservations ON rooms.id = room_reservations.room_id 
-                WHERE (room_reservations.start_time < ? AND room_reservations.end_time > ?) 
-                OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?) 
+                WHERE ((room_reservations.start_time < ? AND room_reservations.end_time > ?) 
+                OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?)) 
+                AND (room_reservations.recurring = 0 OR room_reservations.parent != 0) 
                 GROUP BY room_id";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time']]);
             
@@ -142,6 +143,7 @@ class Reservation_model extends CI_Model
         $sql = "SELECT COUNT(*) AS reserved 
                 FROM room_reservations 
                 WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
+                AND (recurring = '0' OR parent != '0') 
                 AND room_id = ?
                 AND deleted = 0"; 
         $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
@@ -465,8 +467,8 @@ class Reservation_model extends CI_Model
         $sql = "SELECT equipment.id AS id 
                 FROM equipment 
                 INNER JOIN equipment_reservations ON equipment.id = equipment_reservations.equipment_id  
-                WHERE (equipment_reservations.start_time < ? AND equipment_reservations.end_time > ?) 
-                OR (equipment_reservations.start_time < ? AND equipment_reservations.start_time >= ?) 
+                WHERE ((equipment_reservations.start_time < ? AND equipment_reservations.end_time > ?) 
+                OR (equipment_reservations.start_time < ? AND equipment_reservations.start_time >= ?)) 
                 AND equipment_type_id = ? 
                 GROUP BY equipment_id";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['type']]);
@@ -855,6 +857,7 @@ class Reservation_model extends CI_Model
                 FROM room_reservations 
                 WHERE ((start_time < ? AND end_time > ?) 
                 OR (start_time < ? AND start_time >= ?)) 
+                AND (recurring = '0' OR parent != '0') 
                 AND room_id = ? 
                 AND id != ?
                 AND deleted = 0"; 

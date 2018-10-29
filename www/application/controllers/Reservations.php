@@ -100,6 +100,8 @@ class Reservations extends MY_Controller
     {
         $data['room_id'] = $this->input->post('room');
         $data['users'] = $this->res->show_users_for_invitation();
+        $data['frequencies'] = $this->res->get_reservation_frequencies();
+
 
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
