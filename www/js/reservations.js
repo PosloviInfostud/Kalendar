@@ -63,8 +63,6 @@ let fpItemEndDate = $("#item_datetime_end").flatpickr({
 	altFormat: "d/m/y @ H:i",
 });});
 
-
-
 //load select2 plugin - multiple
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
@@ -106,9 +104,7 @@ $(document).ready(function() {
             maximumInputLength: 50, // only allow terms up to 50 characters long
             closeOnSelect: true
         }
-
     );
-
 });
 
 //send ajax search request for free rooms
@@ -555,7 +551,8 @@ $("#form_update_room_reservation").submit(function(e){
             title : $("#reservation_name").val(),
             description : $("#reservation_description").val(),
             update_all : $("#update_all_child_reservations").is(":checked"),
-            res : $("#res").val()
+            res : $("#res").val(),
+            parent : $("#parent").val()
         }
     })
     .done(function(response){
@@ -582,7 +579,16 @@ var deleteReservationConfirmModal = function(callback) {
         $("#delete_reservation_confirm_modal").modal("show");
         $("#delete_reservation_confirm_modal-body").html(
             "Are you sure you want to cancel this meeting?"
-        )
+        );
+    });
+
+    $("body").on('click', '#del_all_res_btn', function(e) {
+        e.preventDefault();
+        delete_url = this.href;
+        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal-body").html(
+            "Are you sure you want to cancel ALL the reservations of this recurring event?"
+        );
     });
 
     $("body").on("click", "#delete_reservation_confirm_modal-btn-yes", function(){

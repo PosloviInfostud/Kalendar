@@ -35,7 +35,7 @@
         </div>
 
         <input type="hidden" name="res" id="res" value="<?= $meeting['id'] ?>">
-        
+        <input type="hidden" name="parent" id="parent" value="<?= $meeting['parent'] ?>">
         <!-- Check if it's a recurring reservation -->
         <?php if($meeting['recurring'] == 1) { ?>
             <div class="form-check">

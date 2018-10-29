@@ -355,7 +355,7 @@ class Reservations extends MY_Controller
         $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
         if($meeting[0]['recurring'] == 1) {
-            $child_dates = $this->res->get_child_reservations_dates($meeting[0]['parent']);
+            $child_dates = $this->res->get_child_reservations($meeting[0]['parent']);
         }
 
         // Check if user is a member of the given reservation
@@ -489,23 +489,50 @@ class Reservations extends MY_Controller
                 "title" => $this->input->post('title'),
                 "description" => $this->input->post('description'),
                 "id" => $this->input->post('res'),
-                "update_all" => $this->input->post('update_all')
+                "update_all" => $this->input->post('update_all'),
+                "parent" => $this->input->post('parent')
             ];
-            if($this->res->check_if_room_is_free_for_update($data)) {
-                $this->res->update_room_reservation($data);
-                $message['success'] = $data['id'];
 
+            if($data['update_all'] != 'false') {
+                $active_child = $data['id'];
+                $children = $this->res->get_child_reservations($data['parent']);
+                foreach($children as $key => $child) {
+                    $data['id'] = $child['id'];
+                    $data['start_time'] = $child['start_time'];
+                    $data['end_time'] = $child['end_time'];
+                    $this->res->update_room_reservation($data);
+                    $message['success'] = $active_child;
+                }
             } else {
-                $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                if($this->res->check_if_room_is_free_for_update($data)) {
+                    $this->res->update_room_reservation($data);
+                    $message['success'] = $data['id'];
+                } else {
+                    $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                }
             }
-
         }
         echo json_encode($message);
     }
 
     public function delete_room_reservation($id)
     {
-        $this->res->delete_room_reservation($id);
+        // Delete all reservations of a recurring event
+        if($this->input->get('option', TRUE)) {
+            // Get parent id
+            $parent = $this->input->get('parent', TRUE);
+            // Delete children
+            $children = $this->res->get_child_reservations($parent);
+            foreach($children as $child) {
+                $this->res->delete_room_reservation($child['id'], TRUE);
+            }
+            // Delete parent
+            $this->res->delete_room_reservation($parent);
+
+        // Delete single reservation
+        } else {
+            $this->res->delete_room_reservation($id);
+        }
         url_redirect('/reservations/meetings');
     }
 
