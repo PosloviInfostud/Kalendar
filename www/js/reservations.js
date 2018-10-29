@@ -171,33 +171,97 @@ $("body").on('change click', "input.room_radio", function(e) {
     room = $(this).val();
 })
 
-//submit room reservation form
-$("body").on('click', "#reservation_room_submit_by_date", function(e) {
-    e.preventDefault();
-    data = {};
-    data.start_time = $("#datetime_start").val();
-    data.end_time =  $("#datetime_end").val();
-    data.room =  room;
-    // data.room =  $('input[name=room]:checked').val();
-    data.frequency = $("#res_frequency").val();
-    data.title = $("#reservation_name").val();
-    data.description = $("#reservation_description").val();
-    data.members = $("#members").val();
-    submit_room_reservation(data);
+
+//===============================================================================
+//submit room reservation form 
+
+    //search by date
+
+var confirmRoomReservationByDate = function(callback){
+  
+    $("body").on('click', "#reservation_room_submit_by_date", function(e) {
+        e.preventDefault();
+        data = {};
+        data.start_time = $("#datetime_start").val();
+        data.end_time =  $("#datetime_end").val();
+        data.room =  room;
+        data.title = $("#reservation_name").val();
+        data.description = $("#reservation_description").val();
+        data.members = $("#members").val();
+
+        $("#room_reservation_modal").modal('show');
+        $("#modal-body").html(
+            "Start: "+$("#datetime_start").val()+
+            "<br>End: "+$("#datetime_end").val()+
+            "<br>Room: "+room+
+            "<br>Title: "+$("#reservation_name").val()+
+            "<br> Description: "+$("#reservation_description").val()+
+            "<br>Invited: "+$("#members").val())
+    });
+  
+    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function(){
+      callback(true, data);
+      $("#room_reservation_modal").modal('hide');
+    });
+    
+    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-no", function(){
+        callback(false, data);
+      $("#room_reservation_modal").modal('hide');
+    });
+};
+
+confirmRoomReservationByDate(function(confirm, data) {
+    if(confirm) {
+        submit_room_reservation(data);
+    } else {
+        return false;
+    }
 })
 
-$("body").on('click', "#reservation_room_submit_by_room", function(e) {
-    e.preventDefault();
-    data = {};
-    data.start_time = $("#datetime_start").val();
-    data.end_time =  $("#datetime_end").val();
-    data.room =  room;
-    data.frequency = $("#res_frequency").val();
-    data.title = $("#reservation_name").val();
-    data.description = $("#reservation_description").val();
-    data.members = $("#members").val();
-    submit_room_reservation(data);
+    //search by free room
+
+var confirmRoomReservationByRoom = function(callback){
+
+    $("body").on('click', "#reservation_room_submit_by_room", function(e) {
+        e.preventDefault();
+        data = {};
+        data.start_time = $("#datetime_start").val();
+        data.end_time =  $("#datetime_end").val();
+        data.room =  room;
+        data.title = $("#reservation_name").val();
+        data.description = $("#reservation_description").val();
+        data.members = $("#members").val();
+
+        $("#room_reservation_modal").modal('show');
+        $("#modal-body").html(
+            "Start: "+$("#datetime_start").val()+
+            "<br>End: "+$("#datetime_end").val()+
+            "<br>Room: "+room+
+            "<br>Title: "+$("#reservation_name").val()+
+            "<br> Description: "+$("#reservation_description").val()+
+            "<br>Invited: "+$("#members").val())
+    });
+    
+    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
+        callback(true, data);
+        $("#room_reservation_modal").modal('hide');
+    });
+    
+    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
+        callback(false, data);
+        $("#room_reservation_modal").modal('hide');
+    });
+};
+
+confirmRoomReservationByRoom(function(confirm, data) {
+    if(confirm) {
+        submit_room_reservation(data);
+    } else {
+        return false;
+    }
 })
+
+    //sending AJAX
 
 function submit_room_reservation(data) {
     $.ajax({
@@ -231,6 +295,7 @@ function submit_room_reservation(data) {
         }
     })
 }
+//==============================================================================
 
 //send ajax search request for free schedule for specific item
 $("select.select_item").change(function(e){
@@ -248,8 +313,11 @@ $("select.select_item").change(function(e){
     })
 })
 
-
+//===================================================================================
 //submit equipment reservation form
+
+    //sending AJAX
+
 function submit_equipment_reservation(data) {
     $.ajax({
         method: "POST",
@@ -269,26 +337,83 @@ function submit_equipment_reservation(data) {
     })
 }
 
-$("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
-    e.preventDefault();
-    data =  {};
-    data.start_time =  $("#item_datetime_start").val();
-    data.end_time =  $("#item_datetime_end").val();
-    data.description =  $("#reservation_description").val();
-    data.equipment_id =  $(".radio_equipment_id:checked").val(); 
-    submit_equipment_reservation(data);
-    })
+    //search by date
 
-$("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
-    e.preventDefault();
-    data =  {};
-    data.start_time =  $("#item_datetime_start").val();
-    data.end_time =  $("#item_datetime_end").val();
-    data.description =  $("#reservation_description").val();
-    data.equipment_id =  $(".select_item option:selected").val();
-    submit_equipment_reservation(data);
-    })
+var confirmEquipReservationByDate = function(callback) {
 
+    $("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
+        e.preventDefault();
+        data =  {};
+        data.start_time =  $("#item_datetime_start").val();
+        data.end_time =  $("#item_datetime_end").val();
+        data.description =  $("#reservation_description").val();
+        data.equipment_id =  $(".radio_equipment_id:checked").val(); 
+
+        $("#equip_reservation_modal").modal('show');
+        $("#modal-body").html(
+            "Start: "+$("#item_datetime_start").val()+
+            "<br>End: "+$("#item_datetime_end").val()+
+            "<br> Description: "+$("#reservation_description").val())
+    });
+
+    $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-yes", function(){
+        callback(true, data);
+        $("#equip_reservation_modal").modal('hide');
+      });
+      
+      $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-no", function(){
+          callback(false, data);
+        $("#equip_reservation_modal").modal('hide');
+      });
+}
+
+confirmEquipReservationByDate(function(confirm, data) {
+    if(confirm) {
+        submit_equipment_reservation(data);
+    } else {
+        return false;
+    }
+})
+
+    //search by specific item
+
+var confirmEquipReservationByItem = function(callback) {
+
+    $("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
+        e.preventDefault();
+        data =  {};
+        data.start_time =  $("#item_datetime_start").val();
+        data.end_time =  $("#item_datetime_end").val();
+        data.description =  $("#reservation_description").val();
+        data.equipment_id =  $(".select_item option:selected").val(); 
+
+        $("#equip_reservation_modal").modal('show');
+        $("#modal-body").html(
+            "Start: "+$("#item_datetime_start").val()+
+            "<br>End: "+$("#item_datetime_end").val()+
+            "<br> Description: "+$("#reservation_description").val())
+    });
+
+    $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-yes", function(){
+        callback(true, data);
+        $("#equip_reservation_modal").modal('hide');
+        });
+        
+        $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-no", function(){
+            callback(false, data);
+        $("#equip_reservation_modal").modal('hide');
+        });
+}
+
+confirmEquipReservationByItem(function(confirm, data) {
+    if(confirm) {
+        submit_equipment_reservation(data);
+    } else {
+        return false;
+    }
+})
+
+//===========================================================================================
 //load update user reservation role form modal
 
 $("body").on('click','.role_edit', function(e) {
@@ -430,31 +555,56 @@ $("#del_res_btn").click(function(){
 
 //submit equipment update form
 
-$("#update_equipment_submit").click(function(e){
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/reservations/update_equipment",
-        data: {
-            start_time : $("#update_item_datetime_start").val(),
-            end_time :  $("#update_item_datetime_end").val(),
-            description : $("#reservation_description").val(),
-            equip_id : $("#equip_id").val(),
-            res_id : $("#res_id").val()
-        }
-    })
-    .done(function(response){
-        console.log(response);
-        msg = JSON.parse(response);
-        console.log(msg);
-        if (msg.error) {
-            $("#show_errors").html(msg.error);
-        }
-        if(msg.success) {
-            window.location.href = "/reservations/equipment/"+msg.success;
-        }
-    })
-})
+var confirmEquipUpdate = function(callback){
+  
+    $("#update_equipment_submit").on("click", function(e){
+        e.preventDefault();
+      $("#update_equipment_modal").modal('show');
+      $("#modal-body").html(
+        "Start: "+$("#update_item_datetime_start").val()+
+        "<br>End: "+$("#update_item_datetime_end").val()+
+        "<br> Description: "+$("#reservation_description").val())
+    });
+  
+    $("#modal-btn-yes").on("click", function(){
+      callback(true);
+      $("#update_equipment_modal").modal('hide');
+    });
+    
+    $("#modal-btn-no").on("click", function(){
+      callback(false);
+      $("#update_equipment_modal").modal('hide');
+    });
+};
+  
+confirmEquipUpdate(function(confirm){
+    if(confirm){
+        $.ajax({
+            method: "POST",
+            url: "/reservations/update_equipment",
+            data: {
+                start_time : $("#update_item_datetime_start").val(),
+                end_time :  $("#update_item_datetime_end").val(),
+                description : $("#reservation_description").val(),
+                equip_id : $("#equip_id").val(),
+                res_id : $("#res_id").val()
+            }
+        })
+        .done(function(response){
+            console.log(response);
+            msg = JSON.parse(response);
+            console.log(msg);
+            if (msg.error) {
+                $("#show_errors").html(msg.error);
+            }
+            if(msg.success) {
+                window.location.href = "/reservations/equipment/"+msg.success;
+            }
+        })
+    } else {
+        return false;
+    }
+});
 
 //confirm delete equipment reservation
 

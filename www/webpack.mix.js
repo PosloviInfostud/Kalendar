@@ -1,7 +1,9 @@
 
-let mix = require('laravel-mix')
-require('laravel-mix-tailwind')
-require('laravel-mix-purgecss')
+let mix = require('laravel-mix');
+require('laravel-mix-tailwind');
+require('laravel-mix-purgecss');
+require('laravel-mix-svg-sprite');
+
 
 /*
  |--------------------------------------------------------------------------
@@ -43,6 +45,7 @@ mix
 
     // Copy
     .copyDirectory('src/img/*.*', 'public/img')
+    .copyDirectory('src/icons/*.*', 'public/icons')
 
     // BrowserSync
     .browserSync({

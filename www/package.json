@@ -13,10 +13,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@ayctor/laravel-mix-svg-sprite": "^0.1.0",
     "browser-sync": "^2.26.3",
     "browser-sync-webpack-plugin": "2.0.1",
     "laravel-mix": "^2.1.14",
     "laravel-mix-purgecss": "^3.0.0",
+    "laravel-mix-svg-sprite": "0.0.1",
     "laravel-mix-tailwind": "^0.1.0",
     "tailwindcss": "^0.6.6"
   },

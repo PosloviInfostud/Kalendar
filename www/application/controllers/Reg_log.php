@@ -12,7 +12,7 @@ class Reg_log extends MY_Controller
     public function index()
     {
         $this->layouts->set_title('Reservations');
-        $this->layouts->view('index');
+        $this->layouts->view('index', array(), 'login_tailwind');
     }
 
     public function register()
@@ -108,9 +108,8 @@ class Reg_log extends MY_Controller
                 $response['status'] = 'success';
 
                 // Notification
-                $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                E-mail sent successfully! Please, go to your email account and click on the link to enter your new password!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $msg = $this->alerts->render('teal', 'E-mail sent successfully', 'Please, go to your email account and click the link to enter your new password!');
+                $this->session->set_flashdata('flash_message', $msg);
             }
         } else {
             $errors = array();
@@ -141,7 +140,7 @@ class Reg_log extends MY_Controller
             $data['error'] = "E-mail and code do not fit. Try again!";
         }
         $this->layouts->set_title('Reset Password');
-        $this->layouts->view('reset_password', $data);
+        $this->layouts->view('reset_password', $data, 'login_tailwind');
     }
 
     public function reset_password()
@@ -149,8 +148,6 @@ class Reg_log extends MY_Controller
         $this->form_validation->set_rules('email', 'E-Mail', 'trim|required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         $this->form_validation->set_rules('confirm', 'Password Confirmation', 'trim|required|matches[password]');
-
-        /////////////////////////////////////////////////////////////////////////////////
 
         if ($this->form_validation->run()) {
             $data = [
@@ -161,10 +158,9 @@ class Reg_log extends MY_Controller
 
             if ($this->user->reset_password($data) == true) {
                 // Set notification
-                $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-                Your password has been successfully reseted! You can now login with your new password!
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-                // Set status
+                $msg = $this->alerts->render('teal', 'Success', 'Your password has been successfully reseted! You can now login with your new password!');
+                $this->session->set_flashdata('flash_message', $msg);
+
                 $response['status'] = "success";
             } else {
                 $response['status'] = "user_error";

@@ -1,38 +1,38 @@
-$("body").on('click', ".btn-options", function(e) {
-    $(".btn-options, .sub-options").addClass('btn-outline-info').removeClass('btn-info');
-    $("#message, #table").html('');
-    $("#rooms, #items, #equipment").addClass('hide');
-    // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
-})
+// $("body").on('click', ".btn-options", function(e) {
+//     $(".btn-options, .sub-options").addClass('btn-outline-info').removeClass('btn-info');
+//     $("#message, #table").html('');
+//     $("#rooms, #items, #equipment").addClass('hide');
+//     // $("#table").html('<div class="progress"><div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div></div>');
+// })
 
-$("body").on('click', ".sub-options", function(e) {
-    $(".sub-options").addClass('btn-outline-info').removeClass('btn-info');
-    $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
-    $("#equipment").addClass('hide');
-})
+// $("body").on('click', ".sub-options", function(e) {
+//     $(".sub-options").addClass('btn-outline-info').removeClass('btn-info');
+//     $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
+//     $("#equipment").addClass('hide');
+// })
 
-$("body").on('click', ".equip-options", function(e) {
-    $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
-})
+// $("body").on('click', ".equip-options", function(e) {
+//     $(".equip-options").addClass('btn-outline-info').removeClass('btn-info');
+// })
 
-// Choose between reservation types
-$("body").on('click', "#show_reservations", function() {
-    $("#rooms").removeClass("hide");
-    $(this).addClass('btn-info').removeClass('btn-outline-info');
-})
+// // Choose between reservation types
+// $("body").on('click', "#show_reservations", function() {
+//     $("#rooms").removeClass("hide");
+//     $(this).addClass('btn-info').removeClass('btn-outline-info');
+// })
 
-// Choose between type of lists
-$("body").on('click', "#show_items", function() {
-    $("#items").removeClass("hide");
-    $(this).addClass('btn-info').removeClass('btn-outline-info');
-})
+// // Choose between type of lists
+// $("body").on('click', "#show_items", function() {
+//     $("#items").removeClass("hide");
+//     $(this).addClass('btn-info').removeClass('btn-outline-info');
+// })
 
-// Choose between equipment items and types
-$("body").on('click', "#show_equipment", function() {
-    $("#equipment").removeClass("hide");
-    $(this).addClass('btn-info').removeClass('btn-outline-info');
-    $("#message, #table").html('');
-})
+// // Choose between equipment items and types
+// $("body").on('click', "#show_equipment", function() {
+//     $("#equipment").removeClass("hide");
+//     $(this).addClass('btn-info').removeClass('btn-outline-info');
+//     $("#message, #table").html('');
+// })
 
 /* VIEWS */
 

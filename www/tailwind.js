@@ -46,6 +46,32 @@ View the full documentation at https://tailwindcss.com.
 let colors = {
   'transparent': 'transparent',
 
+  'smoke-darkest': 'rgba(0, 0, 0, 0.9)',
+  'smoke-darker': 'rgba(0, 0, 0, 0.75)',
+  'smoke-dark': 'rgba(0, 0, 0, 0.6)',
+  'smoke': 'rgba(0, 0, 0, 0.5)',
+  'smoke-light': 'rgba(0, 0, 0, 0.4)',
+  'smoke-lighter': 'rgba(0, 0, 0, 0.25)',
+  'smoke-lightest': 'rgba(0, 0, 0, 0.1)',
+
+  'primary-darkest-grey' : '#22313F',
+  'primary-darkest' : '#11283B',
+  'primary-darker' : '#215077',
+  'primary-dark' : '#3279B2',
+  'primary' : '#3786C6',
+  'primary-light' : '#73AAD7',
+  'primary-lighter' : '#AFCFE8',
+  'primary-lightest' : '#EBF3F9',
+
+  // Infostud blue
+  // 'primary-darkest' : '#003448',
+  // 'primary-darker' : '#00688F',
+  // 'primary-dark' : '#009DD7',
+  // 'primary' : '#00AEEF',
+  // 'primary-light' : '#4DC6F4',
+  // 'primary-lighter' : '#99DFF9',
+  // 'primary-lightest' : '#E6F7FD',
+
   'black': '#22292f',
   'grey-darkest': '#3d4852',
   'grey-darker': '#606f7b',
@@ -62,6 +88,7 @@ let colors = {
   'red': '#e3342f',
   'red-light': '#ef5753',
   'red-lighter': '#f9acaa',
+  'red-alert': '#ffe4e4',
   'red-lightest': '#fcebea',
 
   'orange-darkest': '#462a16',
@@ -70,6 +97,7 @@ let colors = {
   'orange': '#f6993f',
   'orange-light': '#faad63',
   'orange-lighter': '#fcd9b6',
+  'orange-alert': '#fbebdb',
   'orange-lightest': '#fff5eb',
 
   'yellow-darkest': '#453411',
@@ -78,6 +106,7 @@ let colors = {
   'yellow': '#ffed4a',
   'yellow-light': '#fff382',
   'yellow-lighter': '#fff9c2',
+  'yellow-alert': '#fffce3',
   'yellow-lightest': '#fcfbeb',
 
   'green-darkest': '#0f2f21',
@@ -86,6 +115,7 @@ let colors = {
   'green': '#38c172',
   'green-light': '#51d88a',
   'green-lighter': '#a2f5bf',
+  'green-alert': '#d1f5dd',
   'green-lightest': '#e3fcec',
 
   'teal-darkest': '#0d3331',
@@ -94,6 +124,7 @@ let colors = {
   'teal': '#4dc0b5',
   'teal-light': '#64d5ca',
   'teal-lighter': '#a0f0ed',
+  'teal-alert': '#d8f3f1',
   'teal-lightest': '#e8fffe',
 
   'blue-darkest': '#12283a',
@@ -102,6 +133,7 @@ let colors = {
   'blue': '#3490dc',
   'blue-light': '#6cb2eb',
   'blue-lighter': '#bcdefa',
+  'blue-alert': '#ddefff',
   'blue-lightest': '#eff8ff',
 
   'indigo-darkest': '#191e38',
@@ -194,6 +226,8 @@ module.exports = {
 
   fonts: {
     'sans': [
+      'Fira Sans',
+      'Barlow',
       'system-ui',
       'BlinkMacSystemFont',
       '-apple-system',
@@ -202,7 +236,6 @@ module.exports = {
       'Oxygen',
       'Ubuntu',
       'Cantarell',
-      'Fira Sans',
       'Droid Sans',
       'Helvetica Neue',
       'sans-serif',
@@ -259,6 +292,8 @@ module.exports = {
     '3xl': '1.875rem',  // 30px
     '4xl': '2.25rem',   // 36px
     '5xl': '3rem',      // 48px
+    '6xl': '4rem',
+    '7xl': '5rem',
   },
 
 
@@ -398,6 +433,7 @@ module.exports = {
     '0': '0',
     '2': '2px',
     '4': '4px',
+    '6': '6px',
     '8': '8px',
   },
 
@@ -480,6 +516,7 @@ module.exports = {
     '10': '2.5rem',
     '12': '3rem',
     '16': '4rem',
+    '20': '5rem',
     '24': '6rem',
     '32': '8rem',
     '48': '12rem',
@@ -594,12 +631,14 @@ module.exports = {
   */
 
   maxWidth: {
+    '2xs': '10rem',
     'xs': '20rem',
     'sm': '30rem',
     'md': '40rem',
     'lg': '50rem',
     'xl': '60rem',
     '2xl': '70rem',
+    '2/5xl': '75rem',
     '3xl': '80rem',
     '4xl': '90rem',
     '5xl': '100rem',
@@ -644,6 +683,7 @@ module.exports = {
 
   padding: {
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -679,6 +719,7 @@ module.exports = {
   margin: {
     'auto': 'auto',
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -713,6 +754,7 @@ module.exports = {
 
   negativeMargin: {
     'px': '1px',
+    '2px': '2px',
     '0': '0',
     '1': '0.25rem',
     '2': '0.5rem',
@@ -872,7 +914,7 @@ module.exports = {
     borderStyle: ['responsive'],
     borderWidths: ['responsive'],
     cursor: ['responsive'],
-    display: ['responsive'],
+    display: ['responsive', 'group-hover', 'hover'],
     flexbox: ['responsive'],
     float: ['responsive'],
     fonts: ['responsive'],
