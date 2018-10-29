@@ -353,7 +353,7 @@ class Reservations extends MY_Controller
         $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
         if($meeting[0]['recurring'] == 1) {
-            $child_dates = $this->res->get_child_reservations_dates($id);
+            $child_dates = $this->res->get_child_reservations_dates($meeting[0]['parent']);
         }
 
         // Check if user is a member of the given reservation
@@ -486,7 +486,8 @@ class Reservations extends MY_Controller
                 "room" => $this->input->post('room'),
                 "title" => $this->input->post('title'),
                 "description" => $this->input->post('description'),
-                "id" => $this->input->post('res')
+                "id" => $this->input->post('res'),
+                "update_all" => $this->input->post('update_all')
             ];
             if($this->res->check_if_room_is_free_for_update($data)) {
                 $this->res->update_room_reservation($data);

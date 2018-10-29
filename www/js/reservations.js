@@ -528,6 +528,7 @@ $("#form_update_room_reservation").submit(function(e){
             room : $(".select_room option:selected").val(),
             title : $("#reservation_name").val(),
             description : $("#reservation_description").val(),
+            update_all : $("#update_all_child_reservations").is(":checked"),
             res : $("#res").val()
         }
     })
