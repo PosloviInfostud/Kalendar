@@ -558,6 +558,7 @@ var deleteReservationConfirmModal = function(callback) {
     
     $("body").on('click', '#del_res_btn', function(e) {
         e.preventDefault();
+        delete_url = this.href;
         $("#delete_reservation_confirm_modal").modal("show");
         $("#delete_reservation_confirm_modal-body").html(
             "Are you sure you want to cancel this meeting?"
@@ -577,9 +578,9 @@ var deleteReservationConfirmModal = function(callback) {
 
     deleteReservationConfirmModal(function(confirm) {
         if(confirm == false) {
-            e.preventDefault();
+            return false;
         } else {
-            return true;
+            window.location = delete_url;
         }
     })
 
@@ -637,15 +638,40 @@ confirmEquipUpdate(function(confirm){
         return false;
     }
 });
-
+//============================================================================================
 //confirm delete equipment reservation
+var deleteEquipReservationConfirmModal = function(callback) {
 
-$("#delete_equip_btn").click(function(){
-    if (!confirm("Are you sure you want to delete this reservation?")) {
-        return false;
-    }   
+    $("body").on('click', '#delete_equip_btn', function(e) {
+    delete_equip_url = this.href;
+    console.log(delete_equip_url)
+    e.preventDefault();
+    $("#delete_equip_reservation_confirm_modal").modal("show");
+    $("#delete_equip_reservation_confirm_modal-body").html(
+        "Are you sure you want to remove this item from reservations?"
+    )
 });
 
+$("body").on("click", "#delete_equip_reservation_confirm_modal-btn-yes", function(){
+    callback(true);
+    $("#delete_equip_reservation_confirm_modal").modal('hide');
+  });
+  
+  $("body").on("click", "#delete_equip_reservation_confirm_modal-btn-no", function(){
+      callback(false);
+    $("#delete_equip_reservation_confirm_modal").modal('hide');
+  });
+}
+
+deleteEquipReservationConfirmModal(function(confirm) {
+    if(confirm == false) {
+        return false;
+    } else {
+        window.location = delete_equip_url;
+    }
+})
+
+//===========================================================================================
 //edit member notifications checkboxes for specific reservation
 
 $(".notify").change(function(){

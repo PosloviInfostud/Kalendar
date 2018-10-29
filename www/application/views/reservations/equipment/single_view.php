@@ -9,7 +9,7 @@
         <div>
             <?php if($user_id == $equipment['user_id']) { ?>
                 <a href="/reservations/equipment/update/<?= $equipment['id'] ?>"><button id="edit_equip_btn" class="btn btn-info">Edit</button></a>
-                <a href="/reservations/equipment/delete/<?= $equipment['id'] ?>"><button id="delete_equip_btn" class="btn btn-danger ml-2">Delete</button></a>
+                <a id="delete_equip_btn" href="/reservations/equipment/delete/<?= $equipment['id'] ?>"><button class="btn btn-danger ml-2">Delete</button></a>
             <?php } ?>
         </div>
     </div>
@@ -46,5 +46,24 @@
     </div>
   </div>
 </div>
+
+<!-- Delete Equipment Reservation Confirmation Modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="delete_equip_reservation_confirm_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Reservation Deelete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="delete_equip_reservation_confirm_modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_equip_reservation_confirm_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="delete_equip_reservation_confirm_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="/js/reservations.js"></script>
