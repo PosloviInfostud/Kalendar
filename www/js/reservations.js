@@ -112,8 +112,7 @@ $(document).ready(function() {
 });
 
 //send ajax search request for free rooms
-
-$("#search_reserved_offices").click(function(e){
+$("#search_reserved_rooms").click(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -125,12 +124,16 @@ $("#search_reserved_offices").click(function(e){
         }
     })
     .done(function(response){
-        $("#free").html(response);
+        if(response['status'] == 'success') {
+            $('#messages').empty();
+            $('#free').html(response['message']);
+        } else {
+            $('#messages').html(response['errors']);
+        }
     })
 })
 
 //send ajax requests for equipment type needed
-
 $("#search_equipment").click(function(e){
     e.preventDefault();
     $.ajax({
@@ -169,13 +172,13 @@ $("body").on('change click', "input.room_radio", function(e) {
 })
 
 //submit room reservation form
-
 $("body").on('click', "#reservation_room_submit_by_date", function(e) {
     e.preventDefault();
     data = {};
     data.start_time = $("#datetime_start").val();
     data.end_time =  $("#datetime_end").val();
     data.room =  room;
+    // data.room =  $('input[name=room]:checked').val();
     data.frequency = $("#res_frequency").val();
     data.title = $("#reservation_name").val();
     data.description = $("#reservation_description").val();
@@ -202,6 +205,20 @@ function submit_room_reservation(data) {
         url: "/reservations/submit_reservation_form",
         data: data
     })
+    // .done(function(response){
+    //     console.log(response);
+    //     if(response['status'] == 'success') {
+    //         console.log(response);
+    //         // window.location.href = "/reservations/meetings";
+    //     } else if(response['status'] == 'form_error') {
+    //         $("#messages").html(response['errors']);
+    //         // for (var key in response['errors']) {
+    //         //     $("#" + key + "_err").html(response['errors'][key])
+    //         // }
+    //     } else {
+    //         $("#messages").html(response['errors']);
+    //     }
+    // })
     .done(function(response){
         console.log(response);
         msg = JSON.parse(response);
