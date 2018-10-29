@@ -8,6 +8,15 @@
     </div>
 
     <div class="form-group">
+        <label for="res_frequency">Frequency</label>
+        <select class="form-control" id="res_frequency">
+            <?php foreach($frequencies as $freq) { ?>
+                <option value="<?= $freq['id'] ?>"><?= $freq['name'] ?></option>
+            <?php } ?>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label for="title">What is the Name od the Event?</label>
         <input type="text" class="form-control" name="title" id="reservation_name">
     </div>
