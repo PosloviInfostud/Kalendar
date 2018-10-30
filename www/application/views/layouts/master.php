@@ -44,7 +44,7 @@
 <!-- CONTENT -->
     <?= $content_for_layout ?>
 <!-- FOOTER -->
-    <?= $this->layouts->print_header_includes() ?>
+    <?= $this->layouts->print_footer_includes() ?>
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     <script src="/public/js/app.js"></script>
