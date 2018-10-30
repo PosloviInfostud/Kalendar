@@ -9,9 +9,9 @@ class Permission_model extends CI_Model
 
         if(empty($token) || empty($user)) {
             // Notification
-            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                You need to log in to access that page.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            $msg = $this->alerts->render('red', 'Attention', 'You need to log in to access that page.');
+            $this->session->set_flashdata('flash_message', $msg);
+
             // Delete incorrect cookie
             delete_cookie('usr-vezba');
             url_redirect('/login');
