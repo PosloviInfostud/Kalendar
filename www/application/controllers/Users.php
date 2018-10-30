@@ -21,6 +21,7 @@ class Users extends MY_Controller
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->view('users/dashboard', array(), 'master_tailwind');
     }
