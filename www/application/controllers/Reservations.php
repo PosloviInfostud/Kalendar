@@ -201,7 +201,7 @@ class Reservations extends MY_Controller
 
     public function submit_reservation_form()
     {
-        this->load->model('Datetime_model', 'datetime');
+        $this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
 
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
