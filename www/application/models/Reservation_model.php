@@ -200,16 +200,16 @@ class Reservation_model extends CI_Model
             $period = [];
             // daily
             if($freq == '2') {
-                $period = $this->get_reccuring_dates($data, '1', 'D', '1');
+                $period = $this->datetime->get_reccuring_dates($data, '1', 'D', '1');
             // weekly
             } elseif($freq == '3') {
-                $period = $this->get_reccuring_dates($data, '1', 'W', '1');
+                $period = $this->datetime->get_reccuring_dates($data, '1', 'W', '1');
             // bi-weekly
             } elseif($freq == '4') {
-                $period = $this->get_reccuring_dates($data, '2', 'W', '1');
+                $period = $this->datetime->get_reccuring_dates($data, '2', 'W', '1');
             // monthly
             } elseif($freq == '5') {
-                $period = $this->get_reccuring_dates($data, '1', 'M', '3');
+                $period = $this->datetime->get_reccuring_dates($data, '1', 'M', '3');
             }
 
             // Create parent reservation
@@ -268,61 +268,6 @@ class Reservation_model extends CI_Model
             }
         }
         return $data;
-    }
-
-    public function get_reccuring_dates($data, $step, $unit, $period)
-    {
-        $result = [];
-
-        $reservation_start = new DateTime($data['start_time']);
-        $reservation_end = new DateTime($data['end_time']);
-
-        // Define holidays here (day-month format)
-        $holidays = array(
-            '01-01'
-        );
-
-        // Set how long it runs
-        $repeat_end = new DateTime(date('Y-m-d H:i:s', strtotime("+$period months", strtotime($data['start_time']))));
-
-        // How often it should repeat
-        $interval = new DateInterval("P{$step}{$unit}");
-
-        // Generate the dates
-        $period_start_dates = new DatePeriod($reservation_start, $interval, $repeat_end);
-        $period_end_dates = new DatePeriod($reservation_end, $interval, $repeat_end);
-
-        // Combine the date arrays into one
-        foreach ($period_start_dates as $key => $date ) {
-            
-            $dayOfWeek = $date->format('N');
-            if( $dayOfWeek < 6 ){
-                // If the day of the week is not a pre-defined holiday
-                $format = $date->format('d-m');
-                if(!in_array( $format, $holidays)){
-                    //Add the valid day to our days array
-                    $result['reservations'][$key]['start'] = $date->format('Y-m-d H:i:s');
-                }
-            }
-        }
-        foreach ($period_end_dates as $key => $date) {
-            $dayOfWeek = $date->format('N');
-            if( $dayOfWeek < 6 ){
-                // If the day of the week is not a pre-defined holiday
-                $format = $date->format('d-m');
-                if(!in_array( $format, $holidays)){
-                    //Add the valid day to our days array
-                    $result['reservations'][$key]['end'] = $date->format('Y-m-d H:i:s');
-                }
-            }
-        }
-        // Add extra data needed for parent reservation
-        $last_element = end($result['reservations']);
-        $result['first_start_date'] = $data['start_time'];
-        $result['last_end_date'] = $last_element['end'];
-
-        // Return the end result
-        return $result;
     }
 
     public function insert_unregistered_members($data)
@@ -826,6 +771,7 @@ class Reservation_model extends CI_Model
 
     public function update_room_reservation($data)
     {
+
         $sql = "UPDATE room_reservations 
                 SET room_id = ?, start_time = ?, end_time = ?, modified_at = NOW(), title = ?, description = ? 
                 WHERE id = ?";

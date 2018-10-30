@@ -201,6 +201,7 @@ class Reservations extends MY_Controller
 
     public function submit_reservation_form()
     {
+        this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
 
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
@@ -469,6 +470,7 @@ class Reservations extends MY_Controller
 
     public function update_room_reservation()
     {
+        $this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
         
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
@@ -488,6 +490,8 @@ class Reservations extends MY_Controller
 
         } else {
             $data = [
+                "default_start_time" => $this->input->post('default_start_time'),
+                "default_end_time" => $this->input->post('default_end_time'),
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
                 "room" => $this->input->post('room'),
@@ -498,16 +502,33 @@ class Reservations extends MY_Controller
                 "parent" => $this->input->post('parent')
             ];
 
-            if($data['update_all'] != 'false') {
+            if($data['update_all'] == 'true') {
+                // Update children
+                $child_data = $data;
                 $active_child = $data['id'];
+                // Get all children
                 $children = $this->res->get_child_reservations($data['parent']);
+                // Get date differences
+                $start_time_diff = $this->datetime->time_difference($data['default_start_time'], $data['start_time']);
+                $end_time_diff = $this->datetime->time_difference($data['default_end_time'], $data['end_time']);
+                // Loop through the children
                 foreach($children as $key => $child) {
-                    $data['id'] = $child['id'];
-                    $data['start_time'] = $child['start_time'];
-                    $data['end_time'] = $child['end_time'];
-                    $this->res->update_room_reservation($data);
+                    // Prepare data for update
+                    $child_data['id'] = $child['id'];
+                    $child_data['start_time'] = $this->datetime->add_time($child['start_time'], $start_time_diff);
+                    $child_data['end_time'] = $this->datetime->add_time($child['end_time'], $end_time_diff);
+                    // Update child
+                    $this->res->update_room_reservation($child_data);
                     $message['success'] = $active_child;
                 }
+                // Update parent
+                $parent_data = $data;
+                $parent = $this->res->single_room_reservation($data['parent']);
+                $parent_data['id'] = $parent[0]['id'];
+                // Prepare data for update
+                $parent_data['start_time'] = $this->datetime->add_time($parent[0]['starttime'], $start_time_diff);
+                $parent_data['end_time'] = $this->datetime->add_time($parent[0]['endtime'], $end_time_diff);
+                $this->res->update_room_reservation($parent_data);
             } else {
                 if($this->res->check_if_room_is_free_for_update($data)) {
                     $this->res->update_room_reservation($data);

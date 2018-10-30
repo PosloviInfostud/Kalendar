@@ -545,6 +545,8 @@ $("#form_update_room_reservation").submit(function(e){
         method: "POST",
         url: "/reservations/update_room_reservation",
         data: {
+            default_start_time : $("#default_datetime_start").val(),
+            default_end_time : $("#default_datetime_end").val(),
             start_time : $("#datetime_start").val(),
             end_time :  $("#datetime_end").val(),
             room : $(".select_room option:selected").val(),

@@ -10,8 +10,7 @@ class Mail_model extends CI_Model
                 'send_from' => $details['from'],
                 'send_to' => $email,
                 'subject' => $details['subject'],
-                'message' => $details['message'],
-                'message' => $details['message'],
+                'message' => $details['message']
             ];
         }
 
