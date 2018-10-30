@@ -8,7 +8,8 @@ class Calendar_model extends CI_model {
                 INNER JOIN res_members AS mem ON mem.res_id = res.id 
                 INNER JOIN rooms ON rooms.id = res.room_id
                 WHERE mem.user_id = ? 
-                AND (res.recurring = '0' OR res.parent != '0')";
+                AND (res.recurring = '0' OR res.parent != '0') 
+                AND res.deleted = '0'";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -21,12 +22,36 @@ class Calendar_model extends CI_model {
             $event->start = $row['start_time'];
             $event->end = $row['end_time'];
             $event->title = $row['title'];
+            $event->room = $row['name'];
             $json_arr[] = $event;
         }
 
         $json = json_encode($json_arr, JSON_PRETTY_PRINT);
         echo $json;
-
-
     }
+
+    
+    public function get_all_meetings_for_room($id) {
+        $sql = "SELECT id, start_time, end_time, title, description FROM room_reservations 
+                WHERE (recurring = 0 OR parent != 0) AND deleted = '0'";
+        $query = $this->db->query($sql, [$id]);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        $json_arr = [];
+        foreach($result as $row) {
+            $event = (object)[];
+            $event->id = $row['id'];
+            $event->start = $row['start_time'];
+            $event->end = $row['end_time'];
+            $event->title = $row['title'];
+            $event->description = $row['description'];
+            $json_arr[] = $event;
+        }
+
+        $json = json_encode($json_arr, JSON_PRETTY_PRINT);
+        return $json;
+    }
+
 }

@@ -622,11 +622,4 @@ class Reservations extends MY_Controller
         $res_id = $this->input->post('res_id');
         $this->res->change_member_notifications($user_id, $res_id, $notify, $column);
     }
-
-    public function load_json($id) {
-
-        $json = $this->res->get_JSON_for_room($id);
-
-        echo $json;
-    }
 }
