@@ -13,5 +13,10 @@ class Calendar extends MY_Controller
     {
         $this->cal->get_all_meetings_for_user($id);
     }
+    
+    public function get_all_meetings_for_room($id) 
+    {
+        $this->cal->get_all_meetings_for_room($id);
+    }
 
 }
