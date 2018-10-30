@@ -21,7 +21,9 @@
         <div class="form-group border rounded border-info p-3 m-3">
             <p>When?</p>
             From <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="text-center" value="<?= $meeting['starttime'] ?>"> 
+            <input type="hidden" name="default_start_time" id="default_datetime_start" value="<?= $meeting['starttime'] ?>">
             to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center" value="<?= $meeting['endtime'] ?>">
+            <input type="hidden" name="default_end_time" id="default_datetime_end" value="<?= $meeting['endtime'] ?>">
         </div>
 
         <div class="form-group border rounded border-info p-3 m-3">
