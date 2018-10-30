@@ -1,5 +1,8 @@
+var id = $('#calendar').attr("data-user");
+var userMeetings = $.getJSON('/calendar/get_all_meetings_for_user/'+id);
 $(document).ready(function() {
-    $('#calendar').fullCalendar({
+
+    var $calendar = $('#calendar').fullCalendar({
         defaultView: "agendaWeek",
         // Do not show Saturday/Sunday
         weekends : false,
@@ -20,55 +23,66 @@ $(document).ready(function() {
             listWeek: {buttonText: 'list week'},
             listMonth: {buttonText: 'list month'},
         },
+        //make clicks and selections possible
+        selectable: true,
+
+        //callback that will be triggered when a selection is made
+        select: function(start, end, jsEvent, view) {
+
+            //ask for a title
+            var title = prompt("Enter a title for this event","New event");
+            if (title != null) {
+                //Create event
+                var event = {
+                    title: title.trim() !="" ? title: "New event",
+                    start: start,
+                    end: end
+                };
+                //display en event
+                $calendar.fullCalendar("renderEvent", event, true);
+
+            }
+            // alert(start.format("MM/DD/YYYY HH:mm")+" to "+end.format("MM/DD/YYYY HH:mm")+" in view "+view.name);
+        },
+        //make events editable, globally
+        editable: true,
+        //callback triggered wehen we click on the event
+        eventClick: function(event, jsEvent, view) {
+            //ask for a title
+            var newTitle = prompt("Enter a new title for this event", event.title);
+            // if the cancel button isn't pressed
+            if(newTitle != null) {
+                event.title = newTitle.trim() != "" ? newTitle: event.title;
+                //call the "updateEvent" method
+                $calendar.fullCalendar("updateEvent", event);
+            }
+        },
         viewRender: function (view, viewContainer){
             // Clear background image if still lingering
             $(".fc-view-container").addClass("bg-white");
         },
+        //delete link
+        eventRender: function(event, element) {
+            $(element).find(".fc-content").append("<div style='float-right'><a href='javascript:remove_event("+event.id+")' class='delete-link'>Delete</a></div>");
+            $(element).find('.delete-link').click(function(e) {
+                e.stopImmediatePropagation()
+            })
+        },
+
         eventSources: [
             {
                 color: '#4dc0b5',   
                 textColor: '#000000',
-                events: [
-                    {
-                        id: 1,
-                        title: 'Event 1',
-                        start: '2018-10-30'
-                    },
-                    {
-                        id: 2,
-                        title: 'Event 2',
-                        start: '2018-10-31'
-                    },
-                    {
-                        id: 3,
-                        title: 'Event 3',
-                        start: '2018-10-31T08:30:00',
-                        end: '2018-10-31T15:30:00',
-                    },
-                ]
-            },
-            {
-                color: '#fa7ea8',   
-                textColor: '#000000',
-                events: [
-                    {
-                        id: 11,
-                        title: 'Event 11',
-                        start: '2018-11-05'
-                    },
-                    {
-                        id: 12,
-                        title: 'Event 12',
-                        start: '2018-11-16'
-                    },
-                    {
-                        id: 13,
-                        title: 'Event 13',
-                        start: '2018-10-31T09:30:00',
-                        end: '2018-10-31T17:45:00',
-                    },
-                ]
+                events: userMeetings.responseJSON
             }
         ]
     })
 });
+
+//removes event
+function remove_event(id) {
+    var remove = confirm("remove event id"+id+"?");
+    if (remove == true) {
+        $("#calendar").fullCalendar("removeEvents", id);
+    }
+}

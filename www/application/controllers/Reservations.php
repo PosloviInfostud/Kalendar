@@ -38,6 +38,12 @@ class Reservations extends MY_Controller
         $this->load->model('Admin_model','admin');
         $rooms = $this->admin->get_all_rooms();
         $this->layouts->set_title('Room Reservation');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/js/calendar.js');
         $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
     }
 
@@ -99,10 +105,9 @@ class Reservations extends MY_Controller
     public function load_calendar_for_room()
     {
         $data['room_id'] = $this->input->post('room');
+        $data['calendar'] = $this->res->get_JSON_for_room($data['room_id']);
         $data['users'] = $this->res->show_users_for_invitation();
         $data['frequencies'] = $this->res->get_reservation_frequencies();
-
-
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
         echo $view;
@@ -526,5 +531,12 @@ class Reservations extends MY_Controller
         $column = $this->input->post('column');
         $res_id = $this->input->post('res_id');
         $this->res->change_member_notifications($user_id, $res_id, $notify, $column);
+    }
+
+    public function load_json($id) {
+
+        $json = $this->res->get_JSON_for_room($id);
+
+        echo $json;
     }
 }
