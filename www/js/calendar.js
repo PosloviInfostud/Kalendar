@@ -68,18 +68,6 @@ $(document).ready(function() {
                         end: '2018-10-31T17:45:00',
                     },
                 ]
-            },
-            {
-                color: '#7886d7',   
-                textColor: '#000000',
-                events: [
-                    {
-                        id: 21,
-                        title: 'Event 21',
-                        start: '2018-10-31T14:22:00',
-                        end: '2018-11-01T11:45:00'
-                    }
-                ]
             }
         ]
     })

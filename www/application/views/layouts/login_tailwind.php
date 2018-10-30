@@ -16,7 +16,7 @@
     <div class="container mx-auto sm:px-8">
         <div class="mx-auto max-w-sm">
             <!-- Logo -->
-            <div class="flex items-center justify-center py-8 sm:py-16">
+            <div class="flex items-center justify-center py-4 sm:pt-16 sm:pb-8">
                 <!-- <img class="w-1/2 fill-current text-black" src="/src/img/infostud-kalendar-logo.svg"> -->
                 <img class="w-1/3" src="/src/img/infostud-kalendar-logo.png">
             </div>

@@ -86,8 +86,9 @@ class Reservation_model extends CI_Model
         $sql = "SELECT rooms.id 
                 FROM rooms 
                 INNER JOIN room_reservations ON rooms.id = room_reservations.room_id 
-                WHERE (room_reservations.start_time < ? AND room_reservations.end_time > ?) 
-                OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?) 
+                WHERE ((room_reservations.start_time < ? AND room_reservations.end_time > ?) 
+                OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?)) 
+                AND (room_reservations.recurring = 0 OR room_reservations.parent != 0) 
                 GROUP BY room_id";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time']]);
             
@@ -142,6 +143,7 @@ class Reservation_model extends CI_Model
         $sql = "SELECT COUNT(*) AS reserved 
                 FROM room_reservations 
                 WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
+                AND (recurring = '0' OR parent != '0') 
                 AND room_id = ?
                 AND deleted = 0"; 
         $query = $this->db->query($sql,[$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['room']]);
@@ -465,8 +467,8 @@ class Reservation_model extends CI_Model
         $sql = "SELECT equipment.id AS id 
                 FROM equipment 
                 INNER JOIN equipment_reservations ON equipment.id = equipment_reservations.equipment_id  
-                WHERE (equipment_reservations.start_time < ? AND equipment_reservations.end_time > ?) 
-                OR (equipment_reservations.start_time < ? AND equipment_reservations.start_time >= ?) 
+                WHERE ((equipment_reservations.start_time < ? AND equipment_reservations.end_time > ?) 
+                OR (equipment_reservations.start_time < ? AND equipment_reservations.start_time >= ?)) 
                 AND equipment_type_id = ? 
                 GROUP BY equipment_id";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time'], $data['type']]);
@@ -766,7 +768,7 @@ class Reservation_model extends CI_Model
             $reservation = $this->single_room_reservation($data['res'])[0];
             $notify = $this->get_if_member_is_notified($data['res'], $data['member']);
 
-            if($notify['not_update'] == 1) {
+            if($notify['update'] == 1) {
                 $this->send_delete_member_mail($member, $reservation);
             }
             
@@ -855,6 +857,7 @@ class Reservation_model extends CI_Model
                 FROM room_reservations 
                 WHERE ((start_time < ? AND end_time > ?) 
                 OR (start_time < ? AND start_time >= ?)) 
+                AND (recurring = '0' OR parent != '0') 
                 AND room_id = ? 
                 AND id != ?
                 AND deleted = 0"; 
@@ -870,13 +873,15 @@ class Reservation_model extends CI_Model
         }
     }
 
-    public function delete_room_reservation($id)
+    public function delete_room_reservation($id, $child = FALSE)
     {
+       // Delete from the reservations table
        $sql = "UPDATE room_reservations 
                 SET deleted = 1, modified_at = NOW()
                 WHERE id = ?";
         $query = $this->db->query($sql, [$id]);
 
+        // Log action
         $user_id = $this->user_data['user']['id'];
         $data_log = [
             'user_id' => $user_id,
@@ -887,10 +892,30 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+
+        // Delete from the members table
+        $sql = "UPDATE res_members 
+                SET deleted = 1, modified_at = NOW()
+                WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        // Log action
+        $data_log = [
+            'user_id' => $user_id,
+            'table' => 'res_members',
+            'type' => 'delete',
+            'value' => [
+                'id' => $id
+            ]
+        ];
+        $this->logs->insert_log($data_log);
+
         //Send e-mail notification
-        $members = $this->get_all_reservation_mails($id);
-        $reservation = $this->single_room_reservation($id)[0];
-        $this->send_cancelled_meeting_mail($members, $reservation);
+        if($child == FALSE) {
+            $members = $this->get_all_reservation_mails($id);
+            $reservation = $this->single_room_reservation($id)[0];
+            $this->send_cancelled_meeting_mail($members, $reservation);
+        }
     }
 
     public function check_if_equipment_is_free_for_update($data)
@@ -1031,11 +1056,12 @@ class Reservation_model extends CI_Model
         return $editors;
     }
 
-    public function get_child_reservations_dates($id)
+    public function get_child_reservations($id)
     {
         $result = [];
         $sql = "SELECT res.id, 
-                res.start_time
+                res.start_time,
+                res.end_time
                 FROM room_reservations AS res
                 WHERE res.parent = ?
                 AND res.deleted = '0'";

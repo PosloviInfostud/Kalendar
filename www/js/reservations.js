@@ -63,8 +63,6 @@ let fpItemEndDate = $("#item_datetime_end").flatpickr({
 	altFormat: "d/m/y @ H:i",
 });});
 
-
-
 //load select2 plugin - multiple
 $(document).ready(function() {
     $('.js-example-basic-single').select2();
@@ -106,14 +104,11 @@ $(document).ready(function() {
             maximumInputLength: 50, // only allow terms up to 50 characters long
             closeOnSelect: true
         }
-
     );
-
 });
 
 //send ajax search request for free rooms
-
-$("#search_reserved_offices").click(function(e){
+$("#search_reserved_rooms").click(function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -125,12 +120,16 @@ $("#search_reserved_offices").click(function(e){
         }
     })
     .done(function(response){
-        $("#free").html(response);
+        if(response['status'] == 'success') {
+            $('#messages').empty();
+            $('#free').html(response['message']);
+        } else {
+            $('#messages').html(response['errors']);
+        }
     })
 })
 
 //send ajax requests for equipment type needed
-
 $("#search_equipment").click(function(e){
     e.preventDefault();
     $.ajax({
@@ -182,6 +181,7 @@ var confirmRoomReservationByDate = function(callback){
         data.start_time = $("#datetime_start").val();
         data.end_time =  $("#datetime_end").val();
         data.room =  room;
+        data.frequency = $("#res_frequency").val();
         data.title = $("#reservation_name").val();
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
@@ -225,6 +225,7 @@ var confirmRoomReservationByRoom = function(callback){
         data.start_time = $("#datetime_start").val();
         data.end_time =  $("#datetime_end").val();
         data.room =  room;
+        data.frequency = $("#res_frequency").val();
         data.title = $("#reservation_name").val();
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
@@ -266,6 +267,20 @@ function submit_room_reservation(data) {
         url: "/reservations/submit_reservation_form",
         data: data
     })
+    // .done(function(response){
+    //     console.log(response);
+    //     if(response['status'] == 'success') {
+    //         console.log(response);
+    //         // window.location.href = "/reservations/meetings";
+    //     } else if(response['status'] == 'form_error') {
+    //         $("#messages").html(response['errors']);
+    //         // for (var key in response['errors']) {
+    //         //     $("#" + key + "_err").html(response['errors'][key])
+    //         // }
+    //     } else {
+    //         $("#messages").html(response['errors']);
+    //     }
+    // })
     .done(function(response){
         console.log(response);
         msg = JSON.parse(response);
@@ -438,32 +453,56 @@ $("body").on('submit', '#update_user_role_form', function(e) {
     })
 })
 
+//=====================================================================================================
 //click on delete reservation member button
 
-$("body").on('click', '.member_delete', function(e) {
-    e.preventDefault();
-    if (!confirm("Are you sure you want to delete this user from this meeting? Notification email will be sent.")) {
-        return false;
-    } else {
-        $.ajax({
-            method: "POST",
-            url: "/reservations/delete_res_member",
-            data: {
-                "res_id" : $(this).attr("data-res"),
-                "user_id" : $(this).attr("data-user"),
-                "creator" : $(this).attr("data-creator")
-            }
-        }).done(function(response){
-            msg = JSON.parse(response);
-            if(msg.error) {
-                $("#del_error_msg").html(msg.error);
-            } else {
-                location.reload();
-            }
-        })
-    }
-})
+var deleteMemberConfirmModal = function(callback) {
+    
+    $("body").on('click', '.member_delete', function(e) {
+        e.preventDefault();
+        data = {};
+        data.res_id = $(this).attr("data-res");
+        data.user_id = $(this).attr("data-user");
+        data.creator = $(this).attr("data-creator");
+        $("#delete_member_confirm_modal").modal("show");
+        $("#delete_member_confirm_modal-body").html(
+            "Are you sure you want to remove this member from meeting?"
+        )
+    });
 
+    $("body").on("click", "#delete_member_confirm_modal-btn-yes", function(){
+        callback(true, data);
+        $("#delete_member_confirm_modal").modal('hide');
+      });
+      
+      $("body").on("click", "#delete_member_confirm_modal-btn-no", function(){
+          callback(false, data);
+        $("#delete_member_confirm_modal").modal('hide');
+      });
+    }
+
+    deleteMemberConfirmModal(function(confirm, data) {
+        if(confirm) {
+            console.log($(this).attr("data-res"));
+            $.ajax({
+                method: "POST",
+                url: "/reservations/delete_res_member",
+                data: data
+            }).done(function(response){
+                msg = JSON.parse(response);
+                if(msg.error) {
+                    $("#del_error_msg").html(msg.error);
+                } else {
+                    location.reload();
+                }
+            })        
+        } else {
+            return false;
+        }
+    })
+
+
+//=============================================================================================
 //add new member show form modal
 
 $("body").on('click', '#btn_add_new_member', function(e) {
@@ -511,7 +550,9 @@ $("#form_update_room_reservation").submit(function(e){
             room : $(".select_room option:selected").val(),
             title : $("#reservation_name").val(),
             description : $("#reservation_description").val(),
-            res : $("#res").val()
+            update_all : $("#update_all_child_reservations").is(":checked"),
+            res : $("#res").val(),
+            parent : $("#parent").val()
         }
     })
     .done(function(response){
@@ -527,15 +568,50 @@ $("#form_update_room_reservation").submit(function(e){
         }
     })
 })
-
+//=============================================================================================
 //confirm delete reservation
 
-$("#del_res_btn").click(function(){
-    if (!confirm("Are you sure you want to delete this reservation? Notification email will be sent.")) {
-        return false;
-    }   
-});
+var deleteReservationConfirmModal = function(callback) {
+    
+    $("body").on('click', '#del_res_btn', function(e) {
+        e.preventDefault();
+        delete_url = this.href;
+        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal-body").html(
+            "Are you sure you want to cancel this meeting?"
+        );
+    });
 
+    $("body").on('click', '#del_all_res_btn', function(e) {
+        e.preventDefault();
+        delete_url = this.href;
+        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal-body").html(
+            "Are you sure you want to cancel ALL the reservations of this recurring event?"
+        );
+    });
+
+    $("body").on("click", "#delete_reservation_confirm_modal-btn-yes", function(){
+        callback(true);
+        $("#delete_reservation_confirm_modal").modal('hide');
+      });
+      
+      $("body").on("click", "#delete_reservation_confirm_modal-btn-no", function(){
+          callback(false);
+        $("#delete_reservation_confirm_modal").modal('hide');
+      });
+    }
+
+    deleteReservationConfirmModal(function(confirm) {
+        if(confirm == false) {
+            return false;
+        } else {
+            window.location = delete_url;
+        }
+    })
+
+
+//========================================================================================
 //submit equipment update form
 
 var confirmEquipUpdate = function(callback){
@@ -588,15 +664,40 @@ confirmEquipUpdate(function(confirm){
         return false;
     }
 });
-
+//============================================================================================
 //confirm delete equipment reservation
+var deleteEquipReservationConfirmModal = function(callback) {
 
-$("#delete_equip_btn").click(function(){
-    if (!confirm("Are you sure you want to delete this reservation?")) {
-        return false;
-    }   
+    $("body").on('click', '#delete_equip_btn', function(e) {
+    delete_equip_url = this.href;
+    console.log(delete_equip_url)
+    e.preventDefault();
+    $("#delete_equip_reservation_confirm_modal").modal("show");
+    $("#delete_equip_reservation_confirm_modal-body").html(
+        "Are you sure you want to remove this item from reservations?"
+    )
 });
 
+$("body").on("click", "#delete_equip_reservation_confirm_modal-btn-yes", function(){
+    callback(true);
+    $("#delete_equip_reservation_confirm_modal").modal('hide');
+  });
+  
+  $("body").on("click", "#delete_equip_reservation_confirm_modal-btn-no", function(){
+      callback(false);
+    $("#delete_equip_reservation_confirm_modal").modal('hide');
+  });
+}
+
+deleteEquipReservationConfirmModal(function(confirm) {
+    if(confirm == false) {
+        return false;
+    } else {
+        window.location = delete_equip_url;
+    }
+})
+
+//===========================================================================================
 //edit member notifications checkboxes for specific reservation
 
 $(".notify").change(function(){

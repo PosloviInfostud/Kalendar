@@ -64,42 +64,59 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
 
-        if($this->form_validation->run() == false) {
-            echo validation_errors();
-            die;
-        } 
-        if($this->input->post('start_time') < $date) {
-                echo "Change start time. You have to reserve in advance";
-        } 
-        elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            echo "Check start and end time again. End time has to be greater than start time.";
+        if ($this->form_validation->run())
+        {
+            // Check for user errors
+            $response['status'] = 'user_error';
 
-        } else {
-            $attendants = $this->input->post('attendants');
-            if(empty($attendants)) {
-                $attendants = 2;
+            if($this->input->post('start_time') < $date)
+            {
+                $response['errors'] = "Change start time. You have to reserve in advance";
             }
+            elseif($this->input->post('start_time') >= $this->input->post('end_time'))
+            {
+                $response['errors'] = "Check start and end time again. End time has to be greater than start time.";
+            }
+            else
+            {
+                // When everything looks OK
+                $response['status'] = 'success';
+                $attendants = $this->input->post('attendants');
 
-            $data = [
-                "start_time" => $this->input->post('start_time'),
-                "end_time" => $this->input->post('end_time'),
-                "attendants" => $attendants
-            ];
+                if(empty($attendants)) {
+                    $attendants = 2;
+                }
 
-            $frequencies = $this->res->get_reservation_frequencies();
-            $rooms = $this->res->check_free_rooms($data);
-            $users = $this->res->show_users_for_invitation();
+                $data = [
+                    "start_time" => $this->input->post('start_time'),
+                    "end_time" => $this->input->post('end_time'),
+                    "attendants" => $attendants
+                ];
 
-            $view = $this->load->view('reservations/free_rooms', ["rooms" => $rooms, "users" => $users, "frequencies" => $frequencies], true);
+                $frequencies = $this->res->get_reservation_frequencies();
+                $rooms = $this->res->check_free_rooms($data);
+                $users = $this->res->show_users_for_invitation();
 
-            echo $view;
+                $response['message'] = $this->load->view('reservations/free_rooms', ["rooms" => $rooms, "users" => $users, "frequencies" => $frequencies], true);
+            }
         }
+        else
+        {
+            // Form errors
+            $response['status'] = 'form_error';
+            $response['errors'] = validation_errors();
+        }
+        header('Content-type: application/json');
+        echo json_encode($response);
+        exit();
     }
 
     public function load_calendar_for_room()
     {
         $data['room_id'] = $this->input->post('room');
         $data['users'] = $this->res->show_users_for_invitation();
+        $data['frequencies'] = $this->res->get_reservation_frequencies();
+
 
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
@@ -190,6 +207,50 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
 
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
+        // if ($this->form_validation->run()) {
+        //     $data = [
+        //         "start_time" => $this->input->post('start_time'),
+        //         "end_time" => $this->input->post('end_time'),
+        //         "frequency" => $this->input->post('frequency'),
+        //         "room" => $this->input->post('room'),
+        //         "title" => $this->input->post('title'),
+        //         "description" => $this->input->post('description'),
+        //         "members" => $this->input->post('members')
+        //     ];
+
+        //     if($this->res->check_if_room_is_free($data)) {
+        //         $this->res->submit_reservation_form($data);
+        //         $response['status'] = "success";
+        //     } else {
+        //         $response['status'] = "user_error";
+        //         $response['errors'] = "Unfortunately, the room is not available at that time! Check again.";
+        //     }
+        // } else {
+        //     $errors = array();
+        //     // Loop through $_POST and get the keys
+        //     foreach ($this->input->post() as $key => $value) {
+        //         // Add the error message for this field
+        //         $errors[] = $value;
+        //     }
+        //     $response['errors'] = validation_errors();
+        //     $response['status'] = 'form_error';
+        //     // $errors = array();
+        //     // // Loop through $_POST and get the keys
+        //     // foreach ($this->input->post() as $key => $value) {
+        //     //     // Add the error message for this field
+        //     //     $errors[$key] = form_error($key);
+        //     // }
+        //     // $response['errors'] = array_filter($errors); // Some might be empty
+        //     // $response['status'] = 'form_error';
+        // }
+        // header('Content-type: application/json');
+        // echo json_encode($response);
+        // exit();
+
+        ////////////////////////////////////////////////////////////////////////////////////////////
+
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
         } 
@@ -256,24 +317,6 @@ class Reservations extends MY_Controller
         echo json_encode($message);
     }
 
-    // public function show_room_reservations()
-    // {
-    //     $table = [];
-    //     $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
-    //     $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
-    //     echo $table;
-    //     die();
-    // }
-
-    // public function show_equipment_reservations()
-    // {
-    //     $table = [];
-    //     $room_res = $this->res->get_room_reservations_by_user($this->user_data['user']['id']);
-    //     $table = $this->load->view('admin/room_reservations', ['room_res' => $room_res], TRUE);
-    //     echo $table;
-    //     die();
-    // }
-
     public function room_reservations_by_user()
     {
         $meetings = $this->res->room_reservations_by_user($this->user_data['user']['id']);
@@ -312,7 +355,7 @@ class Reservations extends MY_Controller
         $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
         if($meeting[0]['recurring'] == 1) {
-            $child_dates = $this->res->get_child_reservations_dates($id);
+            $child_dates = $this->res->get_child_reservations($meeting[0]['parent']);
         }
 
         // Check if user is a member of the given reservation
@@ -445,23 +488,51 @@ class Reservations extends MY_Controller
                 "room" => $this->input->post('room'),
                 "title" => $this->input->post('title'),
                 "description" => $this->input->post('description'),
-                "id" => $this->input->post('res')
+                "id" => $this->input->post('res'),
+                "update_all" => $this->input->post('update_all'),
+                "parent" => $this->input->post('parent')
             ];
-            if($this->res->check_if_room_is_free_for_update($data)) {
-                $this->res->update_room_reservation($data);
-                $message['success'] = $data['id'];
 
+            if($data['update_all'] != 'false') {
+                $active_child = $data['id'];
+                $children = $this->res->get_child_reservations($data['parent']);
+                foreach($children as $key => $child) {
+                    $data['id'] = $child['id'];
+                    $data['start_time'] = $child['start_time'];
+                    $data['end_time'] = $child['end_time'];
+                    $this->res->update_room_reservation($data);
+                    $message['success'] = $active_child;
+                }
             } else {
-                $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                if($this->res->check_if_room_is_free_for_update($data)) {
+                    $this->res->update_room_reservation($data);
+                    $message['success'] = $data['id'];
+                } else {
+                    $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                }
             }
-
         }
         echo json_encode($message);
     }
 
     public function delete_room_reservation($id)
     {
-        $this->res->delete_room_reservation($id);
+        // Delete all reservations of a recurring event
+        if($this->input->get('option', TRUE)) {
+            // Get parent id
+            $parent = $this->input->get('parent', TRUE);
+            // Delete children
+            $children = $this->res->get_child_reservations($parent);
+            foreach($children as $child) {
+                $this->res->delete_room_reservation($child['id'], TRUE);
+            }
+            // Delete parent
+            $this->res->delete_room_reservation($parent);
+
+        // Delete single reservation
+        } else {
+            $this->res->delete_room_reservation($id);
+        }
         url_redirect('/reservations/meetings');
     }
 

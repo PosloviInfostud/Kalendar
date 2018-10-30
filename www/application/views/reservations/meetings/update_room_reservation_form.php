@@ -18,24 +18,35 @@
         /mesto za kalendar/
         <div id="show_errors"></div>
 
-        <div class="form-froup border rounded border-info p-3 m-3">
+        <div class="form-group border rounded border-info p-3 m-3">
             <p>When?</p>
             From <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="text-center" value="<?= $meeting['starttime'] ?>"> 
             to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center" value="<?= $meeting['endtime'] ?>">
         </div>
 
-        <div class="form-froup border rounded border-info p-3 m-3">
-            <label for="title">What is the Name od the Event?</label>
+        <div class="form-group border rounded border-info p-3 m-3">
+            <label for="title">What is the Name of the Event?</label>
             <input type="text" class="form-control" name="title" id="reservation_name" value="<?= $meeting['title'] ?>">
         </div>
                 
-        <div class="form-froup border rounded border-info p-3 m-3">
+        <div class="form-group border rounded border-info p-3 m-3">
             <label for="description">Describe it to the Attendants</label>
             <textarea class="form-control" name="description" id="reservation_description"><?= $meeting['description'] ?></textarea>
         </div>
 
         <input type="hidden" name="res" id="res" value="<?= $meeting['id'] ?>">
-        <input type="submit" name="submit" id="form_update_room_reservation_submit" class="btn btn-block btn-success" value="Update">
+        <input type="hidden" name="parent" id="parent" value="<?= $meeting['parent'] ?>">
+        <!-- Check if it's a recurring reservation -->
+        <?php if($meeting['recurring'] == 1) { ?>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="update_all_child_reservations">
+                <label class="form-check-label" for="update_all_child_reservations">Update all reservations</label>
+            </div>
+        <?php } ?>
+            
+        <div class="form-group mt-3">
+            <input type="submit" name="submit" id="form_update_room_reservation_submit" class="btn btn-block btn-success" value="Update">
+        </div>
 
     </form>
 </div>

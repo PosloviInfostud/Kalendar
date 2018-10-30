@@ -76,7 +76,7 @@
         <div data-section="forgot" class="hidden">
             <div class="hidden flex justify-between">
                 <button data-link="register" class="link_register font-bold text-primary hover:text-primary-dark no-underline">Don't have an account?</button>
-                <button data-link="register" class="link_login text-grey-darkest hover:text-black no-underline">Back to Login</button>
+                <button data-link="login" class="link_login text-grey-darkest hover:text-black no-underline">Back to Login</button>
             </div>
         </div>
     </div>

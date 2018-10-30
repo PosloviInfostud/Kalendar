@@ -1,5 +1,6 @@
 <div id="show_errors"><?php echo validation_errors(); ?></div>
     <p class="mt-3">Which room do you want to reserve? These ones are available: </p>
+    <small id="room_err" class="form-text text-danger error_box"></small>
     <div class="form-group">
     <?php 
     if(empty($rooms)) { ?>
@@ -28,6 +29,7 @@
             <div class="form-group">
                 <label for="title">What is the Name of the Event?</label>
                 <input type="text" class="form-control" name="title" id="reservation_name">
+                <small id="title_err" class="form-text text-danger error_box"></small>
             </div>
             <div class="form-group">
                 <label for="description">Describe it to the Attendants</label>
@@ -44,6 +46,7 @@
                 <?php  } ?> 
 
                 </select>
+                <small id="members_err" class="form-text text-danger error_box"></small>
             </div>
             </div>
             <input type="submit" name="submit" id="reservation_room_submit_by_date" class="btn btn-block btn-success" value="Reserve!">

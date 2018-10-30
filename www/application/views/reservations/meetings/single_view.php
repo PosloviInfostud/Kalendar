@@ -10,6 +10,7 @@
             <?php if (in_array($user_id, $editors)) { ?>
             <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
             <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
+            <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn"><button class="btn btn-danger ml-2">Delete All</button></a>
             <?php } ?>
         </div>
     </div>
@@ -60,38 +61,37 @@
                 </div>
             </div>
         </div>
-    </div>
     <hr>
     <div class="row mt-1">
-    <div>
+        <div>
             <h3>Current members</h3>
             <table class="table table-bordered table-hover table-striped">
                 <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Role</th>
-                        <th colspan="2"></th>
-                    </tr>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Role</th>
+                    <th colspan="2"></th>
+                </tr>
                 </thead>
                 <tbody>
-                <?php $i=1; foreach($members as $member) { ?>
+                    <?php $i=1; foreach($members as $member) { ?>
                     <tr>
                     <th scope="row"><?= $i ?></th>
                     <td class="text-center"><?= $member['name'] ?></td>
                     <td><?= $member['email'] ?></td>
-                    
+
                     <!-- If user is an editor, he can edit roles for other members -->
                     <?php if (in_array($user_id, $editors)) {  ?>
 
                     <!-- Check who is creator of the reservation and unabling his update or deletion -->
                     <?php if($meeting['creator_id'] != $member['user_id']) { ?>
-                    <td><?= $member['role'] ?></td>
-                    <td><button class="btn btn-info btn-sm float-right mx-1 role_edit" data-roleid="<?= $member['res_role_id'] ?>"  data-rolename="<?= $member['role'] ?>"data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"  data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-marker"></i></button></td>
-                    <td><button class="btn btn-danger btn-sm float-left mx-1 member_delete" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-minus-circle"></i></button></td>
+                        <td><?= $member['role'] ?></td>
+                        <td><button class="btn btn-info btn-sm float-right mx-1 role_edit" data-roleid="<?= $member['res_role_id'] ?>"  data-rolename="<?= $member['role'] ?>"data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"  data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-marker"></i></button></td>
+                        <td><button class="btn btn-danger btn-sm float-left mx-1 member_delete" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>"><i class="fas fa-minus-circle"></i></button></td>
                     <?php }  else { ?>
-                    <td colspan="3" class="text-center">CREATOR (cannot be updated or deleted)</td>
+                        <td colspan="3" class="text-center">CREATOR (cannot be updated or deleted)</td>
                     <?php } ?>
 
                     <?php } else { ?>
@@ -104,18 +104,16 @@
 
                 </tbody>
             </table>
-        </div>
-<!-- Delete Reservation Member Errors -->
-<div id="del_error_msg" class="text-danger"></div>
-<div>
-<!-- If user is an editor, he can add new members -->
-<?php if (in_array($user_id, $editors)) { ?>
-    <button id="btn_add_new_member" class="btn btn-info float-right mx-4 my-2" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>"><i class="fas fa-plus-circle mr-1"></i> Add new member</button>
-<?php } ?>
-</div>
 
-</div>
-<?php if($meeting['recurring'] == 1 && $meeting['recurring'] == 0) { ?>
+            <!-- Delete Reservation Member Errors -->
+            <div id="del_error_msg" class="text-danger"></div>
+            <!-- If user is an editor, he can add new members -->
+            <?php if (in_array($user_id, $editors)) { ?>
+            <button id="btn_add_new_member" class="btn btn-info float-right mx-4 my-2" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>"><i class="fas fa-plus-circle mr-1"></i> Add new member</button>
+            <?php } ?>
+        </div>
+    </div>
+<?php if($meeting['recurring'] == 1) { ?>
     <hr>
     <div class="mb-3">
     <h2>Upcoming dates</h2>
@@ -127,7 +125,8 @@
 <?php } ?>
 
 <div class="d-flex justify-content-end mb-3"><a href="/reservations/meetings/"><button class="btn btn-secondary">Back</button></a></div>
-
+</div>
+</div>
 <script src="/js/reservations.js"></script>
 
 
@@ -168,3 +167,38 @@
     </div>
   </div>
 </div>
+
+<!-- Delete Member Confirmation Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="delete_member_confirm_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Member Deelete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="delete_member_confirm_modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_member_confirm_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="delete_member_confirm_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Reservation Confirmation Modal -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="delete_reservation_confirm_modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">Confirm Reservation Deelete</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div id="delete_reservation_confirm_modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="delete_reservation_confirm_modal-btn-yes">Yes</button>
+        <button type="button" class="btn btn-default" id="delete_reservation_confirm_modal-btn-no">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
