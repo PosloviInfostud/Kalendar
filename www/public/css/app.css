@@ -5642,6 +5642,11 @@ table {
   resize: both;
 }
 
+.shadow-sm {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
+
 .shadow {
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -5672,6 +5677,11 @@ table {
           box-shadow: none;
 }
 
+.hover\:shadow-sm:hover {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+}
+
 .hover\:shadow:hover {
   -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
           box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -5700,6 +5710,11 @@ table {
 .hover\:shadow-none:hover {
   -webkit-box-shadow: none;
           box-shadow: none;
+}
+
+.focus\:shadow-sm:focus {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+          box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
 }
 
 .focus\:shadow:focus {
@@ -12260,6 +12275,11 @@ table {
     resize: both;
   }
 
+  .sm\:shadow-sm {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .sm\:shadow {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -12290,6 +12310,11 @@ table {
             box-shadow: none;
   }
 
+  .sm\:hover\:shadow-sm:hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .sm\:hover\:shadow:hover {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -12318,6 +12343,11 @@ table {
   .sm\:hover\:shadow-none:hover {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .sm\:focus\:shadow-sm:focus {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
   }
 
   .sm\:focus\:shadow:focus {
@@ -18856,6 +18886,11 @@ table {
     resize: both;
   }
 
+  .md\:shadow-sm {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .md\:shadow {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -18886,6 +18921,11 @@ table {
             box-shadow: none;
   }
 
+  .md\:hover\:shadow-sm:hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .md\:hover\:shadow:hover {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -18914,6 +18954,11 @@ table {
   .md\:hover\:shadow-none:hover {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .md\:focus\:shadow-sm:focus {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
   }
 
   .md\:focus\:shadow:focus {
@@ -25452,6 +25497,11 @@ table {
     resize: both;
   }
 
+  .lg\:shadow-sm {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .lg\:shadow {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -25482,6 +25532,11 @@ table {
             box-shadow: none;
   }
 
+  .lg\:hover\:shadow-sm:hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .lg\:hover\:shadow:hover {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -25510,6 +25565,11 @@ table {
   .lg\:hover\:shadow-none:hover {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .lg\:focus\:shadow-sm:focus {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
   }
 
   .lg\:focus\:shadow:focus {
@@ -32048,6 +32108,11 @@ table {
     resize: both;
   }
 
+  .xl\:shadow-sm {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .xl\:shadow {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -32078,6 +32143,11 @@ table {
             box-shadow: none;
   }
 
+  .xl\:hover\:shadow-sm:hover {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+  }
+
   .xl\:hover\:shadow:hover {
     -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
             box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
@@ -32106,6 +32176,11 @@ table {
   .xl\:hover\:shadow-none:hover {
     -webkit-box-shadow: none;
             box-shadow: none;
+  }
+
+  .xl\:focus\:shadow-sm:focus {
+    -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .1);
   }
 
   .xl\:focus\:shadow:focus {
