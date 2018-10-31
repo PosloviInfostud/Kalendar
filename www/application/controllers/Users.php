@@ -23,7 +23,9 @@ class Users extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-        $this->layouts->view('users/dashboard', array(), 'master_tailwind');
+        $this->load->model('Calendar_model','calendar');
+        $data['calendar'] = $this->calendar->get_all_meetings_for_user($this->user_data['user']['id']);
+        $this->layouts->view('users/dashboard', $data, 'master_tailwind');
     }
 
     public function edit()

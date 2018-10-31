@@ -4,7 +4,7 @@ class Calendar_model extends CI_model {
 
     public function get_all_meetings_for_user($id)
     {
-        $sql = "SELECT res.id, rooms.name, res.room_id, res.start_time, res.end_time, res.title FROM room_reservations AS res 
+        $sql = "SELECT res.id, rooms.name, rooms.color, res.room_id, res.start_time, res.end_time, res.title FROM room_reservations AS res 
                 INNER JOIN res_members AS mem ON mem.res_id = res.id 
                 INNER JOIN rooms ON rooms.id = res.room_id
                 WHERE mem.user_id = ? 
@@ -23,11 +23,12 @@ class Calendar_model extends CI_model {
             $event->end = $row['end_time'];
             $event->title = $row['title'];
             $event->room = $row['name'];
+            $event->color = $row['color'];
             $json_arr[] = $event;
         }
 
         $json = json_encode($json_arr, JSON_PRETTY_PRINT);
-        echo $json;
+        return $json;
     }
 
     
