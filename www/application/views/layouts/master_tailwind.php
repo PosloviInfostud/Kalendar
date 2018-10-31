@@ -80,7 +80,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="reservations/meetings" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                            <a href="/reservations/meetings" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
@@ -88,7 +88,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="reservations/equipment" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                            <a href="/reservations/equipment" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
@@ -108,8 +108,8 @@
         </div>
     </div>
 
-    <!-- Content section -->
-    <div class="mx-auto max-w-2/5xl lg:px-4 py-4 mb-4">
+    <!-- Content section :: container replacement -->
+    <div class="mx-auto max-w-2/5xl sm:px-4 py-4 mb-4">
         <!-- Flash notifications -->
         <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
         <!-- Error messages -->

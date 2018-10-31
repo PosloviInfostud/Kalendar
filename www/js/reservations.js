@@ -431,7 +431,7 @@ $("body").on('click','.role_edit', function(e) {
     }).done(function(response) {
         $('#edit_user_role_modal_body').html(response);
         // show modal
-        $('#editUserRoleModal').modal('show');    
+        $('#editUserRoleModal').show("slow");    
     })
 })
 
