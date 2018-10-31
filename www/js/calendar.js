@@ -1,5 +1,3 @@
-var id = $('#calendar').attr("data-user");
-var userMeetings = $.getJSON('/calendar/get_all_meetings_for_user/'+id);
 $(document).ready(function() {
 
     var $calendar = $('#calendar').fullCalendar({
@@ -87,13 +85,7 @@ $(document).ready(function() {
                     }		    
 		},
 
-        eventSources: [
-            {
-                color: '#4dc0b5',   
-                textColor: '#000000',
-                events: userMeetings.responseJSON
-            }
-        ]
+        eventSources: sources
     })
 });
 

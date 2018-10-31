@@ -149,6 +149,7 @@ $("#search_equipment").click(function(e){
 //send ajax search request for free schedule for specific room
 $("select.select_room").change(function(e){
     room = $(".select_room option:selected").val();
+
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_room",
