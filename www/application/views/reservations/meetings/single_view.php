@@ -10,8 +10,9 @@
             <?php if (in_array($user_id, $editors)) { ?>
             <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
             <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
-            <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn"><button class="btn btn-danger ml-2">Delete All</button></a>
-            <?php } ?>
+                <?php if($meeting['recurring'] == 1) { ?>
+                <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn"><button class="btn btn-danger ml-2">Delete All</button></a>
+                <?php } ?>            <?php } ?>
         </div>
     </div>
     <div class="my-3" id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
