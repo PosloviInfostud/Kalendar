@@ -70,10 +70,10 @@
         <div class="hidden bg-primary-darkest sm:block sm:bg-primary sm:font-normal border-b border-primary-dark" id="secondary_nav">
             <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
-                    <div class="sm:flex text-sm md:text-base">
+                    <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="/dashboard" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
-                            <div class="fill-current h-6 w-6 mr-2">
+                            <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
                                 Dashboard
@@ -81,7 +81,7 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="reservations/meetings" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
-                            <div class="fill-current h-6 w-6 mr-2">
+                            <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
                                 Meetings
@@ -89,21 +89,19 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="reservations/equipment" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
-                            <div class="fill-current h-6 w-6 mr-2">
+                            <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
                                 Equipment
                             </a>
                         </div>
                     </div>
-                    <div>
-                        <div class="sm:flex sm:justify-end text-sm md:text-base">
-                            <a href="/reservations/create">
-                                <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-3 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
-                                    New Reservation
-                                </button>
-                            </a>
-                        </div>
+                    <div class="flex items-center text-sm">
+                        <a href="/reservations/create">
+                            <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
+                                New Reservation
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
