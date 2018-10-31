@@ -43,7 +43,7 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-        $this->layouts->add_footer_include('/js/calendar.js');
+        // $this->layouts->add_footer_include('/js/calendar.js');
         $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
     }
 
@@ -119,10 +119,11 @@ class Reservations extends MY_Controller
 
     public function load_calendar_for_room()
     {
+        $this->load->model('calendar_model', 'calendar');
         $data['room_id'] = $this->input->post('room');
-        $data['calendar'] = $this->res->get_JSON_for_room($data['room_id']);
         $data['users'] = $this->res->show_users_for_invitation();
         $data['frequencies'] = $this->res->get_reservation_frequencies();
+        $data['current_reservations'] = $this->calendar->get_all_meetings_for_room($data['room_id']);
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
         echo $view;

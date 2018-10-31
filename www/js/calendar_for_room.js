@@ -1,7 +1,6 @@
-var id = $('#calendar').attr("data-user");
-var userMeetings = $.getJSON('/calendar/get_all_meetings_for_user/'+id);
-$(document).ready(function() {
 
+
+    $(document).ready(function() {
     var $calendar = $('#calendar').fullCalendar({
         defaultView: "agendaWeek",
         // Do not show Saturday/Sunday
@@ -91,12 +90,11 @@ $(document).ready(function() {
             {
                 color: '#4dc0b5',   
                 textColor: '#000000',
-                events: userMeetings.responseJSON
+                events: current_reservations
             }
         ]
     })
 });
-
 //removes event
 function remove_event(id) {
     var remove = confirm("remove event id"+id+"?");
