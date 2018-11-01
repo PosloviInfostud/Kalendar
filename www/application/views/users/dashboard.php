@@ -27,8 +27,8 @@ Object.keys(result).forEach(function(key){
     </div>
     <span class="text-primary font-normal">Dashboard</span>
 </div>
-<div class="py-4">
-    <div id="calendar" data-user="<?= $this->user_data['user']['id'] ?>">
+<div class="py-4 z-0">
+    <div id="calendar" class="z-2" data-user="<?= $this->user_data['user']['id'] ?>">
     </div>
 </div>
 <script src="/js/calendar.js"></script>
