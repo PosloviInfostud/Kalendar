@@ -379,6 +379,7 @@ class Reservations extends MY_Controller
             'notify' => $notify
         ];
         $this->layouts->set_title($meeting[0]['title']);
+        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/meetings/single_view_tailwind', $data, 'master_tailwind');
         // $this->layouts->view('reservations/meetings/single_view', $data);
     }
