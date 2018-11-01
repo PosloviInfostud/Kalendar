@@ -1,4 +1,8 @@
-    <p>/mesto za kalendar/</p>
+<script>
+var current_reservations = <?= $current_reservations; ?>;
+</script>
+
+<div id="calendar"></div>
     <div id="show_errors"><?php echo validation_errors(); ?></div>
 
     <div class="form-froup">
@@ -31,5 +35,5 @@
   </div>
 </div>
 
-<script src="/js/reservations.js"></script>
+<script src="/js/calendar_for_item.js"></script>
 

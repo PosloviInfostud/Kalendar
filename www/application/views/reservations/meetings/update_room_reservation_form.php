@@ -1,3 +1,7 @@
+<script>
+var current_reservations = <?= $current_reservations; ?>;
+var background = "<?= $background; ?>";
+</script>
 <h2 class="text-center p-2">Update reservation "<?= $meeting['title'] ?>"</h2>
 <div class="container mt-5">
     <form id="form_update_room_reservation">
@@ -15,7 +19,7 @@
             </select>
         </div>
 
-        /mesto za kalendar/
+        <div id="calendar"></div>
         <div id="show_errors"></div>
 
         <div class="form-group border rounded border-info p-3 m-3">
@@ -54,3 +58,4 @@
 </div>
 
 <script src="/js/reservations.js"></script>
+<script src="/js/calendar_for_room.js"></script>

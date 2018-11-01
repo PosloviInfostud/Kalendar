@@ -19,4 +19,12 @@ class Calendar extends MY_Controller
         $this->cal->get_all_meetings_for_room($id);
     }
 
+    public function save_test()
+    {
+        var_dump($this->input->post('title'));
+        var_dump($this->input->post('start_time'));
+        var_dump($this->input->post('end_time'));
+
+    }
+
 }

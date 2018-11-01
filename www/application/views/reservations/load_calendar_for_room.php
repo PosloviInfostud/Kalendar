@@ -1,6 +1,5 @@
 <script>
 var current_reservations = <?= $current_reservations; ?>;
-console.log(current_reservations)
 var background = "<?= $background; ?>";
 </script>
 <div id="calendar"></div>

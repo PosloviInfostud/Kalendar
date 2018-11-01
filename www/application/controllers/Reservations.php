@@ -10,6 +10,7 @@ class Reservations extends MY_Controller
         $this->load->model('Mail_model', 'mail');
         $this->load->model('Beautify_model', 'beautify');
         $this->load->model('Logs_model', 'logs');
+        $this->load->model('Calendar_model', 'calendar');
         $this->load->library('form_validation');
         $this->load->library('encryption');
         $this->load->helper('link_helper');
@@ -59,6 +60,11 @@ class Reservations extends MY_Controller
         $this->load->model('Admin_model','admin');
         $equipment = $this->admin->get_all_equipment();
         $this->layouts->set_title('Item Reservation');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->view('reservations/specific_equipment',["equipment" => $equipment]);
     }
 
@@ -119,7 +125,6 @@ class Reservations extends MY_Controller
 
     public function load_calendar_for_room()
     {
-        $this->load->model('calendar_model', 'calendar');
         $data['room_id'] = $this->input->post('room');
         $data['users'] = $this->res->show_users_for_invitation();
         $data['frequencies'] = $this->res->get_reservation_frequencies();
@@ -133,7 +138,7 @@ class Reservations extends MY_Controller
     public function load_calendar_for_item()
     {
         $data['equipment_id'] = $this->input->post('equipment_id');
-
+        $data['current_reservations'] = $this->calendar->get_all_item_reservations($data['equipment_id']);
         $view = $this->load->view('reservations/load_calendar_for_item', $data, true);
 
         echo $view;
@@ -404,21 +409,27 @@ class Reservations extends MY_Controller
 
     public function update_room_reservation_form($id)
     {
-        $meeting = $this->res->single_room_reservation($id);
+        $data['meeting'] = $this->res->single_room_reservation($id)[0];
         // Check if a reservation exists with that id
-        if(empty($meeting)) {
+        if(empty($data['meeting'])) {
             url_redirect('/error_404');
         }
-        $members = $this->res->get_reservation_members($id);
+        $data['members'] = $this->res->get_reservation_members($id);
         $this->load->model('Admin_model','admin');
-        $rooms = $this->admin->get_all_rooms();
-        $user_id = $this->user_data['user']['id'];
+        $data['rooms'] = $this->admin->get_all_rooms();
+        $data['user_id'] = $this->user_data['user']['id'];
+        $data['current_reservations'] = $this->calendar->get_all_meetings_for_room($data['meeting']['room_id']);
+        $data['background'] = $this->calendar->room_color($data['meeting']['room_id']);
+
 
         // Check if user is an editor of the given reservation
-        $this->permission->is_editor_of_reservation($id, $user_id);
-        $this->load->view('header', $this->user_data);
-        $this->load->view('reservations/meetings/update_room_reservation_form', ['meeting' => $meeting[0], 'members' => $members, 'user_id' => $user_id, 'rooms' => $rooms]);
-        $this->load->view('footer');
+        $this->permission->is_editor_of_reservation($id, $data['user_id']);
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->view('reservations/meetings/update_room_reservation_form', $data);
     }
 
     public function show_update_user_role_form()
@@ -572,6 +583,13 @@ class Reservations extends MY_Controller
     {
         $user_id = $this->user_data['user']['id'];
         $data['equipment'] = $this->res->single_equipment_reservation($id)[0];
+        $data['current_reservations'] = $this->calendar->get_all_item_reservations($data['equipment']['equipment_id']);
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+
         // Check if reservation exists for that id
         if(empty($data['equipment'])) {
             url_redirect('/error_404');
