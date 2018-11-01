@@ -1,4 +1,7 @@
-
+// Close modal
+$(".close-modal").on('click', function() {
+    $(".modal").hide('slow');
+});
 $(document).ready(function() {
 /* Flatpickr */
 
@@ -465,7 +468,7 @@ var deleteMemberConfirmModal = function(callback) {
         data.res_id = $(this).attr("data-res");
         data.user_id = $(this).attr("data-user");
         data.creator = $(this).attr("data-creator");
-        $("#delete_member_confirm_modal").modal("show");
+        $("#delete_member_confirm_modal").show("slow");
         $("#delete_member_confirm_modal-body").html(
             "Are you sure you want to remove this member from meeting?"
         )
@@ -517,7 +520,7 @@ $("body").on('click', '#btn_add_new_member', function(e) {
     }).done(function(response){
         $('#add_member_modal_body').html(response);
         // show modal
-        $('#addMemberModal').modal('show');   
+        $('#addMemberModal').show('slow');   
     })
 })
 
@@ -579,7 +582,7 @@ var deleteReservationConfirmModal = function(callback) {
     $("body").on('click', '#del_res_btn', function(e) {
         e.preventDefault();
         delete_url = this.href;
-        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal").show("slow");
         $("#delete_reservation_confirm_modal-body").html(
             "Are you sure you want to cancel this meeting?"
         );
@@ -588,7 +591,7 @@ var deleteReservationConfirmModal = function(callback) {
     $("body").on('click', '#del_all_res_btn', function(e) {
         e.preventDefault();
         delete_url = this.href;
-        $("#delete_reservation_confirm_modal").modal("show");
+        $("#delete_reservation_confirm_modal").show("slow");
         $("#delete_reservation_confirm_modal-body").html(
             "Are you sure you want to cancel ALL the reservations of this recurring event?"
         );
@@ -673,7 +676,6 @@ var deleteEquipReservationConfirmModal = function(callback) {
 
     $("body").on('click', '#delete_equip_btn', function(e) {
     delete_equip_url = this.href;
-    console.log(delete_equip_url)
     e.preventDefault();
     $("#delete_equip_reservation_confirm_modal").modal("show");
     $("#delete_equip_reservation_confirm_modal-body").html(
