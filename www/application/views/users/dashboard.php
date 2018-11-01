@@ -7,16 +7,6 @@ result = calendar.reduce(function (r, a) {
     return r;
 }, Object.create(null));
 
-//generate random color for each room
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
-
 //creating new array for each room
 console.log(result);
 var sources = [];
@@ -28,10 +18,6 @@ Object.keys(result).forEach(function(key){
     sources.push(object);
     console.log(key, result[key])
 })
-for (let i=0; i< result.length; i++) {
-
-}
-
  console.log(sources);       
 </script>
 <div class="flex text-sm text-black pb-3 px-2 sm:px-0 border-b">

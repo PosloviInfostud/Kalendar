@@ -1,5 +1,8 @@
-<script>var current_reservations = <?= $current_reservations; ?>;
-console.log(current_reservations)</script>
+<script>
+var current_reservations = <?= $current_reservations; ?>;
+console.log(current_reservations)
+var background = "<?= $background; ?>";
+</script>
 <div id="calendar"></div>
     <div id="show_errors"><?php echo validation_errors(); ?></div>
 
@@ -57,8 +60,6 @@ console.log(current_reservations)</script>
     </div>
   </div>
 </div>      
-
-<script src="/js/reservations.js"></script>
 <script>
 $(document).ready(function() {
     $('.js-example-basic-multiple').select2(

@@ -18,7 +18,6 @@ $(document).ready(function() {
         },
         views: {
             listDay: {buttonText: 'list day'},
-            listDayFormat: (room) => event.room,
             listWeek: {buttonText: 'list week'},
             listMonth: {buttonText: 'list month'},
         },
@@ -61,8 +60,9 @@ $(document).ready(function() {
             // Clear background image if still lingering
             $(".fc-view-container").addClass("bg-white");
         },
-        //delete link
         eventRender: function(event, element) {
+            $(element).find(".fc-content").append(event.room);
+            //delete link
             $(element).find(".fc-content").append("<div style='float-right'><a href='javascript:remove_event("+event.id+")' class='delete-link'>Delete</a></div>");
             $(element).find('.delete-link').click(function(e) {
                 e.stopImmediatePropagation()

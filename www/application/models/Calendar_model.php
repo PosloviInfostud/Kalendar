@@ -4,6 +4,7 @@ class Calendar_model extends CI_model {
 
     public function get_all_meetings_for_user($id)
     {
+        $result = [];
         $sql = "SELECT res.id, rooms.name, rooms.color, res.room_id, res.start_time, res.end_time, res.title FROM room_reservations AS res 
                 INNER JOIN res_members AS mem ON mem.res_id = res.id 
                 INNER JOIN rooms ON rooms.id = res.room_id
@@ -33,6 +34,7 @@ class Calendar_model extends CI_model {
 
     
     public function get_all_meetings_for_room($id) {
+        $result = [];
         $sql = "SELECT id, start_time, end_time, title, description FROM room_reservations 
                 WHERE (recurring = 0 OR parent != 0) AND deleted = '0' AND room_id = ?";
         $query = $this->db->query($sql, [$id]);
@@ -51,6 +53,19 @@ class Calendar_model extends CI_model {
         }
         $return =  json_encode($json_arr, true);
         return $return;
+    }
+
+    public function room_color($id)
+    {
+        $color = "#4dc0b5";
+        $sql = "SELECT color FROM rooms WHERE id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if($query->num_rows()){
+            $result = $query->row_array();
+        }
+        $color = $result['color'];
+        return $color;
     }
 
 }

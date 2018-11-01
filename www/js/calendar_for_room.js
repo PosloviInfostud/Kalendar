@@ -88,7 +88,7 @@
 
         eventSources: [
             {
-                color: '#4dc0b5',   
+                color: background,   
                 textColor: '#000000',
                 events: current_reservations
             }
