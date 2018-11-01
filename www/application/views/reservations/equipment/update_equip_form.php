@@ -1,5 +1,8 @@
+<script>
+var current_reservations = <?= $current_reservations; ?>;
+</script>
 <div class="jumbotron">
-<p>/mesto za kalendar/</p>
+<div id="calendar"></div>
     <div id="show_errors"><?php echo validation_errors(); ?></div>
     <?php
         $date = date('Y-m-d h:i:s', time()); ?>
@@ -62,3 +65,4 @@ $("#update_item_datetime_end").flatpickr({
 	altFormat: "d/m/y @ H:i",
 });
 </script>
+<script src="/js/calendar_for_item.js"></script>

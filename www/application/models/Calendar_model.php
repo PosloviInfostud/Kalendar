@@ -68,4 +68,25 @@ class Calendar_model extends CI_model {
         return $color;
     }
 
+    public function get_all_item_reservations($id) {
+        $result = [];
+        $sql = "SELECT id, start_time, end_time, description FROM equipment_reservations 
+                WHERE deleted = '0' AND equipment_id = ?";
+        $query = $this->db->query($sql, [$id]);
+
+        if ($query->num_rows()) {
+            $result = $query->result_array();
+        }
+        $json_arr = [];
+        foreach($result as $row) {
+            $event['id'] = $row['id'];
+            $event['start'] = $row['start_time'];
+            $event['end'] = $row['end_time'];
+            $event['description'] = $row['description'];
+            $json_arr[] = $event;
+        }
+        $return =  json_encode($json_arr, true);
+        return $return;
+    }
+
 }

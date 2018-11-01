@@ -9,13 +9,11 @@
         // Uppercase H for 24-hour clock
         timeFormat: "H:mm",
         slotLabelFormat: "H:mm",
-        slotDuration: "00:30:00",
-        
         contentHeight: "auto",
         header: {
             left: 'prev, next',
             center: 'title',
-            right: 'agendaDay, agendaWeek, listDay, listWeek, listMonth'
+            right: 'agendaWeek, month, listDay, listWeek, listMonth'
         },
         views: {
             listDay: {buttonText: 'list day'},
@@ -35,23 +33,22 @@
                 //Create event
                 var event = {
                     title: title.trim() !="" ? title: "New event",
-                    start: start.format("YYYY/DD/MM HH:mm"),
-                    end: end.format("YYYY/DD/MM HH:mm")
-                    // ,
-                    // room: room
+                    start: start,
+                    end: end,
+                    room: room
                 };
-                $calendar.fullCalendar("renderEvent", jsEvent, true);
-                saveEvent(event);
                 //display en event
+                $calendar.fullCalendar("renderEvent", event, true);
 
             }
+            // alert(start.format("MM/DD/YYYY HH:mm")+" to "+end.format("MM/DD/YYYY HH:mm")+" in view "+view.name);
         },
         //make events editable, globally
         editable: true,
         //callback triggered wehen we click on the event
         eventClick: function(event, jsEvent, view) {
             //ask for a title
-            window.location.href = '/reservations/meetings/'+event.id;
+            window.location.href = '/reservations/equipment/'+event.id;
             // if the cancel button isn't pressed
             // if(newTitle != null) {
             //     event.title = newTitle.trim() != "" ? newTitle: event.title;
@@ -89,7 +86,7 @@
 
         eventSources: [
             {
-                color: background,   
+                color: "1e9cdb",   
                 textColor: '#000000',
                 events: current_reservations
             }
@@ -102,19 +99,4 @@ function remove_event(id) {
     if (remove == true) {
         $("#calendar").fullCalendar("removeEvents", id);
     }
-}
-function saveEvent(event)
-{
-    console.log(event);
-    $.ajax({
-        method: "POST",
-        url: "/calendar/save_test",
-        data: {
-            "start_time" : event.start,
-            "end_time" :event.end,
-            "title" : event.title
-        }
-    }).done(function(response){
-        console.log(response);
-    })
 }

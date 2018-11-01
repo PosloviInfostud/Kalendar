@@ -990,6 +990,7 @@ class Reservation_model extends CI_Model
     public function get_all_editors($id)
     {
         $editors = [];
+        $result = [];
         $sql = "SELECT user_id FROM res_members WHERE res_role_id = 1 AND res_id = ?";
         $query = $this->db->query($sql, [$id]);
 
@@ -1020,6 +1021,7 @@ class Reservation_model extends CI_Model
     }
     public function get_if_member_is_notified($res_id, $user_id)
     {
+        $result = [];
         $sql = "SELECT not_update, not_remind FROM res_members WHERE res_id = ? AND user_id = ?";
         $query = $this->db->query($sql, [$res_id, $user_id]);
 
