@@ -14,7 +14,7 @@ class Reminder_model extends CI_Model
                 res.end_time 
                 FROM room_reservations as res
                 INNER JOIN rooms as room ON room.id = res.room_id
-                WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 59 MINUTE)
+                WHERE NOW() >= DATE_SUB(res.start_time, INTERVAL 15 MINUTE)
                 AND res.start_time > NOW()
                 AND res.reminder_sent = 0
                 AND res.deleted = '0'";
