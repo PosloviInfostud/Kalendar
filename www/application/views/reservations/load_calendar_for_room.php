@@ -2,9 +2,6 @@
 var current_reservations = <?= $current_reservations; ?>;
 var background = "<?= $background; ?>";
 </script>
-<div id="test"></div>
-
-    <div id="show_errors"><?php echo validation_errors(); ?></div>
 
     <div class="form-froup flatpickr">
     <div id="calendar"></div>
@@ -12,6 +9,7 @@ var background = "<?= $background; ?>";
         From <input type="text" data-input name="start_time" id="datetime_start" placeholder="start datetime" class="text-center" value=""> 
         to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center" data-default-date="">
     </div>
+    <div id="show_errors"><?php echo validation_errors(); ?></div>
 
     <div class="form-group">
         <label for="res_frequency">Frequency</label>

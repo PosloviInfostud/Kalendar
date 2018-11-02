@@ -355,9 +355,16 @@ class Reservations extends MY_Controller
 
     public function equipment_reservations_by_user()
     {
-        $equipment = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/js/calendar_user_items.js');
+        $data['equipment'] = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
         $this->layouts->set_title('Active Reservations');
-        $this->layouts->view('reservations/user_equipment', ['equipment' => $equipment]);
+        $data['calendar'] = $this->calendar->get_all_items_for_user($this->user_data['user']['id']);
+        $this->layouts->view('reservations/user_equipment', $data,'master_tailwind');
     }
 
     public function single_room_reservation($id)

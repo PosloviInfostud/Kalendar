@@ -8,7 +8,7 @@ var background = "<?= $background; ?>";
 
         <div class="form-group col-9">
             <label for="room">Select Room</label>
-            <select name="room" id="room_select" class="js-example-basic-single form-control select_room text-center">
+            <select name="room" id="update_room_select" class="js-example-basic-single form-control select_room text-center">
                 <?php foreach ($rooms as $room) { ?>
                     <?php if($room['id'] == $meeting['room_id']) { ?>
                         <option value="<?= $room['id']; ?>" selected><?= $room['name']; ?></option>

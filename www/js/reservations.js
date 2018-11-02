@@ -1,3 +1,8 @@
+// Close modal
+$(".close-modal").on('click', function() {
+    $(".modal").hide('slow');
+ });
+ 
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();
@@ -158,22 +163,7 @@ function submit_room_reservation(data) {
         method: "POST",
         url: "/reservations/submit_reservation_form",
         data: data
-    })
-    // .done(function(response){
-    //     console.log(response);
-    //     if(response['status'] == 'success') {
-    //         console.log(response);
-    //         // window.location.href = "/reservations/meetings";
-    //     } else if(response['status'] == 'form_error') {
-    //         $("#messages").html(response['errors']);
-    //         // for (var key in response['errors']) {
-    //         //     $("#" + key + "_err").html(response['errors'][key])
-    //         // }
-    //     } else {
-    //         $("#messages").html(response['errors']);
-    //     }
-    // })
-    .done(function(response){
+    }).done(function(response){
         console.log(response);
         msg = JSON.parse(response);
         console.log(msg);
@@ -428,7 +418,20 @@ $("body").on('submit','#add_new_member_form', function(e) {
         location.reload();
     })
 })
+//===========================================================================
+//reload calendar after different room selected
 
+var room = 0;
+$("#update_room_select").change(function(e) {
+    room = $(".select_room option:selected").val();
+    $.getJSON("/calendar/get_json_for_room/"+room, function(data) {
+        current_reservations = data;
+        $('#calendar').fullCalendar('removeEvents');
+        $('#calendar').fullCalendar('addEventSource', current_reservations);  
+        background = data.color;       
+        $('#calendar').fullCalendar('rerenderEvents');
+    });
+})
 //submit reservation update form
 
 $("#form_update_room_reservation").submit(function(e){
