@@ -14,8 +14,10 @@ class Beautify_model extends CI_Model
             $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
             $result[$key]['created_at'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
             $result[$key]['description'] = ucfirst($value['description']);
-            if (strtotime($value['start_time']) < time()) {
+            if (strtotime($value['start_time']) < time() && strtotime($value['end_time']) >= time()) {
                 $result[$key]['status'] = 'ongoing';
+            } elseif (strtotime($value['start_time']) < time() && strtotime($value['end_time']) < time()) {
+                $result[$key]['status'] = 'expired';
             } else {
                 $result[$key]['status'] = 'upcoming';
             };
