@@ -7,8 +7,8 @@ var current_reservations = <?= $current_reservations; ?>;
 
     <div class="form-froup">
         <p>When?</p>
-        From <input type="text" name="start_time" id="item_datetime_start" placeholder="start datetime" class="text-center"> 
-        to <input type="text" name="end_time" id="item_datetime_end" placeholder="end datetime" class="text-center">
+        From <input type="text" name="start_time" id="item_datetime_start" placeholder="start datetime" class="text-center" data-default-date=""> 
+        to <input type="text" name="end_time" id="item_datetime_end" placeholder="end datetime" class="text-center" data-default-date="">
     </div>
               
     <div class="form-group">
@@ -36,4 +36,4 @@ var current_reservations = <?= $current_reservations; ?>;
 </div>
 
 <script src="/js/calendar_for_item.js"></script>
-
+<script src="/js/flatpickr_items.js"></script>

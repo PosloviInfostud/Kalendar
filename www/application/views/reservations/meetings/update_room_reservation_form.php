@@ -56,6 +56,3 @@ var background = "<?= $background; ?>";
 
     </form>
 </div>
-
-<script src="/js/reservations.js"></script>
-<script src="/js/calendar_for_room.js"></script>

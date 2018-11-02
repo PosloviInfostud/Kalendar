@@ -31,6 +31,8 @@ class Reservations extends MY_Controller
     public function form_rooms()
     {
         $this->layouts->set_title('Room Reservation');
+        $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
+        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/rooms');
     }
 
@@ -44,7 +46,7 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-        // $this->layouts->add_footer_include('/js/calendar.js');
+        $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
     }
 
@@ -52,6 +54,8 @@ class Reservations extends MY_Controller
     {
         $data['equips'] = $this->res->get_all_equipment_types();
         $this->layouts->set_title('Equipment Reservation');
+        $this->layouts->add_footer_include('/js/flatpickr_items.js');
+        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/equipment', $data);
     }
 
@@ -65,6 +69,7 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_equipment',["equipment" => $equipment]);
     }
 
@@ -130,6 +135,8 @@ class Reservations extends MY_Controller
         $data['frequencies'] = $this->res->get_reservation_frequencies();
         $data['current_reservations'] = $this->calendar->get_all_meetings_for_room($data['room_id']);
         $data['background'] = $this->calendar->room_color($data['room_id']);
+        $this->layouts->add_footer_include('/js/select2.js');
+        $this->layouts->add_footer_include('/js/calendar_for_room.js');
         $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
         echo $view;
@@ -427,6 +434,10 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/js/select2.js');
+        $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
+        $this->layouts->add_footer_include('/js/reservations.js');
+        $this->layouts->add_footer_include('/js/calendar_for_room.js');
         $this->layouts->view('reservations/meetings/update_room_reservation_form', $data);
     }
 

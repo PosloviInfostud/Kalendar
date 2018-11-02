@@ -27,7 +27,3 @@
     <div id="rest"></div>
     </form>
 </div>
-
-
-
-<script src="/js/reservations.js"></script>

@@ -2,13 +2,15 @@
 var current_reservations = <?= $current_reservations; ?>;
 var background = "<?= $background; ?>";
 </script>
-<div id="calendar"></div>
+<div id="test"></div>
+
     <div id="show_errors"><?php echo validation_errors(); ?></div>
 
-    <div class="form-froup">
+    <div class="form-froup flatpickr">
+    <div id="calendar"></div>
         <p>When?</p>
-        From <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="text-center"> 
-        to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center">
+        From <input type="text" data-input name="start_time" id="datetime_start" placeholder="start datetime" class="text-center" value=""> 
+        to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center" data-default-date="">
     </div>
 
     <div class="form-group">
@@ -59,48 +61,6 @@ var background = "<?= $background; ?>";
     </div>
   </div>
 </div>      
-<script>
-$(document).ready(function() {
-    $('.js-example-basic-multiple').select2(
-        {
-            tags: true,
-            createTag: function (params) {
-                var term = $.trim(params.term);
-                var count = 0
-                var existsVar = false;
-                //check if there is any option already
-                if($('#keywords option').length > 0){
-                    $('#keywords option').each(function(){
-                        if ($(this).text().toUpperCase() == term.toUpperCase()) {
-                            existsVar = true
-                            return false;
-                        }else{
-                            existsVar = false
-                        }
-                    });
-                    if(existsVar){
-                        return null;
-                    }
-                    return {
-                        id: params.term,
-                        text: params.term,
-                        newTag: true
-                    }
-                }
-                //since select has 0 options, add new without comparing
-                else{
-                    return {
-                        id: params.term,
-                        text: params.term,
-                        newTag: true
-                    }
-                }
-            },
-            maximumInputLength: 50, // only allow terms up to 50 characters long
-            closeOnSelect: true
-        }
-
-    );
-
-});</script>
 <script src="/js/calendar_for_room.js"></script>
+<script src="/js/flatpickr_rooms.js"></script>
+<script src="/js/select2.js"></script>

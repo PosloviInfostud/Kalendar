@@ -15,5 +15,3 @@
     <div id="free"></div>
     </form>
 </div>
-
-<script src="/js/reservations.js"></script>
