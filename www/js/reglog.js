@@ -83,7 +83,7 @@ $("#login_form").submit(function (e) {
         .done(function (response) {
             $(".error_box").empty();
             if (response['status'] == 'success') {
-                window.location.href = "/dashboard";
+                window.location.href = "/reservations/meetings";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#login_" + key + "_err").html(response['errors'][key])

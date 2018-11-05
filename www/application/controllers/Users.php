@@ -15,19 +15,6 @@ class Users extends MY_Controller
         $this->layouts->view('users/profile', array(), 'master_tailwind');
     }
 
-    public function dashboard()
-    {
-        $this->layouts->set_title('Dashboard');
-        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-        $this->load->model('Calendar_model','calendar');
-        $data['calendar'] = $this->calendar->get_all_meetings_for_user($this->user_data['user']['id']);
-        $this->layouts->view('users/dashboard', $data, 'master_tailwind');
-    }
-
     public function edit()
     {
         $id = $this->input->post('user_id');

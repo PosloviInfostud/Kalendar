@@ -41,32 +41,18 @@ $(document).ready(function() {
                 $calendar.fullCalendar("renderEvent", event, true);
 
             }
-            // alert(start.format("MM/DD/YYYY HH:mm")+" to "+end.format("MM/DD/YYYY HH:mm")+" in view "+view.name);
         },
         //make events editable, globally
         editable: true,
         //callback triggered wehen we click on the event
         eventClick: function(event, jsEvent, view) {
-            //ask for a title
             window.location.href = '/reservations/equipment/'+event.id;
-            // if the cancel button isn't pressed
-            // if(newTitle != null) {
-            //     event.title = newTitle.trim() != "" ? newTitle: event.title;
-            //     //call the "updateEvent" method
-            //     $calendar.fullCalendar("updateEvent", event);
-            // }
         },
         viewRender: function (view, viewContainer){
             // Clear background image if still lingering
             $(".fc-view-container").addClass("bg-white");
         },
         eventRender: function(event, element) {
-            $(element).find(".fc-content").append(event.room);
-            //delete link
-            $(element).find(".fc-content").append("<div style='float-right'><a href='javascript:remove_event("+event.id+")' class='delete-link'>Delete</a></div>");
-            $(element).find('.delete-link').click(function(e) {
-                e.stopImmediatePropagation()
-            })
         },
         eventAfterAllRender : function( view ) {
 		    if (view.type == 'listWeek') {
@@ -88,11 +74,3 @@ $(document).ready(function() {
         eventSources: sources
     })
 });
-
-//removes event
-function remove_event(id) {
-    var remove = confirm("remove event id"+id+"?");
-    if (remove == true) {
-        $("#calendar").fullCalendar("removeEvents", id);
-    }
-}
