@@ -31,9 +31,11 @@ class Reservations extends MY_Controller
     public function form_rooms()
     {
         $this->layouts->set_title('Room Reservation');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
         $this->layouts->add_footer_include('/js/reservations.js');
-        $this->layouts->view('reservations/rooms');
+        $this->layouts->view('reservations/rooms_tailwind', array(), 'master_tailwind');
     }
 
     public function form_specific_room()
@@ -435,19 +437,21 @@ class Reservations extends MY_Controller
         $data['current_reservations'] = $this->calendar->get_all_meetings_for_room($data['meeting']['room_id']);
         $data['background'] = $this->calendar->room_color($data['meeting']['room_id']);
 
-
         // Check if user is an editor of the given reservation
         $this->permission->is_editor_of_reservation($id, $data['user_id']);
+
+        // Load layout
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-        $this->layouts->add_footer_include('/js/select2.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
         $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
-        $this->layouts->view('reservations/meetings/update_room_reservation_form', $data);
+        $this->layouts->view('reservations/meetings/update_room_reservation_form_tailwind', $data, 'master_tailwind');
     }
 
     public function show_update_user_role_form()
@@ -511,7 +515,7 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('room', 'Room', 'trim|required');
-        $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
+        $this->form_validation->set_rules('title', 'Title', 'trim|required');
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
 
         if($this->form_validation->run() == false) {

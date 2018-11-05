@@ -3,6 +3,11 @@ $(".close-modal").on('click', function() {
     $(".modal").hide('slow');
  });
  
+ // Close alert box (error messages)
+ $("#close_alert").on('click', function() {
+    $("#alert_box").hide('slow');
+});
+
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();
@@ -457,8 +462,8 @@ $("#form_update_room_reservation").submit(function(e){
         msg = JSON.parse(response);
         console.log(msg);
         if (msg.error) {
-            $("#show_errors").html(msg.error);
-            $("#show_errors").addClass("alert alert-danger");
+            $("#messages").html(msg.error);
+            $("#alert_box").show();
         }
         if(msg.success) {
             window.location.href = "/reservations/meetings/"+msg.success;
