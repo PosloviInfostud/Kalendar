@@ -22,10 +22,11 @@ $("#search_reserved_rooms").click(function(e){
     })
     .done(function(response){
         if(response['status'] == 'success') {
-            $('#messages').empty();
+            $('#form_errors').empty();
             $('#free').html(response['message']);
+            $('#free').show();
         } else {
-            $('#messages').html(response['errors']);
+            $('#form_errors').html(response['errors']);
         }
     })
 })

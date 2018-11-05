@@ -2,7 +2,7 @@
     var current_reservations = <?= $current_reservations; ?>;
     var background = "<?= $background; ?>";
 </script>
-
+<!-- Breadcrumb -->
 <div class="flex text-xs sm:text-sm text-black px-2 pb-3 sm:px-0">
     <span>Reservations</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
@@ -14,7 +14,6 @@
     </div>
     <span class="text-primary font-normal"><?= $meeting['title'] ?></span>
 </div>
-<div id="show_errors"></div>
 <!-- Content -->
 <div class="md:flex">
     <div class="md:flex md:w-1/2 md:mr-4">

@@ -1,3 +1,4 @@
+<!-- Breadcrumb -->
 <div class="flex text-xs sm:text-sm text-black px-2 sm:px-0">
     <span>Reservations</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
@@ -9,6 +10,7 @@
     </div>
     <span class="text-primary font-normal"><?= $meeting['title'] ?></span>
 </div>
+<!-- Content -->
 <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8 my-4">
     <!-- Title and buttons section -->
     <div class="smd:flex smd:items-center smd:justify-between">

@@ -30,9 +30,11 @@ class Reservations extends MY_Controller
 
     public function form_rooms()
     {
-        $this->layouts->set_title('Room Reservation');
+        $this->layouts->set_title('New Meeting');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
         $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/rooms_tailwind', array(), 'master_tailwind');
@@ -116,7 +118,7 @@ class Reservations extends MY_Controller
                 $rooms = $this->res->check_free_rooms($data);
                 $users = $this->res->show_users_for_invitation();
 
-                $response['message'] = $this->load->view('reservations/free_rooms', ["rooms" => $rooms, "users" => $users, "frequencies" => $frequencies], true);
+                $response['message'] = $this->load->view('reservations/free_rooms_tailwind', ["rooms" => $rooms, "users" => $users, "frequencies" => $frequencies], true);
             }
         }
         else
