@@ -7,7 +7,7 @@
         <ul class="navbar-nav mr-auto">
         </ul>
         <div class="row align-items-center">
-            <div class="col"><a href="/dashboard"><i class="fas fa-home fa-lg text-secondary"></i></a></div>
+            <div class="col"><a href="/reservations/meetings"><i class="fas fa-home fa-lg text-secondary"></i></a></div>
             <div class="col"><a href="/profile"><i class="far fa-user-circle fa-lg text-secondary"></i></a></div>
             <div class="col"><a class="btn btn-danger btn-sm" href="/logout">Logout</a></div>
         </div>

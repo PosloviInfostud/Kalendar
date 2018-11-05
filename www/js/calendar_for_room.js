@@ -1,6 +1,3 @@
-    var start_time = "";
-    var end_time = "";
-    
     $(document).ready(function() {
     var $calendar = $('#calendar').fullCalendar({
         defaultView: "agendaWeek",
@@ -32,29 +29,29 @@
         //callback that will be triggered when a selection is made
         select: function(start, end, jsEvent, view) {
 
-            //ask for a title
-            var title = prompt("Enter a title for this event","New event");
-            if (title != null) {
-                //Create event
-                var event = {
-                    title: title.trim() !="" ? title: "New event",
-                    start: start.format("YYYY-MM-DD HH:mm"),
-                    end: end.format("YYYY/DD/MM HH:mm")
-                    // ,
-                    // room: room
-                };
-                $calendar.fullCalendar("renderEvent", jsEvent, true);
-                saveEvent(event);
-                $("#datetime_start").attr("value", event.start);
-                $("#datetime_start").text(event.start);
-                $("#datetime_start").val(event.start);
-                // $("#datetime_start").jumpToDate(event.start);
-                // fpRoomStartDate.set("defaultDate", event.start);
-                end_time = event.end;
-                console.log(start_time);
-                //display en event
+            // //ask for a title
+            // var title = prompt("Enter a title for this event","New event");
+            // if (title != null) {
+            //     //Create event
+            //     var event = {
+            //         title: title.trim() !="" ? title: "New event",
+            //         start: start.format("YYYY-MM-DD HH:mm"),
+            //         end: end.format("YYYY/DD/MM HH:mm")
+            //         // ,
+            //         // room: room
+            //     };
+            //     $calendar.fullCalendar("renderEvent", jsEvent, true);
+            //     saveEvent(event);
+            //     $("#datetime_start").attr("value", event.start);
+            //     $("#datetime_start").text(event.start);
+            //     $("#datetime_start").val(event.start);
+            //     // $("#datetime_start").jumpToDate(event.start);
+            //     // fpRoomStartDate.set("defaultDate", event.start);
+            //     end_time = event.end;
+            //     console.log(start_time);
+            //     //display en event
 
-            }
+            // }
         },
         //make events editable, globally
         editable: true,
@@ -62,23 +59,12 @@
         eventClick: function(event, jsEvent, view) {
             //ask for a title
             window.location.href = '/reservations/meetings/'+event.id;
-            // if the cancel button isn't pressed
-            // if(newTitle != null) {
-            //     event.title = newTitle.trim() != "" ? newTitle: event.title;
-            //     //call the "updateEvent" method
-            //     $calendar.fullCalendar("updateEvent", event);
-            // }
         },
         viewRender: function (view, viewContainer){
             // Clear background image if still lingering
             $(".fc-view-container").addClass("bg-white");
         },
-        //delete link
         eventRender: function(event, element) {
-            $(element).find(".fc-content").append("<div style='float-right'><a href='javascript:remove_event("+event.id+")' class='delete-link'>Delete</a></div>");
-            $(element).find('.delete-link').click(function(e) {
-                e.stopImmediatePropagation()
-            })
         },
         eventAfterAllRender : function( view ) {
 		    if (view.type == 'listWeek') {
@@ -106,25 +92,3 @@
         ]
     })
 });
-//removes event
-function remove_event(id) {
-    var remove = confirm("remove event id"+id+"?");
-    if (remove == true) {
-        $("#calendar").fullCalendar("removeEvents", id);
-    }
-}
-function saveEvent(event)
-{
-    console.log(event);
-    $.ajax({
-        method: "POST",
-        url: "/calendar/save_test",
-        data: {
-            "start_time" : event.start,
-            "end_time" :event.end,
-            "title" : event.title
-        }
-    }).done(function(response){
-        console.log(response);
-    })
-}

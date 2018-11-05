@@ -28,7 +28,7 @@ class Permission_model extends CI_Model
             $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
             You do not have sufficient permissions to access that page.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            url_redirect('/dashboard');
+            url_redirect('/reservations/meetings');
         }
     }
 

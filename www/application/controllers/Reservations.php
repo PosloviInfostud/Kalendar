@@ -343,9 +343,15 @@ class Reservations extends MY_Controller
 
     public function room_reservations_by_user()
     {
-        $meetings = $this->res->room_reservations_by_user($this->user_data['user']['id']);
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->load->model('Calendar_model','calendar');
+        $data['calendar'] = $this->calendar->get_all_meetings_for_user($this->user_data['user']['id']);
         $this->layouts->set_title('Active Reservations');
-        $this->layouts->view('reservations/user_meetings', ['meetings' => $meetings]);
+        $this->layouts->view('reservations/user_meetings', $data, 'master_tailwind');
     }
 
     public function get_reservation_members()

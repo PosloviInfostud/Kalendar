@@ -9,6 +9,7 @@ class Reservation_model extends CI_Model
                 res.start_time, 
                 res.end_time, 
                 res.title, 
+                rooms.name AS room,
                 res.description
                 FROM res_members AS mem 
                 INNER JOIN users AS u ON u.id = mem.user_id 
@@ -21,9 +22,15 @@ class Reservation_model extends CI_Model
                 AND u.not_create = '1'";
         $query = $this->db->query($sql, [$res_id]);
         if ($query->num_rows()) {
+            
             $result = $query->result_array();
         }
         foreach ($result as $user) {
+            
+            $user['day'] = date('l (d/m/y)', strtotime($user['start_time']));
+            $user['time'] = date('H:i', strtotime($user['start_time']))." - ".date('H:i', strtotime($user['end_time']));
+            $user['starttime'] = date('D @ H:i (d/m/y)', strtotime($user['start_time']));
+
             $this->send_members_notification($user);
         }
     }
@@ -38,6 +45,7 @@ class Reservation_model extends CI_Model
                     res.start_time, 
                     res.end_time, 
                     res.title, 
+                    rooms.name AS room,
                     res.description
                     FROM res_members AS mem 
                     INNER JOIN users AS u ON u.id = mem.user_id 
@@ -50,6 +58,10 @@ class Reservation_model extends CI_Model
             $query = $this->db->query($sql, [$user, $res_id]);
             if ($query->num_rows()) {
             $result = $query->row_array();
+
+            $result['day'] = date('l (d/m/y)', strtotime($result['start_time']));
+            $result['time'] = date('H:i', strtotime($result['start_time']))." - ".date('H:i', strtotime($result['end_time']));
+            $result['starttime'] = date('D @ H:i (d/m/y)', strtotime($result['start_time']));
             }
 
             $this->send_members_notification($result);
@@ -61,7 +73,7 @@ class Reservation_model extends CI_Model
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
         $email_details['subject'] = 'New meeting';
-        $email_details['message'] = $this->load->view('reservation_invitation_mail', $user, TRUE);
+        $email_details['message'] = $this->load->view('mails/reservation_invitation_mail', $user, TRUE);
 
         // Add email to queue
         $this->mail->add_mail_to_queue(array($user['email']), $email_details);
@@ -536,8 +548,7 @@ class Reservation_model extends CI_Model
                 INNER JOIN users as u ON res.user_id = u.id
                 INNER JOIN rooms as room ON room.id = res.room_id
                 INNER JOIN res_frequency as freq ON res.frequency_id = freq.id
-                WHERE res.id = ?
-                AND res.deleted = '0'";
+                WHERE res.id = ?";
         $query = $this->db->query($sql, [$id]);
 
         if($query->num_rows()) {
@@ -842,7 +853,7 @@ class Reservation_model extends CI_Model
         // Delete from the members table
         $sql = "UPDATE res_members 
                 SET deleted = 1, modified_at = NOW()
-                WHERE id = ?";
+                WHERE res_id = ?";
         $query = $this->db->query($sql, [$id]);
 
         // Log action
@@ -963,7 +974,6 @@ class Reservation_model extends CI_Model
         $sql = "SELECT u.email FROM res_members AS mem
                 INNER JOIN users AS u ON u.id = mem.user_id 
                 WHERE mem.res_id = ? 
-                AND mem.deleted = '0' 
                 AND mem.not_update = '1'";
         $query = $this->db->query($sql, [$id]);
 

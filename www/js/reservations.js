@@ -218,7 +218,7 @@ function submit_equipment_reservation(data) {
             $("#show_errors").html(msg.error);
         }
         if(msg.success) {
-            window.location.href = "/dashboard";
+            window.location.href = "/reservations/equipment";
         }
     })
 }

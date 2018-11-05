@@ -50,17 +50,6 @@ class Mail_model extends CI_Model
     
     public function send_mail($email)
     {
-
-        // Set SMTP Configuration
-        $emailConfig = [
-            'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'visnjamarica@gmail.com',
-            'smtp_pass' => '!v1snj4V1SNJ1C1C4!',
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        ];
         // Set your email information
         $from = [
             'email' => $email['send_from'],
@@ -72,7 +61,7 @@ class Mail_model extends CI_Model
         // load view file called "welcome_message" in to a $message variable as a html string.
         $message = $email['message'];
         // Load CodeIgniter Email library
-        $this->load->library('email', $emailConfig);
+        $this->load->library('email');
         // Sometimes you have to set the new line character for better result
         $this->email->set_newline("\r\n");
         // Set email preferences

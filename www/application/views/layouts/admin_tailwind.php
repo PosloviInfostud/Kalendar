@@ -25,7 +25,7 @@
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
-                            <a href="/dashboard" class="no-underline text-grey-light hover:text-indigo">
+                            <a href="/reservations/meetings" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
                                     <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
                                        <?= file_get_contents("public/icons/cog.svg") ?>
