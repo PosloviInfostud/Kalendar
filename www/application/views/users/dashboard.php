@@ -8,7 +8,6 @@ result = calendar.reduce(function (r, a) {
 }, Object.create(null));
 
 //creating new array for each room
-console.log(result);
 var sources = [];
 Object.keys(result).forEach(function(key){
     object = {};
@@ -16,9 +15,7 @@ Object.keys(result).forEach(function(key){
     object.textColor = '#fff';
     object.events = result[key];
     sources.push(object);
-    console.log(key, result[key])
 })
- console.log(sources);       
 </script>
 <div class="flex text-sm text-black pb-3 px-2 sm:px-0 border-b">
     <span>Reservations</span>

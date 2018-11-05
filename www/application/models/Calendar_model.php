@@ -22,7 +22,7 @@ class Calendar_model extends CI_model {
             $event->id = $row['id'];
             $event->start = $row['start_time'];
             $event->end = $row['end_time'];
-            $event->title = $row['title'];
+            $event->title = $row['name'].": ".$row['title'];
             $event->room = $row['name'];
             $event->color = $row['color'];
             $json_arr[] = $event;

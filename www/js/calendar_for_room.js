@@ -48,7 +48,7 @@
                 $("#datetime_start").attr("value", event.start);
                 $("#datetime_start").text(event.start);
                 $("#datetime_start").val(event.start);
-                $("#datetime_start").jumpToDate(event.start);
+                // $("#datetime_start").jumpToDate(event.start);
                 // fpRoomStartDate.set("defaultDate", event.start);
                 end_time = event.end;
                 console.log(start_time);
