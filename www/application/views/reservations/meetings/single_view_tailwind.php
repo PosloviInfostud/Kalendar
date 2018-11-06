@@ -130,10 +130,10 @@
                                 <?php if($meeting['creator_id'] != $member['user_id']) { ?>
                                     <td class="px-2 py-2 text-xs"><?= $member['role'] ?></td>
                                     <td class="px-2 py-2">
-                                        <button class="role_edit bg-primary-light py-1 px-2 text-white text-xs font-medium rounded" data-roleid="<?= $member['res_role_id'] ?>" data-rolename="<?= $member['role'] ?>" data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"  data-creator="<?= $meeting['creator_id'] ?>">
+                                        <button class="role_edit bg-primary py-1 px-2 text-white text-xs font-medium rounded" data-roleid="<?= $member['res_role_id'] ?>" data-rolename="<?= $member['role'] ?>" data-name="<?= $member['name'] ?>" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>"  data-creator="<?= $meeting['creator_id'] ?>">
                                             edit
                                         </button>
-                                        <button class="member_delete bg-red-light py-1 px-2 text-white text-xs font-medium rounded" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>">
+                                        <button class="member_delete bg-red py-1 px-2 text-white text-xs font-medium rounded" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>">
                                             x
                                         </button>
                                     </td>
@@ -150,7 +150,7 @@
                     <?php if (in_array($user_id, $editors) && $meeting['status'] != 'expired') {  ?>
                          <tr>
                              <td class="px-2 py-2" colspan="5">
-                                <button class="w-full bg-primary-light hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" id="btn_add_new_member" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>">Add new member</button> 
+                                <button class="w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" id="btn_add_new_member" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>">Add new member</button> 
                              </td>
                          </tr>
                     <?php } ?>       
@@ -179,17 +179,17 @@
                                 <td class="md:w-1/2 p-2"><?= $date['start_time'] ?></td>
                                 <td class="md:w-2/2 p-2">
                                 <a class="no-underline" href="/reservations/meetings/<?= $date['id'] ?>">
-                                    <button class="bg-primary-light py-1 px-2 text-white text-xs font-medium rounded">
+                                    <button class="bg-primary py-1 px-2 text-white text-xs font-medium rounded">
                                         view
                                     </button>
                                 </a>
                                 <a class="no-underline" href="/reservations/meetings/edit/<?= $date['id'] ?>">
-                                    <button class="bg-primary-light py-1 px-2 text-white text-xs font-medium rounded">
+                                    <button class="bg-primary py-1 px-2 text-white text-xs font-medium rounded">
                                         edit
                                     </button>
                                 </a>
                                 <a class="no-underline" href="/reservations/meetings/delete/<?= $date['id'] ?>">
-                                    <button class="bg-red-light py-1 px-2 text-white text-xs font-medium rounded">
+                                    <button class="bg-red py-1 px-2 text-white text-xs font-medium rounded">
                                         x
                                     </button>
                                 </a>
@@ -209,7 +209,7 @@
 <!-- Edit member role modal -->
 <div class="hidden modal" id="editUserRoleModal">
     <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
-        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-1/2 max-w-smd m-auto flex-col flex">
+        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-2/3 md:w-1/3 max-w-smd m-auto flex-col flex">
             <span class="absolute pin-t pin-b pin-r p-2 sm:p-4">
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
@@ -222,7 +222,7 @@
 <!-- Add new member modal -->
 <div class="hidden modal" id="addMemberModal">
     <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
-        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-1/2 max-w-smd m-auto flex-col flex">
+        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-2/3 md:w-1/3 max-w-smd m-auto flex-col flex">
             <span class="absolute pin-t pin-b pin-r p-2 sm:p-4">
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
@@ -235,14 +235,14 @@
 <!-- Delete member confirmation modal -->
 <div class="hidden modal" id="delete_member_confirm_modal">
     <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
-        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-1/2 max-w-smd m-auto flex-col flex">
+        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-2/3 md:w-1/3 max-w-smd m-auto flex-col flex">
             <span class="absolute pin-t pin-b pin-r p-2 sm:p-4">
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
             <div id="delete_member_confirm_modal-body" class="my-2"></div>
             <div class="flex flex-inline justify-between">
-                <button type="button" class="bg-red-light hover:bg-red text-grey-darkest text-white font-bold w-full py-2 mt-2 sm:mr-2 border border-red-light rounded" id="delete_member_confirm_modal-btn-yes">Yes</button>
-                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 sm:ml-2 border border-grey rounded" id="delete_member_confirm_modal-btn-no">No</button>
+                <button type="button" class="bg-red hover:bg-red-dark text-grey-darkest text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_member_confirm_modal-btn-yes">Yes</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_member_confirm_modal-btn-no">No</button>
             </div>
         </div>
     </div>
@@ -251,14 +251,14 @@
 <!-- Delete member confirmation modal -->
 <div class="hidden modal" id="delete_reservation_confirm_modal">
     <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
-        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-1/2 max-w-smd m-auto flex-col flex">
+        <div id="modal-content" class="relative p-8 md:p-12 bg-white sm:w-1/2 md:w-1/3 max-w-smd m-auto flex-col flex shadow">
             <span class="absolute pin-t pin-b pin-r p-2 sm:p-4">
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
             <div id="delete_reservation_confirm_modal-body" class="my-2"></div>
             <div class="flex flex-inline justify-between">
-                <button type="button" class="bg-red-light hover:bg-red text-grey-darkest text-white font-bold w-full py-2 mt-2 sm:mr-2 border border-red-light rounded" id="delete_reservation_confirm_modal-btn-yes">Yes</button>
-                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 sm:ml-2 border border-grey rounded" id="delete_reservation_confirm_modal-btn-no">No</button>
+                <button type="button" class="bg-red hover:bg-red-dark text-grey-darkest text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_reservation_confirm_modal-btn-yes">Yes</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_reservation_confirm_modal-btn-no">No</button>
             </div>
         </div>
     </div>

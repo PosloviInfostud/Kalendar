@@ -254,9 +254,11 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
-        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            Success! Your reservation has been created!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+
+        // Notification
+        $msg = $this->alerts->render('teal', 'Success!', 'Your reservation has been created.');
+        $this->session->set_flashdata('flash_message', $msg);
+
         $this->insert_reservation_members($data);
         $this->insert_creator_into_res_members($data['res_id'], $user_id);
         $this->insert_unregistered_members($data);
@@ -487,9 +489,9 @@ class Reservation_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
-        $this->session->set_flashdata('flash_message', '<div class="alert alert-success alert-dismissible fade show" role="alert">
-        Success! Your reservation has been created!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+        // Notification
+        $msg = $this->alerts->render('teal', 'Success!', 'Your reservation has been created.');
+        $this->session->set_flashdata('flash_message', $msg);
     }
 
     public function room_reservations_by_user($id)

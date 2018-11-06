@@ -6,6 +6,10 @@ $("#load-modal, #close-modal").on('click', function () {
     $("#modal").toggle('slow');
 });
 
+$("#close_alert").on('click', function () {
+    $("#alert_box").toggle('slow');
+});
+
 // Show register form
 $('*[data-link="register"]').click(function () {
     $("#messages").empty();
@@ -28,8 +32,4 @@ $('*[data-link="forgot"]').click(function () {
     $('*[data-section="register"]').addClass("hidden");
     $('*[data-section="login"]').addClass("hidden");
     $('*[data-section="forgot"]').removeClass("hidden");
-});
-
-$("#close_alert").on('click', function () {
-    $("#alert_box").toggle('slow');
 });

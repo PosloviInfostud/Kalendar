@@ -8,6 +8,11 @@ $(".close-modal").on('click', function() {
     $("#alert_box").hide('slow');
 });
 
+// Load mobile menu
+$("#phone_menu_btn").on("click", function () {
+    $("#secondary_nav").slideToggle();
+});
+
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();
@@ -48,10 +53,9 @@ $("#search_equipment").click(function(e){
     })
 })
 
-//send ajax search request for free schedule for specific room
+// Send ajax search request for free schedule for specific room
 $("#room_select").change(function(e){
     room = $(".select_room option:selected").val();
-
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_room",
@@ -64,20 +68,17 @@ $("#room_select").change(function(e){
     })
 })
 
-//get value from room radio button
+// Get value from room radio button
 var room;
 $("body").on('change click', "input.room_radio", function(e) {
     room = $(this).val();
 })
 
-
 //===============================================================================
-//submit room reservation form 
+// Submit room reservation form
 
-    //search by date
-
+//search by date
 var confirmRoomReservationByDate = function(callback){
-  
     $("body").on('click', "#reservation_room_submit_by_date", function(e) {
         e.preventDefault();
         data = {};
@@ -89,7 +90,7 @@ var confirmRoomReservationByDate = function(callback){
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
 
-        $("#room_reservation_modal").modal('show');
+        $("#room_reservation_modal").show('slow');
         $("#modal-body").html(
             "Start: "+$("#datetime_start").val()+
             "<br>End: "+$("#datetime_end").val()+
@@ -101,12 +102,12 @@ var confirmRoomReservationByDate = function(callback){
   
     $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function(){
       callback(true, data);
-      $("#room_reservation_modal").modal('hide');
+      $("#room_reservation_modal").hide('slow');
     });
     
     $("body").on("click", "#reservation_room_submit_by_date_modal-btn-no", function(){
         callback(false, data);
-      $("#room_reservation_modal").modal('hide');
+      $("#room_reservation_modal").hide('slow');
     });
 };
 
@@ -118,11 +119,10 @@ confirmRoomReservationByDate(function(confirm, data) {
     }
 })
 
-    //search by free room
-
+// Search by free room
 var confirmRoomReservationByRoom = function(callback){
-
     $("body").on('click', "#reservation_room_submit_by_room", function(e) {
+        $("#room_errors").empty();
         e.preventDefault();
         data = {};
         data.start_time = $("#datetime_start").val();
@@ -142,12 +142,12 @@ var confirmRoomReservationByRoom = function(callback){
             "<br> Description: "+$("#reservation_description").val()+
             "<br>Invited: "+$("#members").val())
     });
-    
+
     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
         callback(true, data);
         $("#room_reservation_modal").modal('hide');
     });
-    
+
     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
         callback(false, data);
         $("#room_reservation_modal").modal('hide');
@@ -170,11 +170,9 @@ function submit_room_reservation(data) {
         url: "/reservations/submit_reservation_form",
         data: data
     }).done(function(response){
-        console.log(response);
         msg = JSON.parse(response);
-        console.log(msg);
         if (msg.error) {
-            $("#show_errors").html(msg.error);
+            $("#room_errors").html(msg.error);
         }
         if(msg.success) {
             window.location.href = "/reservations/meetings";
@@ -427,7 +425,7 @@ $("body").on('submit','#add_new_member_form', function(e) {
 //===========================================================================
 //reload calendar after different room selected
 
-var room = 0;
+var room;
 $("#update_room_select").change(function(e) {
     room = $(".select_room option:selected").val();
     $.getJSON("/calendar/get_json_for_room/"+room, function(data) {

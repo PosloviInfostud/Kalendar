@@ -1,4 +1,4 @@
-<div id="room_err" class=""></div>
+<div id="room_errors" class="mb-4 text-red text-sm"></div>
 <div class="md:flex mb-4 mt-4 md:mt-0">
     <div class="md:w-1/3 md:pr-4 mb-2 md:mb-0">
         <label class="font-normal md:font-light">Which room do you want to reserve?</label>
@@ -10,7 +10,7 @@
             $i=1; 
             foreach($rooms as $room) { ?>
             <div class="py-1">
-                <input type="radio" id="customRadio<?= $i; ?>" name="room" value="<?= $room['id'] ?>" enabled>
+                <input type="radio" id="customRadio<?= $i; ?>" name="room" class="room_radio" value="<?= $room['id'] ?>" enabled>
                 <label for="customRadio<?= $i; ?>" class=""><?= $room['name'] ?></label>
             </div>
             <?php $i++;}
@@ -65,4 +65,22 @@
         <input type="submit" name="submit" id="reservation_room_submit_by_date" class="cursor-pointer w-full md:w-3/4 py-2 px-2 md:px-4 bg-primary hover:bg-primary-dark text-white font-bold border-b-4 border-primary-dark rounded hover:shadow-inner" value="Create">
     </div>
 </div>
+
+<!-- Delete member confirmation modal -->
+<div class="hidden modal" id="room_reservation_modal">
+    <div class="fixed pin z-50 overflow-auto bg-smoke-light flex items-center">
+        <div id="modal-content" class="relative p-8 bg-white w-full sm:w-2/3 md:w-1/3 max-w-smd m-auto flex-col flex">
+            <span class="absolute pin-t pin-b pin-r p-6">
+                <svg class="close-modal h-6 w-6 tex-grey-lighter hover:text-grey-darkest opacity-75" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+            <h3 class="mb-4 pb-4 border-b">Are these correct?</h3>
+            <div id="modal-body" class="my-2"></div>
+            <div class="flex flex-inline justify-between">
+                <button type="button" class="bg-red hover:bg-red-dark text-grey-darkest text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="reservation_room_submit_by_date_modal-btn-yes">Yes</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="reservation_room_submit_by_date_modal-btn-no">No</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
 <script src="/js/select2.js"></script>

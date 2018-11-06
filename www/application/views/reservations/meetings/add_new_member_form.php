@@ -11,7 +11,7 @@
     </div>
     <input type="hidden" name="res_id" id="res_id" value="<?= $res_id ?>">
 </form>
-<button type="submit" form="add_new_member_form" value="Submit" class="bg-primary-light hover:bg-primary text-grey-darkest text-white font-bold w-full py-2 mt-2 border border-primary-light rounded">
+<button type="submit" form="add_new_member_form" value="Submit" class="bg-primary hover:bg-primary-dark text-grey-darkest text-white font-bold w-full py-3 mt-2 border border-primary-light rounded">
     Invite
 </button>
 
