@@ -13,6 +13,11 @@ $("#phone_menu_btn").on("click", function () {
     $("#secondary_nav").slideToggle();
 });
 
+// Load mobile menu
+$("#new_reservation").on("touchstart", function () {
+    $("#new_reservation_options").slideToggle();
+});
+
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();
@@ -65,6 +70,7 @@ $("#room_select").change(function(e){
     })
     .done(function(response){
         $("#show").html(response);
+        $("#show").show();
     })
 })
 
@@ -122,7 +128,7 @@ confirmRoomReservationByDate(function(confirm, data) {
 // Search by free room
 var confirmRoomReservationByRoom = function(callback){
     $("body").on('click', "#reservation_room_submit_by_room", function(e) {
-        $("#room_errors").empty();
+        $("#room_errors").hide();
         e.preventDefault();
         data = {};
         data.start_time = $("#datetime_start").val();
@@ -133,7 +139,7 @@ var confirmRoomReservationByRoom = function(callback){
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
 
-        $("#room_reservation_modal").modal('show');
+        $("#room_reservation_modal").show("slow");
         $("#modal-body").html(
             "Start: "+$("#datetime_start").val()+
             "<br>End: "+$("#datetime_end").val()+
@@ -145,12 +151,12 @@ var confirmRoomReservationByRoom = function(callback){
 
     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
         callback(true, data);
-        $("#room_reservation_modal").modal('hide');
+        $("#room_reservation_modal").hide();
     });
 
     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
         callback(false, data);
-        $("#room_reservation_modal").modal('hide');
+        $("#room_reservation_modal").hide();
     });
 };
 
@@ -170,9 +176,11 @@ function submit_room_reservation(data) {
         url: "/reservations/submit_reservation_form",
         data: data
     }).done(function(response){
+        
         msg = JSON.parse(response);
         if (msg.error) {
             $("#room_errors").html(msg.error);
+            $("#room_errors").show();
         }
         if(msg.success) {
             window.location.href = "/reservations/meetings";

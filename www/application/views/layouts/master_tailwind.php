@@ -23,7 +23,10 @@
                         </div>
                     </div>
                     <div class="w-1/2 sm:w-auto text-lg text-center text-grey-light font-medium tracking-wide uppercase">
-                        Kalendar <span class="text-xs text-primary-dark">infostud</span>
+                        <div class="xs:flex xs:items-baseline">
+                            Kalendar
+                            <span class="block text-xs text-primary-dark xs:ml-2px">infostud</span>
+                        </div>
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
@@ -92,8 +95,8 @@
                             </a>
                         </div>
                     </div>
-                    <div class="flex items-center text-sm z-40 sm:relative group">
-                            <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
+                    <div class="flex items-center text-sm z-40 relative group">
+                            <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings" || substr($_SERVER['REQUEST_URI'], 0, 21) == "/reservations/meeting") { ?>
                             New meeting
                              <?php } ?>
@@ -101,7 +104,7 @@
                              New item reservation
                              <?php } ?>
                             </button>
-                        <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md sm:absolute mt-12 pin-t pin-l w-full border">
+                        <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border">
                             <ul class="list-reset">
                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings" || substr($_SERVER['REQUEST_URI'], 0, 21) == "/reservations/meeting") { ?>
                                 <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>

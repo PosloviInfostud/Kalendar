@@ -1,4 +1,4 @@
-<div id="room_errors" class="mb-4 text-red text-sm"></div>
+<div id="room_errors" class="hidden mb-4 text-red text-sm p-4 border border-red bg-red-lightest"></div>
 <div class="md:flex mb-4 mt-4 md:mt-0">
     <div class="md:w-1/3 md:pr-4 mb-2 md:mb-0">
         <label class="font-normal md:font-light">Which room do you want to reserve?</label>
@@ -66,7 +66,7 @@
     </div>
 </div>
 
-<!-- Delete member confirmation modal -->
+<!-- Confirm reservation modal -->
 <div class="hidden modal" id="room_reservation_modal">
     <div class="fixed pin z-50 overflow-auto bg-smoke-light flex items-center">
         <div id="modal-content" class="relative p-8 bg-white w-full sm:w-2/3 md:w-1/3 max-w-smd m-auto flex-col flex">

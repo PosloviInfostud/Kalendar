@@ -44,6 +44,10 @@ class Reservations extends MY_Controller
         $this->load->model('Admin_model','admin');
         $rooms = $this->admin->get_all_rooms();
         $this->layouts->set_title('Room Reservation');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
@@ -140,7 +144,8 @@ class Reservations extends MY_Controller
         $data['background'] = $this->calendar->room_color($data['room_id']);
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
-        $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
+        $view = $this->load->view('reservations/load_calendar_for_room_tailwind', $data, true);
+        // $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
 
         echo $view;
     }

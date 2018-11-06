@@ -6,8 +6,8 @@ var background = "<?= $background; ?>";
     <div class="form-froup flatpickr">
     <div id="calendar"></div>
         <p>When?</p>
-        From <input type="text" data-input name="start_time" id="datetime_start" placeholder="start datetime" class="text-center" value=""> 
-        to <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="text-center" data-default-date="">
+        From <input type="text" data-input name="start_time" id="datetime_start" placeholder="start time" class="text-center" value=""> 
+        to <input type="text" name="end_time" id="datetime_end" placeholder="end time" class="text-center" data-default-date="">
     </div>
     <div id="show_errors"><?php echo validation_errors(); ?></div>
 
@@ -61,4 +61,3 @@ var background = "<?= $background; ?>";
 </div>      
 <script src="/js/calendar_for_room.js"></script>
 <script src="/js/flatpickr_rooms.js"></script>
-<script src="/js/select2.js"></script>

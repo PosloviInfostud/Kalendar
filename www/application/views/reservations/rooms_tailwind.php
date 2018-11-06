@@ -11,7 +11,7 @@
     <span class="text-primary font-normal">New Meeting</span>
 </div>
 <!-- Content -->
-<div class="bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8">
+<div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
     <h1 class="font-normal text-xl xs:text-2xl sm:text-3xl">Create a new meeting</h1>
     <p class="mt-8 mb-4">When is it happening?</p>
     <form id="reservation_form" action="/reservations/submit_reservation_form" method="POST">
@@ -31,4 +31,4 @@
         <div id="form_errors" class="text-red text-sm"></div>
     </form>
 </div>
-<div id="free" class="hidden bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8 mt-4"></div>
+<div id="free" class="hidden bg-white border-x sm:border-y sm:rounded shadow p-8"></div>
