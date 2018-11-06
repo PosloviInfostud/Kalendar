@@ -28,9 +28,9 @@ class Reservations extends MY_Controller
         $this->layouts->view('reservations/create_reservation');
     }
 
-    public function form_rooms()
+    public function meeting_create_by_date()
     {
-        $this->layouts->set_title('New Meeting');
+        $this->layouts->set_title('Create New Meeting');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
@@ -39,7 +39,7 @@ class Reservations extends MY_Controller
         $this->layouts->view('reservations/rooms_tailwind', array(), 'master_tailwind');
     }
 
-    public function form_specific_room()
+    public function meeting_create_by_room()
     {
         $this->load->model('Admin_model','admin');
         $rooms = $this->admin->get_all_rooms();
@@ -50,10 +50,11 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->add_footer_include('/js/select2.js');
-        $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
+        // $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
+        $this->layouts->view('reservations/specific_room_tailwind', ["rooms" => $rooms], 'master_tailwind');
     }
 
-    public function form_equip()
+    public function equipment_create_by_date()
     {
         $data['equips'] = $this->res->get_all_equipment_types();
         $this->layouts->set_title('Equipment Reservation');
@@ -61,7 +62,7 @@ class Reservations extends MY_Controller
         $this->layouts->view('reservations/equipment', $data);
     }
 
-    public function form_specific_equip()
+    public function equipment_create_by_item()
     {
         $this->load->model('Admin_model','admin');
         $equipment = $this->admin->get_all_equipment();
