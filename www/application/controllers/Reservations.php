@@ -36,7 +36,6 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
-        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/rooms_tailwind', array(), 'master_tailwind');
     }
 
@@ -59,7 +58,6 @@ class Reservations extends MY_Controller
         $data['equips'] = $this->res->get_all_equipment_types();
         $this->layouts->set_title('Equipment Reservation');
         $this->layouts->add_footer_include('/js/flatpickr_items.js');
-        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/equipment', $data);
     }
 
@@ -388,6 +386,10 @@ class Reservations extends MY_Controller
         }
         $members = $this->res->get_reservation_members($id);
         $user_id = $this->user_data['user']['id'];
+
+        // Check if user is a member of the given reservation
+        $this->permission->is_member_of_reservation($members, $user_id);
+        
         $editors = $this->res->get_all_editors($id);
         $notify = $this->res->get_if_member_is_notified($id, $user_id);
 
@@ -395,8 +397,6 @@ class Reservations extends MY_Controller
             $child_dates = $this->res->get_child_reservations($meeting[0]['parent']);
         }
 
-        // Check if user is a member of the given reservation
-        $this->permission->is_member_of_reservation($members, $user_id);
 
         // Build and load view
         $data = [
@@ -410,7 +410,6 @@ class Reservations extends MY_Controller
         $this->layouts->set_title($meeting[0]['title']);
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
-        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->view('reservations/meetings/single_view_tailwind', $data, 'master_tailwind');
         // $this->layouts->view('reservations/meetings/single_view', $data);
     }
@@ -451,14 +450,12 @@ class Reservations extends MY_Controller
         // Load layout
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
-        $this->layouts->add_footer_include('/js/select2.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
-        $this->layouts->add_footer_include('/js/reservations.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
         $this->layouts->view('reservations/meetings/update_room_reservation_form_tailwind', $data, 'master_tailwind');
     }

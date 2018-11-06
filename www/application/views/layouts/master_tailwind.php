@@ -136,5 +136,6 @@
     </div>
     <!-- Footer section -->
     <?= $this->layouts->print_footer_includes() ?>
+    <script src="/js/reservations.js"></script>
     </body>
 </html>

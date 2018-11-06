@@ -8,7 +8,7 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Create New Meeting</span>
+    <span class="text-primary font-normal">New Meeting</span>
 </div>
 <!-- Content -->
 <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8">
@@ -28,7 +28,7 @@
                 <button id="search_reserved_rooms" class="w-full bg-primary hover:bg-primary-dark text-white font-bold md:ml-4 py-1 px-2 py-2 md:px-4 border-b-4 border-primary-dark rounded hover:shadow-inner">Search</button>
             </div>
         </div>
-        <div id="form_errors" class="text-red text-sm font-base"></div>
+        <div id="form_errors" class="text-red text-sm"></div>
     </form>
 </div>
 <div id="free" class="hidden bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8 mt-4"></div>

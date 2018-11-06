@@ -9,5 +9,5 @@
     <input type="hidden" name="user_id" id="update_user_role_form_user_id" value="<?= $user_id ?>">
     <input type="hidden" name="res_id" id="update_user_role_form_res_id" value="<?= $res_id ?>">
     <input type="hidden" name="creator" id="update_user_role_form_creator" value="<?= $creator ?>">
-    <input type="submit" value="Change role" class="cursor-pointer bg-primary-light hover:bg-primary text-grey-darkest text-white font-bold w-full py-2 mt-1 border border-primary-light rounded">
+    <input type="submit" value="Change role" class="cursor-pointer bg-primary hover:bg-primary-dark text-grey-darkest text-white font-bold w-full py-2 mt-1 border border-primary-light rounded">
 </form>

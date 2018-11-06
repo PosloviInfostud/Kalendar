@@ -65,7 +65,7 @@
                     </div>
                 <?php } ?>
                 <div>
-                    <input type="submit" name="submit" id="form_update_room_reservation_submit" class="cursor-pointer w-full bg-primary-light hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" value="Update">
+                    <input type="submit" name="submit" id="form_update_room_reservation_submit" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" value="Update">
                 </div>
             </form>
         </div>

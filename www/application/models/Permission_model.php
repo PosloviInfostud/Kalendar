@@ -25,9 +25,9 @@ class Permission_model extends CI_Model
 
         if($user['user_role_id'] != 1) {
             // Notification
-            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-            You do not have sufficient permissions to access that page.
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            // Notification
+            $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
+            $this->session->set_flashdata('flash_message', $msg);
             url_redirect('/reservations/meetings');
         }
     }
@@ -41,9 +41,9 @@ class Permission_model extends CI_Model
 
         if (!in_array($user_id, $members_id)) {
             // Notification
-            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Wrong request!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            // Notification
+            $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
+            $this->session->set_flashdata('flash_message', $msg);
             url_redirect('/reservations/meetings');
         }
     }
@@ -59,9 +59,9 @@ class Permission_model extends CI_Model
         $role = $result['res_role_id'];
         if ($role != 1) {
             // Notification
-            $this->session->set_flashdata('flash_message', '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-                Wrong request!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+            // Notification
+            $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
+            $this->session->set_flashdata('flash_message', $msg);
             url_redirect('/reservations/meetings');
         }
     }
