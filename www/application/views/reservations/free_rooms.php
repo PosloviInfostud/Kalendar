@@ -11,7 +11,7 @@
         foreach($rooms as $room) { ?>
             <div class="custom-control custom-radio">
                 <input type="radio" id="customRadio<?= $i; ?>" name="room" value="<?= $room['id'] ?>" class="custom-control-input room_radio" enabled>
-                <label for="customRadio<?= $i; ?>" class="custom-control-label"><?= $room['name'] ?></label>
+                <label for="customRadio<?= $i; ?>"><?= $room['name'] ?></label>
             </div>
         <?php
         $i++;

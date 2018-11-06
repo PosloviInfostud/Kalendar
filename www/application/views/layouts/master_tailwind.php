@@ -136,7 +136,6 @@
     </div>
     <!-- Footer section -->
     <?= $this->layouts->print_footer_includes() ?>
+    <script src="/public/js/app.js">
     </body>
-    <!-- <script src="/js/calendar.js"></script>
-    <script src="/public/js/app.js"></script> -->
 </html>

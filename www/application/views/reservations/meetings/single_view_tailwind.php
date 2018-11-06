@@ -1,3 +1,4 @@
+<!-- Breadcrumb -->
 <div class="flex text-xs sm:text-sm text-black px-2 sm:px-0">
     <span>Reservations</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
@@ -9,13 +10,14 @@
     </div>
     <span class="text-primary font-normal"><?= $meeting['title'] ?></span>
 </div>
+<!-- Content -->
 <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 md:p-8 my-4">
     <!-- Title and buttons section -->
     <div class="smd:flex smd:items-center smd:justify-between">
         <div class="smd:w-2/3">
-            <div class="flex items-top mb-4 smd:mb-0">
+            <div class="flex flex-inline items-top mb-4 smd:mb-0">
                 <h1 class="font-normal xs:text-2xl sm:text-3xl"><?= $meeting['title'] ?></h1>
-                <div class="flex flex-inline items-center h-5 ml-2 p-1 bg-primary text-white text-xs font-medium rounded"><?= $meeting['status'] ?></div>
+                <div class="h-5 ml-2 p-1 bg-primary text-white text-xs font-medium rounded"><?= $meeting['status'] ?></div>
             </div>
         </div>
         <div class="smd:w-1/3">
@@ -99,7 +101,7 @@
 
     <div class="md:flex">
         <!-- Members -->
-        <div class="md:w-2/3 md:mr-4">
+        <div class="md:w-2/3 md:mr-4 overflow-auto">
             <div class="flex justify-between items-center h-12">
             <div class="flex items-center h-12">
                 <h2 class="font-normal">Current members</h2>
@@ -181,7 +183,7 @@
                                         view
                                     </button>
                                 </a>
-                                <a class="no-underline" href="/reservations/meetings/update/<?= $date['id'] ?>">
+                                <a class="no-underline" href="/reservations/meetings/edit/<?= $date['id'] ?>">
                                     <button class="bg-primary-light py-1 px-2 text-white text-xs font-medium rounded">
                                         edit
                                     </button>
