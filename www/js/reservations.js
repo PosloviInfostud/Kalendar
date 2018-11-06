@@ -421,7 +421,7 @@ $("body").on('submit','#add_new_member_form', function(e) {
 //===========================================================================
 //reload calendar after different room selected
 
-var room = 0;
+var room;
 $("#update_room_select").change(function(e) {
     room = $(".select_room option:selected").val();
     $.getJSON("/calendar/get_json_for_room/"+room, function(data) {

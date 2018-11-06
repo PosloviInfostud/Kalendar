@@ -72,7 +72,9 @@
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="/reservations/meetings" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                        <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/reservations/meetings' ? 'text-white border-primary-dark' : 'text-grey-light' ?>
+                        
+                            <a href="/reservations/meetings" class="<?= $text_meetings ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
@@ -80,7 +82,9 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="/reservations/equipment" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                        <?php $text_equipment = $_SERVER['REQUEST_URI'] == '/reservations/equipment' ? 'text-white border-primary-dark' : 'text-grey-light' ?>
+
+                            <a href="/reservations/equipment" class="<?= $text_equipment ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
@@ -90,21 +94,23 @@
                     </div>
                     <div class="flex items-center text-sm z-40 sm:relative group">
                             <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
-                                New Reservation
+                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings") { ?>
+                            New meeting
+                             <?php } ?>
+                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment") { ?>
+                             New item reservation
+                             <?php } ?>
                             </button>
                         <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md sm:absolute mt-12 pin-t pin-l w-full border">
                             <ul class="list-reset">
-                                <li class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Meeting</li>
+                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings") { ?>
                                 <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
                                 <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
-                                </li>
-                                <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Equipment</span></li>
-                                <li>
-                                    <ul class="list-reset text-sm">
-                                        <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
-                                        <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
-                                    </ul>
-                                </li>
+                             <?php } ?>
+                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment") { ?>
+                                <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
+                                <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
+                             <?php } ?>
                             </ul>
                         </div>
                 </div>
