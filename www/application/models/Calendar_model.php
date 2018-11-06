@@ -74,7 +74,14 @@ class Calendar_model extends CI_model {
     
     public function get_all_meetings_for_room($id) {
         $result = [];
-        $sql = "SELECT id, start_time, end_time, title, description FROM room_reservations 
+        $sql = "SELECT  res.id, 
+                        res.start_time, 
+                        res.end_time, 
+                        res.title, 
+                        res.description,
+                        users.name AS creator
+                FROM room_reservations AS res 
+                INNER JOIN users ON users.id = res.user_id
                 WHERE (recurring = 0 OR parent != 0) AND deleted = '0' AND room_id = ?";
         $query = $this->db->query($sql, [$id]);
 
@@ -87,7 +94,7 @@ class Calendar_model extends CI_model {
             $event['id'] = $row['id'];
             $event['start'] = $row['start_time'];
             $event['end'] = $row['end_time'];
-            $event['title'] = $row['title'];
+            $event['title'] = $row['title']." (by ".$row['creator'].")";
             $event['description'] = $row['description'];
             $event['color'] = $color;
             $json_arr[] = $event;

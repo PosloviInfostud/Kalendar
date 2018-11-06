@@ -94,20 +94,20 @@
                     </div>
                     <div class="flex items-center text-sm z-40 sm:relative group">
                             <button class="w-full sm:w-auto bg-transparent hover:bg-white text-white  py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
-                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings") { ?>
+                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings" || substr($_SERVER['REQUEST_URI'], 0, 21) == "/reservations/meeting") { ?>
                             New meeting
                              <?php } ?>
-                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment") { ?>
+                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment" || substr($_SERVER['REQUEST_URI'], 0, 22) == "/reservations/equipment") { ?>
                              New item reservation
                              <?php } ?>
                             </button>
                         <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md sm:absolute mt-12 pin-t pin-l w-full border">
                             <ul class="list-reset">
-                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings") { ?>
+                            <?php if($_SERVER["REQUEST_URI"] == "/reservations/meetings" || substr($_SERVER['REQUEST_URI'], 0, 21) == "/reservations/meeting") { ?>
                                 <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
                                 <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
                              <?php } ?>
-                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment") { ?>
+                             <?php if($_SERVER["REQUEST_URI"] == "/reservations/equipment" || substr($_SERVER['REQUEST_URI'], 0, 22) == "/reservations/equipment") { ?>
                                 <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
                                 <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
                              <?php } ?>
@@ -136,6 +136,5 @@
     </div>
     <!-- Footer section -->
     <?= $this->layouts->print_footer_includes() ?>
-    <script src="/public/js/app.js">
     </body>
 </html>

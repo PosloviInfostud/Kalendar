@@ -1,5 +1,5 @@
     $(document).ready(function() {
-    var $calendar = $('#calendar').fullCalendar({
+    $('#calendar').fullCalendar({
         defaultView: "agendaWeek",
         // Do not show Saturday/Sunday
         weekends : false,
@@ -24,42 +24,6 @@
             listMonth: {buttonText: 'list month'},
         },
         //make clicks and selections possible
-        selectable: true,
-
-        //callback that will be triggered when a selection is made
-        select: function(start, end, jsEvent, view) {
-
-            // //ask for a title
-            // var title = prompt("Enter a title for this event","New event");
-            // if (title != null) {
-            //     //Create event
-            //     var event = {
-            //         title: title.trim() !="" ? title: "New event",
-            //         start: start.format("YYYY-MM-DD HH:mm"),
-            //         end: end.format("YYYY/DD/MM HH:mm")
-            //         // ,
-            //         // room: room
-            //     };
-            //     $calendar.fullCalendar("renderEvent", jsEvent, true);
-            //     saveEvent(event);
-            //     $("#datetime_start").attr("value", event.start);
-            //     $("#datetime_start").text(event.start);
-            //     $("#datetime_start").val(event.start);
-            //     // $("#datetime_start").jumpToDate(event.start);
-            //     // fpRoomStartDate.set("defaultDate", event.start);
-            //     end_time = event.end;
-            //     console.log(start_time);
-            //     //display en event
-
-            // }
-        },
-        //make events editable, globally
-        editable: true,
-        //callback triggered wehen we click on the event
-        eventClick: function(event, jsEvent, view) {
-            //ask for a title
-            window.location.href = '/reservations/meetings/'+event.id;
-        },
         viewRender: function (view, viewContainer){
             // Clear background image if still lingering
             $(".fc-view-container").addClass("bg-white");
