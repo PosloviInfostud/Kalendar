@@ -23,7 +23,8 @@ class Items extends CI_Controller
             $data = [
                 "name" => $this->input->post('name'),
                 "capacity" => $this->input->post('capacity'),
-                "description" => $this->input->post('description')
+                "description" => $this->input->post('description'),
+                "color" => $this->input->post('color')
             ];
 
         $this->item->insert_room($data);
@@ -64,7 +65,8 @@ class Items extends CI_Controller
                 "id" => $this->input->post('id'),
                 "name" => $this->input->post('name'),
                 "capacity" => $this->input->post('capacity'),
-                "description" => $this->input->post('description')
+                "description" => $this->input->post('description'),
+                "color" => $this->input->post('color')
             ];
 
             $this->item->update_room($data);
@@ -99,6 +101,9 @@ class Items extends CI_Controller
 
         $this->item->insert_equipment($data);
         $message = 'success';
+        // Notification
+        $msg = $this->alerts->render('green', 'Success', 'New item added.');
+        $this->session->set_flashdata('flash_message', $msg);
         }
 
         echo $message;
@@ -140,6 +145,9 @@ class Items extends CI_Controller
 
             $this->item->update_equipment($data);
             $message = 'success';
+            // Notification
+            $msg = $this->alerts->render('green', 'Success', 'Item updated.');
+            $this->session->set_flashdata('flash_message', $msg);
         }
 
         // Send response to ajax

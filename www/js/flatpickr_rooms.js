@@ -3,7 +3,7 @@ $(document).ready(function() {
     var fpRoomStartDate = $("#datetime_start").flatpickr({
         dateFormat: "Y-m-d H:i",
         minDate: new Date(),
-        // defaultDate: start_time,
+        defaultDate: new Date(),
         enableTime: true,
         time_24hr: true,
         minTime: "08:00",

@@ -52,7 +52,7 @@ class Admin_model extends CI_Model
     {
         $result = [];
 
-        $sql = "SELECT id, name, description, capacity FROM rooms";
+        $sql = "SELECT id, name, description, capacity, color FROM rooms";
 
         $query = $this->db->query($sql, []);
 

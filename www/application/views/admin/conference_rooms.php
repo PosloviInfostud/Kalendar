@@ -3,7 +3,7 @@
 </div>
 <div class="row mt-5 mb-3">
     <!-- Button to trigger the modal -->
-    <div class="col-4"><button id="show_add_new_room_modal" class="cursor-pointer w-1/3 bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 my-2 px-4 rounded" data-toggle="modal" data-target="#addNewRoomModal"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
+    <div class="col-4"><button id="show_add_new_room_modal" class="cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded" data-toggle="modal" data-target="#addNewRoomModal"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
     
 
 </div>
@@ -12,21 +12,23 @@
 <?php if(empty($rooms)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed table-striped border">
+        <table class="table table-text-sm table-condensed stripe border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
+                    <th scope="col">Colour</th>
                     <th scope="col">Capacity</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($rooms as $room) { ?> 
                     <tr>
-                        <td class="col-2 align-middle text-center"><button id="edit_room_modal" class="cursor-pointer w-1/3 bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                        <td class="col-2 align-middle text-center"><button class="edit_room_modal cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
                         <td class="col-2 align-middle text-center"><?= $room['name'] ?></td>
                         <td class="col-2 align-middle"><?= $room['description'] ?></td>
+                        <td class="col-2 align-middle"><input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/2 h-10 border rounded" value="<?= $room['color'] ?>" disabled></td>
                         <td class="col-2 align-middle text-center"><?= $room['capacity'] ?></td>
                     </tr>
             <?php } ?>
@@ -44,16 +46,20 @@
                 <small id="insert_error_msg" class="text-danger"></small>
                 <form>
                     <div class="mt-2 mb-8">
-                        <label for="room_name" class="font-normal text-lg mb-2">Name <small class="text-muted">(required)</small></label>
+                        <label for="room_name" class="font-light text-lg mb-2">Name <small class="text-muted">(required)</small></label>
                         <input type="text" class="bg-grey-lighter p-2 w-full font-light border rounded" id="room_name" required>
                     </div>
                     <div class="mt-2 mb-8">
-                        <label for="room_description" class="font-normal text-lg mb-2">Description</label>
+                        <label for="room_description" class="font-light text-lg mb-2">Description</label>
                         <textarea class="bg-grey-lighter font-light p-2 w-full border rounded" id="room_description" rows="3"></textarea>
                     </div>
                     <div class="mt-2 mb-8">
-                        <label for="room_capacity" class="font-normal text-lg mb-2">Capacity <small class="text-muted">(required; between 4 and 50)</small></label>
-                        <input type="number" class="bg-grey-lighter font-light p-2 w-full border rounded" id="room_capacity" required min="4" max="50">
+                        <label for="room_capacity" class="font-light text-lg mb-2">Capacity <br><small class="text-grey text-sm">(required; between 4 and 50)</small></label>
+                        <input type="number" class="bg-grey-lighter font-light ml-4 py-2 w-auto border rounded" id="room_capacity" required min="4" max="50">
+                    </div>
+                    <div class="mt-2 mb-8">
+                        <label for="room_color" class="font-light text-lg mb-2">Color for Calendar <br><small class="text-grey text-sm">(required)</small></label>
+                        <input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/4 h-10 border rounded" id="room_color">
                     </div>
                 </form>  
             <div class="inline-flex">
@@ -78,7 +84,6 @@
                 </span>
                 <small id="insert_error_msg" class="text-danger"></small>
                 <div id="edit_room_modal_body">
-                
                 </div>
             </div>
         </div>

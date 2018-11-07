@@ -5,14 +5,14 @@ class Item_model extends CI_Model
     /* CONFERENCE ROOMS */
     public function insert_room($data)
     {
-        $sql = 'INSERT INTO rooms (name, description, capacity) VALUES (?, ?, ?)';
-        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity']]);
+        $sql = 'INSERT INTO rooms (name, description, capacity, color) VALUES (?, ?, ?, ?)';
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity'], $data['color']]);
     }
 
     public function update_room($data)
     {
-        $sql = "UPDATE rooms SET name = ?, description = ?, capacity = ? WHERE id = ?";
-        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity'], $data['id']]);
+        $sql = "UPDATE rooms SET name = ?, description = ?, capacity = ?, color = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['description'], $data['capacity'], $data['color'], $data['id']]);
     }
 
     public function get_single_room($id)
