@@ -1,4 +1,10 @@
-    $(document).ready(function() {
+$(document).ready(function() {
+    // Show calendar
+    $("#show_calendar").on("click", function() {
+        $("#calendar").slideToggle();
+    })
+
+    // Initiate calendar
     var $calendar = $('#calendar').fullCalendar({
         defaultView: "month",
         // Do not show Saturday/Sunday
@@ -38,21 +44,21 @@
         eventRender: function(event, element) {
         },
         eventAfterAllRender : function( view ) {
-		    if (view.type == 'listWeek') {
-			console.log(view.type + ' change colspan');
-			console.log(view)
-			var tableSubHeaders = jQuery("td.fc-widget-header");
-			console.log(tableSubHeaders);
-			var numberOfColumnsItem = jQuery('tr.fc-list-item');
-			var maxCol = 0;
-			var arrayLength = numberOfColumnsItem.length;
-			for (var i = 0; i < arrayLength; i++) {
-			    maxCol = Math.max(maxCol,numberOfColumnsItem[i].children.length);
-			}
-			console.log("number of items : " + maxCol);
-			tableSubHeaders.attr("colspan",maxCol);
+            if (view.type == 'listWeek') {
+            console.log(view.type + ' change colspan');
+            console.log(view)
+            var tableSubHeaders = jQuery("td.fc-widget-header");
+            console.log(tableSubHeaders);
+            var numberOfColumnsItem = jQuery('tr.fc-list-item');
+            var maxCol = 0;
+            var arrayLength = numberOfColumnsItem.length;
+            for (var i = 0; i < arrayLength; i++) {
+                maxCol = Math.max(maxCol,numberOfColumnsItem[i].children.length);
+            }
+            console.log("number of items : " + maxCol);
+            tableSubHeaders.attr("colspan",maxCol);
                     }		    
-		},
+        },
 
         eventSources: [
             {
@@ -63,7 +69,8 @@
         ]
     })
 });
-//removes event
+
+// Removes event
 function remove_event(id) {
     var remove = confirm("remove event id"+id+"?");
     if (remove == true) {

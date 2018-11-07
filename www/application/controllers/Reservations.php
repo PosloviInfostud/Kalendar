@@ -54,16 +54,17 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->add_footer_include('/js/select2.js');
-        // $this->layouts->view('reservations/specific_room', ["rooms" => $rooms]);
         $this->layouts->view('reservations/specific_room_tailwind', ["rooms" => $rooms], 'master_tailwind');
     }
 
     public function equipment_create_by_date()
     {
         $data['equips'] = $this->res->get_all_equipment_types();
-        $this->layouts->set_title('Equipment Reservation');
+        $this->layouts->set_title('Create New Reservation');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_items.js');
-        $this->layouts->view('reservations/equipment', $data);
+        $this->layouts->view('reservations/equipment_tailwind', $data, 'master_tailwind');
     }
 
     public function equipment_create_by_item()
@@ -71,13 +72,15 @@ class Reservations extends MY_Controller
         $this->load->model('Admin_model','admin');
         $equipment = $this->admin->get_all_equipment();
         $this->layouts->set_title('Item Reservation');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->add_footer_include('/js/select2.js');
-        $this->layouts->view('reservations/specific_equipment',["equipment" => $equipment]);
+        $this->layouts->view('reservations/specific_equipment_tailwind', ["equipment" => $equipment], 'master_tailwind');
     }
 
     public function search_free_rooms()
@@ -145,8 +148,6 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
         $view = $this->load->view('reservations/load_calendar_for_room_tailwind', $data, true);
-        // $view = $this->load->view('reservations/load_calendar_for_room', $data, true);
-
         echo $view;
     }
 
@@ -154,8 +155,7 @@ class Reservations extends MY_Controller
     {
         $data['equipment_id'] = $this->input->post('equipment_id');
         $data['current_reservations'] = $this->calendar->get_all_item_reservations($data['equipment_id']);
-        $view = $this->load->view('reservations/load_calendar_for_item', $data, true);
-
+        $view = $this->load->view('reservations/load_calendar_for_item_tailwind', $data, true);
         echo $view;
     }
 
@@ -185,7 +185,6 @@ class Reservations extends MY_Controller
             ];
 
         $free = $this->res->check_if_room_is_free($data);
-
         echo $free;
         }
     }
@@ -198,27 +197,35 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('end_time','End Time', 'trim|required');
         $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required');
 
+        $message = [];
+
         if($this->form_validation->run() == false) {
-            echo validation_errors();
-            die;
-        } 
-        if($this->input->post('start_time') < $date) {
-                echo "Change start time. You have to reserve in advance";
+            $message['status'] = 'error';
+            $message['response'] = validation_errors();
+        }
+        elseif($this->input->post('start_time') < $date) {
+                $message['status'] = 'error';
+                $message['response'] = "Change start time. You have to reserve in advance";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            echo "Check start and end time again. End time has to be greater than start time.";
-
-        } else {
+            $message['status'] = 'error';
+            $message['response'] = "Check start and end time again. End time has to be greater than start time.";
+        }
+        else {
             $data = [
                 "start_time" => $this->input->post('start_time'),
                 "end_time" => $this->input->post('end_time'),
                 "type" => $this->input->post('equipment_type')
             ];
             $free_equipment = $this->res->search_free_equipment($data);
-            $view = $this->load->view('reservations/free_equipment',["items" => $free_equipment], true);
-            
-            echo $view;
+            $view = $this->load->view('reservations/free_equipment_tailwind',["items" => $free_equipment], true);
+
+            $message['status'] = 'success';
+            $message['response'] = $view;
         }
+
+        echo json_encode($message);
+        die();
     }
 
     public function submit_reservation_form()
@@ -301,11 +308,9 @@ class Reservations extends MY_Controller
             if($this->res->check_if_room_is_free($data)) {
                 $this->res->submit_reservation_form($data);
                 $message['success'] = "success";
-
             } else {
                 $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
             }
-
         }
         echo json_encode($message);
     }
@@ -317,16 +322,22 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
         $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
         $this->form_validation->set_rules('equipment_id', 'Equipment', 'trim|required');
-        $this->form_validation->set_rules('description', 'Reservation Description', 'trim|required');
+        $this->form_validation->set_rules('description', 'Reservation Description', 'trim');
+
+        $message = [];
 
         if($this->form_validation->run() == false) {
-            $message['error'] = validation_errors();
+
+            $message['status'] = 'error';
+            $message['response'] = validation_errors();
 
         } elseif($this->input->post('start_time') < $date) {
-            $message['error'] = "Change start time. You have to reserve in advance";
+            $message['status'] = 'error';
+            $message['response'] = "Change start time. You have to reserve in advance";
         }
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['status'] = 'error';
+            $message['response'] = "Check start and end time again. End time has to be greater than start time.";
         } else {
             $data = [
                 "start_time" => $this->input->post('start_time'),
@@ -336,10 +347,10 @@ class Reservations extends MY_Controller
             ];
             if($this->res->check_if_equipment_is_free($data)) {
                 $this->res->submit_reservation_equip_form($data);
-                $message['success'] = "success";
-                            
+                $message['status'] = "success"; 
             } else {
-                $message['error'] = "Unfortunately, the item is not available at that time! Check again.";
+                $message['status'] = 'error';
+                $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
             }
         }
         echo json_encode($message);

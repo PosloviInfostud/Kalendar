@@ -32,11 +32,14 @@ $("#search_reserved_rooms").click(function(e){
     })
     .done(function(response){
         if(response['status'] == 'success') {
-            $('#form_errors').empty();
+            $('#form_errors').hide();
+            $("#main-container").addClass("bg-smoke-lightest").removeClass("bg-white shadow");
+            $("#search_reserved_rooms").addClass("bg-primary-lighter hover:bg-primary-light").removeClass("bg-primary hover:bg-primary-dark");
             $('#free').html(response['message']);
             $('#free').show();
         } else {
             $('#form_errors').html(response['errors']);
+            $('#form_errors').show();
         }
     })
 })
@@ -44,6 +47,8 @@ $("#search_reserved_rooms").click(function(e){
 //send ajax requests for equipment type needed
 $("#search_equipment").click(function(e){
     e.preventDefault();
+    console.log("clicked");
+    
     $.ajax({
         method: "POST",
         url: "/reservations/search_free_equipment",
@@ -54,7 +59,16 @@ $("#search_equipment").click(function(e){
         }
     })
     .done(function(response){
-        $("#rest").html(response);
+        $("#form_errors").hide();
+        msg = JSON.parse(response);
+        if(msg['status'] == 'error') {
+            $("#form_errors").html(msg['response']);
+            $("#form_errors").show();
+        } else {
+            $("#rest").html(msg['response']);
+            $("#rest").show();
+            $("#search_equipment").addClass("bg-primary-lighter hover:bg-primary-light").removeClass("bg-primary hover:bg-primary-dark shadow");
+        } 
     })
 })
 
@@ -168,8 +182,7 @@ confirmRoomReservationByRoom(function(confirm, data) {
     }
 })
 
-    //sending AJAX
-
+// Sending AJAX
 function submit_room_reservation(data) {
     $.ajax({
         method: "POST",
@@ -189,10 +202,9 @@ function submit_room_reservation(data) {
 }
 //==============================================================================
 
-//send ajax search request for free schedule for specific item
-$("select.select_item").change(function(e){
+// Send ajax search request for free schedule for specific item
+$("select.select_item").change(function(e) {
     item = $(".select_item option:selected").val();
-    console.log(item);
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_item",
@@ -202,14 +214,14 @@ $("select.select_item").change(function(e){
     })
     .done(function(response){
         $("#show").html(response);
+        $("#show").show();
     })
 })
 
 //===================================================================================
-//submit equipment reservation form
+// Submit equipment reservation form
 
-    //sending AJAX
-
+// Sending AJAX
 function submit_equipment_reservation(data) {
     $.ajax({
         method: "POST",
@@ -217,20 +229,18 @@ function submit_equipment_reservation(data) {
         data: data
     })
     .done(function(response){
-        console.log(response);
+        $("#equipment_errors").hide();
         msg = JSON.parse(response);
-        console.log(msg);
-        if (msg.error) {
-            $("#show_errors").html(msg.error);
-        }
-        if(msg.success) {
+        if (msg['status'] == 'error') {
+            $("#equipment_errors").html(msg['response']);
+            $("#equipment_errors").show();
+        } else {
             window.location.href = "/reservations/equipment";
         }
     })
 }
 
-    //search by date
-
+//search by date
 var confirmEquipReservationByDate = function(callback) {
 
     $("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
@@ -241,7 +251,7 @@ var confirmEquipReservationByDate = function(callback) {
         data.description =  $("#reservation_description").val();
         data.equipment_id =  $(".radio_equipment_id:checked").val(); 
 
-        $("#equip_reservation_modal").modal('show');
+        $("#equip_reservation_modal").show('slow');
         $("#modal-body").html(
             "Start: "+$("#item_datetime_start").val()+
             "<br>End: "+$("#item_datetime_end").val()+
@@ -250,12 +260,12 @@ var confirmEquipReservationByDate = function(callback) {
 
     $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-yes", function(){
         callback(true, data);
-        $("#equip_reservation_modal").modal('hide');
+        $("#equip_reservation_modal").hide();
       });
       
       $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-no", function(){
           callback(false, data);
-        $("#equip_reservation_modal").modal('hide');
+        $("#equip_reservation_modal").hide();
       });
 }
 
@@ -279,7 +289,7 @@ var confirmEquipReservationByItem = function(callback) {
         data.description =  $("#reservation_description").val();
         data.equipment_id =  $(".select_item option:selected").val(); 
 
-        $("#equip_reservation_modal").modal('show');
+        $("#equip_reservation_modal").show('slow');
         $("#modal-body").html(
             "Start: "+$("#item_datetime_start").val()+
             "<br>End: "+$("#item_datetime_end").val()+
@@ -288,12 +298,12 @@ var confirmEquipReservationByItem = function(callback) {
 
     $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-yes", function(){
         callback(true, data);
-        $("#equip_reservation_modal").modal('hide');
+        $("#equip_reservation_modal").hide();
         });
         
         $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-no", function(){
             callback(false, data);
-        $("#equip_reservation_modal").modal('hide');
+        $("#equip_reservation_modal").hide();
         });
 }
 
@@ -366,12 +376,12 @@ var deleteMemberConfirmModal = function(callback) {
 
     $("body").on("click", "#delete_member_confirm_modal-btn-yes", function(){
         callback(true, data);
-        $("#delete_member_confirm_modal").modal('hide');
+        $("#delete_member_confirm_modal").hide();
       });
       
       $("body").on("click", "#delete_member_confirm_modal-btn-no", function(){
           callback(false, data);
-        $("#delete_member_confirm_modal").modal('hide');
+        $("#delete_member_confirm_modal").hide();
       });
     }
 
@@ -502,12 +512,12 @@ var deleteReservationConfirmModal = function(callback) {
 
     $("body").on("click", "#delete_reservation_confirm_modal-btn-yes", function(){
         callback(true);
-        $("#delete_reservation_confirm_modal").modal('hide');
+        $("#delete_reservation_confirm_modal").hide();
       });
       
       $("body").on("click", "#delete_reservation_confirm_modal-btn-no", function(){
           callback(false);
-        $("#delete_reservation_confirm_modal").modal('hide');
+        $("#delete_reservation_confirm_modal").hide();
       });
     }
 
@@ -527,7 +537,7 @@ var confirmEquipUpdate = function(callback){
   
     $("#update_equipment_submit").on("click", function(e){
         e.preventDefault();
-      $("#update_equipment_modal").modal('show');
+      $("#update_equipment_modal").show('slow');
       $("#modal-body").html(
         "Start: "+$("#update_item_datetime_start").val()+
         "<br>End: "+$("#update_item_datetime_end").val()+
@@ -536,12 +546,12 @@ var confirmEquipUpdate = function(callback){
   
     $("#modal-btn-yes").on("click", function(){
       callback(true);
-      $("#update_equipment_modal").modal('hide');
+      $("#update_equipment_modal").hide();
     });
     
     $("#modal-btn-no").on("click", function(){
       callback(false);
-      $("#update_equipment_modal").modal('hide');
+      $("#update_equipment_modal").hide();
     });
 };
   
@@ -588,12 +598,12 @@ var deleteEquipReservationConfirmModal = function(callback) {
 
 $("body").on("click", "#delete_equip_reservation_confirm_modal-btn-yes", function(){
     callback(true);
-    $("#delete_equip_reservation_confirm_modal").modal('hide');
+    $("#delete_equip_reservation_confirm_modal").hide();
   });
   
   $("body").on("click", "#delete_equip_reservation_confirm_modal-btn-no", function(){
       callback(false);
-    $("#delete_equip_reservation_confirm_modal").modal('hide');
+    $("#delete_equip_reservation_confirm_modal").hide();
   });
 }
 
