@@ -16,7 +16,7 @@
     <div class="smd:flex smd:items-center smd:justify-between">
         <div class="smd:w-2/3">
             <div class="flex flex-inline items-top mb-4 smd:mb-0">
-                <h1 class="font-normal xs:text-2xl sm:text-3xl"><?= $meeting['title'] ?></h1>
+                <h1 class="pl-2 font-normal text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary"><?= $meeting['title'] ?></h1>
                 <div class="h-5 ml-2 p-1 bg-primary text-white text-xs font-medium rounded"><?= $meeting['status'] ?></div>
             </div>
         </div>

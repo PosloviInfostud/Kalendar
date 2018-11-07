@@ -36,7 +36,7 @@
                 <div class="md:w-1/3 mb-2 md:mb-0 md:flex">
                     <label for="equipment_type" class="mr-4 font-light">When?</label>
                 </div>
-                <div class="md:w-2/3 flex">
+                <div class="sm:w-2/3 sm:flex">
                     <div class="sm:mr-2 sm:w-1/2">
                         <input type="text" name="start_time" id="item_datetime_start" placeholder="Start time" class="w-full bg-grey-lighter py-2 font-light text-center border rounded"> 
                         <p class="sm:mr-1 mt-2px text-grey-dark uppercase text-xs">from</p>

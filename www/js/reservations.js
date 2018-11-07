@@ -112,15 +112,17 @@ $("body").on('change click', "input.room_radio", function(e) {
     });
 
     function submit_room_reservation_by_date(data) {
-        console.log(data);
+        $("#room_errors").hide();
         $.ajax({
             method: "POST",
             url: "/reservations/validate_reservation_form",
             data: data
         }).done(function(response){
             msg = JSON.parse(response);
+           
             if (msg.error) {
                 $("#room_errors").html(msg.error);
+                $("#room_errors").show();
             }
             if(msg.success) {
                 $("#room_reservation_modal").show('slow');
@@ -192,7 +194,6 @@ $("body").on('change click', "input.room_radio", function(e) {
     });
 
     function submit_room_reservation_by_room(data) {
-        console.log(data);
         $.ajax({
             method: "POST",
             url: "/reservations/validate_reservation_form",
@@ -217,7 +218,7 @@ $("body").on('change click', "input.room_radio", function(e) {
                             method: "POST",
                             url: "/reservations/submit_reservation_form",
                             data: data
-                        }).done(function(response){
+                        }).done(function(response) {
                             msg = JSON.parse(response);
                             if (msg.error) {
                                 $("#room_errors").html(msg.error);
@@ -225,8 +226,7 @@ $("body").on('change click', "input.room_radio", function(e) {
                             if(msg.success) {
                                 window.location.href = "/reservations/meetings";
                             }
-                        })     ;
-                        console.log(data);
+                        });
                         $("#room_reservation_modal").hide('slow');
                     });
                 

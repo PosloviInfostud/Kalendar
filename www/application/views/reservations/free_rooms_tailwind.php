@@ -36,7 +36,7 @@
             <label for="title" class="mr-4">What is the name of the event?</label>
         </div>
         <div class="md:w-2/3">
-            <input type="text" name="title" id="reservation_name" class="w-full p-3 bg-grey-lighter border rounded">
+            <input type="text" name="title" id="reservation_name" class="w-full p-2 font-light bg-grey-lighter border rounded">
         </div>
     </div>
     <div class="md:flex mt-8 mb-4">
@@ -44,7 +44,7 @@
             <label for="description" class="mr-4">Describe it to the attendants</label>
         </div>
         <div class="md:w-2/3">
-            <textarea name="description" rows="4" id="reservation_description" class="w-full p-3 bg-grey-lighter border rounded"></textarea>
+            <textarea name="description" rows="4" id="reservation_description" class="w-full p-2 font-light bg-grey-lighter border rounded"></textarea>
         </div>
     </div>
     <div class="md:flex mt-8">
@@ -52,7 +52,7 @@
             <label for="description" class="mr-4">Who do you want to invite?</label>
         </div>
         <div class="md:w-2/3">
-        <select class="js-example-basic-multiple w-full p-3 bg-grey-lighter border rounded" name="members[]" id="members" multiple="multiple">
+        <select class="js-example-basic-multiple w-full p-2 font-light bg-grey-lighter border rounded" name="members[]" id="members" multiple="multiple">
             <?php foreach($users as $user) { ?>
                 <option value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
             <?php  } ?>
