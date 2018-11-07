@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="/public/css/app.css">
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
@@ -82,10 +84,10 @@
                             </div>
                                 <span>Reservations</span>
                             </div>
-                            <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
+                            <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="#meetings" id="show_room_res" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Meetings</a></li>
-                                    <li><a href="#equipment" id="show_equipment_res" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Equipment</a></li>
+                                    <li><a href="/admin/meetings" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Meetings</a></li>
+                                    <li><a href="/admin/equipment" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Equipment</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -96,16 +98,16 @@
                             </div>
                                 <span>Items</span>
                             </div>
-                            <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-indigo shadow-md sm:absolute mt-12 pin-t pin-l w-48">
+                            <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-indigo shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
                                     <li class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Meetings</li>
-                                    <li><a href="#conference-rooms" id="show_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Conference room list</a></li>
+                                    <li><a href="/admin/conference_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Conference room list</a></li>
                                     </li>
                                     <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Equipment</span></li>
                                     <li>
                                         <ul class="list-reset text-sm">
-                                            <li><a href="#items" id="show_equip_items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
-                                            <li><a href="#item-types" id="show_item_types" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Item types</a></li>
+                                            <li><a href="/admin/items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
+                                            <li><a href="/admin/types" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Item types</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -118,15 +120,15 @@
                             </div>
                                 <span>Users</span>
                             </div>
-                            <div class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
+                            <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="#users" id="show_users" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">List of users</a></li>
-                                    <li><a href="#user-activities" id="show_user_activites" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">User activites</a></li>
+                                    <li><a href="/admin/users" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">List of users</a></li>
+                                    <li><a href="/admin/activities" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">User activites</a></li>
                                 </ul>
                             </div>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                            <a href="#" id="show_logs" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
+                            <a href="/admin/logs" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
                             <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
                                 <?= file_get_contents("public/icons/database.svg") ?>
                             </div>
@@ -153,28 +155,9 @@
                 </span>
             </div>
         </div>
+        <div class="z-0 mt-5">
         <?= $content_for_layout ?>
-    <div class="mt-6"><a href="#" id="load-modal" class="no-underline text-grey text-sm">Dare to click me?</a></div>
-    </div>
-    <!-- Modal -->
-    <div class="hidden" id="modal">
-        <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
-            <div id="modal-content" class="relative p-16 bg-white w-full max-w-md m-auto flex-col flex">
-                <span class="absolute pin-t pin-b pin-r p-4">
-                    <svg id="close-modal" class="h-12 w-12 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
-                </span>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elite. Quod blanditiis, quia ut tempore iusto labore adipisci saepe, dolorem debitis veritatis minima incidunt minus porro, rerum sed mollitia! A, ipsa possimus.</p>
-                <div class="inline-flex">
-                    <button class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded-l">
-                        Prev
-                    </button>
-                    <button class="bg-blue hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded-r">
-                        Next
-                    </button>
-                </div>
-            </div>
         </div>
-    </div>
     <!-- Footer section -->
     <script src="/js/admin.js"></script>
     <script src="/public/js/app.js"></script>

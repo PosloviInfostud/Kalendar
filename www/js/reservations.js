@@ -56,6 +56,7 @@ $("#search_equipment").click(function(e){
 // Send ajax search request for free schedule for specific room
 $("#room_select").change(function(e){
     room = $(".select_room option:selected").val();
+    room_name = $(this).attr("data-room_name");
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_room",
@@ -72,13 +73,11 @@ $("#room_select").change(function(e){
 var room;
 $("body").on('change click', "input.room_radio", function(e) {
     room = $(this).val();
+    room_name = $(this).attr("data-room_name");
 })
 
 //===============================================================================
-// Submit room reservation form
-
-//search by date
-var confirmRoomReservationByDate = function(callback){
+// Submit room reservation form (search by date)
     $("body").on('click', "#reservation_room_submit_by_date", function(e) {
         e.preventDefault();
         data = {};
@@ -89,38 +88,56 @@ var confirmRoomReservationByDate = function(callback){
         data.title = $("#reservation_name").val();
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
+        submit_room_reservation_by_date(data);
+    });
 
-        $("#room_reservation_modal").show('slow');
-        $("#modal-body").html(
-            "Start: "+$("#datetime_start").val()+
-            "<br>End: "+$("#datetime_end").val()+
-            "<br>Room: "+room+
-            "<br>Title: "+$("#reservation_name").val()+
-            "<br> Description: "+$("#reservation_description").val()+
-            "<br>Invited: "+$("#members").val())
-    });
-  
-    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function(){
-      callback(true, data);
-      $("#room_reservation_modal").hide('slow');
-    });
+    function submit_room_reservation_by_date(data) {
+        console.log(data);
+        $.ajax({
+            method: "POST",
+            url: "/reservations/validate_reservation_form",
+            data: data
+        }).done(function(response){
+            msg = JSON.parse(response);
+            if (msg.error) {
+                $("#room_errors").html(msg.error);
+            }
+            if(msg.success) {
+                $("#room_reservation_modal").show('slow');
+                $("#modal-body").html(
+                    "Start: "+$("#datetime_start").val()+
+                    "<br>End: "+$("#datetime_end").val()+
+                    "<br>Room: "+room_name+
+                    "<br>Title: "+$("#reservation_name").val()+
+                    "<br> Description: "+$("#reservation_description").val()+
+                    "<br>Invited: "+$("#members").val());
     
-    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-no", function(){
-        callback(false, data);
-      $("#room_reservation_modal").hide('slow');
-    });
-};
-
-confirmRoomReservationByDate(function(confirm, data) {
-    if(confirm) {
-        submit_room_reservation(data);
-    } else {
-        return false;
+                    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function(){
+                        $.ajax({
+                            method: "POST",
+                            url: "/reservations/submit_reservation_form",
+                            data: data
+                        }).done(function(response){
+                            msg = JSON.parse(response);
+                            if (msg.error) {
+                                $("#room_errors").html(msg.error);
+                            }
+                            if(msg.success) {
+                                window.location.href = "/reservations/meetings";
+                            }
+                        })     ;
+                        console.log(data);
+                        $("#room_reservation_modal").hide('slow');
+                    });
+                
+                    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-no", function(){
+                        $("#room_reservation_modal").hide('slow');
+                    });       
+            };
+        })
     }
-})
-
-// Search by free room
-var confirmRoomReservationByRoom = function(callback){
+//===================================================================================================  
+// Submit room reservation form (search by free room)
     $("body").on('click', "#reservation_room_submit_by_room", function(e) {
         $("#room_errors").empty();
         e.preventDefault();
@@ -132,53 +149,55 @@ var confirmRoomReservationByRoom = function(callback){
         data.title = $("#reservation_name").val();
         data.description = $("#reservation_description").val();
         data.members = $("#members").val();
-
-        $("#room_reservation_modal").modal('show');
-        $("#modal-body").html(
-            "Start: "+$("#datetime_start").val()+
-            "<br>End: "+$("#datetime_end").val()+
-            "<br>Room: "+room+
-            "<br>Title: "+$("#reservation_name").val()+
-            "<br> Description: "+$("#reservation_description").val()+
-            "<br>Invited: "+$("#members").val())
+        submit_room_reservation_by_room(data);
     });
 
-    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
-        callback(true, data);
-        $("#room_reservation_modal").modal('hide');
-    });
-
-    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
-        callback(false, data);
-        $("#room_reservation_modal").modal('hide');
-    });
-};
-
-confirmRoomReservationByRoom(function(confirm, data) {
-    if(confirm) {
-        submit_room_reservation(data);
-    } else {
-        return false;
+    function submit_room_reservation_by_room(data) {
+        console.log(data);
+        $.ajax({
+            method: "POST",
+            url: "/reservations/validate_reservation_form",
+            data: data
+        }).done(function(response){
+            msg = JSON.parse(response);
+            if (msg.error) {
+                $("#room_errors").html(msg.error);
+            }
+            if(msg.success) {
+                $("#room_reservation_modal").show('slow');
+                $("#modal-body").html(
+                    "Start: "+$("#datetime_start").val()+
+                    "<br>End: "+$("#datetime_end").val()+
+                    "<br>Room: "+room_name+
+                    "<br>Title: "+$("#reservation_name").val()+
+                    "<br> Description: "+$("#reservation_description").val()+
+                    "<br>Invited: "+$("#members").val());
+    
+                    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
+                        $.ajax({
+                            method: "POST",
+                            url: "/reservations/submit_reservation_form",
+                            data: data
+                        }).done(function(response){
+                            msg = JSON.parse(response);
+                            if (msg.error) {
+                                $("#room_errors").html(msg.error);
+                            }
+                            if(msg.success) {
+                                window.location.href = "/reservations/meetings";
+                            }
+                        })     ;
+                        console.log(data);
+                        $("#room_reservation_modal").hide('slow');
+                    });
+                
+                    $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
+                        $("#room_reservation_modal").hide('slow');
+                    });       
+            };
+        })
     }
-})
 
-    //sending AJAX
-
-function submit_room_reservation(data) {
-    $.ajax({
-        method: "POST",
-        url: "/reservations/submit_reservation_form",
-        data: data
-    }).done(function(response){
-        msg = JSON.parse(response);
-        if (msg.error) {
-            $("#room_errors").html(msg.error);
-        }
-        if(msg.success) {
-            window.location.href = "/reservations/meetings";
-        }
-    })
-}
 //==============================================================================
 
 //send ajax search request for free schedule for specific item
@@ -452,6 +471,7 @@ $("#form_update_room_reservation").submit(function(e){
             title : $("#reservation_name").val(),
             description : $("#reservation_description").val(),
             update_all : $("#update_all_child_reservations").is(":checked"),
+            send_email_update: $("#send_email_update").is(":checked"),
             res : $("#res").val(),
             parent : $("#parent").val()
         }

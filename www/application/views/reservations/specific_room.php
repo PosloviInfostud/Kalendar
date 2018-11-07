@@ -5,7 +5,7 @@
             <select name="room" id="room_select" class="js-example-basic-single form-control select_room">
                 <option selected="true" disabled="disabled">Choose room</option> 
                 <?php foreach ($rooms as $room) { ?>
-                    <option value="<?= $room['id']; ?>"><?= $room['name']; ?></option>
+                    <option value="<?= $room['id']; ?>" data-room_name="<?= $room['name']; ?>"><?= $room['name']; ?></option>
                 <?php } ?>
             </select>
         </div>

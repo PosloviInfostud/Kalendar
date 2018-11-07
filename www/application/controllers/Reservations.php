@@ -215,7 +215,7 @@ class Reservations extends MY_Controller
         }
     }
 
-    public function submit_reservation_form()
+    public function validate_reservation_form()
     {
         $this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
@@ -229,49 +229,6 @@ class Reservations extends MY_Controller
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
         $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        // if ($this->form_validation->run()) {
-        //     $data = [
-        //         "start_time" => $this->input->post('start_time'),
-        //         "end_time" => $this->input->post('end_time'),
-        //         "frequency" => $this->input->post('frequency'),
-        //         "room" => $this->input->post('room'),
-        //         "title" => $this->input->post('title'),
-        //         "description" => $this->input->post('description'),
-        //         "members" => $this->input->post('members')
-        //     ];
-
-        //     if($this->res->check_if_room_is_free($data)) {
-        //         $this->res->submit_reservation_form($data);
-        //         $response['status'] = "success";
-        //     } else {
-        //         $response['status'] = "user_error";
-        //         $response['errors'] = "Unfortunately, the room is not available at that time! Check again.";
-        //     }
-        // } else {
-        //     $errors = array();
-        //     // Loop through $_POST and get the keys
-        //     foreach ($this->input->post() as $key => $value) {
-        //         // Add the error message for this field
-        //         $errors[] = $value;
-        //     }
-        //     $response['errors'] = validation_errors();
-        //     $response['status'] = 'form_error';
-        //     // $errors = array();
-        //     // // Loop through $_POST and get the keys
-        //     // foreach ($this->input->post() as $key => $value) {
-        //     //     // Add the error message for this field
-        //     //     $errors[$key] = form_error($key);
-        //     // }
-        //     // $response['errors'] = array_filter($errors); // Some might be empty
-        //     // $response['status'] = 'form_error';
-        // }
-        // header('Content-type: application/json');
-        // echo json_encode($response);
-        // exit();
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
 
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
@@ -293,13 +250,37 @@ class Reservations extends MY_Controller
                 "members" => $this->input->post('members')
             ];
             if($this->res->check_if_room_is_free($data)) {
-                $this->res->submit_reservation_form($data);
+                // $this->res->submit_reservation_form($data);
                 $message['success'] = "success";
 
             } else {
                 $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
             }
 
+        }
+        echo json_encode($message);
+    }
+
+    public function submit_reservation_form()
+    {
+        $this->load->model('Datetime_model', 'datetime');
+        $date = date('Y-m-d h:i:s', time());
+
+        $data = [
+            "start_time" => $this->input->post('start_time'),
+            "end_time" => $this->input->post('end_time'),
+            "frequency" => $this->input->post('frequency'),
+            "room" => $this->input->post('room'),
+            "title" => $this->input->post('title'),
+            "description" => $this->input->post('description'),
+            "members" => $this->input->post('members')
+        ];
+        if($this->res->check_if_room_is_free($data)) {
+            $this->res->submit_reservation_form($data);
+            $message['success'] = "success";
+
+        } else {
+            $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
         }
         echo json_encode($message);
     }
@@ -544,9 +525,9 @@ class Reservations extends MY_Controller
                 "description" => $this->input->post('description'),
                 "id" => $this->input->post('res'),
                 "update_all" => $this->input->post('update_all'),
+                'send_email_update' => $this->input->post('send_email_update'),
                 "parent" => $this->input->post('parent')
             ];
-
             if($data['update_all'] == 'true') {
                 // Update children
                 $child_data = $data;
