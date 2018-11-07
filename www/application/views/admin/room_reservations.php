@@ -2,8 +2,8 @@
 <?php if(empty($reservations)) {
     echo 'No entries';
 } else { ?>
-    <div class="flex justify-center">
-        <table class="text-center w-full text-grey-darker text-sm">
+    <div class="justify-center overflow-auto">
+        <table id="meetings_table" class="table stripe text-center w-full text-grey-darker text-sm">
             <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                 <tr>
                     <th class="py-4">Title</th>

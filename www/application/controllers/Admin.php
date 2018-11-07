@@ -3,12 +3,12 @@ class Admin extends MY_Controller
 {
     public function __construct()
     {
-            parent::__construct();
-            $this->load->model('Permission_model', 'permission');
-            $this->load->model('Beautify_model', 'beautify');
-            $this->load->model('Admin_model', 'admin');
-            $this->permission->is_logged_in();
-            $this->permission->is_admin();
+        parent::__construct();
+        $this->load->model('Permission_model', 'permission');
+        $this->load->model('Beautify_model', 'beautify');
+        $this->load->model('Admin_model', 'admin');
+        $this->permission->is_logged_in();
+        $this->permission->is_admin();
     }
 
     public function index()
@@ -17,76 +17,52 @@ class Admin extends MY_Controller
         $this->layouts->view('admin/index', array(), ('admin_tailwind'));
     }
 
-    public function show_room_reservations()
+    public function meetings()
     {
-        $table = [];
         $reservations = $this->admin->get_all_room_reservations();
-        $table = $this->load->view('admin/room_reservations', ['reservations' => $reservations], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/room_reservations', ['reservations' => $reservations], ('admin_tailwind'));
     }
 
-    public function show_equipment_reservations()
+    public function equipment()
     {
-        $table = [];
         $reservations = $this->admin->get_all_equipment_reservations();
-        $table = $this->load->view('admin/equipment_reservations', ['reservations' => $reservations], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/equipment_reservations', ['reservations' => $reservations], ('admin_tailwind'));
     }
 
-    public function show_conference_rooms()
+    public function conference_rooms()
     {
-        $table = [];
         $rooms = $this->admin->get_all_rooms();
-        $table = $this->load->view('admin/conference_rooms', ['rooms' => $rooms], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/conference_rooms', ['rooms' => $rooms], ('admin_tailwind'));
     }
 
-    public function show_equipment()
+    public function items()
     {
-        $table = [];
         $equipment = $this->admin->get_all_equipment();
         $types = $this->admin->get_all_equipment_types();
-        $table = $this->load->view('admin/equipment', ['equipment' => $equipment, 'types' => $types], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/equipment', ['equipment' => $equipment, 'types' => $types], ('admin_tailwind'));
     }
 
-    public function show_equipment_types()
+    public function types()
     {
-        $table = [];
         $types = $this->admin->get_all_equipment_types();
-        $table = $this->load->view('admin/equipment_types', ['types' => $types], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/equipment_types', ['types' => $types], ('admin_tailwind'));
     }
 
-    public function show_users()
+    public function users()
     {
-        $table = [];
         $users = $this->admin->get_all_users();
-        $table = $this->load->view('admin/users', ['users' => $users], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/users', ['users' => $users], ('admin_tailwind'));
     }
 
-    public function show_user_activites()
+    public function activites()
     {
-        $table = [];
         $user_activites = $this->admin->get_all_user_activities();
-        $table = $this->load->view('admin/user_activites', ['user_activites' => $user_activites], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/user_activites', ['user_activites' => $user_activites], ('admin_tailwind'));
     }
 
-    public function show_logs()
+    public function logs()
     {
-        $table = [];
         $logs = $this->admin->get_all_logs();
-        $table = $this->load->view('admin/logs', ['logs' => $logs], TRUE);
-        echo $table;
-        die();
+        $this->layouts->view('admin/logs', ['logs' => $logs], ('admin_tailwind'));
     }
 }

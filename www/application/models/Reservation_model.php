@@ -804,10 +804,13 @@ class Reservation_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
-        //Send e-mail notification
-        $members = $this->get_all_reservation_mails($data['id']);
-        $reservation = $this->single_room_reservation($data['id'])[0];
-        $this->send_updated_meeting_mail($members, $reservation);
+        //Send e-mail notification if checkbox is checked
+        if($data['send_email_update'] == 'true') {
+            $members = $this->get_all_reservation_mails($data['id']);
+            $reservation = $this->single_room_reservation($data['id'])[0];
+            $this->send_updated_meeting_mail($members, $reservation);        
+        }
+
     }
 
     public function check_if_room_is_free_for_update($data)

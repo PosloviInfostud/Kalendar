@@ -6,6 +6,7 @@ class Items extends CI_Controller
             parent::__construct();
             $this->load->model('Item_model', 'item');
             $this->load->library('form_validation');
+            $this->load->library('alerts');
     }
 
     public function insert_room()
@@ -27,6 +28,10 @@ class Items extends CI_Controller
 
         $this->item->insert_room($data);
         $message = 'success';
+        // Notification
+        $msg = $this->alerts->render('green', 'Success', 'New room added.');
+        $this->session->set_flashdata('flash_message', $msg);
+        
         }
 
         echo $message;
@@ -64,6 +69,9 @@ class Items extends CI_Controller
 
             $this->item->update_room($data);
             $message = 'success';
+            // Notification
+            $msg = $this->alerts->render('green', 'Success', 'Room updated.');
+            $this->session->set_flashdata('flash_message', $msg);
         }
 
         // Send response to ajax

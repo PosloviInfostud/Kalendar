@@ -53,7 +53,7 @@
                 </div>
                 <div class="mt-2 mb-8">
                     <p class="font-normal text-lg mb-2">Description</p>
-                    <textarea rows="4" class="bg-grey-lighter font-light p-2 w-full border rounded"><?= $meeting['description'] ?></textarea>
+                    <textarea rows="4" class="bg-grey-lighter font-light p-2 w-full border rounded" id="reservation_description"><?= $meeting['description'] ?></textarea>
                 </div>
                 <input type="hidden" name="res" id="res" value="<?= $meeting['id'] ?>">
                 <input type="hidden" name="parent" id="parent" value="<?= $meeting['parent'] ?>">
@@ -64,6 +64,10 @@
                         <label class="form-check-label" for="update_all_child_reservations">Update all reservations of this recurring event</label>
                     </div>
                 <?php } ?>
+                <div class="mb-8">
+                    <input type="checkbox" class="" id="send_email_update">
+                    <label class="form-check-label" for="send_email_update">Send mail notifications to members about these changes</label>
+                </div>
                 <div>
                     <input type="submit" name="submit" id="reservation_room_submit_by_room" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" value="Update">
                 </div>
