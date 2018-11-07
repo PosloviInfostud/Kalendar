@@ -1,6 +1,7 @@
 $(document).ready(function() {
 // Load flatpickr for room reservations
     var fpRoomStartDate = $("#datetime_start").flatpickr({
+        disableMobile: "true",
         dateFormat: "Y-m-d H:i",
         minDate: new Date(),
         defaultDate: new Date(),
@@ -21,6 +22,7 @@ $(document).ready(function() {
     });
     
     var fpRoomEndDate = $("#datetime_end").flatpickr({
+        disableMobile: "true",
         dateFormat: "Y-m-d H:i",
         minDate: new Date(),
         // defaultDate: end_time,

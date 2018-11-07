@@ -16,9 +16,9 @@
 </div>
 <!-- Content -->
 <div class="md:flex">
-    <div class="md:flex md:w-1/2 md:mr-4">
+    <div>
         <div class="md:flex-grow bg-white border-x sm:border-y sm:rounded shadow p-4">
-            <h1 class="font-normal text-xl xs:text-2xl sm:text-3xl my-2">Update "<?= $meeting['title'] ?>"</h1>
+            <h1 class="font-normal text-lg xs:text-xl sm:text-2xl my-2">Update "<?= $meeting['title'] ?>"</h1>
             <form id="form_update_room_reservation" class="mt-8">
                 <div class="mt-2 mb-8">
                     <p class="font-normal text-lg mb-2">Select conference room</p>
@@ -37,12 +37,12 @@
                     <div class="sm:flex sm:items-center">
                         <div class="sm:flex items-center mb-2 sm:mb-0 sm:mr-2 sm:w-1/2">
                             <span class="sm:mr-2">From</span>
-                            <input type="text" name="start_time" id="datetime_start" placeholder="start datetime" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['starttime'] ?>"> 
+                            <input type="text" name="start_time" id="datetime_start" placeholder="start time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['starttime'] ?>"> 
                             <input type="hidden" name="default_start_time" id="default_datetime_start" value="<?= $meeting['starttime'] ?>">
                         </div>
                         <div class="sm:flex items-center sm:w-1/2">
                             <span class="sm:mr-2">to</span>
-                            <input type="text" name="end_time" id="datetime_end" placeholder="end datetime" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['endtime'] ?>">
+                            <input type="text" name="end_time" id="datetime_end" placeholder="end time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['endtime'] ?>">
                             <input type="hidden" name="default_end_time" id="default_datetime_end" value="<?= $meeting['endtime'] ?>">
                         </div>
                     </div>
@@ -69,10 +69,10 @@
                     <label class="form-check-label" for="send_email_update">Send mail notifications to members about these changes</label>
                 </div>
                 <div>
-                    <input type="submit" name="submit" id="form_update_room_reservation_submit" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" value="Update">
+                    <input type="submit" name="submit" id="reservation_room_submit_by_room" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm py-2 px-4 rounded" value="Update">
                 </div>
             </form>
         </div>
     </div>
-    <div class="hidden md:block md:w-1/2 md:ml-4" id="calendar"></div>
+    <div class="" id="calendar"></div>
 </div>

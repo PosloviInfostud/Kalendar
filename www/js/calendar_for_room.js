@@ -1,4 +1,10 @@
-    $(document).ready(function() {
+$(document).ready(function() {
+    // Show calendar
+    $("#show_calendar").on("click", function() {
+        $("#calendar").slideToggle();
+    })
+    
+    // Initiate calendat
     $('#calendar').fullCalendar({
         defaultView: "agendaWeek",
         // Do not show Saturday/Sunday
@@ -15,12 +21,10 @@
         header: {
             left: 'prev, next',
             center: 'title',
-            right: 'agendaDay, agendaWeek, listDay, listWeek, listMonth'
+            right: 'agendaDay, agendaWeek, listMonth'
         },
         views: {
-            listDay: {buttonText: 'list day'},
             listDayFormat: (room) => event.room,
-            listWeek: {buttonText: 'list week'},
             listMonth: {buttonText: 'list month'},
         },
         //make clicks and selections possible
@@ -31,21 +35,21 @@
         eventRender: function(event, element) {
         },
         eventAfterAllRender : function( view ) {
-		    if (view.type == 'listWeek') {
-			console.log(view.type + ' change colspan');
-			console.log(view)
-			var tableSubHeaders = jQuery("td.fc-widget-header");
-			console.log(tableSubHeaders);
-			var numberOfColumnsItem = jQuery('tr.fc-list-item');
-			var maxCol = 0;
-			var arrayLength = numberOfColumnsItem.length;
-			for (var i = 0; i < arrayLength; i++) {
-			    maxCol = Math.max(maxCol,numberOfColumnsItem[i].children.length);
-			}
-			console.log("number of items : " + maxCol);
-			tableSubHeaders.attr("colspan",maxCol);
+            if (view.type == 'listWeek') {
+            // console.log(view.type + ' change colspan');
+            // console.log(view)
+            var tableSubHeaders = jQuery("td.fc-widget-header");
+            // console.log(tableSubHeaders);
+            var numberOfColumnsItem = jQuery('tr.fc-list-item');
+            var maxCol = 0;
+            var arrayLength = numberOfColumnsItem.length;
+            for (var i = 0; i < arrayLength; i++) {
+                maxCol = Math.max(maxCol,numberOfColumnsItem[i].children.length);
+            }
+            // console.log("number of items : " + maxCol);
+            tableSubHeaders.attr("colspan",maxCol);
                     }		    
-		},
+        },
 
         eventSources: [
             {
