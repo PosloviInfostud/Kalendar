@@ -370,7 +370,7 @@ class Reservations extends MY_Controller
         $data['equipment'] = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
         $this->layouts->set_title('Active Reservations');
         $data['calendar'] = $this->calendar->get_all_items_for_user($this->user_data['user']['id']);
-        $this->layouts->view('reservations/user_equipment', $data,'master_tailwind');
+        $this->layouts->view('reservations/user_equipment_tailwind', $data, 'master_tailwind');
     }
 
     public function single_room_reservation($id)
@@ -395,7 +395,6 @@ class Reservations extends MY_Controller
             $child_dates = $this->res->get_child_reservations($meeting[0]['parent']);
         }
 
-
         // Build and load view
         $data = [
             'meeting' => $meeting[0],
@@ -409,7 +408,6 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
         $this->layouts->view('reservations/meetings/single_view_tailwind', $data, 'master_tailwind');
-        // $this->layouts->view('reservations/meetings/single_view', $data);
     }
 
     public function single_equipment_reservation($id)
@@ -425,7 +423,7 @@ class Reservations extends MY_Controller
             die();
         }
         $this->layouts->set_title($equipment[0]['item_name'] . ' Reservation');
-        $this->layouts->view('reservations/equipment/single_view', ['equipment' => $equipment[0], 'user_id' => $user_id]);
+        $this->layouts->view('reservations/equipment/single_view_tailwind', ['equipment' => $equipment[0], 'user_id' => $user_id], 'master_tailwind');
     }
 
     public function update_room_reservation_form($id)
@@ -563,6 +561,9 @@ class Reservations extends MY_Controller
                     // Update child
                     $this->res->update_room_reservation($child_data);
                     $message['success'] = $active_child;
+                    // Notification
+                    $msg = $this->alerts->render('teal', 'Success', 'Reservation successfully updated.');
+                    $this->session->set_flashdata('flash_message', $msg);
                 }
                 // Update parent
                 $parent_data = $data;
@@ -576,6 +577,9 @@ class Reservations extends MY_Controller
                 if($this->res->check_if_room_is_free_for_update($data)) {
                     $this->res->update_room_reservation($data);
                     $message['success'] = $data['id'];
+                    // Notification
+                    $msg = $this->alerts->render('teal', 'Success', 'Reservation successfully updated.');
+                    $this->session->set_flashdata('flash_message', $msg);
                 } else {
                     $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
                 }
@@ -610,21 +614,27 @@ class Reservations extends MY_Controller
         $user_id = $this->user_data['user']['id'];
         $data['equipment'] = $this->res->single_equipment_reservation($id)[0];
         $data['current_reservations'] = $this->calendar->get_all_item_reservations($data['equipment']['equipment_id']);
-        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
-        $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
-
+        
         // Check if reservation exists for that id
         if(empty($data['equipment'])) {
             url_redirect('/error_404');
-        // Check if it's the user's reservation
+            // Check if it's the user's reservation
         } elseif($data['equipment']['user_id'] != $user_id) {
             echo 'Not your reservation.';
             die();
-        }        
-        $this->layouts->view('reservations/equipment/update_equip_form', $data);
+        }
+
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
+        $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/lib/moment.min.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
+        $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/js/flatpickr_items.js');
+        $this->layouts->add_footer_include('/js/calendar_for_item.js');
+        $this->layouts->view('reservations/equipment/update_equip_form_tailwind', $data, 'master_tailwind');
+        // $this->layouts->view('reservations/equipment/update_equip_form', $data);
     }
 
     public function update_equipment()

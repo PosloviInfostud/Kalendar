@@ -1,5 +1,5 @@
 <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-    <div id="equipment_errors" class="hidden mb-8 text-red text-sm p-4 border border-red bg-red-lightest"></div>
+    <div id="equipment_errors" class="hidden bg-red-lightest text-red text-sm mb-8 p-4 border-l-6 border-red-lighter"></div>
 <?php if(empty($items)) { ?>
         <p>Sorry, nothing is available at the moment! Check again!</p>
 <?php }  else { ?>

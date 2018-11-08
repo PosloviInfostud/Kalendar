@@ -12,9 +12,15 @@
         <span class="text-primary font-normal">New Meeting</span>
     </div>
     <!-- Content -->
-    <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-        <h1 class="pl-2 font-normal text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a new meeting</h1>
-        <p class="mt-8 mb-4">Which conference room would you like to reserve?</p>
+    <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
+        <div id="form_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
+        <div class="flex flex-inline">
+            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a New Meeting</h1>
+            <span class="uppercase text-grey font-medium text-sm ml-1">By room</span>
+        </div>
+    </div>
+    <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
+        <p class="mb-4">Which conference room would you like to reserve?</p>
         <select name="room" id="room_select" class="select_room w-full p-2 font-light bg-grey-lighter border rounded">
             <option selected="true" disabled="disabled">Choose room</option> 
             <?php foreach ($rooms as $room) { ?>

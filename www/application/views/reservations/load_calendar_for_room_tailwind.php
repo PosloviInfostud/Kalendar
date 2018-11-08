@@ -7,7 +7,7 @@ var background = "<?= $background; ?>";
     <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-white font-bold mb-4 py-3 w-full shadow rounded focus:outline-none">Show conference room schedule</button>
     <div class="hidden mb-4" id="calendar"></div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-        <div id="room_errors" class="hidden mb-4 text-red text-sm p-4 border border-red bg-red-lightest"></div>
+        <div id="room_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
         <form>
             <div class="mt-2 mb-8">
                 <p class="mb-2">When is it happening?</p>

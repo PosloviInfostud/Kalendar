@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // Show calendar
     $("#show_calendar").on("click", function() {
-        $("#calendar").slideToggle();
+        $("#calendar").slideToggle().fullCalendar('rerenderEvents');
     })
     
     // Initiate calendat

@@ -8,7 +8,7 @@
         </div>
         <div>
             <?php if($user_id == $equipment['user_id']) { ?>
-                <a href="/reservations/equipment/update/<?= $equipment['id'] ?>"><button id="edit_equip_btn" class="btn btn-info">Edit</button></a>
+                <a href="/reservations/equipment/edit/<?= $equipment['id'] ?>"><button id="edit_equip_btn" class="btn btn-info">Edit</button></a>
                 <a id="delete_equip_btn" href="/reservations/equipment/delete/<?= $equipment['id'] ?>"><button class="btn btn-danger ml-2">Delete</button></a>
             <?php } ?>
         </div>

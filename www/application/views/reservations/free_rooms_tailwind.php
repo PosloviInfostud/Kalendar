@@ -1,5 +1,5 @@
 <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-    <div id="room_errors" class="hidden mb-8 text-red text-sm p-4 border border-red bg-red-lightest"></div>
+    <div id="room_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
     <div class="md:flex mb-4 mt-4 md:mt-0">
         <div class="md:w-1/3 md:pr-4 mb-2 md:mb-0">
             <label class="">Which room do you want to reserve?</label>

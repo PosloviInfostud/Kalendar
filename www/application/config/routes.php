@@ -71,5 +71,5 @@ $route['reservations/meetings/delete/(:num)'] = 'reservations/delete_room_reserv
 $route['reservations/equipment'] = 'reservations/equipment_reservations_by_user';
 $route['reservations/equipment/(:num)'] = 'reservations/single_equipment_reservation/$1';
 $route['reservations/equipment/delete/(:num)'] = 'reservations/delete_equipment_reservation/$1';
-$route['reservations/equipment/update/(:num)'] = 'reservations/show_update_equip_form/$1';
+$route['reservations/equipment/edit/(:num)'] = 'reservations/show_update_equip_form/$1';
 $route['welcome'] = 'test';

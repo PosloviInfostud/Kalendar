@@ -6,7 +6,7 @@ var current_reservations = <?= $current_reservations; ?>;
     <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-white font-bold mb-4 py-3 w-full shadow rounded focus:outline-none">Show equipment schedule</button>
     <div class="hidden mb-4" id="calendar"></div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-        <div id="equipment_errors" class="hidden mb-4 text-red text-sm p-4 border border-red bg-red-lightest"></div>
+        <div id="equipment_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
         <div class="md:flex mt-8">
             <div class="md:w-1/3 mb-2 md:mb-0 md:flex">
                 <label for="equipment_type" class="mr-4 font-light">When?</label>

@@ -509,9 +509,10 @@ $("#update_room_select").change(function(e) {
         $('#calendar').fullCalendar('rerenderEvents');
     });
 })
-//submit reservation update form
 
-$("#form_update_room_reservation").submit(function(e){
+// Submit reservation update form
+$("#reservation_room_submit_by_room").on("click", function(e) {
+    console.log("clicked");
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -531,12 +532,10 @@ $("#form_update_room_reservation").submit(function(e){
         }
     })
     .done(function(response){
-        console.log(response);
         msg = JSON.parse(response);
-        console.log(msg);
         if (msg.error) {
-            $("#messages").html(msg.error);
-            $("#alert_box").show();
+            $("#form_errors").html(msg.error);
+            $("#form_errors").show();
         }
         if(msg.success) {
             window.location.href = "/reservations/meetings/"+msg.success;
@@ -592,7 +591,7 @@ var deleteReservationConfirmModal = function(callback) {
 var confirmEquipUpdate = function(callback){
   
     $("#update_equipment_submit").on("click", function(e){
-        e.preventDefault();
+      e.preventDefault();
       $("#update_equipment_modal").show('slow');
       $("#modal-body").html(
         "Start: "+$("#update_item_datetime_start").val()+

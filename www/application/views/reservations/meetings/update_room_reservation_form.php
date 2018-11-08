@@ -51,7 +51,7 @@ var background = "<?= $background; ?>";
         <?php } ?>
             
         <div class="form-group mt-3">
-            <input type="submit" name="submit" id="form_update_room_reservation_submit" class="btn btn-block btn-success" value="Update">
+            <input type="submit" name="submit" id="form_update_room_reservation_submit" form="form_update_room_reservation" class="btn btn-block btn-success" value="Update">
         </div>
 
     </form>

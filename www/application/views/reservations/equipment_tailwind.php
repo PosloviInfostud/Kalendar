@@ -12,11 +12,16 @@
         <span class="text-primary font-normal">New Reservation</span>
     </div>
     <!-- Content -->
-    <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
-        <div id="form_errors" class="hidden mb-8 text-red text-sm p-4 border border-red bg-red-lightest"></div>
-        <h1 class="pl-2 font-normal text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a new reservation</h1>
+    <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
+        <div class="flex flex-inline">
+            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a New Reservation</h1>
+            <span class="uppercase text-grey font-medium text-sm ml-1">By date</span>
+        </div>
+    </div>
+    <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
+        <div id="form_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
         <form id="reservation_equip_form" class="" action="/reservations/submit_reservation_equip_form" method="POST">
-            <div class="md:flex mt-8 mb-4">
+            <div class="md:flex mb-4">
                 <div class="md:w-1/3 mb-2 md:mb-0">
                     <label for="equipment_type" class="mr-4 font-light">What would you like to reserve?</label>
                 </div>
@@ -34,7 +39,7 @@
             </div>
             <div class="md:flex mt-8">
                 <div class="md:w-1/3 mb-2 md:mb-0 md:flex">
-                    <label for="equipment_type" class="mr-4 font-light">When?</label>
+                    <label for="equipment_type" class="mr-4 font-light">For what period?</label>
                 </div>
                 <div class="sm:w-2/3 sm:flex">
                     <div class="sm:mr-2 sm:w-1/2">
