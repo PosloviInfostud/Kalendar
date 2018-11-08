@@ -14,7 +14,7 @@
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-8">
         <div id="form_errors" class="hidden mb-4 text-red text-sm p-4 border border-red bg-red-lightest"></div>
-        <h1 class="font-normal text-xl xs:text-2xl sm:text-3xl">Create a new meeting</h1>
+        <h1 class="pl-2 font-normal text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a new meeting</h1>
         <form id="reservation_form" action="/reservations/submit_reservation_form" method="POST">
             <div class="mt-8">
                 <p class="mb-4">When is it happening?</p>

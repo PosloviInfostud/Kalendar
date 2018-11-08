@@ -18,7 +18,7 @@
 <div class="md:flex">
     <div>
         <div class="md:flex-grow bg-white border-x sm:border-y sm:rounded shadow p-4">
-            <h1 class="font-normal text-lg xs:text-xl sm:text-2xl my-2">Update "<?= $meeting['title'] ?>"</h1>
+            <h1 class="pl-2 font-normal text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Update "<?= $meeting['title'] ?>"</h1>
             <form id="form_update_room_reservation" class="mt-8">
                 <div class="mt-2 mb-8">
                     <p class="font-normal text-lg mb-2">Select conference room</p>

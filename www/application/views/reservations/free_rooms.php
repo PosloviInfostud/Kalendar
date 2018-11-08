@@ -28,18 +28,18 @@
             </div>
             <div class="form-group">
                 <label for="title">What is the Name of the Event?</label>
-                <input type="text" class="form-control" name="title" id="reservation_name">
+                <input type="text" class="font-light" name="title" id="reservation_name">
                 <small id="title_err" class="form-text text-danger error_box"></small>
             </div>
             <div class="form-group">
                 <label for="description">Describe it to the Attendants</label>
-                <textarea class="form-control" name="description" id="reservation_description"></textarea>
+                <textarea class="font-light" name="description" id="reservation_description"></textarea>
             </div>
             <div class="form-group">
                 <p>Who do you want to invite?</p>
             
             <div class="form-group">
-                <select class="js-example-basic-multiple form-control" name="members[]" id="members" multiple="multiple">
+                <select class="js-example-basic-multiple font-light" name="members[]" id="members" multiple="multiple">
 
                 <?php foreach($users as $user) { ?>
                     <option value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
