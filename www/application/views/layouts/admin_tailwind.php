@@ -23,7 +23,10 @@
                         </div>
                     </div>
                     <div class="w-1/2 sm:w-auto text-lg text-center text-grey-light font-medium tracking-wide uppercase">
-                        Kalendar <span class="text-xs text-indigo-dark">admin</span>
+                        <div class="xs:flex xs:items-baseline">
+                            Kalendar
+                            <span class="block text-xs text-indigo-dark xs:ml-2px">admin</span>
+                        </div>
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
@@ -68,10 +71,10 @@
         <div class="hidden bg-primary-darkest sm:block sm:bg-indigo sm:font-normal border-b border-indigo-light" id="secondary_nav">
             <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
-                    <div class="sm:flex text-sm md:text-base">
+                    <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="/admin" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
-                            <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
+                            <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
                                 Dashboard
@@ -79,7 +82,7 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center sm:relative group">
                             <div class="cursor-pointer text-grey-light flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
-                            <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
+                            <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/calendar-full.svg") ?>
                             </div>
                                 <span>Reservations</span>
@@ -93,7 +96,7 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center sm:relative group">
                             <div class="cursor-pointer text-grey-light flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
-                            <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
+                            <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
                                 <span>Items</span>
@@ -115,7 +118,7 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center sm:relative group">
                             <div class="cursor-pointer text-grey-light flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
-                            <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
+                            <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
                                 <span>Users</span>
@@ -129,7 +132,7 @@
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="/admin/logs" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
-                            <div class="sm:hidden md:block fill-current h-6 w-6 mr-2">
+                            <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/database.svg") ?>
                             </div>
                                 Logs
@@ -142,7 +145,7 @@
     </div>
 
     <!-- Content section -->
-    <div class="container mx-auto sm:px-4 py-4 mb-4">
+    <div class="container mx-auto sm:px-4">
         <!-- Flash notifications -->
         <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
         <!-- Error messages -->
@@ -155,7 +158,7 @@
                 </span>
             </div>
         </div>
-        <div class="z-0 mt-5">
+        <div class="z-0">
         <?= $content_for_layout ?>
         </div>
     <!-- Footer section -->

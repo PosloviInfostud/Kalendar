@@ -1,10 +1,3 @@
-<?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') === true) { ?>
-New meeting
-<?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') === true) { ?>
-New item reservation
-<?php } ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,11 +76,10 @@ New item reservation
                     <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
                         <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/reservations/meetings' ? 'text-white border-primary-dark' : 'text-grey-light' ?>
-                        
                             <a href="/reservations/meetings" class="<?= $text_meetings ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
-                            <div class="fill-current h-5 w-5 mr-2">
-                                <?= file_get_contents("public/icons/users.svg") ?>
-                            </div>
+                                <div class="fill-current h-5 w-5 mr-2">
+                                    <?= file_get_contents("public/icons/users.svg") ?>
+                                </div>
                                 Meetings
                             </a>
                         </div>

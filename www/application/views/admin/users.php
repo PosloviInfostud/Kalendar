@@ -1,4 +1,4 @@
-<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+<div class="flex text-sm text-black py-3 border-b mb-8">
     <span>Admin</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
@@ -7,15 +7,15 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">User List</span>
+    <span class="text-primary font-normal">List of Users</span>
 </div>
-<h3 class="mt-5 mb-3">List of all users</h3>
+<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo capitalize">List of all users</h1>
 
 <!-- Check if there are any entries in the db -->
 <?php if(empty($users)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed stripe border">
+        <table class="hidden table table-text-sm table-condensed stripe border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Action</th>

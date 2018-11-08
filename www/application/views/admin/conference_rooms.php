@@ -1,4 +1,4 @@
-<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+<div class="flex text-sm text-black py-3 border-b mb-8">
     <span>Admin</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
@@ -9,17 +9,23 @@
     </div>
     <span class="text-primary font-normal">Conference rooms</span>
 </div>
-<div class="flex mt-5 mb-3">
-    <div class="w-4/5"><h3 class="py-3">Conference Room List</h3></div>
+<div class="flex">
+    <div class="w-4/5">
+        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Conference Room List</h1>
+    </div>
     <!-- Button to trigger the modal -->
-    <div class="w-1/5"><button id="show_add_new_room_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
+    <div class="w-1/5">
+        <button id="show_add_new_room_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-3 px-4 rounded shadow">
+            Add new room
+        </button>
+    </div>
 </div>
 <div id="messages"></div>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($rooms)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed stripe border">
+        <table class="hidden table table-text-sm table-condensed stripe border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>

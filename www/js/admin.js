@@ -1,7 +1,8 @@
 //Load DataTable
-    $(document).ready( function () {
-        $('.table').DataTable();
-    } );
+$(document).ready( function() {
+    $('.table').DataTable();
+    $('.table').show();
+} );
 
 //==============================================================================
 /* CONFERENCE ROOMS */
