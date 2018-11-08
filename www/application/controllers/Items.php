@@ -165,9 +165,13 @@ class Items extends CI_Controller
         } else {
             $data = [
                 "name" => $this->input->post('name'),
+                "color" => $this->input->post('color')
             ];
         $this->item->insert_type($data);
         $message = 'success';
+        // Notification
+        $msg = $this->alerts->render('green', 'Success', 'New equipment type added.');
+        $this->session->set_flashdata('flash_message', $msg);
         }
 
         echo $message;
@@ -199,10 +203,14 @@ class Items extends CI_Controller
             $data = [
                 "id" => $this->input->post('id'),
                 "name" => $this->input->post('name'),
+                "color" => $this->input->post('color')
             ];
 
             $this->item->update_type($data);
             $message = 'success';
+            // Notification
+            $msg = $this->alerts->render('green', 'Success', 'Equipment type updated.');
+            $this->session->set_flashdata('flash_message', $msg);
         }
         // Send response to ajax
         echo $message;

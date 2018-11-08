@@ -1,8 +1,19 @@
-<div class="row mt-5 mb-3">
-    <div class="col-8"><h3>Items List</h3></div>
+<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+    <span>Admin</span>
+    <div class="fill-current h-2 w-2 mx-1 -mt-px">
+        <?= file_get_contents("public/icons/chevron-right.svg") ?>
+    </div>
+    <span>Items</span>
+    <div class="fill-current h-2 w-2 mx-1 -mt-px">
+        <?= file_get_contents("public/icons/chevron-right.svg") ?>
+    </div>
+    <span class="text-primary font-normal">Equipment</span>
+</div>
+<div class="flex mt-5 mb-3">
+    <div class="w-4/5"><h3 class="py-3">Items List</h3></div>
     <!-- Button to trigger the modal -->
-    <div class="col-4">
-      <button id="show_add_new_item_modal" class="cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded"><i class="fas fa-plus-circle mr-1"></i> Add new item</button>
+    <div class="w-1/5">
+      <button id="show_add_new_item_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded"><i class="fas fa-plus-circle mr-1"></i> Add new item</button>
     </div>
 </div>
 

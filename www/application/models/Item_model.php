@@ -57,17 +57,17 @@ class Item_model extends CI_Model
 
         /* EQUIPMENT */
 
-        public function insert_type($data)
-        {
-            $sql = 'INSERT INTO equipment_types (name) VALUES (?)';
-            $query = $this->db->query($sql, [$data['name']]);
-        }
-    
-        public function update_type($data)
-        {
-            $sql = "UPDATE equipment_types SET name = ? WHERE id = ?";
-            $query = $this->db->query($sql, [$data['name'], $data['id']]);
-        }
+    public function insert_type($data)
+    {
+        $sql = 'INSERT INTO equipment_types (name, color) VALUES (?, ?)';
+        $query = $this->db->query($sql, [$data['name'], $data['color']]);
+    }
+
+    public function update_type($data)
+    {
+        $sql = "UPDATE equipment_types SET name = ?, color = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['color'], $data['id']]);
+    }
 
     public function get_all_equipment_types()
     {
