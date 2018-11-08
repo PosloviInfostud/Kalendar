@@ -1,4 +1,4 @@
-<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+<div class="flex text-sm text-black py-3 border-b mb-8">
     <span>Admin</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
@@ -9,38 +9,46 @@
     </div>
     <span class="text-primary font-normal">Conference rooms</span>
 </div>
-<div class="flex mt-5 mb-3">
-    <div class="w-4/5"><h3 class="py-3">Conference Room List</h3></div>
+<div class="flex">
+    <div class="w-4/5">
+        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Conference Room List</h1>
+    </div>
     <!-- Button to trigger the modal -->
-    <div class="w-1/5"><button id="show_add_new_room_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded"><i class="fas fa-plus-circle mr-1"></i> Add new room</button></div>
+    <div class="w-1/5">
+        <button id="show_add_new_room_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-3 px-4 rounded shadow">
+            Add new room
+        </button>
+    </div>
 </div>
 <div id="messages"></div>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($rooms)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed stripe border">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Colour</th>
-                    <th scope="col">Capacity</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($rooms as $room) { ?> 
+        <div class="overflow-auto">
+            <table class="hidden table table-text-sm table-condensed stripe border">
+                <thead class="thead-light">
                     <tr>
-                        <td class="col-2 align-middle text-center"><button class="edit_room_modal cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
-                        <td class="col-2 align-middle text-center"><?= $room['name'] ?></td>
-                        <td class="col-2 align-middle"><?= $room['description'] ?></td>
-                        <td class="col-2 align-middle"><input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/2 h-10 border rounded" value="<?= $room['color'] ?>" disabled></td>
-                        <td class="col-2 align-middle text-center"><?= $room['capacity'] ?></td>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Colour</th>
+                        <th scope="col">Capacity</th>
                     </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach($rooms as $room) { ?> 
+                        <tr>
+                            <td class="col-2 align-middle text-center"><button class="edit_room_modal cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                            <td class="col-2 align-middle text-center"><?= $room['name'] ?></td>
+                            <td class="col-2 align-middle"><?= $room['description'] ?></td>
+                            <td class="col-2 align-middle"><input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/2 h-10 border rounded" value="<?= $room['color'] ?>" disabled></td>
+                            <td class="col-2 align-middle text-center"><?= $room['capacity'] ?></td>
+                        </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
 <?php } ?>
 
 <!-- Add New Room Modal -->

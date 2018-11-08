@@ -14,7 +14,7 @@
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
         <!-- Title -->
-        <div class="flex flex-inline mb-6">
+        <div class="flex flex-inline mb-4">
             <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary"><?= $meeting['title'] ?></h1>
             <div class="h-5 ml-2 p-1 bg-primary text-white text-xs font-medium rounded"><?= $meeting['status'] ?></div>
         </div>
@@ -34,14 +34,14 @@
                             </button>
                         </a>
                         <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn">
-                            <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded">
+                            <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
                                 Delete All
                             </button>
                         </a>
                     </div>
                 <?php } else { ?>
                     <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn">
-                        <button class="bg-red hover:bg-red-dark text-white font-bold mr-3 py-1 px-2 md:py-2 md:px-4 border-b-4 border-red-dark rounded focus:outline-none">
+                        <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
                             Delete
                         </button>
                     </a>
