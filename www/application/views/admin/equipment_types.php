@@ -1,8 +1,19 @@
-<div class="row mt-5 mb-3">
-    <div class="col-8"><h3>Equipment Types List</h3></div>
+<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+    <span>Admin</span>
+    <div class="fill-current h-2 w-2 mx-1 -mt-px">
+        <?= file_get_contents("public/icons/chevron-right.svg") ?>
+    </div>
+    <span>Items</span>
+    <div class="fill-current h-2 w-2 mx-1 -mt-px">
+        <?= file_get_contents("public/icons/chevron-right.svg") ?>
+    </div>
+    <span class="text-primary font-normal">Equipment Types</span>
+</div>
+<div class="flex mt-5 mb-3">
+    <div class="w-4/5"><h3 class="py-3">Equipment Types List</h3></div>
     <!-- Button to trigger the modal -->
-    <div class="col-4">
-      <button class="btn btn-info btn-sm float-right mx-1" data-toggle="modal" data-target="#addNewTypeModal"><i class="fas fa-plus-circle mr-1"></i> Add new type</button>
+    <div class="w-1/5">
+      <button id="show_add_new_type_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 my-2 px-4 rounded"><i class="fas fa-plus-circle mr-1"></i> Add new type</button>
     </div>
 </div>
 
@@ -10,20 +21,22 @@
 <?php if(empty($types)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed table-striped border">
+        <table class="table table-text-sm table-condensed stripe border">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Colour</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($types as $type) { ?> 
                     <tr>
-                        <td class="align-middle text-center"><button class="btn btn-sm btn-info type-edit" data-id="<?= $type['id'] ?>"><i class="fas fa-pencil-alt"></i></button></td>
+                        <td class="align-middle text-center"><button class="edit_type_modal_btn cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $type['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
                         <td class="align-middle text-center"><?= $type['id'] ?></td>
                         <td class="align-middle text-center"><?= $type['name'] ?></td>
+                        <td class="align-middle"><input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/2 h-10 border rounded" value="<?= $type['color'] ?>" disabled></td>
                     </tr>
             <?php } ?>
             </tbody>
@@ -31,46 +44,47 @@
 <?php } ?>
 
 <!-- Add New Equipment Type Modal -->
-<div class="modal fade" id="addNewTypeModal" tabindex="-1" role="dialog" aria-labelledby="addNewTypeModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="typeModalLongTitle">Add new type</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+<div class="hidden" id="addNewTypeModal">
+  <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
+      <div id="modal-content" class="relative p-16 bg-white w-full max-w-md m-auto flex-col flex">
+          <span class="absolute pin-t pin-b pin-r p-4">
+              <svg id="close-addNewTypeModal" class="h-12 w-12 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+          </span>
+          <small id="insert_error_msg" class="text-danger"></small>
+          <form>
+          <div class="mt-2 mb-8">
+              <label for="type_name" class="font-light text-lg mb-2">Name <small class="text-muted">(required)</small></label>
+              <input type="text" class="bg-grey-lighter p-2 w-full font-light border rounded" id="type_name" required>
+          </div>
+          <div class="mt-2 mb-8">
+              <label for="type_color" class="font-light text-lg mb-2">Color for Calendar <br><small class="text-grey text-sm">(required)</small></label>
+              <input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/4 h-10 border rounded" id="type_color">
+          </div>
+
+          </form>  
+      <div class="inline-flex">
+          <button id="new_type_btn" class="bg-blue hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded-l">
+              Create
+          </button>
+          <button id="cancel-addNewTypeModal" class="bg-grey-light hover:bg-grey text-grey-darkest font-bold py-2 px-4 rounded-r">
+              Cancel
+          </button>
       </div>
-      <div class="modal-body">
-      <small id="insert_error_msg" class="text-danger"></small>
-        <form>
-            <div class="form-group">
-                <label for="type_name">Name <small class="text-muted">(required)</small></label>
-                <input type="text" class="form-control" id="type_name" required>
-            </div>
-        </form>
       </div>
-      <div class="modal-footer">
-      <button type="button" class="btn btn-info" id="new_type_btn">Create</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-      </div>
-    </div>
   </div>
 </div>
 
 <!-- Edit Equipment Type Modal -->
-<div class="modal fade" id="editTypeModal" tabindex="-1" role="dialog" aria-labelledby="editTypeModalTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="typeModalLongTitle">Edit type</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <small id="edit_error_msg" class="text-danger"></small>
-        <div id="edit_type_modal_body"></div>
-      </div>
+
+<div class="hidden" id="editTypeModal">
+    <div class="fixed pin z-50 overflow-auto bg-smoke-light flex">
+        <div id="modal-content" class="relative p-16 bg-white w-full max-w-md m-auto flex-col flex">
+            <span class="absolute pin-t pin-b pin-r p-4">
+                <svg id="close-editTypeModal" class="h-12 w-12 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
+            </span>
+            <small id="insert_error_msg" class="text-danger"></small>
+            <div id="edit_type_modal_body">
+            </div>
+        </div>
     </div>
-  </div>
 </div>

@@ -161,6 +161,82 @@ $("body").on('submit', "#update_equipment_form", function(e) {
 })
 
 //================================================================================
+/* EQUIPMENT TYPE */
+
+// Show and Hide 'Add new equipment type' Modal
+$("body").on('click','#show_add_new_type_modal', function(){
+    $("#addNewTypeModal").show('slow');
+})
+$("body").on('click','#close-addNewTypeModal, #cancel-addNewTypeModal', function(){
+    $("#addNewTypeModal").hide('slow');
+})
+
+// Add new equipment type
+$("body").on('click', "#new_type_btn", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/insert_type",
+        data: {
+            "name" : $("#type_name").val(),
+            "color" : $("#type_color").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $('#addNewTypeModal').hide();
+            location.reload();
+        } else {
+            $("#insert_error_msg").html(response);
+        }
+    })
+})
+
+// Load equipment type edit modal
+$("body").on('click', ".edit_type_modal_btn", function() {
+        $.ajax({
+            method: "POST",
+            url: "/items/edit_type",
+            data: {
+                "type_id" : $(this).attr("data-id")
+            }
+        })
+        .done(function(response) {
+                $('#edit_type_modal_body').html(response);
+                // show modal
+                $('#editTypeModal').show('slow');
+        });
+});
+
+//Hide update item modal
+$("body").on('click','#close-editTypeModal, #cancel-edit_type_modal', function(){
+    $("#editTypeModal").hide('slow');
+})
+
+// Update existing type
+$("body").on('submit', "#update_type_form", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/items/update_type",
+        data: {
+            "id" : $("#update_type_id").val(),
+            "name" : $("#update_type_name").val(),
+            "color" : $("#update_type_color").val()
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("editTypeModal").hide();
+            location.reload();
+        } else {
+            $("#edit_error_msg").html(response);
+        }
+    })
+})
+//==============================================================================================================
+
+
 $("body").on('click', '#show_users', function() {
     $.ajax({
         method: "POST",
@@ -232,75 +308,6 @@ $("body").on('click', '#show_logs', function() {
     // Set clicked button active
     $(this).addClass('btn-info').removeClass('btn-outline-info');
 })
-
-/* EQUIPMENT TYPE */
-
-// Add new equipment type
-$("body").on('click', "#new_type_btn", function(e) {
-    // $("#insert_error_msg").empty();
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/items/insert_type",
-        data: {
-            "name" : $("#type_name").val(),
-        }
-    })
-    .done(function(response){
-        if(response === 'success') {
-            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> New type added.</div>');
-            $('#addNewTypeModal').modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-        } else {
-            $("#insert_error_msg").html(response);
-        }
-    })
-})
-
-// Load equipment type edit modal
-$("body").on('click', ".type-edit", function() {
-        $.ajax({
-            method: "POST",
-            url: "/items/edit_type",
-            data: {
-                "type_id" : $(this).attr("data-id")
-            }
-        })
-        .done(function(response) {
-                $('#edit_type_modal_body').html(response);
-    
-                // show modal
-                $('#editTypeModal').modal('show');
-        });
-});
-
-// Update exisitng type
-$("body").on('submit', "#update_type_form", function(e) {
-    e.preventDefault();
-    $.ajax({
-        method: "POST",
-        url: "/items/update_type",
-        data: {
-            "id" : $("#update_type_id").val(),
-            "name" : $("#update_type_name").val(),
-            "barcode" : $("#update_type_barcode").val(),
-            "type" : $("#update_type_type").val(),
-            "description" : $("#update_type_description").val()
-        }
-    })
-    .done(function(response){
-        if(response === 'success') {
-            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> Type updated.</div>');
-            $("editTypeModal").modal('hide');
-            $('body').removeClass('modal-open');
-            $('.modal-backdrop').remove();
-        } else {
-            $("#edit_error_msg").html(response);
-        }
-    })
-})
-
 
 /* USERS */
 

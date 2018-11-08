@@ -54,7 +54,7 @@ class Admin extends MY_Controller
         $this->layouts->view('admin/users', ['users' => $users], ('admin_tailwind'));
     }
 
-    public function activites()
+    public function activities()
     {
         $user_activites = $this->admin->get_all_user_activities();
         $this->layouts->view('admin/user_activites', ['user_activites' => $user_activites], ('admin_tailwind'));
