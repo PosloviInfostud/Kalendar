@@ -263,7 +263,6 @@ class Reservations extends MY_Controller
                 "members" => $this->input->post('members')
             ];
             if($this->res->check_if_room_is_free($data)) {
-                // $this->res->submit_reservation_form($data);
                 $message['success'] = "success";
             } else {
                 $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
@@ -296,7 +295,7 @@ class Reservations extends MY_Controller
         echo json_encode($message);
     }
 
-    public function submit_reservation_equip_form()
+    public function validate_reservation_equip_form()
     {
         $date = date('Y-m-d h:i:s', time());
 
@@ -327,13 +326,32 @@ class Reservations extends MY_Controller
                 "description" => $this->input->post('description')
             ];
             if($this->res->check_if_equipment_is_free($data)) {
-                $this->res->submit_reservation_equip_form($data);
                 $message['status'] = "success"; 
             } else {
                 $message['status'] = 'error';
                 $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
             }
         }
+        echo json_encode($message);
+    }
+
+    public function submit_reservation_equip_form()
+    {
+        $date = date('Y-m-d h:i:s', time());
+
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "equipment_id" => $this->input->post('equipment_id'),
+                "description" => $this->input->post('description')
+            ];
+            if($this->res->check_if_equipment_is_free($data)) {
+                $this->res->submit_reservation_equip_form($data);
+                $message['status'] = "success"; 
+            } else {
+                $message['status'] = 'error';
+                $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
+            }
         echo json_encode($message);
     }
 

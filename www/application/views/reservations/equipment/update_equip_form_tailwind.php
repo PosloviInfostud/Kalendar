@@ -31,7 +31,7 @@ var current_reservations = <?= $current_reservations; ?>;
         </div>
     </div>
     <!-- Fullcalendar -->
-    <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-white font-bold mt-4 py-3 w-full shadow rounded focus:outline-none">Show conference room schedule</button>
+    <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-white font-bold mt-4 py-3 w-full shadow rounded focus:outline-none">Show item schedule</button>
     <div class="hidden my-4" id="calendar"></div>
     <!-- Details -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
