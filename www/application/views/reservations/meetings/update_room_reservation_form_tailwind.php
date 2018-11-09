@@ -38,7 +38,7 @@
         <form id="form_update_room_reservation">
             <div class="mt-2 mb-8">
                 <p class="text-lg mb-2">Select conference room</p>
-                <select name="room" id="update_room_select" class="select_room select-text bg-grey-lighter p-2 font-light text-center border rounded w-full">
+                <select name="room" id="update_room_select" class="select_room select-text bg-grey-lighter p-2 font-light text-center border rounded w-full js-example-basic-single">
                     <?php foreach ($rooms as $room) { ?>
                         <?php if($room['id'] == $meeting['room_id']) { ?>
                             <option value="<?= $room['id']; ?>" selected><?= $room['name']; ?></option>

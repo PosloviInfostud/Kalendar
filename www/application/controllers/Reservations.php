@@ -49,10 +49,12 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_room_tailwind', ["rooms" => $rooms], 'master_tailwind');
     }
@@ -75,10 +77,12 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_equipment_tailwind', ["equipment" => $equipment], 'master_tailwind');
     }
@@ -469,8 +473,11 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
+        $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/meetings/update_room_reservation_form_tailwind', $data, 'master_tailwind');
     }
 
