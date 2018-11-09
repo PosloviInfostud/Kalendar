@@ -18,7 +18,8 @@
             <!-- Logo -->
             <div class="flex items-center justify-center py-4 sm:pt-16 sm:pb-8">
                 <!-- <img class="w-1/2 fill-current text-black" src="/src/img/infostud-kalendar-logo.svg"> -->
-                <img class="w-1/3" src="/src/img/infostud-kalendar-logo.png">
+                <!-- <img class="w-1/3" src="/src/img/infostud-kalendar-logo.png"> -->
+                <img class="w-1/6" src="/src/img/logo-no-text.png">
             </div>
             <!-- Flash notifications -->
             <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
