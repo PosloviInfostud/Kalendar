@@ -503,7 +503,7 @@ $("#update_room_select").change(function(e) {
 })
 
 // Submit reservation update form
-$("#reservation_room_submit_by_room").on("click", function(e) {
+$("#update_reservation_room").on("click", function(e) {
     console.log("clicked");
     e.preventDefault();
     $.ajax({
@@ -514,7 +514,7 @@ $("#reservation_room_submit_by_room").on("click", function(e) {
             default_end_time : $("#default_datetime_end").val(),
             start_time : $("#datetime_start").val(),
             end_time :  $("#datetime_end").val(),
-            room : $(".select_room option:selected").val(),
+            room : $("#update_room_select").val(),
             title : $("#reservation_name").val(),
             description : $("#reservation_description").val(),
             update_all : $("#update_all_child_reservations").is(":checked"),
@@ -579,57 +579,33 @@ var deleteReservationConfirmModal = function(callback) {
 
 //========================================================================================
 //submit equipment update form
-
-var confirmEquipUpdate = function(callback){
   
-    $("#update_equipment_submit").on("click", function(e){
-      e.preventDefault();
-      $("#update_equipment_modal").show('slow');
-      $("#modal-body").html(
-        "Start: "+$("#update_item_datetime_start").val()+
-        "<br>End: "+$("#update_item_datetime_end").val()+
-        "<br> Description: "+$("#reservation_description").val())
-    });
-  
-    $("#modal-btn-yes").on("click", function(){
-      callback(true);
-      $("#update_equipment_modal").hide();
-    });
-    
-    $("#modal-btn-no").on("click", function(){
-      callback(false);
-      $("#update_equipment_modal").hide();
-    });
-};
-  
-confirmEquipUpdate(function(confirm){
-    if(confirm){
-        $.ajax({
-            method: "POST",
-            url: "/reservations/update_equipment",
-            data: {
-                start_time : $("#update_item_datetime_start").val(),
-                end_time :  $("#update_item_datetime_end").val(),
-                description : $("#reservation_description").val(),
-                equip_id : $("#equip_id").val(),
-                res_id : $("#res_id").val()
-            }
-        })
-        .done(function(response){
-            console.log(response);
-            msg = JSON.parse(response);
-            console.log(msg);
-            if (msg.error) {
-                $("#show_errors").html(msg.error);
-            }
-            if(msg.success) {
-                window.location.href = "/reservations/equipment/"+msg.success;
-            }
-        })
-    } else {
-        return false;
-    }
+$("#update_equipment_submit").on("click", function(e){
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/reservations/update_equipment",
+        data: {
+            start_time : $("#update_item_datetime_start").val(),
+            end_time :  $("#update_item_datetime_end").val(),
+            description : $("#reservation_description").val(),
+            equip_id : $("#equip_id").val(),
+            res_id : $("#res_id").val()
+        }
+    })
+    .done(function(response){
+        console.log(response);
+        msg = JSON.parse(response);
+        console.log(msg);
+        if (msg.error) {
+            $("#show_errors").html(msg.error);
+        }
+        if(msg.success) {
+            window.location.href = "/reservations/equipment/"+msg.success;
+        }
+    })
 });
+
 //============================================================================================
 //confirm delete equipment reservation
 var deleteEquipReservationConfirmModal = function(callback) {

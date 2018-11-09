@@ -649,10 +649,9 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
-        $this->layouts->add_footer_include('/js/flatpickr_items.js');
+        $this->layouts->add_footer_include('/js/flatpickr_items_update.js');
         $this->layouts->add_footer_include('/js/calendar_for_item.js');
         $this->layouts->view('reservations/equipment/update_equip_form_tailwind', $data, 'master_tailwind');
-        // $this->layouts->view('reservations/equipment/update_equip_form', $data);
     }
 
     public function update_equipment()

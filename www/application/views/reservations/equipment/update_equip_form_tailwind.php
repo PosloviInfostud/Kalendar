@@ -50,7 +50,7 @@ var current_reservations = <?= $current_reservations; ?>;
                 </div>
                 <div class="sm:flex items-center sm:w-1/2">
                     <span class="sm:mr-2 text-grey text-sm uppercase">to</span>
-                    <input type="text" name="end_time" id="update_item_datetime_end" class="w-full bg-grey-lighter p-2 font-light text-center border rounded">
+                    <input type="text" name="end_time" id="update_item_datetime_end" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" data-default-date="<?= $equipment['endtime'] ?>">
                 </div>
             </div>
         </div>
@@ -63,4 +63,3 @@ var current_reservations = <?= $current_reservations; ?>;
     </div>
     <input type="submit" name="submit" id="update_equipment_submit" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Update">
 </div>
-

@@ -76,6 +76,7 @@
                 <div class="xs:w-1/4"><b>Description:</b></div>
                 <div class="xs:w-3/4"><?= (empty($meeting['description'])) ? 'No description' : $meeting['description'] ?></div>
             </div>
+            <?php if($meeting['status'] != 'expired') { ?> 
             <div class="xs:flex py-1">
                 <div class="xs:w-1/4"><b>Notify me:</b></div>
                 <div class="xs:w-3/4">
@@ -95,6 +96,7 @@
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
     <!-- Members -->

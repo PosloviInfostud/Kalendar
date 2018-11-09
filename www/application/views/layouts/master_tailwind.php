@@ -95,24 +95,28 @@
                         </div>
                     </div>
                     <div class="flex items-center text-sm z-40 relative group">
-                            <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
-                                <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
-                                    New meeting
-                                <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
-                                    New item reservation
-                                <?php } ?>
-                            </button>
+                    <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
+                        <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
+                            New meeting
+                        </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border">
                             <ul class="list-reset">
-                                <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
-                                    <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
-                                    <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
-                                <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
-                                    <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
-                                    <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
-                                <?php } ?>
+                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
+                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
                             </ul>
                         </div>
+                    <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
+                        <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white">
+                            New item reservation
+                        </button>
+                        <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border">
+                            <ul class="list-reset">
+                                <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
+                                <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
+                            </ul>
+                        </div>
+                        <?php } else { ?>
+                        <?php } ?>
                 </div>
             </div>
         </div>
