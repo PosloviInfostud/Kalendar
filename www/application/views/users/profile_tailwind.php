@@ -7,11 +7,16 @@
         </div>
         <span class="text-primary font-normal">Profile</span>
     </div>
-    <!-- Content -->
-    <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
+
+        <!-- Content -->
+        <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
         <!-- Title -->
+        <div class="flex flex-inline mb-6">
+            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Moj profil</h1>
+        </div>
+        <!-- Buttons -->
         <div class="flex flex-inline">
-            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">My Profile</h1>
+                <button class="user-edit cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normal text-sm py-1 px-2 rounded" data-id="<?= $this->user_data['user']['id'] ?>">Edit</button>
         </div>
     </div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
