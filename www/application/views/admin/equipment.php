@@ -63,11 +63,11 @@
             <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Add New Item</h2>
               <div class="mt-2 mb-8">
                   <label for="equipment_name" class="text-lg">Name <small class="text-grey-dark text-sm">(required)</small></label>
-                  <input type="text" class="bg-grey-lighter p-2 w-full font-light border rounded" id="equipment_name" required>
+                  <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_name" required>
               </div>
               <div class="mt-2 mb-8">
                 <label for="equipment_type">Type</label>
-                <select class="bg-grey-lighter p-2 w-full font-light border rounded" id="equipment_type">
+                <select class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_type">
                 <?php foreach($types as $type) { ?> 
                     <option value="<?= $type['id'] ?>"><?= ucwords($type['name']) ?></option>
                 <?php } ?>
@@ -75,11 +75,11 @@
             </div>
               <div class="mt-2 mb-8">
                 <label for="equipment_barcode" class="text-lg">Barcode <small class="text-grey-dark text-sm">(required)</small></label>
-                <input type="text" class="bg-grey-lighter p-2 w-full font-light border rounded" id="equipment_barcode" required>
+                <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_barcode" required>
               </div>
               <div class="mt-2 mb-8">
                   <label for="equipment_description" class="text-lg">Description</label>
-                  <textarea class="bg-grey-lighter font-light p-2 w-full border rounded" id="equipment_description" rows="3"></textarea>
+                  <textarea class="bg-grey-lighter font-light mt-1 p-2 w-full border rounded" id="equipment_description" rows="3"></textarea>
               </div>
           </form>  
           <button id="new_equipment_btn" class="bg-indigo hover:bg-indigo-dark text-white font-bold py-3 px-4 rounded">
