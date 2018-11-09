@@ -4,15 +4,16 @@ $(document).ready( function() {
     $('.table').show();
 } );
 
+// Close modals
+$("body").on('click',".close-modal, #close-modal, #cancel-modal", function(){
+    $(".modal").hide('slow');
+})
 //==============================================================================
 /* CONFERENCE ROOMS */
 
-//Show and Hide Add New Room Modal
+//Show Add New Room Modal
 $("body").on('click','#show_add_new_room_modal', function(){
     $("#addNewRoomModal").show('slow');
-})
-$("body").on('click','#close-modal, #cancel-modal', function(){
-    $("#addNewRoomModal").hide('slow');
 })
 
 // Add new conference room
@@ -54,11 +55,6 @@ $("body").on('click', ".edit_room_modal", function() {
         });
 });
 
-//Hide update room modal
-$("body").on('click','#close-edit_modal, #cancel-edit_modal', function(){
-    $("#editRoomModal").hide('slow');
-})
-
 // Update existing conference room
 $("body").on('submit', "#update_room_form", function(e) {
     e.preventDefault();
@@ -90,10 +86,8 @@ $("body").on('submit', "#update_room_form", function(e) {
 $("body").on('click','#show_add_new_item_modal', function(){
     $("#addNewItemModal").show('slow');
 })
-$("body").on('click','#close-addNewItemModal, #cancel-addNewItemModal', function(){
-    $("#addNewItemModal").hide('slow');
 
-})// Add new equipment
+// Add new equipment
 $("body").on('click', "#new_equipment_btn", function(e) {
     e.preventDefault();
     $.ajax({
@@ -132,11 +126,6 @@ $("body").on('click', ".edit_item_btn", function() {
         });
 });
 
-//Hide update item modal
-$("body").on('click','#close-edit_item_modal, #cancel-edit_item_modal', function(){
-    $("#editItemModal").hide('slow');
-})
-
 // Update existing equipment
 $("body").on('submit', "#update_equipment_form", function(e) {
     e.preventDefault();
@@ -167,9 +156,6 @@ $("body").on('submit', "#update_equipment_form", function(e) {
 // Show and Hide 'Add new equipment type' Modal
 $("body").on('click','#show_add_new_type_modal', function(){
     $("#addNewTypeModal").show('slow');
-})
-$("body").on('click','#close-addNewTypeModal, #cancel-addNewTypeModal', function(){
-    $("#addNewTypeModal").hide('slow');
 })
 
 // Add new equipment type
@@ -209,11 +195,6 @@ $("body").on('click', ".edit_type_modal_btn", function() {
         });
 });
 
-//Hide update item modal
-$("body").on('click','#close-editTypeModal, #cancel-edit_type_modal', function(){
-    $("#editTypeModal").hide('slow');
-})
-
 // Update existing type
 $("body").on('submit', "#update_type_form", function(e) {
     e.preventDefault();
@@ -235,8 +216,8 @@ $("body").on('submit', "#update_type_form", function(e) {
         }
     })
 })
-//==============================================================================================================
 
+//==============================================================================================================
 
 $("body").on('click', '#show_users', function() {
     $.ajax({
@@ -324,7 +305,7 @@ $("body").on('click', ".user-edit", function() {
     .done(function(response) {
         $('#edit_user_modal_body').html(response);
         // show modal
-        $('#editUserModal').modal('show');
+        $('#editUserModal').show('slow');
     });
 })
 

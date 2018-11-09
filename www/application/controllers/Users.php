@@ -12,7 +12,7 @@ class Users extends MY_Controller
     public function profile()
     {
         $this->layouts->set_title('User Profile');
-        $this->layouts->view('users/profile', array(), 'master_tailwind');
+        $this->layouts->view('users/profile_tailwind', array(), 'master_tailwind');
     }
 
     public function edit()
