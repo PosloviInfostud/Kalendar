@@ -41,8 +41,8 @@ var current_reservations = <?= $current_reservations; ?>;
             <h3 class="mb-4 pb-4 border-b">Are these correct?</h3>
             <div id="modal-body" class="my-2"></div>
             <div class="flex flex-inline justify-between">
-                <button type="button" class="bg-red hover:bg-red-dark text-grey-darkest text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded focus:outline-none" id="reservation_equipment_submit_by_date_modal-btn-yes">Yes</button>
-                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 ml-2 border border-grey rounded focus:outline-none" id="reservation_equipment_submit_by_date_modal-btn-no">No</button>
+                <button type="button" class="bg-red hover:bg-red-dark text-grey-darkest text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded focus:outline-none" id="reservation_equipment_submit_by_item_modal-btn-yes">Yes</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-white text-white font-bold w-full py-2 mt-2 ml-2 border border-grey rounded focus:outline-none" id="reservation_equipment_submit_by_item_modal-btn-no">No</button>
             </div>
         </div>
     </div>

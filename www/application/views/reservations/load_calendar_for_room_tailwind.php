@@ -41,7 +41,7 @@ var background = "<?= $background; ?>";
             </div>
             <div class="mt-2 mb-8">
                 <p class="mb-2">Describe it to the attendants</p>
-                <textarea rows="4" class="bg-grey-lighter font-light p-2 w-full border rounded"></textarea>
+                <textarea rows="4" class="bg-grey-lighter font-light p-2 w-full border rounded" id="reservation_description"></textarea>
             </div>
             <div class="mt-2 mb-8">
                 <p class="mb-2">Who do you want to invite?</p>

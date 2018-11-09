@@ -20,7 +20,7 @@
         </div>
         <!-- Buttons -->
         <div class="flex flex-inline">
-            <?php if($user_id == $equipment['user_id']) { ?>
+            <?php if($user_id == $equipment['user_id'] && $equipment['status'] != 'expired') { ?>
                 <a href="/reservations/equipment/edit/<?= $equipment['id'] ?>">
                     <button id="edit_equip_btn" class="hover:bg-primary text-grey text-sm hover:text-white mr-3 py-1 px-2 border-2 hover:border-primary rounded focus:outline-none">
                         Edit
