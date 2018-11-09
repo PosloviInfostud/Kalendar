@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="/public/css/app.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body class="font-sans bg-grey-lighter font-light">

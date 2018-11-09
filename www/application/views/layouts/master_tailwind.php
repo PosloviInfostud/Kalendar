@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <?= $this->layouts->print_header_includes() ?>
-    <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="/public/css/app.css">
+    <link rel="stylesheet" href="/style/style.css">
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body class="font-sans bg-grey-lighter font-light">

@@ -1,4 +1,5 @@
-<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+<!-- Breadcrumbs -->
+<div class="flex text-sm text-black py-3 border-b mb-8">
     <span>Admin</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
@@ -7,36 +8,38 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">User Activities</span>
+    <span class="text-primary font-normal">Activities</span>
 </div>
-<h3 class="mt-5 mb-3">List of all user activites</h3>
-
+<!-- Content -->
+<h1 class="pl-2 mb-8 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">User Activities</h1>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($user_activites)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed stripe border">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">Email</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Success</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">IP address</th>
-                    <th scope="col">Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($user_activites as $activity) { ?> 
-                    <tr>
-                        <td class="align-middle text-center"><?= $activity['email'] ?></td>
-                        <td class="align-middle text-center"><?= $activity['log_type'] ?></td>
-                        <td class="align-middle text-center"><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
-                        <td class="align-middle"><?= substr($activity['log_description'],0, 120).'...' ?></td>
-                        <td class="align-middle text-center"><?= $activity['ip_address'] ?></td>
-                        <td class="align-middle text-center"><?= $activity['log_time'] ?></td>
+        <div class="overflow-auto">
+            <table class="hidden pt-4 table stripe text-center w-full text-grey-darker text-sm">
+                <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
+                    <tr class="table-row">
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>Success</th>
+                        <th>Description</th>
+                        <th>IP address</th>
+                        <th>Timestamp</th>
                     </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach($user_activites as $activity) { ?> 
+                        <tr>
+                            <td><?= $activity['email'] ?></td>
+                            <td><?= $activity['log_type'] ?></td>
+                            <td><?= $activity['success'] == 1 ? 'Yes' : 'No' ?></td>
+                            <td><?= $activity['log_description'] ?></td>
+                            <td><?= $activity['ip_address'] ?></td>
+                            <td><?= $activity['log_time'] ?></td>
+                        </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div>
 <?php } ?>
