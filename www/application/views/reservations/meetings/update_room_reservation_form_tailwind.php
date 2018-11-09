@@ -38,7 +38,7 @@
         <form id="form_update_room_reservation">
             <div class="mt-2 mb-8">
                 <p class="text-lg mb-2">Select conference room</p>
-                <select name="room" id="update_room_select" class="select_room select-text bg-grey-lighter p-2 font-light text-center border rounded w-full">
+                <select name="room" id="update_room_select" class="select_room select-text bg-grey-lighter p-2 font-light text-center border rounded w-full js-example-basic-single">
                     <?php foreach ($rooms as $room) { ?>
                         <?php if($room['id'] == $meeting['room_id']) { ?>
                             <option value="<?= $room['id']; ?>" selected><?= $room['name']; ?></option>
@@ -53,12 +53,12 @@
                 <div class="sm:flex sm:items-center">
                     <div class="sm:flex items-center mb-2 sm:mb-0 sm:mr-2 sm:w-1/2">
                         <span class="sm:mr-2 text-grey text-sm uppercase">From</span>
-                        <input type="text" name="start_time" id="datetime_start" placeholder="start time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['starttime'] ?>"> 
+                        <input type="text" name="start_time" id="datetime_start" placeholder="start time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" data-default-date="<?= $meeting['starttime'] ?>"> 
                         <input type="hidden" name="default_start_time" id="default_datetime_start" value="<?= $meeting['starttime'] ?>">
                     </div>
                     <div class="sm:flex items-center sm:w-1/2">
                         <span class="sm:mr-2 text-grey text-sm uppercase">to</span>
-                        <input type="text" name="end_time" id="datetime_end" placeholder="end time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" value="<?= $meeting['endtime'] ?>">
+                        <input type="text" name="end_time" id="datetime_end" placeholder="end time" class="w-full bg-grey-lighter p-2 font-light text-center border rounded" data-default-date="<?= $meeting['endtime'] ?>">
                         <input type="hidden" name="default_end_time" id="default_datetime_end" value="<?= $meeting['endtime'] ?>">
                     </div>
                 </div>
@@ -86,5 +86,5 @@
             </div>
         </form>
     </div>
-    <input type="submit" name="submit" id="reservation_room_submit_by_room" form="form_update_room_reservation" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Update">
+    <input type="submit" name="submit" id="update_reservation_room" form="form_update_room_reservation" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Update">
 </div>

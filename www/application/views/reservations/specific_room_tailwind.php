@@ -21,7 +21,7 @@
     </div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
         <p class="mb-4">Which conference room would you like to reserve?</p>
-        <select name="room" id="room_select" class="select_room w-full p-2 font-light bg-grey-lighter border rounded">
+        <select name="room" id="room_select" class="select_room w-full p-2 font-light bg-grey-lighter border rounded js-example-basic-single">
             <option selected="true" disabled="disabled">Choose room</option> 
             <?php foreach ($rooms as $room) { ?>
                 <option value="<?= $room['id']; ?>"><?= $room['name']; ?></option>

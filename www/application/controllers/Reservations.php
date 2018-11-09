@@ -49,10 +49,12 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_room_tailwind', ["rooms" => $rooms], 'master_tailwind');
     }
@@ -75,10 +77,12 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/fullcalendar/lib/moment.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
         $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/specific_equipment_tailwind', ["equipment" => $equipment], 'master_tailwind');
     }
@@ -263,7 +267,6 @@ class Reservations extends MY_Controller
                 "members" => $this->input->post('members')
             ];
             if($this->res->check_if_room_is_free($data)) {
-                // $this->res->submit_reservation_form($data);
                 $message['success'] = "success";
             } else {
                 $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
@@ -296,7 +299,7 @@ class Reservations extends MY_Controller
         echo json_encode($message);
     }
 
-    public function submit_reservation_equip_form()
+    public function validate_reservation_equip_form()
     {
         $date = date('Y-m-d h:i:s', time());
 
@@ -327,13 +330,32 @@ class Reservations extends MY_Controller
                 "description" => $this->input->post('description')
             ];
             if($this->res->check_if_equipment_is_free($data)) {
-                $this->res->submit_reservation_equip_form($data);
                 $message['status'] = "success"; 
             } else {
                 $message['status'] = 'error';
                 $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
             }
         }
+        echo json_encode($message);
+    }
+
+    public function submit_reservation_equip_form()
+    {
+        $date = date('Y-m-d h:i:s', time());
+
+            $data = [
+                "start_time" => $this->input->post('start_time'),
+                "end_time" => $this->input->post('end_time'),
+                "equipment_id" => $this->input->post('equipment_id'),
+                "description" => $this->input->post('description')
+            ];
+            if($this->res->check_if_equipment_is_free($data)) {
+                $this->res->submit_reservation_equip_form($data);
+                $message['status'] = "success"; 
+            } else {
+                $message['status'] = 'error';
+                $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
+            }
         echo json_encode($message);
     }
 
@@ -451,8 +473,11 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
+        $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/js/flatpickr_rooms.js');
         $this->layouts->add_footer_include('/js/calendar_for_room.js');
+        $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.full.min.js');
+        $this->layouts->add_footer_include('/js/select2.js');
         $this->layouts->view('reservations/meetings/update_room_reservation_form_tailwind', $data, 'master_tailwind');
     }
 
@@ -631,10 +656,9 @@ class Reservations extends MY_Controller
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/locale/sr.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/gcal.js');
-        $this->layouts->add_footer_include('/js/flatpickr_items.js');
+        $this->layouts->add_footer_include('/js/flatpickr_items_update.js');
         $this->layouts->add_footer_include('/js/calendar_for_item.js');
         $this->layouts->view('reservations/equipment/update_equip_form_tailwind', $data, 'master_tailwind');
-        // $this->layouts->view('reservations/equipment/update_equip_form', $data);
     }
 
     public function update_equipment()

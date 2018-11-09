@@ -1,36 +1,39 @@
-<div class="flex text-sm text-black pb-4 px-2 sm:px-0">
+<!-- Breadcrumbs -->
+<div class="flex text-sm text-black py-3 border-b mb-8">
     <span>Admin</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
     <span class="text-primary font-normal">Logs</span>
 </div>
-<h3 class="mt-5 mb-3">List of all logs</h3>
-
+<!-- Content -->
+<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Logs</h1>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($logs)) {
         echo 'No entries';
 } else { ?>
-        <table class="table table-text-sm table-condensed stripe border">
-            <thead class="thead-light">
-                <tr>
-                    <th scope="col">User</th>
-                    <th scope="col">Table</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Value</th>
-                    <th scope="col">Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($logs as $log) { ?> 
+        <div class="overflow-auto">
+            <table class="hidden pt-4 table stripe text-center w-full text-grey-darkest text-sm">
+                <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                     <tr>
-                        <td class="align-middle text-center"><?= $log['user_email'] ?></td>
-                        <td class="align-middle text-center"><?= $log['altered_table'] ?></td>
-                        <td class="align-middle text-center"><?= $log['type'] ?></td>
-                        <td class="align-middle"><?= $log['value'] ?></td>
-                        <td class="align-middle text-center"><?= $log['created_at'] ?></td>
+                        <th class="py-4">User</th>
+                        <th class="py-4">Table</th>
+                        <th class="py-4">Type</th>
+                        <th class="py-4 w-8">Value</th>
+                        <th class="py-4">Timestamp</th>
                     </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach($logs as $log) { ?> 
+                        <tr class="table-row">
+                            <td class="table-cell"><?= $log['user_email'] ?></td>
+                            <td class="table-cell"><?= $log['altered_table'] ?></td>
+                            <td class="table-cell"><?= $log['type'] ?></td>
+                            <td class="table-cell"><?= $log['value'] ?></td>
+                            <td class="table-cell"><?= $log['created_at'] ?></td>
+                        </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        </div> 
 <?php } ?>
