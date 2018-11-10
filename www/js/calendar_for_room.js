@@ -16,16 +16,15 @@ $(document).ready(function() {
         timeFormat: "H:mm",
         slotLabelFormat: "H:mm",
         slotDuration: "00:30:00",
-        
         contentHeight: "auto",
         header: {
             left: 'prev, next',
             center: 'title',
-            right: 'agendaDay, agendaWeek, listMonth'
+            right: 'agendaDay, agendaWeek, month, listMonth'
         },
         views: {
             listDayFormat: (room) => event.room,
-            listMonth: {buttonText: 'list month'},
+            listMonth: {buttonText: 'Lista'},
         },
         //make clicks and selections possible
         viewRender: function (view, viewContainer){
@@ -38,9 +37,9 @@ $(document).ready(function() {
             if (view.type == 'listWeek') {
             // console.log(view.type + ' change colspan');
             // console.log(view)
-            var tableSubHeaders = jQuery("td.fc-widget-header");
+            var tableSubHeaders = $("td.fc-widget-header");
             // console.log(tableSubHeaders);
-            var numberOfColumnsItem = jQuery('tr.fc-list-item');
+            var numberOfColumnsItem = $('tr.fc-list-item');
             var maxCol = 0;
             var arrayLength = numberOfColumnsItem.length;
             for (var i = 0; i < arrayLength; i++) {
