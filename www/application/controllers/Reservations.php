@@ -30,7 +30,7 @@ class Reservations extends MY_Controller
 
     public function meeting_create_by_date()
     {
-        $this->layouts->set_title('Create New Meeting');
+        $this->layouts->set_title('Create a New Meeting');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
@@ -62,7 +62,7 @@ class Reservations extends MY_Controller
     public function equipment_create_by_date()
     {
         $data['equips'] = $this->res->get_all_equipment_types();
-        $this->layouts->set_title('Create New Reservation');
+        $this->layouts->set_title('Create a New Reservation');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_items.js');

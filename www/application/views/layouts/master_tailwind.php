@@ -15,7 +15,7 @@
 <!-- Navigation -->
     <div>
         <div class="bg-primary-darkest">
-            <div class="sm:container mx-auto px-4">
+            <div class="sm:container mx-auto px-2 xs:px-4">
                 <div class="flex items-center sm:justify-between py-4">
                     <div class="w-1/4 sm:hidden">
                         <div class="fill-current h-6 w-6 text-grey-light cursor-pointer" id="phone_menu_btn">
@@ -23,17 +23,19 @@
                         </div>
                     </div>
                     <div class="w-1/2 sm:w-auto text-lg text-center text-grey-light font-medium tracking-wide uppercase">
-                        <div class="xs:flex xs:items-baseline">
-                            Kalendar
-                            <span class="block text-xs text-primary-dark xs:ml-2px">infostud</span>
-                        </div>
+                        <a href="/" class="no-underline">
+                            <div class="xs:flex xs:items-baseline text-white">
+                                Kalendar
+                                <span class="block text-xs text-primary-dark xs:ml-2px">infostud</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
                         <?php if($this->user_data['user']['user_role_id'] == 1) { ?>
                             <a href="/admin" class="no-underline text-grey-light hover:text-primary">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                        <?= file_get_contents("public/icons/cog.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
@@ -44,7 +46,7 @@
                         <?php } ?>
                             <a href="/profile" class="no-underline text-grey-light hover:text-primary">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                         <?= file_get_contents("public/icons/user.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
@@ -54,7 +56,7 @@
                             </a>
                             <a href="/logout" class="no-underline text-grey-light hover:text-primary">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6">
                                         <?= file_get_contents("public/icons/exit.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1">

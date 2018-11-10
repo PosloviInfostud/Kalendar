@@ -7,12 +7,20 @@ class Reg_log extends MY_Controller
         $this->load->library('form_validation');
         $this->load->model('Mail_model', 'mail');
         $this->load->model('Logs_model', 'logs');
+        $this->load->model('Permission_model', 'permission');
     }
 
     public function index()
     {
-        $this->layouts->set_title('Reservations');
-        $this->layouts->view('index', array(), 'login_tailwind');
+        $token = $this->input->cookie('usr-vezba');
+        $user = $this->user->get_user_by_token($token);
+
+        if(empty($token) || empty($user)) {
+            $this->layouts->set_title('Reservations');
+            $this->layouts->view('index', array(), 'login_tailwind');
+        } else {
+            url_redirect('/reservations/meetings');
+        }
     }
 
     public function register()
@@ -38,7 +46,7 @@ class Reg_log extends MY_Controller
         // Check if both values match
         } elseif ($data['email'] == $user['email'] && $data['activation_key'] == $user['activation_key']) {
             $this->user->activate($user['id']);
-            url_redirect('/login');
+            url_redirect('/');
         // Handle invalid activation link
         } else {
             echo 'Invalid activation link.';
@@ -156,11 +164,10 @@ class Reg_log extends MY_Controller
                 "reset_key" => $this->input->post('code')
             ];
 
-            if ($this->user->reset_password($data) == true) {
+            if ($this->user->reset_password($data) === true) {
                 // Set notification
                 $msg = $this->alerts->render('teal', 'Success', 'Your password has been successfully reseted! You can now login with your new password!');
                 $this->session->set_flashdata('flash_message', $msg);
-
                 $response['status'] = "success";
             } else {
                 $response['status'] = "user_error";
@@ -188,7 +195,7 @@ class Reg_log extends MY_Controller
     public function logout()
     {
         delete_cookie('usr-vezba');
-        url_redirect('/login');
+        url_redirect('/');
     }
 
     public function registration_by_invitation_form()

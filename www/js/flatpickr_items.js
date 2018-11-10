@@ -1,19 +1,40 @@
 $(document).ready(function() {
-    /* Flatpickr */
-    
+    var curTime = new Date();
+    // Handle weekends
+    if(curTime.getDay() === 5) {
+        curTime.setHours(8,0,0);
+        curTime.setDate(curTime.getDate() + 3); // add 3 days
+    } else if(curTime.getDay() === 6) {
+        curTime.setHours(8,0,0);
+        curTime.setDate(curTime.getDate() + 2); // add 2 days
+    }
+    // Check if we are over maxtime
+    if(curTime.getHours() > 18) {
+        curTime.setDate(curTime.getDate() + 1); // add a day
+    // Check if we are before mintime
+    } else if(curTime.getHours() < 8) {
+        curTime.setHours(8,0,0); // set time to 08:00:00
+    };
     // Load flatpickr for equipment reservations
     let fpItemStartDate = $("#item_datetime_start").flatpickr({
         dateFormat: "Y-m-d H:i",
-        minDate: new Date(),
-        defaultDate: new Date(),
+        minDate: curTime,
+        defaultDate: curTime,
         enableTime: true,
         time_24hr: true,
+        defaultHour: "8",
         altInput: true,
         altInputClass: '',
-        altFormat: "d/m/y @ H:i",
-        onOpen: [function(dateStr, dateObj) {
-            this.set("defaultDate", new Date());
-        }],
+        altFormat: "d.m.Y @ H:i",
+        "disable": [
+            function(date) {
+                // return true to disable
+                return (date.getDay() === 0 || date.getDay() === 6);
+            }
+        ],
+        "locale": {
+            "firstDayOfWeek": 1 // start week on Monday
+        },
         onChange: [function(dateStr, dateObj) {
                 fpItemEndDate.set("minDate", dateObj);
         }]
@@ -21,11 +42,12 @@ $(document).ready(function() {
     
     let fpItemEndDate = $("#item_datetime_end").flatpickr({
         dateFormat: "Y-m-d H:i",
-        minDate: new Date(),
+        minDate: curTime,
         enableTime: true,
         time_24hr: true,
+        defaultHour: "8",
         altInput: true,
         altInputClass: '',
-        altFormat: "d/m/y @ H:i",
+        altFormat: "d.m.Y @ H:i",
     });
 });

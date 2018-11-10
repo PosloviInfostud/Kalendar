@@ -58,7 +58,7 @@ $("#register_form").submit(function (e) {
             $("#alert_box").hide();
             $(":input").removeClass("border-red");
             if (response['status'] == 'success') {
-                window.location.href = "/login";
+                window.location.href = "/";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#register_" + key + "_err").html(response['errors'][key]);
@@ -78,13 +78,15 @@ $("#login_form").submit(function (e) {
     $("#alert_box").hide();
     $.ajax({
             method: "POST",
-            url: "/reg_log/login",
+            url: "reg_log/login",
             data: {
                 "email": $("#login_email").val(),
                 "password": $("#login_password").val()
             }
         })
         .done(function (response) {
+            console.log(response);
+            
             $(".error_box").empty();
             $(":input").removeClass("border-red");
             if (response['status'] == 'success') {
@@ -118,7 +120,7 @@ $("#forgot_form").submit(function (e) {
             $(".error_box").empty();
             $("#alert_box").hide();
             if (response['status'] == 'success') {
-                window.location.href = "/login";
+                window.location.href = "/";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#forgot_" + key + "_err").html(response['errors'][key]);
@@ -151,7 +153,7 @@ $("#form_reset_password").submit(function (e) {
             $(".error_box").empty();
             $("#alert_box").hide();
             if (response['status'] == 'success') {
-                window.location.href = "/login";
+                window.location.href = "/";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#reset_" + key + "_err").html(response['errors'][key]);
@@ -180,7 +182,7 @@ $("#register_by_invite_form").submit(function (e) {
         })
         .done(function (response) {
             if (response === 'success') {
-                window.location.href = "/login"
+                window.location.href = "/"
             } else {
                 $("#messages").html(response);
             }

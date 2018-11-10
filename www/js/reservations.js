@@ -1,11 +1,11 @@
 // Close modal
-$(".close-modal").on('click', function() {
-    $(".modal").hide('slow');
+$(".close-modal").on("click", function() {
+    $(".modal").hide("slow");
  });
  
  // Close alert box (error messages)
- $("#close_alert").on('click', function() {
-    $("#alert_box").hide('slow');
+ $("#close_alert").on("click", function() {
+    $("#alert_box").hide("slow");
 });
 
 // Load mobile menu
@@ -14,7 +14,8 @@ $("#phone_menu_btn").on("click", function () {
 });
 
 // Load mobile menu
-$("#new_reservation").on("touchstart", function () {
+$("#new_reservation").on("touchstart", function(e) {
+    e.preventDefault();
     $("#new_reservation_options").slideToggle();
 });
 
@@ -37,6 +38,8 @@ $("#search_reserved_rooms").click(function(e){
             $("#search_reserved_rooms").addClass("bg-primary-lighter hover:bg-primary-light").removeClass("bg-primary hover:bg-primary-dark");
             $('#free').html(response['message']);
             $('#free').show();
+            // Scroll to the next section
+            $("html, body").animate({scrollTop: $('#free').offset().top}, 500);
         } else {
             $('#form_errors').html(response['errors']);
             $('#form_errors').show();
@@ -45,9 +48,8 @@ $("#search_reserved_rooms").click(function(e){
 })
 
 //send ajax requests for equipment type needed
-$("#search_equipment").click(function(e){
+$("#search_equipment").click(function(e) {
     e.preventDefault();
-    console.log("clicked");
     
     $.ajax({
         method: "POST",
@@ -91,14 +93,16 @@ $("#room_select").change(function(e){
 
 // Get value from room radio button
 var room;
-$("body").on('change click', "input.room_radio", function(e) {
+var room_name;
+
+$("body").on("change click", "input.room_radio", function(e) {
     room = $(this).val();
     room_name = $(this).attr("data-room_name");
 })
 
 //===============================================================================
 // Submit room reservation form (search by date)
-    $("body").on('click', "#reservation_room_submit_by_date", function(e) {
+    $("body").on("click", "#reservation_room_submit_by_date", function(e) {
         e.preventDefault();
         data = {};
         data.start_time = $("#datetime_start").val();
@@ -123,22 +127,22 @@ $("body").on('change click', "input.room_radio", function(e) {
             if (msg.error) {
                 $("#room_errors").html(msg.error);
                 $("#room_errors").show();
+                // Scroll to the error message
                 $('html, body').animate({
                     scrollTop: $("#show").offset().top
-                }, 2000);
+                }, 500);
 
             }
             if(msg.success) {
-                $("#room_reservation_modal").show('slow');
+                $("#room_reservation_modal").show("slow");
                 $("#modal-body").html(
-                    "Start: "+$("#datetime_start").val()+
-                    "<br>End: "+$("#datetime_end").val()+
-                    "<br>Room: "+room_name+
-                    "<br>Title: "+$("#reservation_name").val()+
-                    "<br> Description: "+$("#reservation_description").val()+
-                    "<br>Invited: "+$("#members").val());
+                    "<p class=\"mb-1\"><strong>Start:</strong> " + $("#datetime_start").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>End:</strong> "+ $("#datetime_end").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Room:</strong> " + room_name + "</p>" +
+                    "<p class=\"mb-1\"><strong>Title:</strong> " + $("#reservation_name").val() + "</p>"
+                );
     
-                    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function(){
+                    $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function() {
                         $.ajax({
                             method: "POST",
                             url: "/reservations/submit_reservation_form",
@@ -153,18 +157,18 @@ $("body").on('change click', "input.room_radio", function(e) {
                             }
                         })     ;
                         console.log(data);
-                        $("#room_reservation_modal").hide('slow');
+                        $("#room_reservation_modal").hide("slow");
                     });
                 
                     $("body").on("click", "#reservation_room_submit_by_date_modal-btn-no", function(){
-                        $("#room_reservation_modal").hide('slow');
+                        $("#room_reservation_modal").hide("slow");
                     });       
             };
         })
     }
 //===================================================================================================  
 // Submit room reservation form (search by free room)
-    $("body").on('click', "#reservation_room_submit_by_room", function(e) {
+    $("body").on("click", "#reservation_room_submit_by_room", function(e) {
         e.preventDefault();
         data = {};
         data.start_time = $("#datetime_start").val();
@@ -189,18 +193,17 @@ $("body").on('change click', "input.room_radio", function(e) {
                 $("#room_errors").html(msg.error);
                 $("#room_errors").show();
                 $('html, body').animate({
-                    scrollTop: $("#show").offset().top
+                    scrollTop: $("#room_errors").offset().top
                 }, 500);
             }
             if(msg.success) {
-                $("#room_reservation_modal").show('slow');
+                $("#room_reservation_modal").show("slow");
                 $("#modal-body").html(
-                    "Start: "+$("#datetime_start").val()+
-                    "<br>End: "+$("#datetime_end").val()+
-                    "<br>Room: "+room_name+
-                    "<br>Title: "+$("#reservation_name").val()+
-                    "<br> Description: "+$("#reservation_description").val()+
-                    "<br>Invited: "+$("#members").val());
+                    "<p class=\"mb-1\"><strong>Start:</strong> " + $("#datetime_start").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>End:</strong> "+ $("#datetime_end").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Room:</strong> " + room_name + "</p>" +
+                    "<p class=\"mb-1\"><strong>Title:</strong> " + $("#reservation_name").val() + "</p>"
+                );
     
                     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
                         $.ajax({
@@ -216,11 +219,11 @@ $("body").on('change click', "input.room_radio", function(e) {
                                 window.location.href = "/reservations/meetings";
                             }
                         });
-                        $("#room_reservation_modal").hide('slow');
+                        $("#room_reservation_modal").hide("slow");
                     });
                 
                     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-no", function(){
-                        $("#room_reservation_modal").hide('slow');
+                        $("#room_reservation_modal").hide("slow");
                     });       
             };
         })
@@ -245,7 +248,7 @@ $("select.select_item").change(function(e) {
 
 //===================================================================================
 // Submit equipment reservation form (search by date)
-$("body").on('click', "#reservation_equipment_submit_by_date", function(e) {
+$("body").on("click", "#reservation_equipment_submit_by_date", function(e) {
     e.preventDefault();
     data =  {};
     data.start_time =  $("#item_datetime_start").val();
@@ -274,11 +277,10 @@ function submit_equipment_reservation_by_date(data) {
             }, 2000);
         } 
         if (msg['status'] == 'success') {
-            $("#equip_reservation_modal").show('slow');
+            $("#equip_reservation_modal").show("slow");
             $("#modal-body").html(
-                "Start: "+$("#item_datetime_start").val()+
-                "<br>End: "+$("#item_datetime_end").val()+
-                "<br> Description: "+$("#reservation_description").val())
+                "<p class=\"mb-1\"><strong>Start:</strong> " + $("#item_datetime_start").val() + "</p>" +
+                "<p class=\"mb-1\"><strong>End:</strong> "+ $("#item_datetime_end").val() + "</p>")
 
             $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-yes", function() {
                 $.ajax({
@@ -294,7 +296,7 @@ function submit_equipment_reservation_by_date(data) {
                         window.location.href = "/reservations/equipment";
                     }
                 });
-                $("#equip_reservation_modal").hide('slow');
+                $("#equip_reservation_modal").hide("slow");
             });
             $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-no", function(){
               $("#equip_reservation_modal").hide();
@@ -305,7 +307,7 @@ function submit_equipment_reservation_by_date(data) {
 //==========================================================================================================
 // Submit equipment reservation form (search by item)
 
-$("body").on('click', "#reservation_equipment_submit_by_item", function(e) {
+$("body").on("click", "#reservation_equipment_submit_by_item", function(e) {
     e.preventDefault();
     data =  {};
     data.start_time =  $("#item_datetime_start").val();
@@ -333,11 +335,10 @@ function submit_equipment_reservation_by_item(data) {
             }, 2000);
         } 
         if (msg['status'] == 'success') {
-            $("#equip_reservation_modal").show('slow');
+            $("#equip_reservation_modal").show("slow");
             $("#modal-body").html(
-                "Start: "+$("#item_datetime_start").val()+
-                "<br>End: "+$("#item_datetime_end").val()+
-                "<br> Description: "+$("#reservation_description").val())
+                "<p class=\"mb-1\"><strong>Start:</strong> " + $("#item_datetime_start").val() + "</p>" +
+                "<p class=\"mb-1\"><strong>End:</strong> "+ $("#item_datetime_end").val() + "</p>")
 
             $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-yes", function() {
                 $.ajax({
@@ -353,7 +354,7 @@ function submit_equipment_reservation_by_item(data) {
                         window.location.href = "/reservations/equipment";
                     }
                 });
-                $("#equip_reservation_modal").hide('slow');
+                $("#equip_reservation_modal").hide("slow");
             });
             $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-no", function(){
               $("#equip_reservation_modal").hide();
@@ -365,7 +366,7 @@ function submit_equipment_reservation_by_item(data) {
 //===========================================================================================
 //load update user reservation role form modal
 
-$("body").on('click','.role_edit', function(e) {
+$("body").on("click",'.role_edit', function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -409,7 +410,7 @@ $("body").on('submit', '#update_user_role_form', function(e) {
 
 var deleteMemberConfirmModal = function(callback) {
     
-    $("body").on('click', '.member_delete', function(e) {
+    $("body").on("click", '.member_delete', function(e) {
         e.preventDefault();
         data = {};
         data.res_id = $(this).attr("data-res");
@@ -456,7 +457,7 @@ var deleteMemberConfirmModal = function(callback) {
 //=============================================================================================
 //add new member show form modal
 
-$("body").on('click', '#btn_add_new_member', function(e) {
+$("body").on("click", '#btn_add_new_member', function(e) {
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -467,7 +468,7 @@ $("body").on('click', '#btn_add_new_member', function(e) {
     }).done(function(response){
         $('#add_member_modal_body').html(response);
         // show modal
-        $('#addMemberModal').show('slow');   
+        $('#addMemberModal').show("slow");   
     })
 })
 
@@ -539,7 +540,7 @@ $("#update_reservation_room").on("click", function(e) {
 
 var deleteReservationConfirmModal = function(callback) {
     
-    $("body").on('click', '#del_res_btn', function(e) {
+    $("body").on("click", '#del_res_btn', function(e) {
         e.preventDefault();
         delete_url = this.href;
         $("#delete_reservation_confirm_modal").show("slow");
@@ -548,7 +549,7 @@ var deleteReservationConfirmModal = function(callback) {
         );
     });
 
-    $("body").on('click', '#del_all_res_btn', function(e) {
+    $("body").on("click", '#del_all_res_btn', function(e) {
         e.preventDefault();
         delete_url = this.href;
         $("#delete_reservation_confirm_modal").show("slow");
@@ -610,10 +611,10 @@ $("#update_equipment_submit").on("click", function(e){
 //confirm delete equipment reservation
 var deleteEquipReservationConfirmModal = function(callback) {
 
-    $("body").on('click', '#delete_equip_btn', function(e) {
+    $("body").on("click", '#delete_equip_btn', function(e) {
     delete_equip_url = this.href;
     e.preventDefault();
-    $("#delete_equip_reservation_confirm_modal").modal("show");
+    $("#delete_equip_reservation_confirm_modal").show("slow");
     $("#delete_equip_reservation_confirm_modal-body").html(
         "Are you sure you want to remove this item from reservations?"
     )

@@ -14,7 +14,10 @@ class Permission_model extends CI_Model
 
             // Delete incorrect cookie
             delete_cookie('usr-vezba');
-            url_redirect('/login');
+            // Redirect to homepage - login page
+            url_redirect('/');
+        } else {
+            return true;
         }
     }
 
