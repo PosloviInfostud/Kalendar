@@ -123,7 +123,7 @@
     </div>
 
     <!-- Content section :: container replacement -->
-    <div class="mx-auto max-w-2/5xl sm:px-4 py-4 mb-4">
+    <div class="mx-auto max-w-2/5xl sm:px-4 py-4">
         <!-- Flash notifications -->
         <div class="max-w-md mx-auto">
             <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>

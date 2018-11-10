@@ -11,6 +11,7 @@ $("#load-modal, #close-modal").on('click', function () {
 // Show register form
 $('*[data-link="register"]').click(function() {
     $("#alert_box").hide();
+    $(":input").removeClass("border-red");
     $('*[data-section="login"]').addClass("hidden");
     $('*[data-section="forgot"]').addClass("hidden");
     $('*[data-section="register"]').removeClass("hidden");
@@ -19,6 +20,7 @@ $('*[data-link="register"]').click(function() {
 // Show login form
 $('*[data-link="login"]').click(function() {
     $("#alert_box").hide();
+    $(":input").removeClass("border-red");
     $('*[data-section="register"]').addClass("hidden");
     $('*[data-section="forgot"]').addClass("hidden");
     $('*[data-section="login"]').removeClass("hidden");
@@ -27,6 +29,7 @@ $('*[data-link="login"]').click(function() {
 // Show forgot password form
 $('*[data-link="forgot"]').click(function() { 
     $("#alert_box").hide();
+    $(":input").removeClass("border-red");
     $('*[data-section="register"]').addClass("hidden");
     $('*[data-section="login"]').addClass("hidden");
     $('*[data-section="forgot"]').removeClass("hidden");
@@ -53,12 +56,13 @@ $("#register_form").submit(function (e) {
         .done(function (response) {
             $(".error_box").empty();
             $("#alert_box").hide();
-
+            $(":input").removeClass("border-red");
             if (response['status'] == 'success') {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
-                    $("#register_" + key + "_err").html(response['errors'][key])
+                    $("#register_" + key + "_err").html(response['errors'][key]);
+                    $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
                 $("#messages").html(response['errors']);
@@ -82,11 +86,13 @@ $("#login_form").submit(function (e) {
         })
         .done(function (response) {
             $(".error_box").empty();
+            $(":input").removeClass("border-red");
             if (response['status'] == 'success') {
                 window.location.href = "/reservations/meetings";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#login_" + key + "_err").html(response['errors'][key])
+                    $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
                 $("#messages").html(response['errors']);
@@ -99,6 +105,7 @@ $("#login_form").submit(function (e) {
 $("#forgot_form").submit(function (e) {
     $(".error_box").empty();
     $("#alert_box").hide();
+    $(":input").removeClass("border-red");
     e.preventDefault();
     $.ajax({
             method: "POST",
@@ -114,7 +121,8 @@ $("#forgot_form").submit(function (e) {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
-                    $("#forgot_" + key + "_err").html(response['errors'][key])
+                    $("#forgot_" + key + "_err").html(response['errors'][key]);
+                    $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
                 $("#messages").html(response['errors']);
@@ -127,6 +135,7 @@ $("#forgot_form").submit(function (e) {
 $("#form_reset_password").submit(function (e) {
     $(".error_box").empty();
     $("#alert_box").hide();
+    $(":input").removeClass("border-red");
     e.preventDefault();
     $.ajax({
             method: "POST",
@@ -145,7 +154,8 @@ $("#form_reset_password").submit(function (e) {
                 window.location.href = "/login";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
-                    $("#reset_" + key + "_err").html(response['errors'][key])
+                    $("#reset_" + key + "_err").html(response['errors'][key]);
+                    $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
                 $("#messages").html(response['errors']);
@@ -193,7 +203,6 @@ $(".notify").change(function(){
             user_id: $(this).attr("data-user")
         }
     }).done(function(response){
-        console.log(response);
     })
 })
 
