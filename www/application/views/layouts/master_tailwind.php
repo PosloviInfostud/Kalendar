@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="/src/img/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <?= $this->layouts->print_header_includes() ?>
@@ -72,12 +73,12 @@
         <div class="h-1 bg-primary sm:hidden"></div>
 
         <!-- Secondary Nav -->
-        <div class="hidden bg-primary-darkest sm:block sm:bg-primary sm:font-normal border-b border-primary-dark" id="secondary_nav">
-            <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
+        <div class="hidden bg-primary-darkest sm:block sm:bg-primary border-b border-primary-dark" id="secondary_nav">
+            <div class="mx-auto max-w-2/5xl px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                        <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/reservations/meetings' ? 'text-white border-primary-dark' : 'text-grey-light' ?>
+                        <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/reservations/meetings' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
                             <a href="/reservations/meetings" class="<?= $text_meetings ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                                 <div class="fill-current h-5 w-5 mr-2">
                                     <?= file_get_contents("public/icons/users.svg") ?>
@@ -86,7 +87,7 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                        <?php $text_equipment = $_SERVER['REQUEST_URI'] == '/reservations/equipment' ? 'text-white border-primary-dark' : 'text-grey-light' ?>
+                        <?php $text_equipment = $_SERVER['REQUEST_URI'] == '/reservations/equipment' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
 
                             <a href="/reservations/equipment" class="<?= $text_equipment ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
@@ -96,19 +97,19 @@
                             </a>
                         </div>
                     </div>
-                    <div class="flex items-center text-sm z-40 relative group">
+                    <div class="flex items-center text-sm z-40 relative group justify-center">
                     <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
-                        <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
+                        <button id="new_reservation" class="w-auto bg-transparent hover:bg-white text-white sm:font-normal py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
                             New meeting
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">
-                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
-                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
+                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">by date</a></li>
+                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">by room</a></li>
                             </ul>
                         </div>
                     <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
-                        <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
+                        <button id="new_reservation" class="w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
                             New item reservation
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
