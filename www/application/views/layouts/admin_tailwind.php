@@ -16,7 +16,7 @@
 <!-- Navigation -->
     <div>
         <div class="bg-indigo-darkest">
-            <div class="sm:container mx-auto px-4">
+            <div class="sm:container mx-auto px-2 xs:px-4">
                 <div class="flex items-center sm:justify-between py-4">
                     <div class="w-1/4 sm:hidden">
                         <div class="fill-current h-6 w-6 text-grey-light cursor-pointer" id="phone_menu_btn">
@@ -24,16 +24,18 @@
                         </div>
                     </div>
                     <div class="w-1/2 sm:w-auto text-lg text-center text-grey-light font-medium tracking-wide uppercase">
-                        <div class="xs:flex xs:items-baseline">
-                            Kalendar
-                            <span class="block text-xs text-indigo-dark xs:ml-2px">admin</span>
-                        </div>
+                        <a href="/" class="no-underline">
+                            <div class="xs:flex xs:items-baseline text-white">
+                                Kalendar
+                                <span class="block text-xs text-indigo-dark xs:ml-2px">admin</span>
+                            </div>
+                        </a>
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
                             <a href="/reservations/meetings" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                        <?= file_get_contents("public/icons/cog.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
@@ -43,7 +45,7 @@
                             </a>
                             <a href="/profile" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6 mr-4 sm:mr-0">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                         <?= file_get_contents("public/icons/user.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
@@ -53,7 +55,7 @@
                             </a>
                             <a href="/logout" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
-                                    <div class="fill-current h-6 w-6">
+                                    <div class="fill-current h-5 w-5 xs:h-6 xs:w-6">
                                         <?= file_get_contents("public/icons/exit.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1">
@@ -69,7 +71,7 @@
         <div class="h-1 bg-indigo sm:hidden"></div>
 
         <!-- Secondary Nav -->
-        <div class="hidden bg-primary-darkest sm:block sm:bg-indigo sm:font-normal border-b border-indigo-light" id="secondary_nav">
+        <div class="hidden bg-indigo-darkest sm:block sm:bg-indigo sm:font-normal border-b border-indigo-light" id="secondary_nav">
             <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm">

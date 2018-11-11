@@ -534,6 +534,10 @@ module.exports = {
     '4/5': '80%',
     '1/6': '16.66667%',
     '5/6': '83.33333%',
+    '1/10': '10%',
+    '3/10': '30%',
+    '5/10': '50%',
+    '7/10': '50%',
     'full': '100%',
     'screen': '100vw'
   },
@@ -975,6 +979,7 @@ module.exports = {
       // center: true,
       // padding: '1rem',
     }),
+    require('tailwindcss-spinner')(),
   ],
 
 

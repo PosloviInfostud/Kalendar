@@ -1,17 +1,17 @@
-<h3 class="font-light mb-2">Who do you want to invite?</h3>
+<h3 class="pl-2 py-1 font-light text-lg sm:text-xl border-l-4 mb-6 border-primary">Who would you like to invite?</h3>
 <form id="add_new_member_form">
     <div class="form-group">
-        <select class="js-example-basic-multiple w-full p-2 my-2 rounded" name="members[]" id="members" multiple="multiple">
+        <select class="js-example-basic-multiple w-full my-2 rounded" name="members[]" id="members" multiple="multiple">
 
         <?php foreach($users as $user) { ?>
-            <option class="d-block" value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
+            <option value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
         <?php  } ?> 
 
         </select>
     </div>
     <input type="hidden" name="res_id" id="res_id" value="<?= $res_id ?>">
 </form>
-<button type="submit" form="add_new_member_form" value="Submit" class="bg-primary hover:bg-primary-dark text-grey-darkest text-white font-bold w-full py-3 mt-2 border border-primary-light rounded">
+<button type="submit" form="add_new_member_form" value="Submit" class="bg-primary hover:bg-primary-dark text-grey-darkest text-white w-full py-2 mt-2 border border-primary-light rounded">
     Invite
 </button>
 

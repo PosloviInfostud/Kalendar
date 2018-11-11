@@ -275,6 +275,7 @@ class User_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+        return true;
     }
 
     public function get_all_user_roles()

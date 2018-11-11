@@ -23,7 +23,7 @@ var current_reservations = <?= $current_reservations; ?>;
         <span class="text-primary font-normal"><?= $equipment['item_name'] ?></span>
     </div>
     <!-- Content -->
-    <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
+    <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:px-8 sm:py-6">
         <!-- Title -->
         <div class="flex flex-inline">
             <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary capitalize"><?= $equipment['item_name'] ?> Reservation</h1>
@@ -31,10 +31,10 @@ var current_reservations = <?= $current_reservations; ?>;
         </div>
     </div>
     <!-- Fullcalendar -->
-    <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-white font-bold mt-4 py-3 w-full shadow rounded focus:outline-none">Show item schedule</button>
+    <button id="show_calendar" class="bg-grey hover:bg-grey-dark text-grey-darker hover:text-grey-darkest mt-4 py-3 w-full shadow rounded focus:outline-none">Show item schedule</button>
     <div class="hidden my-4" id="calendar"></div>
     <!-- Details -->
-    <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
+    <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 px-4 py-8 sm:p-8">
         <div id="form_errors" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-6 border-red-lighter"></div>
         <div class="mb-8">
             <p class="text-lg mb-2">Reservation dates</p>
@@ -54,12 +54,15 @@ var current_reservations = <?= $current_reservations; ?>;
                 </div>
             </div>
         </div>
-        <div class="mt-2 mb-8">
+        <div class="mt-2">
             <p class="text-lg mb-2">Reason for reservation</p>
             <textarea rows="4" class="bg-grey-lighter font-light p-2 w-full border rounded" id="reservation_description"><?= $equipment['description'] ?></textarea>
         </div>
         <input type="hidden" name="res_id" id="res_id" value="<?= $equipment['id'] ?>">
         <input type="hidden" name="equip_id" id="equip_id" value="<?= $equipment['equipment_id'] ?>">
+        <!-- Submit button for mobile view -->
+        <input type="submit" name="submit" id="update_equipment_submit" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-6 px-4 rounded" value="Update">
     </div>
-    <input type="submit" name="submit" id="update_equipment_submit" class="cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Update">
+    <!-- Submit button for desktop view -->
+    <input type="submit" name="submit" id="update_equipment_submit" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Update">
 </div>
