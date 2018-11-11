@@ -52,11 +52,11 @@ var background = "<?= $background; ?>";
                 </select>
             </div>
             <!-- Submit button for mobile view -->
-            <input type="submit" name="submit" id="reservation_room_submit_by_room" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase py-3 px-4 mt-8 border border-primary shadow rounded focus:outline-none" value="Create">
+            <button class="reservation_room_submit_by_room sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase py-3 px-4 mt-8 border border-primary shadow rounded focus:outline-none">Create</button>
         </form>
     </div>
     <!-- Submit button for desktop view -->
-    <input type="submit" name="submit" id="reservation_room_submit_by_room" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase py-3 px-4 mt-4 border border-primary shadow rounded focus:outline-none" value="Create">
+    <button class="reservation_room_submit_by_room hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase py-3 px-4 mt-4 border border-primary shadow rounded focus:outline-none">Create</button>
 </div>
 
 <!-- Confirm reservation modal -->

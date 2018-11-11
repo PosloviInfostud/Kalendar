@@ -9,7 +9,7 @@
         <div class="fill-current h-2 w-2 mx-1 -mt-px">
             <?= file_get_contents("public/icons/chevron-right.svg") ?>
         </div>
-        <span class="text-primary font-normal">New Meeting</span>
+        <span class="text-primary font-normal">Create</span>
     </div>
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:p-8">

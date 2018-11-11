@@ -31,10 +31,10 @@
                 <textarea rows="4" class="w-full bg-grey-lighter p-3 font-light border rounded" name="description" id="reservation_description"></textarea>
             </div>
         </div>
-        <input type="submit" name="submit" id="reservation_equipment_submit_by_date" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-6 border border-primary shadow rounded focus:outline-none" value="Create">
+        <button class="reservation_equipment_submit_by_date sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-6 border border-primary shadow rounded focus:outline-none">Create</button>
 </div>
 <!-- Button for desktop view -->
-<input type="submit" name="submit" id="reservation_equipment_submit_by_date" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none" value="Create">
+<button class="reservation_equipment_submit_by_date hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none">Create</button>
 
 <!-- Confirm reservation modal -->
 <div class="hidden modal" id="equip_reservation_modal">

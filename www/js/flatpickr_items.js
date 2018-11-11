@@ -7,6 +7,9 @@ $(document).ready(function() {
     } else if(curTime.getDay() === 6) {
         curTime.setHours(8,0,0);
         curTime.setDate(curTime.getDate() + 2); // add 2 days
+    } else if(curTime.getDay() === 0) {
+        curTime.setHours(8,0,0);
+        curTime.setDate(curTime.getDate() + 1); // add 2 days
     }
     // Check if we are over maxtime
     if(curTime.getHours() > 18) {

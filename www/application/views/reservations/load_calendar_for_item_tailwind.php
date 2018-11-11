@@ -31,10 +31,10 @@ var current_reservations = <?= $current_reservations; ?>;
             </div>
         </div>
         <!-- Button for mobile view -->
-        <input type="submit" name="submit" id="reservation_equipment_submit_by_item" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-6 border border-primary shadow rounded focus:outline-none" value="Create">
+        <button class="reservation_equipment_submit_by_item sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-6 border border-primary shadow rounded focus:outline-none">Create</button>
     </div>
     <!-- Button for desktop view -->
-    <input type="submit" name="submit" id="reservation_equipment_submit_by_item" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none" value="Create">
+    <button class="reservation_equipment_submit_by_item hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none">Create</button>
 </div>
 
 <!-- Confirm reservation modal -->

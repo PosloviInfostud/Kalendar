@@ -22,6 +22,8 @@ $("#new_reservation").on("touchstart", function(e) {
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();
+    $(this).addClass("spinner");
+    $('#form_errors').hide();
     $.ajax({
         method: "POST",
         url: "/reservations/search_free_rooms",
@@ -32,8 +34,8 @@ $("#search_reserved_rooms").click(function(e){
         }
     })
     .done(function(response){
+        $("#search_reserved_rooms").removeClass("spinner");
         if(response['status'] == 'success') {
-            $('#form_errors').hide();
             $("#main-container").addClass("bg-smoke-lightest").removeClass("bg-white shadow");
             $("#search_reserved_rooms").addClass("bg-primary-lighter hover:bg-primary-light").removeClass("bg-primary hover:bg-primary-dark");
             $('#free').html(response['message']);
@@ -44,12 +46,15 @@ $("#search_reserved_rooms").click(function(e){
             $('#form_errors').html(response['errors']);
             $('#form_errors').show();
         }
+
     })
 })
 
 //send ajax requests for equipment type needed
 $("#search_equipment").click(function(e) {
     e.preventDefault();
+    $(this).addClass("spinner");
+    $("#form_errors").hide();
     $.ajax({
         method: "POST",
         url: "/reservations/search_free_equipment",
@@ -60,7 +65,7 @@ $("#search_equipment").click(function(e) {
         }
     })
     .done(function(response){
-        $("#form_errors").hide();
+        $("#search_equipment").removeClass("spinner");
         msg = JSON.parse(response);
         if(msg['status'] == 'error') {
             $("#form_errors").html(msg['response']);
@@ -101,12 +106,13 @@ var room_name;
 $("body").on("change click", "input.room_radio", function(e) {
     room = $(this).val();
     room_name = $(this).attr("data-room_name");
-})
+});
 
 //===============================================================================
 // Submit room reservation form (search by date)
-    $("body").on("click", "#reservation_room_submit_by_date", function(e) {
+    $("body").on("click", ".reservation_room_submit_by_date", function(e) {
         e.preventDefault();
+        $(this).addClass("spinner");
         data = {};
         data.start_time = $("#datetime_start").val();
         data.end_time =  $("#datetime_end").val();
@@ -125,8 +131,8 @@ $("body").on("change click", "input.room_radio", function(e) {
             url: "/reservations/validate_reservation_form",
             data: data
         }).done(function(response){
+            $(".reservation_room_submit_by_date").removeClass("spinner");
             msg = JSON.parse(response);
-           
             if (msg.error) {
                 $("#room_errors").html(msg.error);
                 $("#room_errors").show();
@@ -168,8 +174,10 @@ $("body").on("change click", "input.room_radio", function(e) {
     }
 //===================================================================================================  
 // Submit room reservation form (search by free room)
-    $("body").on("click", "#reservation_room_submit_by_room", function(e) {
+    $("body").on("click", ".reservation_room_submit_by_room", function(e) {
         e.preventDefault();
+        $("#room_errors").hide();
+        $(this).addClass("spinner");
         data = {};
         data.start_time = $("#datetime_start").val();
         data.end_time =  $("#datetime_end").val();
@@ -182,12 +190,12 @@ $("body").on("change click", "input.room_radio", function(e) {
     });
 
     function submit_room_reservation_by_room(data) {
-        $("#room_errors").hide();
         $.ajax({
             method: "POST",
             url: "/reservations/validate_reservation_form",
             data: data
         }).done(function(response){
+            $(".reservation_room_submit_by_room").removeClass("spinner");
             msg = JSON.parse(response);
             if (msg.error) {
                 $("#room_errors").html(msg.error);
@@ -246,8 +254,10 @@ $("select.select_item").change(function(e) {
 
 //===================================================================================
 // Submit equipment reservation form (search by date)
-$("body").on("click", "#reservation_equipment_submit_by_date", function(e) {
+$("body").on("click", ".reservation_equipment_submit_by_date", function(e) {
     e.preventDefault();
+    $("#equipment_errors").hide();
+    $(this).addClass("spinner");
     data =  {};
     data.start_time =  $("#item_datetime_start").val();
     data.end_time =  $("#item_datetime_end").val();
@@ -256,17 +266,15 @@ $("body").on("click", "#reservation_equipment_submit_by_date", function(e) {
     submit_equipment_reservation_by_date(data);
 });
 
-
 function submit_equipment_reservation_by_date(data) {
-    $("#equipment_errors").hide();
     $.ajax({
         method: "POST",
         url: "/reservations/validate_reservation_equip_form",
         data: data
     })
     .done(function(response){
+        $(".reservation_equipment_submit_by_date").removeClass("spinner");
         msg = JSON.parse(response);
-
         if (msg['status'] == 'error') {
             $("#equipment_errors").html(msg['response']);
             $("#equipment_errors").show();
@@ -303,8 +311,9 @@ function submit_equipment_reservation_by_date(data) {
 //==========================================================================================================
 // Submit equipment reservation form (search by item)
 
-$("body").on("click", "#reservation_equipment_submit_by_item", function(e) {
+$("body").on("click", ".reservation_equipment_submit_by_item", function(e) {
     e.preventDefault();
+    $(this).addClass("spinner");
     data =  {};
     data.start_time =  $("#item_datetime_start").val();
     data.end_time =  $("#item_datetime_end").val();
@@ -321,6 +330,7 @@ function submit_equipment_reservation_by_item(data) {
         data: data
     })
     .done(function(response){
+        $(".reservation_equipment_submit_by_item").removeClass("spinner");
         msg = JSON.parse(response);
 
         if (msg['status'] == 'error') {

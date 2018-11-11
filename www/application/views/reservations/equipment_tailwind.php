@@ -9,12 +9,12 @@
         <div class="fill-current h-2 w-2 mx-1 -mt-px">
             <?= file_get_contents("public/icons/chevron-right.svg") ?>
         </div>
-        <span class="text-primary font-normal">New Reservation</span>
+        <span class="text-primary font-normal">Create</span>
     </div>
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:px-8 sm:py-6">
         <div class="flex flex-inline">
-            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create a New Reservation</h1>
+            <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Create New Reservation</h1>
             <span class="uppercase text-grey font-medium text-sm ml-1">By date</span>
         </div>
     </div>

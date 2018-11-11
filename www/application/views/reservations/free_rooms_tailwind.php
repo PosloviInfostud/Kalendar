@@ -60,10 +60,10 @@
         </div>
     </div>
     <!-- Submit button for mobile view  -->
-    <input type="submit" name="submit" id="reservation_room_submit_by_date" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-8 sm:mt-4 border border-primary shadow rounded focus:outline-none" value="Create">
+    <button class="reservation_room_submit_by_date sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-8 sm:mt-4 border border-primary shadow rounded focus:outline-none">Create</button>
 </div>
 <!-- Submit button for desktop view  -->
-<input type="submit" name="submit" id="reservation_room_submit_by_date" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none" value="Create">
+<button class="reservation_room_submit_by_date hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold uppercase px-2 py-3 md:px-4 mt-4 border border-primary shadow rounded focus:outline-none">Create</button>
 
 
 <!-- Confirm reservation modal -->
