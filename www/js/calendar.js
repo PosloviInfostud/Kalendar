@@ -21,19 +21,17 @@ $(document).ready(function() {
             listWeek: {buttonText: 'list week'},
             listMonth: {buttonText: 'list month'},
         },
-        //make clicks and selections possible
-        selectable: true,
-
-        //callback triggered when we click on the event
+        // make clicks and selections possible
+        selectable: false,
+        // callback triggered when we click on the event
         eventClick: function(event, jsEvent, view) {
-            //ask for a title
+            // Load reservation details
             window.location.href = '/reservations/meetings/'+event.id;
         },
         viewRender: function (view, viewContainer){
-            // Clear background image if still lingering
+            // Set calendar background to white
             $(".fc-view-container").addClass("bg-white");
         },
-
         eventAfterAllRender : function( view ) {
 		    if (view.type == 'listWeek') {
 			console.log(view.type + ' change colspan');
@@ -50,7 +48,6 @@ $(document).ready(function() {
 			tableSubHeaders.attr("colspan",maxCol);
                     }		    
 		},
-
         eventSources: sources
     })
 });

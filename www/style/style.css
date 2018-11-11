@@ -24,3 +24,7 @@ table.dataTable.no-footer {
     background-color: #f1f5f8;
     border-color: #dae1e7;
 }
+
+.fc-event {
+    cursor: pointer;
+}
