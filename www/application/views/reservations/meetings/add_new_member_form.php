@@ -1,4 +1,4 @@
-<h3 class="pl-2 py-1 font-light text-lg sm:text-xl border-l-4 mb-6 border-primary">Who would you like to invite?</h3>
+<h3 class="pl-2 py-1 font-light text-lg sm:text-xl border-l-4 mb-6 border-primary">Koga želite da pozovete na sastanak?</h3>
 <form id="add_new_member_form">
     <div class="form-group">
         <select class="js-example-basic-multiple w-full my-2 rounded" name="members[]" id="members" multiple="multiple">
@@ -12,7 +12,7 @@
     <input type="hidden" name="res_id" id="res_id" value="<?= $res_id ?>">
 </form>
 <button type="submit" form="add_new_member_form" value="Submit" class="bg-primary hover:bg-primary-dark text-grey-darkest text-white w-full py-2 mt-2 border border-primary-light rounded">
-    Invite
+    Pozovi
 </button>
 
 <script>

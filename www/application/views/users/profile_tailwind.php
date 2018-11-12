@@ -22,39 +22,39 @@
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">
     <div>
         <div class="xs:flex py-1 mb-2">
-            <div class="xs:w-1/4"><b>Name:</b></div>
+            <div class="xs:w-1/4"><b>Ime:</b></div>
             <div class="xs:w-3/4"><?= $this->user_data['user']['name'] ?></div>
         </div>
         <div class="xs:flex py-1 mb-2">
-            <div class="xs:w-1/4"><b>Email:</b></div>
+            <div class="xs:w-1/4"><b>Email adresa:</b></div>
             <div class="xs:w-3/4"><?= $this->user_data['user']['email'] ?></div>
         </div>
         <div class="xs:flex py-1 mb-2">
-            <div class="xs:w-1/4"><b>Member since:</b></div>
+            <div class="xs:w-1/4"><b>Član od:</b></div>
             <div class="xs:w-3/4"><?= $this->user_data['user']['created_at'] ?></div>
         </div>
         <div class="xs:flex py-1 mb-2">
-            <div class="xs:w-1/4"><b>Notify me:</b></div>
+            <div class="xs:w-1/4"><b>Obavesti me:</b></div>
             <div class="xs:w-3/4">
                 <div class="mb-1">
                     <?php if($this->user_data['user']['not_create'] == 1) { ?>
-                        <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> when new meeting is created
+                        <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> kada budem pozvan na sastanak
                     <?php } else { ?>
-                        <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>"> when new meeting is created
+                        <input type="checkbox" class="notify" name="not_create" data-user="<?= $this->user_data['user']['id'] ?>"> kada budem pozvan na sastanak
                     <?php } ?>
                 </div>
                 <div class="mb-1">
                     <?php if($this->user_data['user']['not_update'] == 1) { ?>
-                        <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> when a meeting is updated or cancelled
+                        <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> kada se informacije u vezi sastanka ažuriraju ili se sastanak otkaže
                     <?php } else { ?>
-                        <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>"> when a meeting is updated or cancelled
+                        <input type="checkbox" class="notify" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>"> kada se informacije u vezi sastanka ažuriraju ili se sastanak otkaže
                     <?php } ?>
                 </div>
                 <div class="mb-1">
                     <?php if($this->user_data['user']['not_remind'] == 1) { ?>
-                        <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> to remind me meeting starts in 15 minutes
+                        <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" checked="checked"> da sastanak počinje za 15 minuta
                     <?php } else { ?>
-                        <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>"> to remind me meeting starts in 15 minutes
+                        <input type="checkbox" class="notify" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>"> da sastanak počinje za 15 minuta
                     <?php } ?>
                 </div>
             </div>

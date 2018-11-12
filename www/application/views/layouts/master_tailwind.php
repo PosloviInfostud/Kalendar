@@ -39,7 +39,7 @@
                                        <?= file_get_contents("public/icons/cog.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
-                                       <span class="text-sm">Admin area</span>
+                                       <span class="text-sm">Admin panel</span>
                                     </div>
                                 </div>
                             </a>
@@ -50,7 +50,7 @@
                                         <?= file_get_contents("public/icons/user.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
-                                        <span class="text-sm">Profile</span>
+                                        <span class="text-sm">Nalog</span>
                                     </div>
                                 </div>
                             </a>
@@ -60,7 +60,7 @@
                                         <?= file_get_contents("public/icons/exit.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1">
-                                        <span class="text-sm">Logout</span>
+                                        <span class="text-sm">Odjava</span>
                                     </div>
                                 </div>
                             </a>
@@ -82,7 +82,7 @@
                                 <div class="fill-current h-5 w-5 mr-2">
                                     <?= file_get_contents("public/icons/users.svg") ?>
                                 </div>
-                                Meetings
+                                Sastanci
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
@@ -92,29 +92,29 @@
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
-                                Equipment
+                                Oprema
                             </a>
                         </div>
                     </div>
                     <div class="flex items-center text-sm z-40 relative group">
                     <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
                         <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
-                            New meeting
+                            Kreiraj novi sastanak
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">
-                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by date</a></li>
-                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">by room</a></li>
+                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">Pretraga po slobodnom terminu</a></li>
+                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm text-primary hover:bg-grey-lighter">Pretraga po salama</a></li>
                             </ul>
                         </div>
                     <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
                         <button id="new_reservation" class="w-full sm:w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
-                            New item reservation
+                            Rezerviši novi artikal
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">
-                                <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by date</a></li>
-                                <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">by item</a></li>
+                                <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">Pretraga po slobodnom terminu</a></li>
+                                <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">Pretraga po artiklima</a></li>
                             </ul>
                         </div>
                         <?php } else { ?>

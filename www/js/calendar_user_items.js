@@ -23,27 +23,6 @@ $(document).ready(function() {
         },
         //make clicks and selections possible
         selectable: true,
-
-        //callback that will be triggered when a selection is made
-        select: function(start, end, jsEvent, view) {
-
-            //ask for a title
-            var title = prompt("Enter a title for this event","New event");
-            if (title != null) {
-                //Create event
-                var event = {
-                    title: title.trim() !="" ? title: "New event",
-                    start: start,
-                    end: end,
-                    room: room
-                };
-                //display en event
-                $calendar.fullCalendar("renderEvent", event, true);
-
-            }
-        },
-        //make events editable, globally
-        editable: true,
         //callback triggered wehen we click on the event
         eventClick: function(event, jsEvent, view) {
             window.location.href = '/reservations/equipment/'+event.id;

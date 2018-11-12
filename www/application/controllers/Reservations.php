@@ -102,11 +102,11 @@ class Reservations extends MY_Controller
 
             if($this->input->post('start_time') < $date)
             {
-                $response['errors'] = "Change start time. You have to reserve in advance";
+                $response['errors'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
             }
             elseif($this->input->post('start_time') >= $this->input->post('end_time'))
             {
-                $response['errors'] = "Check start and end time again. End time has to be greater than start time.";
+                $response['errors'] = "Proverite početno i krajnje vreme.";
             }
             else
             {
@@ -209,11 +209,11 @@ class Reservations extends MY_Controller
         }
         elseif($this->input->post('start_time') < $date) {
                 $message['status'] = 'error';
-                $message['response'] = "Change start time. You have to reserve in advance";
+                $message['response'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
             $message['status'] = 'error';
-            $message['response'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['response'] = "Proverite početno i krajnje vreme.";
         }
         else {
             $data = [
@@ -251,10 +251,10 @@ class Reservations extends MY_Controller
             $message['error'] = validation_errors();
         } 
         elseif($this->input->post('start_time') < $date) {
-            $message['error'] = "Change start time. You have to reserve in advance";
+            $message['error'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['error'] = "Proverite početno i krajnje vreme.";
 
         } else {
             $data = [
@@ -269,7 +269,7 @@ class Reservations extends MY_Controller
             if($this->res->check_if_room_is_free($data)) {
                 $message['success'] = "success";
             } else {
-                $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                $message['error'] = "Sala je zauzeta u traženom terminu. Pokušajte ponovo.";
             }
         }
         echo json_encode($message);
@@ -294,7 +294,7 @@ class Reservations extends MY_Controller
             $message['success'] = "success";
 
         } else {
-            $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+            $message['error'] = "Sala je zauzeta u traženom terminu. Pokušajte ponovo.";
         }
         echo json_encode($message);
     }

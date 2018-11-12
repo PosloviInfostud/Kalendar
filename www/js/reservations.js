@@ -142,10 +142,10 @@ $("body").on("change click", "input.room_radio", function(e) {
             if(msg.success) {
                 $("#room_reservation_modal").show("slow");
                 $("#modal-body").html(
-                    "<p class=\"mb-1\"><strong>Start:</strong> " + $("#datetime_start").val() + "</p>" +
-                    "<p class=\"mb-1\"><strong>End:</strong> "+ $("#datetime_end").val() + "</p>" +
-                    "<p class=\"mb-1\"><strong>Room:</strong> " + room_name + "</p>" +
-                    "<p class=\"mb-1\"><strong>Title:</strong> " + $("#reservation_name").val() + "</p>"
+                    "<p class=\"mb-1\"><strong>Početak:</strong> " + $("#datetime_start").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Kraj:</strong> "+ $("#datetime_end").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Sala:</strong> " + room_name + "</p>" +
+                    "<p class=\"mb-1\"><strong>Naziv:</strong> " + $("#reservation_name").val() + "</p>"
                 );
     
                     $("body").on("click", "#reservation_room_submit_by_date_modal-btn-yes", function() {
@@ -205,10 +205,10 @@ $("body").on("change click", "input.room_radio", function(e) {
             if(msg.success) {
                 $("#room_reservation_modal").show("slow");
                 $("#modal-body").html(
-                    "<p class=\"mb-1\"><strong>Start:</strong> " + $("#datetime_start").val() + "</p>" +
-                    "<p class=\"mb-1\"><strong>End:</strong> "+ $("#datetime_end").val() + "</p>" +
-                    "<p class=\"mb-1\"><strong>Room:</strong> " + room_name + "</p>" +
-                    "<p class=\"mb-1\"><strong>Title:</strong> " + $("#reservation_name").val() + "</p>"
+                    "<p class=\"mb-1\"><strong>Početak:</strong> " + $("#datetime_start").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Kraj:</strong> "+ $("#datetime_end").val() + "</p>" +
+                    "<p class=\"mb-1\"><strong>Sala:</strong> " + room_name + "</p>" +
+                    "<p class=\"mb-1\"><strong>Naziv:</strong> " + $("#reservation_name").val() + "</p>"
                 );
     
                     $("body").on("click", "#reservation_room_submit_by_room_modal-btn-yes", function(){
@@ -283,8 +283,8 @@ function submit_equipment_reservation_by_date(data) {
         if (msg['status'] == 'success') {
             $("#equip_reservation_modal").show("slow");
             $("#modal-body").html(
-                "<p class=\"mb-1\"><strong>Start:</strong> " + $("#item_datetime_start").val() + "</p>" +
-                "<p class=\"mb-1\"><strong>End:</strong> "+ $("#item_datetime_end").val() + "</p>")
+                "<p class=\"mb-1\"><strong>Početak:</strong> " + $("#item_datetime_start").val() + "</p>" +
+                "<p class=\"mb-1\"><strong>Kraj:</strong> "+ $("#item_datetime_end").val() + "</p>")
 
             $("body").on("click", "#reservation_equipment_submit_by_date_modal-btn-yes", function() {
                 $.ajax({
@@ -341,8 +341,8 @@ function submit_equipment_reservation_by_item(data) {
         if (msg['status'] == 'success') {
             $("#equip_reservation_modal").show("slow");
             $("#modal-body").html(
-                "<p class=\"mb-1\"><strong>Start:</strong> " + $("#item_datetime_start").val() + "</p>" +
-                "<p class=\"mb-1\"><strong>End:</strong> "+ $("#item_datetime_end").val() + "</p>")
+                "<p class=\"mb-1\"><strong>Početak:</strong> " + $("#item_datetime_start").val() + "</p>" +
+                "<p class=\"mb-1\"><strong>Kraj:</strong> "+ $("#item_datetime_end").val() + "</p>")
 
             $("body").on("click", "#reservation_equipment_submit_by_item_modal-btn-yes", function() {
                 $.ajax({

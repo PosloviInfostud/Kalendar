@@ -17,9 +17,9 @@ $(document).ready(function() {
             right: 'agendaDay, agendaWeek, month, listDay, listWeek, listMonth'
         },
         views: {
-            listDay: {buttonText: 'list day'},
-            listWeek: {buttonText: 'list week'},
-            listMonth: {buttonText: 'list month'},
+            listDay: {buttonText: 'Dnevna lista'},
+            listWeek: {buttonText: 'Nedeljna lista'},
+            listMonth: {buttonText: 'Mesečna lista'},
         },
         //make clicks and selections possible
         selectable: true,
