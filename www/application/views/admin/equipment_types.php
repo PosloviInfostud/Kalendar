@@ -4,21 +4,21 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span>Items</span>
+    <span>Oprema</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Types</span>
+    <span class="text-primary font-normal">Vrste opreme</span>
 </div>
 <!-- Content -->
 <div class="flex">
     <div class="w-4/5">
-        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Equipment Type List</h1>
+        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Vrste opreme</h1>
     </div>
     <!-- Button to trigger the modal -->
     <div class="w-1/5">
         <button id="show_add_new_type_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-3 px-4 rounded shadow">
-            Add new type
+            Dodaj novu vrstu opreme
         </button>
     </div>
 </div>
@@ -33,14 +33,14 @@
                     <tr>
                         <th>#</th>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Colour</th>
+                        <th>Ime</th>
+                        <th>Boja u kalendaru</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php foreach($types as $type) { ?> 
                         <tr>
-                            <td><button class="edit_type_modal_btn cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white text-sm py-1 px-2 rounded" data-id="<?= $type['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                            <td><button class="edit_type_modal_btn cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white text-sm py-1 px-2 rounded" data-id="<?= $type['id'] ?>"><i class="fas fa-pencil-alt"></i>Izmeni</button></td>
                             <td><?= $type['id'] ?></td>
                             <td><?= $type['name'] ?></td>
                             <td><input type="color" class="bg-grey-lighter w-1/3 h-6 border rounded" value="<?= $type['color'] ?>" disabled></td>
@@ -60,18 +60,18 @@
           </span>
           <small id="insert_error_msg" class="text-danger"></small>
           <form>
-            <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Add New Type</h2>
+            <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Nova oprema</h2>
             <div class="mt-2 mb-8">
-                <label for="type_name" class="text-lg">Name <small class="text-grey-dark text-sm">(required)</small></label>
+                <label for="type_name" class="text-lg">Naziv vrste opreme <small class="text-grey-dark text-sm">(obavezno)</small></label>
                 <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="type_name" required>
             </div>
             <div class="mt-2 mb-8">
-                <label for="type_color" class="text-lg">Color for Calendar <small class="text-grey-dark text-sm">(required)</small></label>
+                <label for="type_color" class="text-lg">Boja za kalendar <small class="text-grey-dark text-sm">(obavezno)</small></label>
                 <input type="color" class="bg-grey-lighter font-light ml-4 mt-2 p-1 w-1/4 h-10 border rounded" id="type_color">
             </div>
           </form>  
           <button id="new_type_btn" class="w-full mr-2 bg-indigo hover:bg-indogo-dark text-white font-bold py-3 px-4 rounded">
-              Create
+              Kreiraj
           </button>
       </div>
   </div>

@@ -24,7 +24,7 @@
         <select name="room" id="room_select" class="select_room w-full p-2 font-light bg-grey-lighter border rounded js-example-basic-single">
             <option selected="true" disabled="disabled">Izaberi salu</option> 
             <?php foreach ($rooms as $room) { ?>
-                <option value="<?= $room['id']; ?>"><?= $room['name']; ?></option>
+                <option value="<?= $room['id']; ?>" data-room_name="<?= $room['name'] ?>"><?= $room['name']; ?></option>
             <?php } ?>
         </select>
     </div>

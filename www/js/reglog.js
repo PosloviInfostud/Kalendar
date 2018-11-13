@@ -189,22 +189,4 @@ $("#register_by_invite_form").submit(function (e) {
         })
 })
 
-// Edit user notifications checkboxes
-$(".notify").change(function(){
-    if($(this).is(":checked")) {
-        value = 1;
-    } else {
-        value = 0;
-    }
-    $.ajax({
-        method: "POST",
-        url: "/users/change_notifications",
-        data: {
-            column: $(this).attr("name"),
-            value: value,
-            user_id: $(this).attr("data-user")
-        }
-    }).done(function(response){
-    })
-})
 
