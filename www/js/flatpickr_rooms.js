@@ -13,6 +13,7 @@ $(document).ready(function() {
     }
     // Check if we are over maxtime
     if(curTime.getHours() > 18) {
+        curTime.setHours(8,0,0);
         curTime.setDate(curTime.getDate() + 1); // add a day
     // Check if we are before mintime
     } else if(curTime.getHours() < 8) {

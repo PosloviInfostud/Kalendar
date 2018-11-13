@@ -17,7 +17,7 @@
                 <small id="login_password_err" class="error_box text-xs text-red font-normal"></small>
             </div>
             <div class="flex">
-                <input type="submit" id="login_submit" value="Login" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">
+                <button type="submit" id="login_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Login</button>
             </div>
         </form>
 
@@ -40,7 +40,7 @@
                 <small id="register_password_confirm_err" class="error_box text-xs text-red font-normal"></small>
             </div>
             <div class="flex">
-                <input type="submit" id="register_submit" value="Register" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">
+                <button type="submit" id="register_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Register</button>
             </div>
         </form>
         
@@ -51,11 +51,11 @@
                 <p class="mb-3">We will send you an email that will allow you to reset your password.</p>
             </div>
             <div class="mb-6">
-                <input type="email" name="email" id="forgot_email" class="border w-full p-3 rounded" placeholder="E-Mail">
+                <input type="email" name="forgot_email" id="forgot_email" class="border w-full p-3 rounded" placeholder="E-Mail">
                 <small id="forgot_email_err" class="error_box text-xs text-red font-normal"></small>
             </div>
             <div class="flex">
-                <input type="submit" id="forgot_submit" value="Send verification email" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">
+                <button type="submit" id="forgot_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Send Verification Mail</button>
             </div>
         </form>
     </div>
