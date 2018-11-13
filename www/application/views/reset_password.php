@@ -18,7 +18,7 @@
                 <small id="reset_confirm_err" class="error_box text-xs text-red font-normal"></small>
             </div>
                 <input type="hidden" name="code" id="reset_password_code" value="<?= $code; ?>">
-                <input type="submit" name="submit" id="reset_password_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded" value="Reset Password">
+                <button type="submit" name="submit" id="reset_password_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Reset Password</button>
         </form>
     </div>
     <div class="border-t px-10 py-6">

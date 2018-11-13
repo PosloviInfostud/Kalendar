@@ -24,7 +24,7 @@
             <input type="password" class="form-control" id="register_password_confirm" name="confirm">
         </div>
         <input type="hidden" name="token" value="<?= $token; ?>" id="token">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="register_by_invite" class="btn btn-primary">Submit</button>
     </form>
 </div>
 <?php } ?>
