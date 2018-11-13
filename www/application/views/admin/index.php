@@ -3,7 +3,7 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Dashboard</span>
+    <span class="text-primary font-normal">Panel</span>
 </div>
 <div id="table">
     <div class="bg-white border-x sm:border-y sm:rounded shadow py-4">

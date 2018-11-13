@@ -14,8 +14,9 @@ $(document).ready(function() {
         onOpen: [function(dateStr, dateObj) {
             this.set("defaultDate", new Date());
         }],
-        onChange: [function(dateStr, dateObj) {
-                fpItemEndDate.set("minDate", dateObj);
+        onClose: [function(dateStr, dateObj) {
+            fpItemEndDate.clear();
+            fpItemEndDate.set("minDate", dateObj);
         }]
     });
     

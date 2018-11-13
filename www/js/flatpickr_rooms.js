@@ -13,7 +13,6 @@ $(document).ready(function() {
     }
     // Check if we are over maxtime
     if(curTime.getHours() > 18) {
-        curTime.setHours(8,0,0);
         curTime.setDate(curTime.getDate() + 1); // add a day
     // Check if we are before mintime
     } else if(curTime.getHours() < 8) {
@@ -43,8 +42,9 @@ $(document).ready(function() {
         "locale": {
             "firstDayOfWeek": 1 // start week on Monday
         },
-        onChange: [function(dateStr, dateObj) {
-                fpRoomEndDate.set("minDate", dateObj);
+        onClose: [function(dateStr, dateObj) {
+            fpRoomEndDate.clear();
+            fpRoomEndDate.set("minDate", dateObj);
         }]
     });
     

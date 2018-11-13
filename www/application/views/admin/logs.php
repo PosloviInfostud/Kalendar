@@ -4,10 +4,10 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Logs</span>
+    <span class="text-primary font-normal">Logovi</span>
 </div>
 <!-- Content -->
-<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Logs</h1>
+<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Logovi</h1>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($logs)) {
         echo 'No entries';
@@ -16,11 +16,11 @@
             <table class="hidden pt-4 table stripe text-center w-full text-grey-darkest text-sm">
                 <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                     <tr>
-                        <th class="py-4">User</th>
-                        <th class="py-4">Table</th>
-                        <th class="py-4">Type</th>
-                        <th class="py-4 w-8">Value</th>
-                        <th class="py-4">Timestamp</th>
+                        <th class="py-4">Korisnik</th>
+                        <th class="py-4">Tabela</th>
+                        <th class="py-4">Tip promene</th>
+                        <th class="py-4">Promena</th>
+                        <th class="py-4">Vreme</th>
                     </tr>
                 </thead>
                 <tbody>

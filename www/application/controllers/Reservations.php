@@ -91,9 +91,14 @@ class Reservations extends MY_Controller
     {
         $date = date('Y-m-d h:i:s', time());
 
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
+        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer',
+            array(  'greater_than_equal_to' => 'Minimalni broj članova sastanka je 2 osobe.', 
+                    'less_than_equal_to' => 'Maksimalni broj članova sastanka je 50 osoba.',
+                    'integer' => 'Polje \'Broj članova\' mora da bude ceo broj.'));
 
         if ($this->form_validation->run())
         {
@@ -102,11 +107,11 @@ class Reservations extends MY_Controller
 
             if($this->input->post('start_time') < $date)
             {
-                $response['errors'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
+                $response['errors'] = "Promeni početno vreme. Sastanci se moraju rezervisati unapred.";
             }
             elseif($this->input->post('start_time') >= $this->input->post('end_time'))
             {
-                $response['errors'] = "Proverite početno i krajnje vreme.";
+                $response['errors'] = "Proveri početno i krajnje vreme.";
             }
             else
             {
@@ -167,8 +172,10 @@ class Reservations extends MY_Controller
     {
         $date = date('Y-m-d h:i:s', time());
 
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
         $this->form_validation->set_rules('room_id', 'Room', 'trim');
 
         if ($this->form_validation->run() == false) {
@@ -176,10 +183,10 @@ class Reservations extends MY_Controller
             die;
         } 
         if($this->input->post('start_time') < $date) {
-                echo "Change start time. You have to reserve in advance";
+                echo "Promeni početno vreme. Sastanci se moraju rezervisati unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            echo "Check start and end time again. End time has to be greater than start time.";
+            echo "Proveri početno i krajnje vreme.";
 
         } else {
             $data = [
@@ -197,9 +204,12 @@ class Reservations extends MY_Controller
     {
         $date = date('Y-m-d h:i:s', time());
 
-        $this->form_validation->set_rules('start_time','Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time','End Time', 'trim|required');
-        $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required');
+        $this->form_validation->set_rules('start_time','Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time','End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
+        $this->form_validation->set_rules('equipment_type','Type of Equipment', 'trim|required',
+            array('required' => 'Vrsta opreme je obavezno polje.'));
 
         $message = [];
 
@@ -209,11 +219,11 @@ class Reservations extends MY_Controller
         }
         elseif($this->input->post('start_time') < $date) {
                 $message['status'] = 'error';
-                $message['response'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
+                $message['response'] = "Promeni početno vreme. Oprema mora da bude rezervisana unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
             $message['status'] = 'error';
-            $message['response'] = "Proverite početno i krajnje vreme.";
+            $message['response'] = "Proveri početno i krajnje vreme.";
         }
         else {
             $data = [
@@ -237,24 +247,31 @@ class Reservations extends MY_Controller
         $this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
 
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer');
-        $this->form_validation->set_rules('room', 'Room', 'trim|required');
-        $this->form_validation->set_rules('frequency', 'Frequency', 'required');
-        $this->form_validation->set_rules('title', 'Event Name', 'trim|required');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
+        $this->form_validation->set_rules('attendants', 'Number of Participants', 'trim|greater_than_equal_to[2]|less_than_equal_to[50]|integer',
+            array(  'greater_than_equal_to' => 'Minimalni broj članova sastanka je 2 osobe.', 
+            'less_than_equal_to' => 'Maksimalni broj članova sastanka je 50 osoba.',
+            'integer' => 'Polje \'Broj članova\' mora da bude ceo broj.'));
+        $this->form_validation->set_rules('room', 'Room', 'trim|required',
+            array('required' => 'Odabir sale je obavezno polje.'));
+        $this->form_validation->set_rules('title', 'Event Name', 'trim|required',
+            array('required' => 'Naziv sastanka je obavezno polje.'));
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
-        $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails');
-
+        $this->form_validation->set_rules('members[]', 'Attendants', 'trim|required|valid_emails',
+            array(  'required' => 'Treba da pozoveš nekoga na sastanak.', 
+                    'valid_emails' => 'Samo email adrese neregistrovanih članova mogu da budu dodate.'));
 
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
         } 
         elseif($this->input->post('start_time') < $date) {
-            $message['error'] = "Promenite početno vreme. Sastanci se moraju rezervisati unapred.";
+            $message['error'] = "Promeni početno vreme. Sastanci se moraju rezervisati unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            $message['error'] = "Proverite početno i krajnje vreme.";
+            $message['error'] = "Proveri početno i krajnje vreme.";
 
         } else {
             $data = [
@@ -269,7 +286,7 @@ class Reservations extends MY_Controller
             if($this->res->check_if_room_is_free($data)) {
                 $message['success'] = "success";
             } else {
-                $message['error'] = "Sala je zauzeta u traženom terminu. Pokušajte ponovo.";
+                $message['error'] = "Sala je zauzeta u traženom terminu. Pokušaj ponovo.";
             }
         }
         echo json_encode($message);
@@ -293,7 +310,7 @@ class Reservations extends MY_Controller
             $this->res->submit_reservation_form($data);
             $message['success'] = "success";
         } else {
-            $message['error'] = "Sala je zauzeta u traženom terminu. Pokušajte ponovo.";
+            $message['error'] = "Sala je zauzeta u traženom terminu. Pokušaj ponovo.";
         }
         echo json_encode($message);
     }
@@ -302,9 +319,12 @@ class Reservations extends MY_Controller
     {
         $date = date('Y-m-d h:i:s', time());
 
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('equipment_id', 'Equipment', 'trim|required');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
+        $this->form_validation->set_rules('equipment_id', 'Equipment', 'trim|required',
+            array('required' => 'Odabir opreme je obavezno polje.'));
         $this->form_validation->set_rules('description', 'Reservation Description', 'trim');
 
         $message = [];
@@ -316,11 +336,11 @@ class Reservations extends MY_Controller
 
         } elseif($this->input->post('start_time') < $date) {
             $message['status'] = 'error';
-            $message['response'] = "Change start time. You have to reserve in advance";
+            $message['response'] = "Promeni početno vreme. Oprema mora da bude rezervisana unapred.";
         }
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
             $message['status'] = 'error';
-            $message['response'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['response'] = "Proveri početno i krajnje vreme.";
         } else {
             $data = [
                 "start_time" => $this->input->post('start_time'),
@@ -332,7 +352,7 @@ class Reservations extends MY_Controller
                 $message['status'] = "success"; 
             } else {
                 $message['status'] = 'error';
-                $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
+                $message['response'] = "Oprema je zauzeta u traženom terminu. Pokušaj ponovo.";
             }
         }
         echo json_encode($message);
@@ -353,7 +373,7 @@ class Reservations extends MY_Controller
                 $message['status'] = "success"; 
             } else {
                 $message['status'] = 'error';
-                $message['response'] = "Unfortunately, the item is not available at that time! Check again.";
+                $message['response'] = "Oprema je zauzeta u traženom terminu. Pokušaj ponovo.";
             }
         echo json_encode($message);
     }
@@ -538,20 +558,24 @@ class Reservations extends MY_Controller
         $this->load->model('Datetime_model', 'datetime');
         $date = date('Y-m-d h:i:s', time());
         
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
-        $this->form_validation->set_rules('room', 'Room', 'trim|required');
-        $this->form_validation->set_rules('title', 'Title', 'trim|required');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
+        $this->form_validation->set_rules('room', 'Room', 'trim|required',
+            array('required' => 'Odabir sale je obavezno polje.'));
+        $this->form_validation->set_rules('title', 'Title', 'trim|required',
+            array('required' => 'Naziv sastanka je obavezno polje.'));
         $this->form_validation->set_rules('description', 'Event Description', 'trim');
 
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
         } 
         elseif($this->input->post('start_time') < $date) {
-            $message['error'] = "Change start time. You have to reserve in advance";
+            $message['error'] = "Promeni početno vreme. Sastanci se moraju rezervisati unapred.";
         } 
         elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['error'] = "Proveri početno i krajnje vreme.";
 
         } else {
             $data = [
@@ -605,7 +629,7 @@ class Reservations extends MY_Controller
                     $msg = $this->alerts->render('teal', 'Success', 'Reservation successfully updated.');
                     $this->session->set_flashdata('flash_message', $msg);
                 } else {
-                    $message['error'] = "Unfortunately, the room is not available at that time! Check again.";
+                    $message['error'] = "Sala je zauzeta u traženom terminu. Pokušaj ponovo.";
                 }
             }
         }
@@ -662,14 +686,16 @@ class Reservations extends MY_Controller
 
     public function update_equipment()
     {
-        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required');
-        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required');
+        $this->form_validation->set_rules('start_time', 'Start Time', 'trim|required',
+            array('required' => 'Početno vreme je obavezno polje.'));
+        $this->form_validation->set_rules('end_time', 'End Time', 'trim|required',
+            array('required' => 'Vreme završetka je obavezno polje.'));
 
         if($this->form_validation->run() == false) {
             $message['error'] = validation_errors();
 
         } elseif($this->input->post('start_time') >= $this->input->post('end_time')) {
-            $message['error'] = "Check start and end time again. End time has to be greater than start time.";
+            $message['error'] = "Proveri početno i krajnje vreme.";
 
         } else {
             $data = [
@@ -684,7 +710,7 @@ class Reservations extends MY_Controller
                 $message['success'] = $data['res_id'];
                             
             } else {
-                $message['error'] = "Unfortunately, the item is not available at that time! Check again.";
+                $message['error'] = "Oprema je zauzeta u traženom terminu. Pokušaj ponovo.";
             }
 
         }

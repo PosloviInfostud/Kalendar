@@ -9,7 +9,7 @@
         <div class="fill-current h-2 w-2 mx-1 -mt-px">
             <?= file_get_contents("public/icons/chevron-right.svg") ?>
         </div>
-        <span class="text-primary font-normal">Kreiranje nove rezervacije</span>
+        <span class="text-primary font-normal">Kreiranje lukanove rezervacije</span>
     </div>
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:px-8 sm:py-6">
@@ -30,7 +30,7 @@
                     </div>
                     <div class="sm:flex items-center mb-2 sm:mb-0 sm:mr-1 sm:flex-2">
                         <span class="sm:mr-1 text-grey-dark uppercase text-xs">do</span>
-                        <input type="text" name="end_time" id="datetime_end" placeholder="kraj" class="w-full bg-grey-lighter py-2 font-light text-center border rounded">
+                        <input type="text" name="end_time" id="datetime_end" placeholder="kraj" class="w-full bg-grey-lighter py-2 font-light text-center border rounded" data-default-date="">
                     </div>
                     <div class="sm:flex items-center mb-2 sm:mb-0 sm:mr-1 sm:flex-1">
                         <span class="sm:ml-1 sm:mr-1 text-grey-dark uppercase text-xs">za</span>

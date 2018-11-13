@@ -139,7 +139,7 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/database.svg") ?>
                             </div>
-                                Promene
+                                Logovi
                             </a>
                         </div>
                     </div>

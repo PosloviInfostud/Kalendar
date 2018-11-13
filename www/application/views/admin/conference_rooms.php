@@ -4,21 +4,21 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span>Items</span>
+    <span>Sastanci</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Conference rooms</span>
+    <span class="text-primary font-normal">Lista sala</span>
 </div>
 <!-- Content -->
 <div class="flex">
     <div class="w-4/5">
-        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Conference Room List</h1>
+        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Sale</h1>
     </div>
     <!-- Button to trigger the modal -->
     <div class="w-1/5">
         <button id="show_add_new_room_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-3 px-4 rounded shadow">
-            Add new room
+            Dodaj novu salu
         </button>
     </div>
 </div>
@@ -31,16 +31,16 @@
             <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Colour</th>
-                    <th>Capacity</th>
+                    <th>Ime</th>
+                    <th>Opis</th>
+                    <th>Boja u kalendaru</th>
+                    <th>Kapacitet</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($rooms as $room) { ?> 
                 <tr>
-                    <td ><button class="edit_room_modal cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normsl text-sm py-1 px-2 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                    <td ><button class="edit_room_modal cursor-pointer w-1/2 bg-indigo hover:bg-indigo-dark text-white font-normsl text-sm py-1 px-2 rounded" data-id="<?= $room['id'] ?>"><i class="fas fa-pencil-alt"></i>Izmeni</button></td>
                     <td ><?= $room['name'] ?></td>
                     <td ><?= $room['description'] ?></td>
                     <td ><input type="color" class="w-1/2 border rounded" value="<?= $room['color'] ?>" disabled></td>
@@ -60,26 +60,26 @@
                 </span>
                 <small id="insert_error_msg" class="hidden bg-red-lightest text-red text-sm my-4 p-4 border-l-6 border-red-lighter"></small>
                 <form>
-                    <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Add New Conference Room</h2>
+                    <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Nova sala</h2>
                     <div class="mt-2 mb-8">
-                        <label for="room_name" class="text-lg">Name <small class="text-grey-dark text-sm">(required)</small></label>
+                        <label for="room_name" class="text-lg">Ime <small class="text-grey-dark text-sm">(obavezno)</small></label>
                         <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="room_name" required>
                     </div>
                     <div class="mt-2 mb-8">
-                        <label for="room_description" class="text-lg">Description</label>
+                        <label for="room_description" class="text-lg">Opis</label>
                         <textarea class="bg-grey-lighter font-light mt-1 p-2 w-full border rounded" id="room_description" rows="3"></textarea>
                     </div>
                     <div class="mt-2 mb-4">
-                        <label for="room_capacity" class="text-lg">Capacity <small class="text-grey-dark text-sm">(required: between 4 and 50)</small></label>
+                        <label for="room_capacity" class="text-lg">Kapacitet <small class="text-grey-dark text-sm">(obavezno: između 4 i 50)</small></label>
                         <input type="number" class="bg-grey-lighter font-light ml-4 mt-1 p-2 border rounded" id="room_capacity" required min="4" max="50">
                     </div>
                     <div class="mt-2 mb-8">
-                        <label for="room_color" class="text-lg">Color for Calendar <small class="text-grey-dark text-sm">(required)</small></label>
+                        <label for="room_color" class="text-lg">Boja za kalendar <small class="text-grey-dark text-sm">(obavezno)</small></label>
                         <input type="color" class="w-20 bg-grey-lighter font-light ml-4 mt-1 p-2 h-10 border rounded" id="room_color">
                     </div>
                 </form>  
                 <button id="new_room_btn" class="w-full mr-2 bg-indigo hover:bg-indogo-dark text-white font-bold py-3 px-4 rounded">
-                    Create
+                    Kreiraj
                 </button>
             </div>
         </div>

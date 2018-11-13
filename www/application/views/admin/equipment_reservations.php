@@ -4,14 +4,14 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span>Reservations</span>
+    <span>Rezervacije</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Equipment</span>
+    <span class="text-primary font-normal">Oprema</span>
 </div>
 <!-- Content -->
-<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Equipment Reservations</h1>
+<h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Rezervacija opreme</h1>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($reservations)) {
         echo 'No entries';
@@ -19,12 +19,12 @@
         <table class="hidden pt-4 table stripe text-center w-full text-grey-darker text-sm">
             <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                 <tr>
-                    <th class="py-4">Description</th>
-                    <th class="py-4">Owner</th>
-                    <th class="py-4">Start</th>
-                    <th class="py-4">End</th>
-                    <th class="py-4">Created</th>
-                    <th class="py-4">Deleted</th>
+                <th class="py-4">Opis</th>
+                    <th class="py-4">Kreator</th>
+                    <th class="py-4">Početak</th>
+                    <th class="py-4">Kraj</th>
+                    <th class="py-4">Kreirano</th>
+                    <th class="py-4">Izbrisano</th>
                 </tr>
             </thead>
             <tbody>

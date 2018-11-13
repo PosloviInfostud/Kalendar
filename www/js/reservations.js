@@ -80,10 +80,13 @@ $("#search_equipment").click(function(e) {
     })
 })
 
+var room;
+var room_name;
+
 // Send ajax search request for free schedule for specific room
 $("#room_select").change(function(e){
     room = $(".select_room option:selected").val();
-    room_name = $(this).attr("data-room_name");
+    room_name = $(".select_room option:selected").attr("data-room_name");
     $.ajax({
         method: "POST",
         url: "/reservations/load_calendar_for_room",
@@ -100,9 +103,6 @@ $("#room_select").change(function(e){
 })
 
 // Get value from room radio button
-var room;
-var room_name;
-
 $("body").on("change click", "input.room_radio", function(e) {
     room = $(this).val();
     room_name = $(this).attr("data-room_name");
@@ -666,3 +666,22 @@ $(".notify").change(function(){
     })
 })
 
+
+// Edit user notifications checkboxes (in User Profile)
+$(".user_notify").change(function(){
+    if($(this).is(":checked")) {
+        value = 1;
+    } else {
+        value = 0;
+    }
+    $.ajax({
+        method: "POST",
+        url: "/users/change_notifications",
+        data: {
+            column: $(this).attr("name"),
+            value: value,
+            user_id: $(this).attr("data-user")
+        }
+    }).done(function(response){
+    })
+})

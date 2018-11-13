@@ -4,21 +4,21 @@
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span>Equipment</span>
+    <span>Oprema</span>
     <div class="fill-current h-2 w-2 mx-1 -mt-px">
         <?= file_get_contents("public/icons/chevron-right.svg") ?>
     </div>
-    <span class="text-primary font-normal">Items List</span>
+    <span class="text-primary font-normal">Lista pojedinačnih artikala</span>
 </div>
 <!-- Content -->
 <div class="flex">
     <div class="w-4/5">
-        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Items List</h1>
+        <h1 class="pl-2 mb-6 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Lista artikala</h1>
     </div>
     <!-- Button to trigger the modal -->
     <div class="w-1/5">
         <button id="show_add_new_item_modal" class="cursor-pointer w-full bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-3 px-4 rounded shadow">
-            Add new item
+            Dodaj novi artikal
         </button>
     </div>
 </div>
@@ -31,16 +31,16 @@
             <thead class="bg-grey-light font-medium uppercase text-sm text-grey-dark border border-grey-light">
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Barcode</th>
-                    <th>Description</th>
+                    <th>Ime</th>
+                    <th>Vrsta</th>
+                    <th>Barkod</th>
+                    <th>Opis</th>
                 </tr>
             </thead>
             <tbody>
             <?php foreach($equipment as $item) { ?> 
                     <tr>
-                        <td><button class="edit_item_btn cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $item['id'] ?>"><i class="fas fa-pencil-alt"></i>Edit</button></td>
+                        <td><button class="edit_item_btn cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-bold text-sm py-2 px-4 rounded" data-id="<?= $item['id'] ?>"><i class="fas fa-pencil-alt"></i>Izmeni</button></td>
                         <td><?= $item['name'] ?></td>
                         <td><?= $item['equipment_type_name'] ?></td>
                         <td><?= $item['barcode'] ?></td>
@@ -60,13 +60,13 @@
           </span>
           <small id="insert_error_msg" class="text-danger"></small>
           <form>
-            <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Add New Item</h2>
+            <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Nova oprema</h2>
               <div class="mt-2 mb-8">
-                  <label for="equipment_name" class="text-lg">Name <small class="text-grey-dark text-sm">(required)</small></label>
+                  <label for="equipment_name" class="text-lg">Ime <small class="text-grey-dark text-sm">(obavezno)</small></label>
                   <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_name" required>
               </div>
               <div class="mt-2 mb-8">
-                <label for="equipment_type">Type</label>
+                <label for="equipment_type">Vrsta opreme</label>
                 <select class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_type">
                 <?php foreach($types as $type) { ?> 
                     <option value="<?= $type['id'] ?>"><?= ucwords($type['name']) ?></option>
@@ -74,16 +74,16 @@
                 </select>
             </div>
               <div class="mt-2 mb-8">
-                <label for="equipment_barcode" class="text-lg">Barcode <small class="text-grey-dark text-sm">(required)</small></label>
+                <label for="equipment_barcode" class="text-lg">Barkod <small class="text-grey-dark text-sm">(obavezno)</small></label>
                 <input type="text" class="bg-grey-lighter mt-1 p-2 w-full font-light border rounded" id="equipment_barcode" required>
               </div>
               <div class="mt-2 mb-8">
-                  <label for="equipment_description" class="text-lg">Description</label>
+                  <label for="equipment_description" class="text-lg">Opis</label>
                   <textarea class="bg-grey-lighter font-light mt-1 p-2 w-full border rounded" id="equipment_description" rows="3"></textarea>
               </div>
           </form>  
           <button id="new_equipment_btn" class="bg-indigo hover:bg-indigo-dark text-white font-bold py-3 px-4 rounded">
-              Create
+              Kreiraj
           </button>
       </div>
   </div>

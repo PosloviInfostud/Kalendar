@@ -40,8 +40,9 @@ $(document).ready(function() {
         "locale": {
             "firstDayOfWeek": 1 // start week on Monday
         },
-        onChange: [function(dateStr, dateObj) {
-                fpItemEndDate.set("minDate", dateObj);
+        onClose: [function(dateStr, dateObj) {
+            fpItemEndDate.clear();
+            fpItemEndDate.set("minDate", dateObj);
         }]
     });
     
