@@ -256,7 +256,7 @@ class Reservation_model extends CI_Model
         $this->logs->insert_log($data_log);
 
         // Notification
-        $msg = $this->alerts->render('teal', 'Success!', 'Your reservation has been created.');
+        $msg = $this->alerts->render('teal', 'Rezervisano!', 'Sastanak je kreiran.');
         $this->session->set_flashdata('flash_message', $msg);
 
         $this->insert_reservation_members($data);
@@ -490,7 +490,7 @@ class Reservation_model extends CI_Model
         $this->logs->insert_log($data_log);
 
         // Notification
-        $msg = $this->alerts->render('teal', 'Success!', 'Your reservation has been created.');
+        $msg = $this->alerts->render('teal', 'Rezervisano!', 'Uspešno izvršena rezervacija.');
         $this->session->set_flashdata('flash_message', $msg);
     }
 

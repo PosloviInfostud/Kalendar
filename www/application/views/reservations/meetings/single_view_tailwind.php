@@ -1,11 +1,11 @@
 <div class="max-w-md mx-auto">
     <!-- Breadcrumb -->
     <div class="flex text-xs sm:text-sm text-black px-2 mb-3 sm:px-0">
-        <span>Reservations</span>
+        <span>Rezervacije</span>
         <div class="fill-current h-2 w-2 mx-1 -mt-px">
             <?= file_get_contents("public/icons/chevron-right.svg") ?>
         </div>
-        <span>Meetings</span>
+        <span>Sastanci</span>
         <div class="fill-current h-2 w-2 mx-1 -mt-px">
             <?= file_get_contents("public/icons/chevron-right.svg") ?>
         </div>
@@ -23,26 +23,26 @@
             <?php if (in_array($user_id, $editors) && $meeting['status'] != 'expired') { ?>
                 <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>">
                     <button class="hover:bg-primary text-grey text-sm hover:text-white mr-3 py-1 px-2 border-2 hover:border-primary rounded focus:outline-none">
-                        Edit
+                        Izmeni
                     </button>
                 </a>
                 <?php if($meeting['recurring'] == 1) { ?>
                     <div class="flex inline-flex">
                         <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn">
                             <button class="hover:bg-red text-grey text-sm hover:text-white mr-3 py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
-                                Delete
+                                Obriši
                             </button>
                         </a>
                         <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn">
                             <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
-                                Delete All
+                                Obriši sve
                             </button>
                         </a>
                     </div>
                 <?php } else { ?>
                     <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn">
                         <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
-                            Delete
+                            Obriši
                         </button>
                     </a>
                 <?php } ?>
@@ -53,45 +53,45 @@
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:p-8 mt-4">
         <div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>Created by:</b></div>
+                <div class="xs:w-1/4"><b>Kreator:</b></div>
                 <div class="xs:w-3/4"><?= $meeting['creator_name'] ?></div>
             </div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>Start time:</b></div>
+                <div class="xs:w-1/4"><b>Početak:</b></div>
                 <div class="xs:w-3/4"><?= $meeting['start_time'] ?></div>
             </div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>End time:</b></div>
+                <div class="xs:w-1/4"><b>Kraj:</b></div>
                 <div class="xs:w-3/4"><?= $meeting['end_time'] ?></div>
             </div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>Where:</b></div>
+                <div class="xs:w-1/4"><b>Sala:</b></div>
                 <div class="xs:w-3/4"><?= $meeting['name'] ?></div>
             </div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>Recurring:</b></div>
-                <div class="xs:w-3/4"><?= ($meeting['recurring'] == 0) ? 'No' : 'Yes' ?> (<?= $meeting['frequency_name'] ?>)</div>
+                <div class="xs:w-1/4"><b>Ponavljajući:</b></div>
+                <div class="xs:w-3/4"><?= ($meeting['recurring'] == 0) ? 'Nije' : 'Jeste' ?> (<?= $meeting['frequency_name'] ?>)</div>
             </div>
             <div class="xs:flex py-1 mb-2">
-                <div class="xs:w-1/4"><b>Description:</b></div>
+                <div class="xs:w-1/4"><b>Opis:</b></div>
                 <div class="xs:w-3/4"><?= (empty($meeting['description'])) ? 'No description' : $meeting['description'] ?></div>
             </div>
             <?php if($meeting['status'] != 'expired') { ?> 
             <div class="xs:flex py-1">
-                <div class="xs:w-1/4"><b>Notify me:</b></div>
+                <div class="xs:w-1/4"><b>Obavesti me:</b></div>
                 <div class="xs:w-3/4">
                     <div class="mb-1">
                         <?php if($notify['update'] == 1) { ?>
-                            <input type="checkbox" class="notify mr-2 leading-tight py-1" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> <span class="text-sm">when a meeting is updated or cancelled</span>
+                            <input type="checkbox" class="notify mr-2 leading-tight py-1" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> <span class="text-sm">kada se informacije u vezi sastanka ažuriraju ili se sastanak otkaže</span>
                         <?php } else { ?>
-                            <input type="checkbox" class="notify mr-2 leading-tight py-1" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" > <span class="text-sm">when a meeting is updated or cancelled</span>
+                            <input type="checkbox" class="notify mr-2 leading-tight py-1" name="not_update" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" > <span class="text-sm">kada se informacije u vezi sastanka ažuriraju ili se sastanak otkaže</span>
                         <?php } ?>
                     </div>
                     <div>
                         <?php if($notify['remind'] == 1) { ?>
-                            <input type="checkbox" class="notify mr-2 leading-tight" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> <span class="text-sm">to remind me meeting starts in 15 minutes</span>
+                            <input type="checkbox" class="notify mr-2 leading-tight" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>" checked="checked"> <span class="text-sm">da sastanak počinje za 15 minuta</span>
                         <?php } else { ?>
-                            <input type="checkbox" class="notify mr-2 leading-tight" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>"> <span class="test-sm">to remind me meeting starts in 15 minutes</span>
+                            <input type="checkbox" class="notify mr-2 leading-tight" name="not_remind" data-user="<?= $this->user_data['user']['id'] ?>" data-res="<?= $meeting['id'] ?>"> <span class="test-sm">da sastanak počinje za 15 minuta</span>
                         <?php } ?>
                     </div>
                 </div>
@@ -103,15 +103,15 @@
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:p-8 mt-4">
         <!-- Delete Reservation Member Errors -->
         <div id="del_error_msg" class="hidden bg-red-lightest text-red text-sm mb-6 p-4 border-l-4 border-red-lighter"></div>
-        <h2 class="pl-2 font-medium text-lg xs:text-xl sm:text-2xl border-l-4 border-primary">Current members</h2>
+        <h2 class="pl-2 font-medium text-lg xs:text-xl sm:text-2xl border-l-4 border-primary">Članovi</h2>
         <div class="overflow-auto">
             <table class="table-auto w-full text-center text-grey-darker text-sm mt-6">
                 <thead class="font-medium uppercase text-sm border-b">
                     <tr>
                         <th class="py-2">#</th>
-                        <th class="py-2">Name</th>
-                        <th class="py-2">Email</th>
-                        <th class="py-2">Role</th>
+                        <th class="py-2">Ime</th>
+                        <th class="py-2">Email adresa</th>
+                        <th class="py-2">Uloga</th>
                         <th class="py-2"></th>
                     </tr>
                 </thead>
@@ -139,7 +139,7 @@
                                         </a>
                                     </td>
                                 <?php }  else { ?>
-                                    <td class="px-2 py-2 text-primary text-xs font-bold uppercase">Creator</td>
+                                    <td class="px-2 py-2 text-primary text-xs font-bold uppercase">Kreator</td>
                                     <td class="px-2"></td>
                                 <?php } ?>
                             <?php } else { ?>
@@ -152,19 +152,19 @@
             </table>
         </div>
         <?php if (in_array($user_id, $editors) && $meeting['status'] != 'expired') {  ?>
-            <button class="w-full bg-primary-light hover:bg-primary text-white mt-4 py-2 px-4 rounded focus:outline-none" id="btn_add_new_member" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>">Add new member</button> 
+            <button class="w-full bg-primary-light hover:bg-primary text-white mt-4 py-2 px-4 rounded focus:outline-none" id="btn_add_new_member" data-toggle="modal" data-target="#addNewMember" data-res="<?= $meeting['id'] ?>">Pozovi novu osobu</button> 
         <?php } ?>       
     </div>
     <!-- Recurring events -->
     <?php if($meeting['recurring'] == 1) { ?>
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:p-8 mt-4">
-        <h2 class="pl-2 font-medium text-lg xs:text-xl sm:text-2xl border-l-4 border-primary">Recurring Events</h2>
+        <h2 class="pl-2 font-medium text-lg xs:text-xl sm:text-2xl border-l-4 border-primary">Ponavljajući sastanci</h2>
         <div class="overflow-auto">
             <table class="w-full text-grey-darker text-center text-sm mt-6">
                 <thead class="font-medium uppercase text-sm border-b">
                     <tr>
                         <th class="py-2 px-4">#</th>
-                        <th class="py-2 px-4">Upcoming dates</th>
+                        <th class="py-2 px-4">Naredni termini</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -235,8 +235,8 @@
             </span>
             <div id="delete_member_confirm_modal-body" class="my-2"></div>
             <div class="flex flex-inline justify-between">
-                <button type="button" class="bg-red hover:bg-red-dark text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_member_confirm_modal-btn-yes">Yes</button>
-                <button type="button" class="bg-grey hover:bg-grey-dark text-grey-dark font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_member_confirm_modal-btn-no">No</button>
+                <button type="button" class="bg-red hover:bg-red-dark text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_member_confirm_modal-btn-yes">Da</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-grey-dark font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_member_confirm_modal-btn-no">Ne</button>
             </div>
         </div>
     </div>
@@ -248,8 +248,8 @@
         <div id="modal-content" class="p-8 bg-white w-full max-w-sm m-auto flex-col flex rounded shadow">
             <div id="delete_reservation_confirm_modal-body" class="my-4"></div>
             <div class="flex flex-inline justify-between">
-                <button type="button" class="bg-red hover:bg-red-dark text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_reservation_confirm_modal-btn-yes">Yes</button>
-                <button type="button" class="bg-grey hover:bg-grey-dark text-grey-dark hover:text-grey-darker font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_reservation_confirm_modal-btn-no">No</button>
+                <button type="button" class="bg-red hover:bg-red-dark text-white font-bold w-full py-2 mt-2 mr-2 border border-red-light rounded" id="delete_reservation_confirm_modal-btn-yes">Da</button>
+                <button type="button" class="bg-grey hover:bg-grey-dark text-grey-dark hover:text-grey-darker font-bold w-full py-2 mt-2 ml-2 border border-grey rounded" id="delete_reservation_confirm_modal-btn-no">Ne</button>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@
     <h2 class="pl-2 font-normal text-lg xs:text-xl sm:text-2xl border-l-4 mb-8 border-indigo">Update Item Details</h2>
     <input type="hidden" name="id" id="update_equipment_id" value="<?= $equipment['id'] ?>">
     <div class="mt-2 mb-8">
-        <label for="Name" class="text-lg">Name <small class="text-grey-dark text-sm">(required)</small></label>
+        <label for="Name" class="text-lg">Ime <small class="text-grey-dark text-sm">(required)</small></label>
         <input type="text" class="w-full bg-grey-lighter mt-1 p-2 font-light border rounded" name="name" id="update_equipment_name" value="<?= $equipment['name'] ?>">
     </div>
     <div class="mt-2 mb-8">

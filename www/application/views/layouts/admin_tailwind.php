@@ -40,7 +40,7 @@
                                        <?= file_get_contents("public/icons/cog.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
-                                        <span class="text-sm">Members area</span>
+                                        <span class="text-sm">Korisnički panel</span>
                                     </div>
                                 </div>
                             </a>
@@ -50,7 +50,7 @@
                                         <?= file_get_contents("public/icons/user.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1 mr-6">
-                                        <span class="text-sm">Profile</span>
+                                        <span class="text-sm">Nalog</span>
                                     </div>
                                 </div>
                             </a>
@@ -60,7 +60,7 @@
                                         <?= file_get_contents("public/icons/exit.svg") ?>
                                     </div>
                                     <div class="hidden sm:block sm:flex sm:items-center ml-1">
-                                        <span class="text-sm">Logout</span>
+                                        <span class="text-sm">Odjava</span>
                                     </div>
                                 </div>
                             </a>
@@ -81,7 +81,7 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
-                                Dashboard
+                                Panel
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center sm:relative group">
@@ -89,12 +89,12 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/calendar-full.svg") ?>
                             </div>
-                                <span>Reservations</span>
+                                <span>Rezervacije</span>
                             </div>
                             <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="/admin/meetings" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Meetings</a></li>
-                                    <li><a href="/admin/equipment" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Equipment</a></li>
+                                    <li><a href="/admin/meetings" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Sastanci</a></li>
+                                    <li><a href="/admin/equipment" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Oprema</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -103,18 +103,18 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
-                                <span>Items</span>
+                                <span>Sale i oprema</span>
                             </div>
                             <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-indigo shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Meetings</li>
-                                    <li><a href="/admin/conference_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Conference room list</a></li>
+                                    <li class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Sastanci</li>
+                                    <li><a href="/admin/conference_rooms" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Lista sala</a></li>
                                     </li>
-                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Equipment</span></li>
+                                    <li><span class="bg-grey-light no-underline px-4 py-2 block uppercase font-medium text-sm">Oprema</span></li>
                                     <li>
                                         <ul class="list-reset text-sm">
-                                            <li><a href="/admin/items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">List of items</a></li>
-                                            <li><a href="/admin/types" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Item types</a></li>
+                                            <li><a href="/admin/items" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Lista pojedinačnih artikala</a></li>
+                                            <li><a href="/admin/types" class="no-underline px-4 py-2 block text-indigo hover:bg-grey-lighter">Vrste opreme</a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -125,12 +125,12 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/users.svg") ?>
                             </div>
-                                <span>Users</span>
+                                <span>Korisnici</span>
                             </div>
                             <div class="z-50 hidden sm:hover:inline-block sm:group-hover:inline-block bg-white shadow-md sm:absolute mt-12 pin-t pin-l w-48">
                                 <ul class="list-reset">
-                                    <li><a href="/admin/users" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">List of users</a></li>
-                                    <li><a href="/admin/activities" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">User activites</a></li>
+                                    <li><a href="/admin/users" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Lista korisnika</a></li>
+                                    <li><a href="/admin/activities" class="no-underline px-4 py-2 block text-sm text-indigo hover:bg-grey-lighter">Aktivnosti korisnika</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/database.svg") ?>
                             </div>
-                                Logs
+                                Promene
                             </a>
                         </div>
                     </div>

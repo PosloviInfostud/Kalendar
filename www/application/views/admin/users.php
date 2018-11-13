@@ -31,7 +31,7 @@
             <tbody>
             <?php foreach($users as $user) { ?> 
                     <tr>
-                        <td ><button class="user-edit cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normsl text-sm py-1 px-2 rounded" data-id="<?= $user['id'] ?>">Edit</button></td>
+                        <td ><button class="user-edit cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normal text-sm py-1 px-2 rounded" data-id="<?= $user['id'] ?>">Edit</button></td>
                         <td ><?= $user['name'] ?></td>
                         <td ><?= $user['email'] ?></td>
                         <td ><?= $user['role'] ?></td>
