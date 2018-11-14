@@ -1,3 +1,3 @@
-<h2>Cancelled Meeting on <?= $reservation['start_time']; ?></h2>
-<p>Dear colleagues, </p>
-<p>The meeting we were supposed to have in <?= $reservation['name']; ?> at <?= $reservation['start_time']; ?> is cancelled.</p>
+<h2>Otkazan sastanak | <?= $reservation['start_time']; ?></h2>
+<p>Drage kolege, </p>
+<p>Sastanak koji je trebao da bude održan u sali "<?= $reservation['name']; ?>" u <?= $reservation['start_time']; ?> je otkazan.</p>

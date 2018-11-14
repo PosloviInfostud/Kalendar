@@ -21,26 +21,26 @@
         <!-- Buttons -->
         <div class="flex flex-inline">
             <?php if (in_array($user_id, $editors) && $meeting['status'] != 'expired') { ?>
-                <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>">
+                <a href="/rezervacije/sastanci/izmena/<?= $meeting['id'] ?>">
                     <button class="hover:bg-primary text-grey text-sm hover:text-white mr-3 py-1 px-2 border-2 hover:border-primary rounded focus:outline-none">
                         Izmeni
                     </button>
                 </a>
                 <?php if($meeting['recurring'] == 1) { ?>
                     <div class="flex inline-flex">
-                        <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn">
+                        <a href="/rezervacije/sastanci/brisanje/<?= $meeting['id'] ?>" id="del_res_btn">
                             <button class="hover:bg-red text-grey text-sm hover:text-white mr-3 py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
                                 Obriši
                             </button>
                         </a>
-                        <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn">
+                        <a href="/rezervacije/sastanci/brisanje/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn">
                             <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
                                 Obriši sve
                             </button>
                         </a>
                     </div>
                 <?php } else { ?>
-                    <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn">
+                    <a href="/rezervacije/sastanci/brisanje/<?= $meeting['id'] ?>" id="del_res_btn">
                         <button class="hover:bg-red text-grey text-sm hover:text-white py-1 px-2 border-2 hover:border-red rounded focus:outline-none">
                             Obriši
                         </button>
@@ -173,17 +173,17 @@
                             <td class="p-2"><strong><?= $i ?></strong></td>
                             <td class="p-2"><?= $date['start_time'] ?></td>
                             <td class="flex flex-inline p-2">
-                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/reservations/meetings/<?= $date['id'] ?>">
+                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/rezervacije/sastanci/<?= $date['id'] ?>">
                                 <div class="fill-current h-4 w-4">
                                     <?= file_get_contents("public/icons/magnifier.svg") ?>
                                 </div>
                             </a>
-                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/reservations/meetings/edit/<?= $date['id'] ?>">
+                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/rezervacije/sastanci/edit/<?= $date['id'] ?>">
                                 <div class="fill-current h-4 w-4">
                                     <?= file_get_contents("public/icons/pencil.svg") ?>
                                 </div>
                             </a>
-                            <a class="text-grey-darker hover:text-red no-underline focus:outline-none" href="/reservations/meetings/delete/<?= $date['id'] ?>">
+                            <a class="text-grey-darker hover:text-red no-underline focus:outline-none" href="/rezervacije/sastanci/brisanje/<?= $date['id'] ?>">
                                 <div class="fill-current h-4 w-4">
                                     <?= file_get_contents("public/icons/cross-circle.svg") ?>
                                 </div>
@@ -208,7 +208,7 @@
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-25" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
             <div id="edit_error_msg" class="text-xs text-red mb-2"></div>
-            <div id="edit_user_role_modal_body"><!-- vews/reservations/meetings/update_user_role --></div>
+            <div id="edit_user_role_modal_body"><!-- vews/rezervacije/sastanci/update_user_role --></div>
         </div>
     </div>
 </div>
@@ -221,7 +221,7 @@
                 <svg class="close-modal h-6 w-6 text-grey hover:text-grey-darkest opacity-50" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
             </span>
             <div id="edit_error_msg" class="text-xs text-red mb-2"></div>
-            <div id="add_member_modal_body"><!-- views/reservations/meetings/add_new_member_form --></div>
+            <div id="add_member_modal_body"><!-- views/rezervacije/sastanci/add_new_member_form --></div>
         </div>
     </div>
 </div>

@@ -19,7 +19,7 @@ class Reg_log extends MY_Controller
             $this->layouts->set_title('Reservations');
             $this->layouts->view('index', array(), 'login_tailwind');
         } else {
-            url_redirect('/reservations/meetings');
+            url_redirect('/rezervacije/sastanci');
         }
     }
 
@@ -55,9 +55,11 @@ class Reg_log extends MY_Controller
 
     public function login()
     {
-        $this->form_validation->set_rules("email", "E-Mail", "trim|required|valid_email");
-        $this->form_validation->set_rules("password", "Password", "trim|required");
-
+        $this->form_validation->set_rules("email", "E-Mail", "trim|required|valid_email",
+            array(  'required' => 'Email adresa je obavezna.',
+                    'valid_email' => 'Email adresa nije pravilno napisana.'));
+        $this->form_validation->set_rules("password", "Password", "trim|required",
+            array(  'required' => 'Šifra je obavezna.'));
         if ($this->form_validation->run()) {
             $data = [
                 "email" => $this->input->post('email'),
@@ -87,13 +89,15 @@ class Reg_log extends MY_Controller
     }
     public function send_forgot_password_mail()
     {
-        $this->form_validation->set_rules('email', 'E-Mail', 'trim|required|valid_email');
+        $this->form_validation->set_rules('email', 'E-Mail', 'trim|required|valid_email',
+            array(  'required' => 'Email adresa je obavezna.',
+                    'valid_email' => 'Email adresa nije pravilno napisana.'));
 
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
             if (empty($this->user->get_user_by_email($email))) {
                 $response['status'] = 'user_error';
-                $response['errors'] = "We can't find the provided email address in our database. Please try again.";
+                $response['errors'] = "Ne postoji registrovan član sa postojećom email adresom.";
             } else {
                 $this->load->library('encryption');
                 $code = bin2hex($this->encryption->create_key(16));
@@ -106,7 +110,7 @@ class Reg_log extends MY_Controller
 
                 $email_details = [];
                 $email_details['from'] = 'visnjamarica@gmail.com';
-                $email_details['subject'] = 'Reset Password';
+                $email_details['subject'] = 'Resetovanje šifre';
                 $email_details['message'] = $this->load->view('mails/reset_password_mail', ['password_link' => $password_link], true);
                 
                 // Add email to queue
@@ -116,7 +120,7 @@ class Reg_log extends MY_Controller
                 $response['status'] = 'success';
 
                 // Notification
-                $msg = $this->alerts->render('teal', 'E-mail sent successfully', 'Please, go to your email account and click the link to enter your new password!');
+                $msg = $this->alerts->render('teal', 'Uspešno poslat email', 'Kada dobiješ email, klikni na link unutar njega i ispuni formu sa novom šifrom.');
                 $this->session->set_flashdata('flash_message', $msg);
             }
         } else {
@@ -145,17 +149,22 @@ class Reg_log extends MY_Controller
             'code' => $this->input->get('code')
         ];
         if($this->user->check_reset_token($data) == false || $data['code'] == "") {
-            $data['error'] = "E-mail and code do not fit. Try again!";
+            $data['error'] = "Email adresa i kod ne odgovaraju. Pokušaj ponovo.";
         }
-        $this->layouts->set_title('Reset Password');
+        $this->layouts->set_title('Resetovanje šifre');
         $this->layouts->view('reset_password', $data, 'login_tailwind');
     }
 
     public function reset_password()
     {
-        $this->form_validation->set_rules('email', 'E-Mail', 'trim|required|valid_email');
-        $this->form_validation->set_rules('password', 'Password', 'trim|required');
-        $this->form_validation->set_rules('confirm', 'Password Confirmation', 'trim|required|matches[password]');
+        $this->form_validation->set_rules('email', 'E-Mail', 'trim|required|valid_email',
+            array(  'required' => 'Email adresa je obavezna.',
+            'valid_email' => 'Email adresa nije pravilno napisana.'));        
+        $this->form_validation->set_rules('password', 'Password', 'trim|required',
+            array('required' => 'Šifra je obavezna.'));
+        $this->form_validation->set_rules('confirm', 'Password Confirmation', 'trim|required|matches[password]',
+            array(  'required' => 'Potvrda šifre je obavezna.',
+                    'matches' => 'Šifra nije uspešno potrvđena.'));        
 
         if ($this->form_validation->run()) {
             $data = [
@@ -166,12 +175,12 @@ class Reg_log extends MY_Controller
 
             if ($this->user->reset_password($data) === true) {
                 // Set notification
-                $msg = $this->alerts->render('teal', 'Success', 'Your password has been successfully reseted! You can now login with your new password!');
+                $msg = $this->alerts->render('teal', 'Promenjena šifra', 'Tvoja šifra je uspešno promenjena. Možeš da se prijaviš sa novom šifrom.');
                 $this->session->set_flashdata('flash_message', $msg);
                 $response['status'] = "success";
             } else {
                 $response['status'] = "user_error";
-                $response['errors'] = "E-Mail or code may not be correct or 5 days has run out!";
+                $response['errors'] = "Email adresa i kod ne odgovaraju.";
             }
         } else {
             $errors = array();

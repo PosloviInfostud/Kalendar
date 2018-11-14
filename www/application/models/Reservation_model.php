@@ -400,7 +400,7 @@ class Reservation_model extends CI_Model
         $email_details = [];
 
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'New Meeting/Invitation for Registration';
+        $email_details['subject'] = 'Novi sastanak/Poziv';
         $email_details['message'] = $this->load->view('registration_invitation_mail', $user, TRUE);
 
         // Add email to queue
@@ -729,7 +729,7 @@ class Reservation_model extends CI_Model
     public function update_user_role($data)
     {
         if($data['creator'] == $data['user_id']) {
-            $message['error'] = "You cannot change the role for the creator of the meeting!";
+            $message['error'] = "Kreatoru sastanka ne može da bude promenjena uloga!";
 
         } else {
             $sql = "UPDATE res_members SET res_role_id = ?, modified_at = NOW()  WHERE res_id = ? AND user_id = ?";
@@ -757,7 +757,7 @@ class Reservation_model extends CI_Model
     public function delete_res_member($data)
     {
         if($data['creator'] == $data['member']) {
-            $message['error'] = "You cannot delete the creator of the meeting!";
+            $message['error'] = "Kreator sastanka ne može da bude obrisan!";
 
         } else {
             $sql = "UPDATE res_members 
@@ -998,7 +998,7 @@ class Reservation_model extends CI_Model
     {
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'Cancelled meeting';
+        $email_details['subject'] = 'Sastanak otkazan';
         $email_details['message'] = $this->load->view('mails/cancelled_meeting_mail', ['members' => $members, 'reservation'=>$reservation], TRUE);
 
         // Add email to queue
@@ -1009,7 +1009,7 @@ class Reservation_model extends CI_Model
     {
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'Meeting Updated';
+        $email_details['subject'] = 'AŽurirani podaci o sastanku';
         $email_details['message'] = $this->load->view('mails/updated_meeting_mail', ['members' => $members, 'reservation'=>$reservation], TRUE);
 
         // Add email to queue
@@ -1020,7 +1020,7 @@ class Reservation_model extends CI_Model
     {
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'Cancelled meeting';
+        $email_details['subject'] = 'Sastanak otkazan';
         $email_details['message'] = $this->load->view('mails/deleted_member_mail', ['member' => $member, 'reservation'=> $reservation], TRUE);
         // Add email to queue
         $this->mail->add_mail_to_queue(array($member['email']), $email_details);

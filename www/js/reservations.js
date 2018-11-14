@@ -159,7 +159,7 @@ $("body").on("change click", "input.room_radio", function(e) {
                                 $("#room_errors").html(msg.error);
                             }
                             if(msg.success) {
-                                window.location.href = "/reservations/meetings";
+                                window.location.href = "/rezervacije/sastanci";
                             }
                         })     ;
                         console.log(data);
@@ -222,7 +222,7 @@ $("body").on("change click", "input.room_radio", function(e) {
                                 $("#room_errors").html(msg.error);
                             }
                             if(msg.success) {
-                                window.location.href = "/reservations/meetings";
+                                window.location.href = "/rezervacije/sastanci";
                             }
                         });
                         $("#room_reservation_modal").hide("slow");
@@ -297,7 +297,7 @@ function submit_equipment_reservation_by_date(data) {
                         $("#equipment_errors").html(msg['response']);
                     }
                     if(msg['status'] == 'success') {
-                        window.location.href = "/reservations/equipment";
+                        window.location.href = "/rezervacije/oprema";
                     }
                 });
                 $("#equip_reservation_modal").hide("slow");
@@ -355,7 +355,7 @@ function submit_equipment_reservation_by_item(data) {
                         $("#equipment_errors").html(msg['response']);
                     }
                     if(msg['status'] == 'success') {
-                        window.location.href = "/reservations/equipment";
+                        window.location.href = "/rezervacije/oprema";
                     }
                 });
                 $("#equip_reservation_modal").hide("slow");
@@ -535,7 +535,7 @@ $("#update_reservation_room").on("click", function(e) {
             $("#form_errors").show();
         }
         if(msg.success) {
-            window.location.href = "/reservations/meetings/"+msg.success;
+            window.location.href = "/rezervacije/sastanci/"+msg.success;
         }
     })
 })
@@ -585,7 +585,7 @@ var deleteReservationConfirmModal = function(callback) {
 //========================================================================================
 //submit equipment update form
   
-$("#update_equipment_submit").on("click", function(e){
+$(".update_equipment_submit").on("click", function(e){
     e.preventDefault();
     $.ajax({
         method: "POST",
@@ -606,7 +606,7 @@ $("#update_equipment_submit").on("click", function(e){
             $("#show_errors").html(msg.error);
         }
         if(msg.success) {
-            window.location.href = "/reservations/equipment/"+msg.success;
+            window.location.href = "/rezervacije/oprema/"+msg.success;
         }
     })
 });

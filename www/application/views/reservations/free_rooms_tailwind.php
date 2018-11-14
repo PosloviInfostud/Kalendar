@@ -8,13 +8,12 @@
             <?php if(empty($rooms)) { ?>
             <p>U zadatom terminu nema slobodnih sala. Pokušajte ponovo.</p>
             <?php } else {
-                $i=1; 
                 foreach($rooms as $room) { ?>
                 <div class="py-1">
-                    <input type="radio" id="customRadio<?= $i; ?>" name="room" class="room_radio" value="<?= $room['id'] ?>" data-room_name="<?= $room['name'] ?>" enabled>
-                    <label for="customRadio<?= $i; ?>"><?= $room['name'] ?></label>
+                    <input type="radio" name="room" class="room_radio" value="<?= $room['id'] ?>" data-room_name="<?= $room['name'] ?>" enabled>
+                    <label><?= $room['name'] ?></label>
                 </div>
-                <?php $i++;}
+                <?php }
             } ?>
         </div>
     </div>

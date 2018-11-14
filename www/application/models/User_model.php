@@ -5,20 +5,18 @@ class User_model extends CI_Model
     {
         $this->load->library('encryption');
 
-        $this->form_validation->set_rules('name', 'Name', 'required|trim');
-        $this->form_validation->set_rules(
-            'email',
-            'Email',
-            'required|valid_email|is_unique[users.email]|trim',
-            array(
-                'required' => 'You have not provided %s.',
-                'valid_email' => 'You need to use a valid email address.',
-                'is_unique' => 'This %s already exists.'
-            )
-        );
-        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]');
-        $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]');
-
+        $this->form_validation->set_rules('name', 'Name', 'required|trim',
+            array(  'required' => 'Ime je obavezno.'));
+        $this->form_validation->set_rules('email', 'Email','required|valid_email|is_unique[users.email]|trim',
+            array(  'required' => 'Email adresa je obavezna.',
+                    'valid_email' => 'Email adresa nije pravilno napisana.',
+                    'is_unique' => 'Već postoji korisnik sa ovom email adresom.'));
+        $this->form_validation->set_rules('password', 'Password', 'required|trim|min_length[6]',
+            array(  'required' => 'Šifra je obavezna.',
+                    'min_length' => 'Šifra mora da sadrži najmanje 6 karaktera.'));
+        $this->form_validation->set_rules('password_confirm', 'Password Confirmation', 'required|trim|matches[password]',
+            array(  'required' => 'Potvrda šifre je obavezna.',
+                    'matches' => 'Šifra nije uspešno potrvđena.'));
         if ($this->form_validation->run())
         {
             $data = [
@@ -74,7 +72,7 @@ class User_model extends CI_Model
         if($data['by_invite'] === false) {
         $this->send_activation_mail($data['email'], $activation_key);
         // Set notfication
-        $msg = $this->alerts->render('teal', 'Success', 'You have successfully registered. A verification link has been sent to your email account.');
+        $msg = $this->alerts->render('teal', 'Uspešna registracija', 'Potrebno je još samo da odeš na svoju email adresu i potvrdiš registraciju.');
         $this->session->set_flashdata('flash_message', $msg);
         }
 
@@ -89,8 +87,8 @@ class User_model extends CI_Model
         $email_details = [];
 
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'Your activation link';
-        $email_details['message'] = "Click on the link below to activate your account: <b />" . user_activation_link($email, $key);
+        $email_details['subject'] = 'Potvrda registracije';
+        $email_details['message'] = "Klikni na link da bi tvoj nalog postao aktivan: <b />" . user_activation_link($email, $key);
 
         // Add email to queue
         $this->mail->add_mail_to_queue(array($email), $email_details);
@@ -113,7 +111,7 @@ class User_model extends CI_Model
         $this->logs->insert_log($data_log);
 
         // Set notification
-        $msg = $this->alerts->render('teal', 'Account activated', 'Your account has been activated successfully. You can now login.');
+        $msg = $this->alerts->render('teal', 'Aktiviran nalog', 'Sada možeš da se prijaviš.');
         $this->session->set_flashdata('flash_message', $msg);
     }
 
@@ -164,21 +162,21 @@ class User_model extends CI_Model
         ];
 
         if (empty($user)) {
-            $message['error'] = "Please, register first!";
+            $message['error'] = "Ne postoji korisnik sa ovom email adresom. <br> Potrebno je prvo da se registruješ.";
             $email = $data['email'];
             $this->load->model('Logs_model', 'logs');
             $this->logs->user_logs($email, 0, $message);
 
         } else {
             if (password_verify($data['password'], $user['password']) == false) {
-                $message['error'] = "Incorrect password";
+                $message['error'] = "Neispravna šifra!";
                 $email = $data['email'];
                 $this->load->model('Logs_model', 'logs');
                 $this->logs->user_logs($email, 0, $message);
 
             } else {
                 if ($user['active'] != 1) {
-                    $message['error'] = "Please, activate your profile first!";
+                    $message['error'] = "Da bi se uspešno prijavio, potrebno je prvo da aktiviraš svoj nalog.";
 
                     $email = $data['email'];
                     $this->load->model('Logs_model', 'logs');

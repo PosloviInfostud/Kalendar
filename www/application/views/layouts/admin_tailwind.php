@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="/src/img/favicon.ico" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <link href="/public/css/font.css" rel="stylesheet">
+    <script src="/scripts/jquery.min.js"></script>
+    <link rel="stylesheet" href="/scripts/DataTables/css/jquery.dataTables.min.css">
+    <script src="/scripts/DataTables/js/jquery.dataTables.min.js"></script>
     <link rel="stylesheet" href="/public/css/app.css">
     <link rel="stylesheet" href="/style/style.css">
     <title><?= $title_for_layout ?>Kalendar</title>
@@ -34,7 +34,7 @@
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
-                            <a href="/reservations/meetings" class="no-underline text-grey-light hover:text-indigo">
+                            <a href="/rezervacije/sastanci" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
                                     <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                        <?= file_get_contents("public/icons/cog.svg") ?>

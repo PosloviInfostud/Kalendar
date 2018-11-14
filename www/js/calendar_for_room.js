@@ -20,11 +20,12 @@ $(document).ready(function() {
         header: {
             left: 'prev, next',
             center: 'title',
-            right: 'agendaDay, agendaWeek, month, listMonth'
+            right: 'agendaDay, agendaWeek, month, listDay, listWeek, listMonth'
         },
         views: {
-            listDayFormat: (room) => event.room,
-            listMonth: {buttonText: 'Lista'},
+            listDay: {buttonText: 'Dnevna lista'},
+            listWeek: {buttonText: 'Nedeljna lista'},
+            listMonth: {buttonText: 'Mesečna lista'},
         },
         //make clicks and selections possible
         viewRender: function (view, viewContainer){

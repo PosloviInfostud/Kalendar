@@ -1,12 +1,12 @@
 <html>
     <head>
-        <title>Your meeting in <?= $room ?> is about to start!</title>
+        <title>Sastanak u sali "<?= $room ?>" počinje za 15 minuta</title>
     </head>
     <body>
         <h2><?= $title ?></h2>
-        <p><strong>When:</strong> <?= $start_time ?></p>
-        <p><strong>Where:</strong> <?= $room ?></p>
-        <p><strong>Duration:</strong> <?= $duration ?> mins</p>
-        <p><strong>About:</strong> <?= $description ?></p>
+        <p><strong>Vreme:</strong> <?= $start_time ?></p>
+        <p><strong>Mesto:</strong> <?= $room ?></p>
+        <p><strong>Trajanje:</strong> <?= $duration ?> minuta</p>
+        <p><strong>Tema:</strong> <?= $description ?></p>
     </body>
 </html>

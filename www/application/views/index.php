@@ -17,7 +17,7 @@
                 <small id="login_password_err" class="error_box text-xs text-red font-normal"></small>
             </div>
             <div class="flex">
-                <button type="submit" id="login_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Prijavite se</button>
+                <button type="submit" id="login_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Prijavi se</button>
             </div>
         </form>
 

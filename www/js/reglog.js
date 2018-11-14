@@ -92,7 +92,7 @@ $("#login_form").submit(function (e) {
             $(".error_box").empty();
             $(":input").removeClass("border-red");
             if (response['status'] == 'success') {
-                window.location.href = "/reservations/meetings";
+                window.location.href = "/rezervacije/sastanci";
             } else if (response['status'] == 'form_error') {
                 for (var key in response['errors']) {
                     $("#login_" + key + "_err").html(response['errors'][key])

@@ -26,7 +26,7 @@ $(document).ready(function() {
         // callback triggered when we click on the event
         eventClick: function(event, jsEvent, view) {
             // Load reservation details
-            window.location.href = '/reservations/meetings/'+event.id;
+            window.location.href = '/rezervacije/sastanci/'+event.id;
         },
         viewRender: function (view, viewContainer){
             // Set calendar background to white
