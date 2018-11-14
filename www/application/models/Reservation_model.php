@@ -264,7 +264,6 @@ class Reservation_model extends CI_Model
                     $conflicts = true;
                     $conflicts_msg .= $conflict['name'] . " (od: " . $conflict['start_time'] . " do: " . $conflict['end_time'] . ")<br>";
                 }
-                // empty($conflict) ?: $conflicts[] = $conflict;
                 // Insert into db
                 $query = $this->db->query($sql, [$data['room'], $user_id, $res['start'], $res['end'], $data['title'], $data['description'], TRUE, $freq, $parent_id]);
                 $data['res_id'] = $this->db->insert_id();
@@ -293,10 +292,11 @@ class Reservation_model extends CI_Model
 
         // Notification (with and without conflicts)
         if($conflicts) {
-            $msg = $this->alerts->render('yellow', 'Rezervisano sa konfliktima', $conflicts_msg);
-            // TODO: send email to creator
+            $msg = $this->alerts->render('orange', 'Rezervisano sa konfliktima', $conflicts_msg);
+            // Notify creator about the conflicts
+            $this->send_mail_about_conflicts($data['title'], $conflicts_msg);
         } else {
-            $msg = $this->alerts->render('teal', 'Rezervisano!', $conflicts_msg);
+            $msg = $this->alerts->render('teal', 'Rezervisano!', 'Rezervacija uspešno kreirana.');
         }
         $this->session->set_flashdata('flash_message', $msg);
 
@@ -305,6 +305,20 @@ class Reservation_model extends CI_Model
         $this->insert_unregistered_members($data);
         $this->invite_members($data['res_id']);
         $this->invite_unregistered_members($data['res_id']);
+    }
+
+    public function send_mail_about_conflicts($title, $conflicts_msg)
+    {
+        // Prepare email
+        $email = $this->user_data['user']['email'];
+        $email_details = [];
+
+        $email_details['from'] = "visnjamarica@gmail.com";
+        $email_details['subject'] = "Konflikti za rezervaciju: $title";
+        $email_details['message'] = $conflicts_msg;
+
+        // Add email to queue
+        $this->mail->add_mail_to_queue(array($email), $email_details);
     }
 
     public function check_members_reg($data)
