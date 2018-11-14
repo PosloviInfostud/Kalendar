@@ -15,6 +15,6 @@
     }
     function invitation_registration_link($email, $token)
     {
-        $url = base_url("/regsiter_by_invite?email=$email&code=$token");
+        $url = base_url("/register_by_invite?email=$email&code=$token");
         return $url;  
     }

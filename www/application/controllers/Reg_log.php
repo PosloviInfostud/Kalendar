@@ -205,18 +205,28 @@ class Reg_log extends MY_Controller
             'token' => $this->input->get('code')
         ];
         if($this->user->check_invite_token($data) == false || $data['token'] == "") {
-            $data['error'] = "E-mail and code do not fit. Try again!";
+            // Notification
+            $msg = $this->alerts->render('red', 'Attention', 'E-mail and code do not fit. Try again!');
+            $this->session->set_flashdata('flash_message', $msg);
+            url_redirect('/');
         }
-        $this->layouts->set_title('Registration by Invite');
-        $this->layouts->view('registration_by_invitation', $data);
+        $this->layouts->set_title('Registracija po Pozivu');
+        $this->layouts->view('registration_by_invitation_tailwind', $data, 'login_tailwind');
     }
 
     public function register_by_invitation()
     {
         $token = $this->input->post('token');
-        $user_id = $this->user->register()['user_id'];
-        $this->user->activate($user_id);
-        $this->load->model('Reservation_model', 'res');
-        $this->res->new_registered_member($user_id, $token);
+        $response = $this->user->register(true);
+        header('Content-type: application/json');
+        echo json_encode($response);
+        // var_dump($response['status']);
+        if($response['status'] == 'success') {
+            $user_id = $response['user_id'];
+            $this->user->activate($user_id);
+            $this->load->model('Reservation_model', 'res');
+            $this->res->new_registered_member($user_id, $token);
+        }
+        exit();
     }
 }
