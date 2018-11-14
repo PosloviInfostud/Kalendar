@@ -16,7 +16,7 @@
         </div>
         <!-- Buttons -->
         <div class="flex flex-inline">
-                <button class="user-edit cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normal text-sm py-1 px-2 rounded" data-id="<?= $this->user_data['user']['id'] ?>">Edit</button>
+                <button class="user-edit cursor-pointer w-1/3 bg-indigo hover:bg-indigo-dark text-white font-normal text-sm py-1 px-2 rounded" data-id="<?= $this->user_data['user']['id'] ?>">Izmeni</button>
         </div>
     </div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 p-4 sm:p-8">

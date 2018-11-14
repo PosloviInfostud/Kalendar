@@ -31,7 +31,7 @@ class Permission_model extends CI_Model
             // Notification
             $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
             $this->session->set_flashdata('flash_message', $msg);
-            url_redirect('/reservations/meetings');
+            url_redirect('/rezervacije/sastanci');
         }
     }
 
@@ -47,7 +47,7 @@ class Permission_model extends CI_Model
             // Notification
             $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
             $this->session->set_flashdata('flash_message', $msg);
-            url_redirect('/reservations/meetings');
+            url_redirect('/rezervacije/sastanci');
         }
     }
 
@@ -65,7 +65,7 @@ class Permission_model extends CI_Model
             // Notification
             $msg = $this->alerts->render('red', 'Wrong request!', 'You do not have sufficient permissions to access that page.');
             $this->session->set_flashdata('flash_message', $msg);
-            url_redirect('/reservations/meetings');
+            url_redirect('/rezervacije/sastanci');
         }
     }
 }

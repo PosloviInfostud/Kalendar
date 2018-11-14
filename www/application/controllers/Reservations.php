@@ -18,19 +18,19 @@ class Reservations extends MY_Controller
 
     public function index()
     {
-        $this->layouts->set_title('Reservations');
+        $this->layouts->set_title('Rezervacije');
         $this->layouts->view('reservations/index');
     }
 
     public function create_reservation()
     {
-        $this->layouts->set_title('Make a New Reservation');
+        $this->layouts->set_title('Nova rezervacija');
         $this->layouts->view('reservations/create_reservation');
     }
 
     public function meeting_create_by_date()
     {
-        $this->layouts->set_title('Create a New Meeting');
+        $this->layouts->set_title('Novi sastanak');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
@@ -43,7 +43,7 @@ class Reservations extends MY_Controller
     {
         $this->load->model('Admin_model','admin');
         $rooms = $this->admin->get_all_rooms();
-        $this->layouts->set_title('Room Reservation');
+        $this->layouts->set_title('Novi sastanak');
         $this->layouts->add_header_include('/scripts/select2/dist/css/select2.min.css');
         $this->layouts->add_footer_include('/scripts/select2/dist/js/select2.min.js');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
@@ -62,7 +62,7 @@ class Reservations extends MY_Controller
     public function equipment_create_by_date()
     {
         $data['equips'] = $this->res->get_all_equipment_types();
-        $this->layouts->set_title('Create a New Reservation');
+        $this->layouts->set_title('Nova rezervacija');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_footer_include('/js/flatpickr_items.js');
@@ -73,7 +73,7 @@ class Reservations extends MY_Controller
     {
         $this->load->model('Admin_model','admin');
         $equipment = $this->admin->get_all_equipment();
-        $this->layouts->set_title('Item Reservation');
+        $this->layouts->set_title('Nova rezervacija');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/fullcalendar.min.css');
@@ -388,7 +388,7 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->load->model('Calendar_model','calendar');
         $data['calendar'] = $this->calendar->get_all_meetings_for_user($this->user_data['user']['id']);
-        $this->layouts->set_title('Active Reservations');
+        $this->layouts->set_title('Moji sastanci');
         $this->layouts->view('reservations/user_meetings', $data, 'master_tailwind');
     }
 
@@ -410,7 +410,7 @@ class Reservations extends MY_Controller
         $this->layouts->add_footer_include('/scripts/fullcalendar/gcal.js');
         $this->layouts->add_footer_include('/js/calendar_user_items.js');
         $data['equipment'] = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
-        $this->layouts->set_title('Active Reservations');
+        $this->layouts->set_title('Rezervisana oprema');
         $data['calendar'] = $this->calendar->get_all_items_for_user($this->user_data['user']['id']);
         $this->layouts->view('reservations/user_equipment_tailwind', $data, 'master_tailwind');
     }
@@ -461,10 +461,10 @@ class Reservations extends MY_Controller
             url_redirect('/error_404');
         // Check if it's the user's reservation
         } elseif($equipment[0]['user_id'] != $user_id) {
-            echo 'Not your reservation.';
+            echo 'Nije dozvoljen pristup tuđim rezervacijama.';
             die();
         }
-        $this->layouts->set_title($equipment[0]['item_name'] . ' Reservation');
+        $this->layouts->set_title($equipment[0]['item_name'] . ' rezervacija');
         $this->layouts->view('reservations/equipment/single_view_tailwind', ['equipment' => $equipment[0], 'user_id' => $user_id], 'master_tailwind');
     }
 
@@ -627,7 +627,7 @@ class Reservations extends MY_Controller
                     $this->res->update_room_reservation($data);
                     $message['success'] = $data['id'];
                     // Notification
-                    $msg = $this->alerts->render('teal', 'Success', 'Reservation successfully updated.');
+                    $msg = $this->alerts->render('teal', 'Ažurirano', 'Podaci uspešno izmenjeni.');
                     $this->session->set_flashdata('flash_message', $msg);
                 } else {
                     $message['error'] = "Sala je zauzeta u traženom terminu. Pokušaj ponovo.";
@@ -655,7 +655,7 @@ class Reservations extends MY_Controller
         } else {
             $this->res->delete_room_reservation($id);
         }
-        url_redirect('/reservations/meetings');
+        url_redirect('/rezervacije/sastanci');
     }
 
     public function show_update_equip_form($id)
@@ -669,7 +669,7 @@ class Reservations extends MY_Controller
             url_redirect('/error_404');
             // Check if it's the user's reservation
         } elseif($data['equipment']['user_id'] != $user_id) {
-            echo 'Not your reservation.';
+            echo 'Nije dozvoljen pristup tuđim rezervacijama.';
             die();
         }
 
@@ -721,7 +721,7 @@ class Reservations extends MY_Controller
     public function delete_equipment_reservation($id)
     {
         $this->res->delete_equipment_reservation($id);
-        url_redirect('/reservations/equipment');
+        url_redirect('/rezervacije/oprema');
     }
 
     public function change_member_notifications()

@@ -8,10 +8,10 @@
         </div>
         <div>
             <?php if (in_array($user_id, $editors)) { ?>
-            <a href="/reservations/meetings/edit/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
-            <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
+            <a href="/rezervacije/sastanci/izmena/<?= $meeting['id'] ?>"><button class="btn btn-info">Edit</button></a>
+            <a href="/rezervacije/sastanci/brisanje/<?= $meeting['id'] ?>" id="del_res_btn"><button class="btn btn-danger ml-2">Delete</button></a>
                 <?php if($meeting['recurring'] == 1) { ?>
-                <a href="/reservations/meetings/delete/<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn"><button class="btn btn-danger ml-2">Delete All</button></a>
+                <a href="/rezervacije/sastanci/brisanje<?= $meeting['id'] ?>?option=all&parent=<?= $meeting['parent'] ?>" id="del_all_res_btn"><button class="btn btn-danger ml-2">Delete All</button></a>
                 <?php } ?>            <?php } ?>
         </div>
     </div>
@@ -120,12 +120,12 @@
     <h2>Upcoming dates</h2>
     <ul>
     <?php foreach($child_dates as $date) { ?>
-        <li><?= $date['start_time'] ?> <a href="/reservations/meetings/<?= $date['id'] ?>">view</a> | <a href="/reservations/meetings/update/<?= $date['id'] ?>">edit</a> | <a href="/reservations/meetings/delete/<?= $date['id'] ?>">delete</a></li>
+        <li><?= $date['start_time'] ?> <a href="/rezervacije/sastanci/<?= $date['id'] ?>">view</a> | <a href="/rezervacije/sastanci/update/<?= $date['id'] ?>">edit</a> | <a href="/rezervacije/sastanci/brisanje/<?= $date['id'] ?>">delete</a></li>
     <?php } ?>
 </div>
 <?php } ?>
 
-<div class="d-flex justify-content-end mb-3"><a href="/reservations/meetings/"><button class="btn btn-secondary">Back</button></a></div>
+<div class="d-flex justify-content-end mb-3"><a href="/rezervacije/sastanci/"><button class="btn btn-secondary">Back</button></a></div>
 </div>
 </div>
 <script src="/js/reservations.js"></script>

@@ -78,8 +78,8 @@
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm">
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                        <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/reservations/meetings' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
-                            <a href="/reservations/meetings" class="<?= $text_meetings ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                        <?php $text_meetings = $_SERVER['REQUEST_URI'] == '/rezervacije/sastanci' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
+                            <a href="/rezervacije/sastanci" class="<?= $text_meetings ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                                 <div class="fill-current h-5 w-5 mr-2">
                                     <?= file_get_contents("public/icons/users.svg") ?>
                                 </div>
@@ -87,9 +87,9 @@
                             </a>
                         </div>
                         <div class="flex sm:mr-12 sm:mt-1 justify-center">
-                        <?php $text_equipment = $_SERVER['REQUEST_URI'] == '/reservations/equipment' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
+                        <?php $text_equipment = $_SERVER['REQUEST_URI'] == '/rezervacije/oprema' ? 'text-white font-normal border-primary-dark' : 'text-grey-light' ?>
 
-                            <a href="/reservations/equipment" class="<?= $text_equipment ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
+                            <a href="/rezervacije/oprema" class="<?= $text_equipment ?> no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-primary-dark hover:text-white">
                             <div class="fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/laptop-phone.svg") ?>
                             </div>
@@ -98,24 +98,24 @@
                         </div>
                     </div>
                     <div class="flex items-center text-sm z-40 relative group justify-center">
-                    <?php if(strpos($_SERVER["REQUEST_URI"], 'meeting') !== false) { ?>
+                    <?php if(strpos($_SERVER["REQUEST_URI"], 'sastanci') !== false) { ?>
                         <button id="new_reservation" class="w-auto bg-transparent hover:bg-white text-white sm:font-normal py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
                             Kreiraj novi sastanak
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">
-                                <li><a href="/reservations/meeting/create_by_date" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">Pretraga po slobodnom terminu</a></li>
-                                <li><a href="/reservations/meeting/create_by_room" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">Pretraga po salama</a></li>
+                                <li><a href="/rezervacije/sastanci/kreiraj/datum" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">po slobodnom terminu</a></li>
+                                <li><a href="/rezervacije/sastanci/kreiraj/sala" class="no-underline px-4 py-2 block text-sm font-normal text-primary hover:bg-grey-lighter">po salama</a></li>
                             </ul>
                         </div>
-                    <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'equipment') !== false) { ?>
+                    <?php } elseif(strpos($_SERVER["REQUEST_URI"], 'oprema') !== false) { ?>
                         <button id="new_reservation" class="w-auto bg-transparent hover:bg-white text-white py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
                             Rezerviši novi artikal
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">
-                                <li><a href="/reservations/equipment/create_by_date" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">Pretraga po slobodnom terminu</a></li>
-                                <li><a href="/reservations/equipment/create_by_item" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">Pretraga po artiklima</a></li>
+                                <li><a href="/rezervacije/oprema/kreiraj/datum" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">po slobodnom terminu</a></li>
+                                <li><a href="/rezervacije/oprema/kreiraj/artikal" class="no-underline px-4 py-2 block text-primary hover:bg-grey-lighter">po artiklima</a></li>
                             </ul>
                         </div>
                         <?php } else { ?>

@@ -10,8 +10,8 @@
         </div>
         <div class="col-5 text-center border border-info rounded my-3 mx-2 p-4">
             <h3 class="mb-3">Equipment</h3>
-            <a href="/reservations/equipment/create_by_date" class="btn btn-block btn-outline-info btn-options">Search Equipment by Free Time</a>
-            <a href="/reservations/equipment/create_by_item" class="btn btn-block btn-outline-info btn-options">Search by Specific Item</a>
+            <a href="/rezervacije/oprema/kreiraj/datum" class="btn btn-block btn-outline-info btn-options">Search Equipment by Free Time</a>
+            <a href="/rezervacije/oprema/kreiraj/artikal" class="btn btn-block btn-outline-info btn-options">Search by Specific Item</a>
         </div>
     </div>
     <div id="show"></div>

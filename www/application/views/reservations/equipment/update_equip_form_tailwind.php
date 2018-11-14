@@ -61,8 +61,8 @@ var current_reservations = <?= $current_reservations; ?>;
         <input type="hidden" name="res_id" id="res_id" value="<?= $equipment['id'] ?>">
         <input type="hidden" name="equip_id" id="equip_id" value="<?= $equipment['equipment_id'] ?>">
         <!-- Submit button for mobile view -->
-        <input type="submit" name="submit" id="update_equipment_submit" class="sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-6 px-4 rounded" value="Ažuriraj">
+        <input type="submit" name="submit" class="update_equipment_submit sm:hidden cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-6 px-4 rounded" value="Ažuriraj">
     </div>
     <!-- Submit button for desktop view -->
-    <input type="submit" name="submit" id="update_equipment_submit" class="hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Ažuriraj">
+    <input type="submit" name="submit" class="update_equipment_submit hidden sm:block cursor-pointer w-full bg-primary hover:bg-primary-dark text-white font-bold text-sm uppercase py-3 mt-4 px-4 rounded" value="Ažuriraj">
 </div>

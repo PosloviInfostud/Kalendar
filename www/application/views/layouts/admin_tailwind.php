@@ -34,7 +34,7 @@
                     </div>
                     <div class="w-1/4 sm:w-auto sm:flex text-right">
                         <div class="flex justify-end">
-                            <a href="/reservations/meetings" class="no-underline text-grey-light hover:text-indigo">
+                            <a href="/rezervacije/sastanci" class="no-underline text-grey-light hover:text-indigo">
                                 <div class="flex justify-end">
                                     <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                        <?= file_get_contents("public/icons/cog.svg") ?>

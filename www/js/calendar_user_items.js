@@ -17,15 +17,15 @@ $(document).ready(function() {
             right: 'agendaWeek, month, listWeek, listMonth'
         },
         views: {
-            listDay: {buttonText: 'list day'},
-            listWeek: {buttonText: 'list week'},
-            listMonth: {buttonText: 'list month'},
+            listDay: {buttonText: 'dnevna lista'},
+            listWeek: {buttonText: 'nedeljna lista'},
+            listMonth: {buttonText: 'mesečna lista'},
         },
         //make clicks and selections possible
         selectable: true,
         //callback triggered wehen we click on the event
         eventClick: function(event, jsEvent, view) {
-            window.location.href = '/reservations/equipment/'+event.id;
+            window.location.href = '/rezervacije/oprema/'+event.id;
         },
         viewRender: function (view, viewContainer){
             // Clear background image if still lingering

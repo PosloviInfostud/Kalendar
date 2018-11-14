@@ -8,8 +8,8 @@
         </div>
         <div>
             <?php if($user_id == $equipment['user_id']) { ?>
-                <a href="/reservations/equipment/edit/<?= $equipment['id'] ?>"><button id="edit_equip_btn" class="btn btn-info">Edit</button></a>
-                <a id="delete_equip_btn" href="/reservations/equipment/delete/<?= $equipment['id'] ?>"><button class="btn btn-danger ml-2">Delete</button></a>
+                <a href="/rezervacije/oprema/izmena/<?= $equipment['id'] ?>"><button id="edit_equip_btn" class="btn btn-info">Edit</button></a>
+                <a id="delete_equip_btn" href="/rezervacije/oprema/brisanje/<?= $equipment['id'] ?>"><button class="btn btn-danger ml-2">Delete</button></a>
             <?php } ?>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="col-2"><b>Description:</b></div>
         <div class="col-10"><?= $equipment['full_description'] ?></div>
     </div>
-    <div class="d-flex justify-content-end"><a href="/reservations/equipment/"><button class="btn btn-secondary">Back</button></a></div>
+    <div class="d-flex justify-content-end"><a href="/rezervacije/oprema/"><button class="btn btn-secondary">Back</button></a></div>
 
 <!-- Edit Equipment Reservation -->
 <div class="modal fade" id="editEquipModal" tabindex="-1" role="dialog" aria-labelledby="editEquipModal" aria-hidden="true">
