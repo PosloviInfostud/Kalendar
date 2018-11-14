@@ -25,7 +25,6 @@ class Datetime_model extends CI_Model
 
         // Combine the date arrays into one
         foreach ($period_start_dates as $key => $date ) {
-            
             $dayOfWeek = $date->format('N');
             if( $dayOfWeek < 6 ){
                 // If the day of the week is not a pre-defined holiday

@@ -169,7 +169,7 @@ class Reservation_model extends CI_Model
             return false;
         }
     }
-
+    
     public function check_if_equipment_is_free($data)
     {  
         $sql = "SELECT COUNT(*) AS reserved 
@@ -186,6 +186,28 @@ class Reservation_model extends CI_Model
         } else {
             return false;
         }
+    }
+
+    public function check_if_room_is_free_for_child($data)
+    {
+        $result = [];
+
+        $sql = "SELECT room.user_id,
+                u.name,
+                room.start_time,
+                room.end_time
+                FROM room_reservations AS room
+                INNER JOIN users AS u ON room.user_id = u.id
+                WHERE ((start_time < ? AND end_time > ?) OR (start_time < ? AND start_time >= ?)) 
+                AND (recurring = '0' OR parent != '0') 
+                AND room_id = ?
+                AND deleted = 0"; 
+        $query = $this->db->query($sql,[$data['start'], $data['start'], $data['end'], $data['start'], $data['room']]);
+
+        if($query->num_rows()) {
+            $result = $query->row_array();
+        }
+        return $result;
     }
 
     public function submit_reservation_form($data)
@@ -209,7 +231,6 @@ class Reservation_model extends CI_Model
             $parent_id = $this->db->insert_id();
         } else {
             // Recurring reservations
-            $period = [];
             // daily
             if($freq == '2') {
                 $period = $this->datetime->get_reccuring_dates($data, '1', 'D', '1');
@@ -227,9 +248,24 @@ class Reservation_model extends CI_Model
             // Create parent reservation
             $query = $this->db->query($sql, [$data['room'], $user_id, $period['first_start_date'], $period['last_end_date'], $data['title'], $data['description'], TRUE, $freq, 0]);
             $parent_id = $this->db->insert_id();
-
+            
             // Create child reservations
+            $conflict = [];
+            $conflicts = false;
+            $conflicts_msg = "Sastanak je kreiran ali postoje konflikti. <br />";
+
             foreach($period['reservations'] as $res) {
+                // Include room id needed for conflict check
+                $res['room'] = $data['room'];
+                // Child dates that are in conflict with existing reservations
+                $conflict = $this->check_if_room_is_free_for_child($res);
+                // if conflict isn't empty add it to the conflicts message and set conflict to true
+                if(!empty($conflict)) {
+                    $conflicts = true;
+                    $conflicts_msg .= $conflict['name'] . " (od: " . $conflict['start_time'] . " do: " . $conflict['end_time'] . ")<br>";
+                }
+                // empty($conflict) ?: $conflicts[] = $conflict;
+                // Insert into db
                 $query = $this->db->query($sql, [$data['room'], $user_id, $res['start'], $res['end'], $data['title'], $data['description'], TRUE, $freq, $parent_id]);
                 $data['res_id'] = $this->db->insert_id();
                 $data['admin'] = $user_id;
@@ -255,8 +291,13 @@ class Reservation_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
 
-        // Notification
-        $msg = $this->alerts->render('teal', 'Rezervisano!', 'Sastanak je kreiran.');
+        // Notification (with and without conflicts)
+        if($conflicts) {
+            $msg = $this->alerts->render('yellow', 'Rezervisano sa konfliktima', $conflicts_msg);
+            // TODO: send email to creator
+        } else {
+            $msg = $this->alerts->render('teal', 'Rezervisano!', $conflicts_msg);
+        }
         $this->session->set_flashdata('flash_message', $msg);
 
         $this->insert_reservation_members($data);

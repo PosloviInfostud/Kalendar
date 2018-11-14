@@ -309,7 +309,6 @@ class Reservations extends MY_Controller
         if($this->res->check_if_room_is_free($data)) {
             $this->res->submit_reservation_form($data);
             $message['success'] = "success";
-
         } else {
             $message['error'] = "Sala je zauzeta u traženom terminu. Pokušaj ponovo.";
         }
