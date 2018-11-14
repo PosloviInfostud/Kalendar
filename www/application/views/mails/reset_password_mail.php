@@ -1,10 +1,10 @@
 <html>
     <head>
-        <title>Reset Password</title>
+        <title>Resetovanje šifre</title>
     </head>
     <body>
-        <h2>Reset Password</h2>
-        <p>Please click the link below to fill in your new password.</p>
-        <p><a href="<?= $password_link ?>">Reset My Password</a></p>
+        <h2>Resetovanje šifre</h2>
+        <p>Klikni na link ispod da bi ti se otvorila forma za upis nove šifre.</p>
+        <p><a href="<?= $password_link ?>">Resetuj moju šifru</a></p>
     </body>
 </html>

@@ -1,5 +1,5 @@
-<h2>Meeting Changes | <?= $reservation['start_time']; ?></h2>
-<p>Dear colleagues, </p>
-<p>The meeting "<?= $reservation['title']; ?>" in <?= $reservation['name']; ?> starts at <?= $reservation['start_time']; ?>.
+<h2>Sastanak - promene | <?= $reservation['title']; ?></h2>
+<p>Drage kolege, </p>
+<p>Sastanak "<?= $reservation['title']; ?>" u sali "<?= $reservation['name']; ?>" počinje u <?= $reservation['start_time']; ?>.
 </p>
-<p>See you!</p>
+<p>Vidimo se!</p>

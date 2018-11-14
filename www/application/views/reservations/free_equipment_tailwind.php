@@ -9,17 +9,15 @@
             </div>
             <div class="md:w-2/3">
                 <?php
-                $i = 99999;
                 foreach($items as $item) { ?>
                     <div class="custom-radio">
-                        <input type="radio" id="customRadio<?= $i; ?>" name="equipment_id" value="<?= $item['id'] ?>" class="radio_equipment_id" enabled>
-                        <label for="customRadio<?= $i; ?>">
+                        <input type="radio" name="equipment_id" value="<?= $item['id'] ?>" class="radio_equipment_id" enabled>
+                        <label>
                             <?= $item['name']; ?>
                             <small>(Kod: <?= $item['barcode']; ?>)</small>
                         </label>
                     </div>
                 <?php
-                $i++;
                 } ?>
             </div>
         </div>

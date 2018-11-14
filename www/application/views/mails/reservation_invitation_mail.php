@@ -1,13 +1,12 @@
-<h2>New Meeting on <?= $starttime; ?></h2>
-<p>Dear <?=$name; ?>, </p>
-<p>We have a new meeting, details below: </p>
+<h2>Novi sastanak | <?= $starttime; ?></h2>
+<p>Detalji ispod: </p>
 <ul>
-    <li><strong>Room: </strong><?= $room; ?></li>
-    <li><strong>Title: </strong><?= $title; ?></li>
+    <li><strong>Sala: </strong><?= $room; ?></li>
+    <li><strong>Naziv: </strong><?= $title; ?></li>
     <?php if($description != "") { ?> 
-    <li><strong>Description: </strong><?= $description; ?></li>
+    <li><strong>Opis: </strong><?= $description; ?></li>
     <?php } ?>
-    <li><strong>Day: </strong><?= $day; ?></li>
-    <li><strong>Time: </strong><?= $time; ?></li>
+    <li><strong>Dan: </strong><?= $day; ?></li>
+    <li><strong>Vreme: </strong><?= $time; ?></li>
 </ul>
-<p>See you!</p>
+<p>Vidimo se!</p>
