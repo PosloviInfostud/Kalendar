@@ -1,5 +1,3 @@
-<!-- Breadcrumbs -->
-<?php $this->load->view('/admin/equipment_arrows'); ?>
 <!-- Content -->
 <div class="flex">
     <div class="w-4/5">

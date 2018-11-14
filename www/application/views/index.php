@@ -39,6 +39,19 @@
                 <input type="password" name="password_confirm" id="register_password_confirm" class="border w-full p-3 rounded" placeholder="Potvrdi šifru">
                 <small id="register_password_confirm_err" class="error_box text-xs text-red font-normal"></small>
             </div>
+            <div class="xs:w-full mb-2"><b>Obavesti me:</b></div>
+            <div class="xs:w-full">
+                <div class="mb-2">
+                    <input type="checkbox" class="user_notify" name="not_create" checked="checked"> kada budem pozvan na sastanak
+                </div>
+                <div class="mb-2">
+                    <input type="checkbox" class="user_notify" name="not_update" checked="checked"> kada se informacije u vezi sastanka ažuriraju ili se sastanak otkaže
+                </div>
+                <div class="mb-2">
+                    <input type="checkbox" class="user_notify" name="not_remind" checked="checked"> da sastanak počinje za 15 minuta
+                </div>
+        </div>
+
             <div class="flex">
                 <button type="submit" id="register_submit" class="cursor-pointer bg-primary hover:bg-primary-dark w-full p-4 text-sm text-white uppercase font-bold rounded">Registrujte se</button>
             </div>

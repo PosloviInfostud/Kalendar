@@ -5,22 +5,6 @@
 </script>
 
 <div class="max-w-md mx-auto">
-    <!-- Breadcrumb -->
-    <div class="flex text-xs sm:text-sm text-black px-2 mb-3 sm:px-0">
-        <span>Rezervacije</span>
-        <div class="fill-current h-2 w-2 mx-1 -mt-px">
-            <?= file_get_contents("public/icons/chevron-right.svg") ?>
-        </div>
-        <span>Sastanci</span>
-        <div class="fill-current h-2 w-2 mx-1 -mt-px">
-            <?= file_get_contents("public/icons/chevron-right.svg") ?>
-        </div>
-        <span>Izmena</span>
-        <div class="fill-current h-2 w-2 mx-1 -mt-px">
-            <?= file_get_contents("public/icons/chevron-right.svg") ?>
-        </div>
-        <span class="text-primary font-normal"><?= $meeting['title'] ?></span>
-    </div>
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow p-4 sm:p-8">
         <!-- Title -->

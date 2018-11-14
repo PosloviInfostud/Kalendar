@@ -67,7 +67,7 @@ class User_model extends CI_Model
         ];
         $this->logs->insert_log($data_log);
         $this->send_activation_mail($data['email'], $activation_key);
-        // Set notfication
+        // Set notification
         $msg = $this->alerts->render('teal', 'Uspešna registracija', 'Potrebno je još samo da odeš na svoju email adresu i potvrdiš registraciju.');
         $this->session->set_flashdata('flash_message', $msg);
 

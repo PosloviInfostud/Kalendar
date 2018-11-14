@@ -19,13 +19,6 @@ Object.keys(result).forEach(function(key){
 }) 
 </script>
 
-<div class="flex text-sm text-black pb-3 px-2 sm:px-0 border-b">
-    <span>Rezervacije</span>
-    <div class="fill-current h-2 w-2 mx-1 -mt-px">
-        <?= file_get_contents("public/icons/chevron-right.svg") ?>
-    </div>
-    <span class="text-primary font-normal">Oprema</span>
-</div>
 <div class="py-4 z-0">
     <div id="calendar" class="z-2" data-user="<?= $this->user_data['user']['id'] ?>">
     </div>

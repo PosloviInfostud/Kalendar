@@ -1,17 +1,5 @@
-<!-- Breadcrumbs -->
-<div class="flex text-sm text-black py-3 border-b mb-8">
-    <span>Admin</span>
-    <div class="fill-current h-2 w-2 mx-1 -mt-px">
-        <?= file_get_contents("public/icons/chevron-right.svg") ?>
-    </div>
-    <span>Users</span>
-    <div class="fill-current h-2 w-2 mx-1 -mt-px">
-        <?= file_get_contents("public/icons/chevron-right.svg") ?>
-    </div>
-    <span class="text-primary font-normal">Activities</span>
-</div>
 <!-- Content -->
-<h1 class="pl-2 mb-8 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">User Activities</h1>
+<h1 class="pl-2 mb-8 py-1 text-xl xs:text-2xl sm:text-3xl border-l-6 border-indigo">Aktivnosti korisnika</h1>
 <!-- Check if there are any entries in the db -->
 <?php if(empty($user_activites)) {
         echo 'No entries';

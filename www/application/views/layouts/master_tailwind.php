@@ -45,7 +45,7 @@
                                 </div>
                             </a>
                         <?php } ?>
-                            <a href="/profile" class="no-underline text-grey-light hover:text-primary">
+                            <a href="/korisnik/nalog" class="no-underline text-grey-light hover:text-primary">
                                 <div class="flex justify-end">
                                     <div class="fill-current h-5 w-5 xs:h-6 xs:w-6 mr-2 xs:mr-4 sm:mr-0">
                                         <?= file_get_contents("public/icons/user.svg") ?>
@@ -141,6 +141,8 @@
                 </div>
             </div>
         </div>
+        <!-- Breadcrumbs -->
+        <?php $this->load->view('/partials/breadcrumbs'); ?>
         <?= $content_for_layout ?>
     </div>
     <!-- Footer section -->

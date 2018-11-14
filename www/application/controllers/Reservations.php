@@ -485,6 +485,7 @@ class Reservations extends MY_Controller
         $this->permission->is_editor_of_reservation($id, $data['user_id']);
 
         // Load layout
+        $this->layouts->set_title($data['meeting']['title']);
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/lib/moment.min.js');
@@ -671,7 +672,7 @@ class Reservations extends MY_Controller
             echo 'Nije dozvoljen pristup tuđim rezervacijama.';
             die();
         }
-
+        $this->layouts->set_title($data['equipment']['item_name'] . ' rezervacija');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.css');
         $this->layouts->add_header_include('https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.5.2/flatpickr.min.js');
         $this->layouts->add_header_include('/scripts/fullcalendar/lib/moment.min.js');

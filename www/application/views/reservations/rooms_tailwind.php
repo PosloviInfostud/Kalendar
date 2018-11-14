@@ -1,21 +1,9 @@
 <div class="max-w-md mx-auto">
-    <!-- Breadcrumb -->
-    <div class="flex text-xs sm:text-sm text-black px-2 pb-3 sm:px-0">
-        <span>Rezervacije</span>
-        <div class="fill-current h-2 w-2 mx-1 -mt-px">
-            <?= file_get_contents("public/icons/chevron-right.svg") ?>
-        </div>
-        <span>Sastanci</span>
-        <div class="fill-current h-2 w-2 mx-1 -mt-px">
-            <?= file_get_contents("public/icons/chevron-right.svg") ?>
-        </div>
-        <span class="text-primary font-normal">Kreiranje lukanove rezervacije</span>
-    </div>
     <!-- Content -->
     <div class="bg-white border-x sm:border-y sm:rounded shadow px-4 py-8 sm:px-8 sm:py-6">
         <div class="flex flex-inline">
             <h1 class="pl-2 text-xl xs:text-2xl sm:text-3xl border-l-6 border-primary">Novi sastanak</h1>
-            <span class="uppercase text-grey font-medium text-sm ml-1">pretraga po slobodnom terminu</span>
+            <span class="uppercase text-grey font-medium text-sm ml-1">po slobodnom terminu</span>
         </div>
     </div>
     <div class="bg-white border-x sm:border-y sm:rounded shadow mt-4 px-4 py-8 sm:p-8">
