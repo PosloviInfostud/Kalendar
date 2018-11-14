@@ -13,6 +13,8 @@
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body class="font-sans bg-grey-lighter font-light">
+<!-- Back to top button -->
+<a id="back_to_top_btn" class="hidden cursor-pointer fixed bg-smoke hover:bg-smoke-dark m-2 sm:m-8 h-10 w-10 sm:h-12 sm:w-12 pin-b pin-r pin-4 z-50 rounded"></a>
 <!-- Navigation -->
     <div>
         <div class="bg-primary-darkest">
