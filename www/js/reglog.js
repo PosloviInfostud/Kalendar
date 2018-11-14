@@ -172,10 +172,12 @@ $("#form_reset_password").submit(function(e) {
         })
 })
 
-// Register user
-$("#register_by_invite_form").submit(function (e) {
+// Register by invitation
+$("#register_by_invite_form").submit(function(e) {
     e.preventDefault();
-    $("#register_by_invite").addClass("spinner");
+    $(".error_box").empty();
+    $("#alert_box").hide();
+    $("#register_invite_submit").addClass("spinner");
     $.ajax({
             method: "POST",
             url: "/reg_log/register_by_invitation",
@@ -187,12 +189,19 @@ $("#register_by_invite_form").submit(function (e) {
                 "token": $("#token").val()
             }
         })
-        .done(function (response) {
-            $("#register_by_invite").removeClass("spinner");
-            if (response === 'success') {
-                window.location.href = "/"
+        .done(function(response) {
+            $("#register_invite_submit").removeClass("spinner");
+            $(":input").removeClass("border-red");
+            if (response['status'] == 'success') {
+                window.location.href = "/";
+            } else if (response['status'] == 'form_error') {
+                for (var key in response['errors']) {
+                    $("#register_" + key + "_err").html(response['errors'][key]);
+                    $("input[name=" + key + "]").addClass("border-red");
+                }
             } else {
-                $("#messages").html(response);
+                $("#alert_box").html(response['errors']);
+                $("#alert_box").show('slow');
             }
         })
 })

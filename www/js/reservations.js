@@ -19,6 +19,23 @@ $("#new_reservation").on("touchstart", function(e) {
     $("#new_reservation_options").slideToggle();
 });
 
+// Back to top button
+$(document).ready(function() {
+    var backToTop = $('#back_to_top_btn'); 
+    $(window).scroll(function() {
+      if ($(window).scrollTop() > 300) {
+        backToTop.removeClass('hidden');
+      } else {
+        backToTop.addClass('hidden');
+      }
+    });
+  
+    backToTop.on('click', function(e) {
+      e.preventDefault();
+      $('html, body').animate({scrollTop:0}, '300');
+    });
+  });
+
 //send ajax search request for free rooms
 $("#search_reserved_rooms").click(function(e){
     e.preventDefault();

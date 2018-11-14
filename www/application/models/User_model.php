@@ -1,7 +1,7 @@
 <?php
 class User_model extends CI_Model
 {
-    public function register()
+    public function register($by_invite = false)
     {
         $this->load->library('encryption');
 
@@ -22,7 +22,8 @@ class User_model extends CI_Model
             $data = [
                 "name" => $this->input->post('name'),
                 "email" => $this->input->post('email'),
-                "password" => $this->input->post('password')
+                "password" => $this->input->post('password'),
+                "by_invite" => $by_invite
             ];
             $message['user_id'] = $this->create($data);
             $message['status'] = 'success';
@@ -66,10 +67,15 @@ class User_model extends CI_Model
             ]
         ];
         $this->logs->insert_log($data_log);
+
+        // Send activation email and set notification if it's a regular registration (not register by invite)
+        if($data['by_invite'] === false) {
         $this->send_activation_mail($data['email'], $activation_key);
         // Set notification
         $msg = $this->alerts->render('teal', 'Uspešna registracija', 'Potrebno je još samo da odeš na svoju email adresu i potvrdiš registraciju.');
         $this->session->set_flashdata('flash_message', $msg);
+        }
+
 
         // user_id neccessary for register_by_invitation function in Reg_log controller
         return $data_log['user_id'];
