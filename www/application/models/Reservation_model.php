@@ -101,6 +101,7 @@ class Reservation_model extends CI_Model
                 WHERE ((room_reservations.start_time < ? AND room_reservations.end_time > ?) 
                 OR (room_reservations.start_time < ? AND room_reservations.start_time >= ?)) 
                 AND (room_reservations.recurring = 0 OR room_reservations.parent != 0) 
+                AND room_reservations.deleted = '0'
                 GROUP BY room_id";
         $query = $this->db->query($sql, [$data['start_time'], $data['start_time'], $data['end_time'], $data['start_time']]);
             
@@ -138,6 +139,7 @@ class Reservation_model extends CI_Model
 
     public function show_users_for_invitation()
     {
+        $result = [];
         $admin = $this->user_data['user']['id'];
 
         $sql = "SELECT id, name, email FROM users WHERE id != ?";
@@ -214,6 +216,9 @@ class Reservation_model extends CI_Model
     {
         $period = [];
         $parent_id = [];
+        $conflict = [];
+        $conflicts = false;
+
         $user_id = $this->user_data['user']['id'];
         $data = $this->check_members_reg($data);
 
@@ -250,8 +255,6 @@ class Reservation_model extends CI_Model
             $parent_id = $this->db->insert_id();
             
             // Create child reservations
-            $conflict = [];
-            $conflicts = false;
             $conflicts_msg = "Sastanak je kreiran ali postoje konflikti. <br />";
 
             foreach($period['reservations'] as $res) {
@@ -687,16 +690,45 @@ class Reservation_model extends CI_Model
     public function new_registered_member($user_id, $token)
     {
         $result = [];
+        $recurring = "";
         $sql = "SELECT res_id FROM pending_users WHERE invite_token = ?";
         $query = $this->db->query($sql, [$token]);
         if ($query->num_rows()){
             $result = $query->row_array();
         }
         $res_id = $result['res_id'];
+
+        $sql = "SELECT recurring FROM room_reservations WHERE id = ?";
+        $query = $this->db->query($sql, [$res_id]);
+        if ($query->num_rows()){
+            $result = $query->row_array();
+        }
+        $recurring = $result['recurring'];
         
-        $sql = "INSERT INTO res_members (res_id, user_id) 
+        if ($recurring == '1') {
+            $children = $this->get_child_reservations($res_id);
+            foreach ($children as $child) {
+
+                $sql = "INSERT INTO res_members (res_id, user_id) 
                 VALUES (?, ?)";
-        $query = $this->db->query($sql, [$res_id, $user_id]);
+                $query = $this->db->query($sql, [$child['id'], $user_id]);
+
+                $data_log = [
+                    'user_id' => $user_id,
+                    'table' => 'res_members',
+                    'type' => 'insert',
+                    'value' => [
+                        'res_id' => $child['id'],
+                        'member' => $user_id
+                    ]
+                ];
+                $this->logs->insert_log($data_log);
+            }
+        }
+        elseif ($recurring == '0') {
+            $sql = "INSERT INTO res_members (res_id, user_id) 
+                    VALUES (?, ?)";
+            $query = $this->db->query($sql, [$res_id, $user_id]);
 
         $data_log = [
             'user_id' => $user_id,
@@ -707,7 +739,9 @@ class Reservation_model extends CI_Model
                 'member' => $user_id
             ]
         ];
-        $this->logs->insert_log($data_log);
+        $this->logs->insert_log($data_log);        
+}
+
 
         $sql = "UPDATE pending_users 
                 SET registered = 1, invite_token = '', modified_at = NOW() 

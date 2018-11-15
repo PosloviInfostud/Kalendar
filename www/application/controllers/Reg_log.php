@@ -99,7 +99,7 @@ class Reg_log extends MY_Controller
             $email = $this->input->post('email');
             if (empty($this->user->get_user_by_email($email))) {
                 $response['status'] = 'user_error';
-                $response['errors'] = "Ne postoji registrovan član sa postojećom email adresom.";
+                $response['errors'] = "Ne postoji registrovan član sa ovom email adresom.";
             } else {
                 $this->load->library('encryption');
                 $code = bin2hex($this->encryption->create_key(16));
