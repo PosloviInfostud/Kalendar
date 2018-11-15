@@ -88,7 +88,7 @@ class User_model extends CI_Model
 
         $email_details['from'] = 'visnjamarica@gmail.com';
         $email_details['subject'] = 'Potvrda registracije';
-        $email_details['message'] = "Klikni na link da bi tvoj nalog postao aktivan: <b />" . user_activation_link($email, $key);
+        $email_details['message'] = $this->load->view('mails/activate', ['email' => $email, 'key' => $key], true);
 
         // Add email to queue
         $this->mail->add_mail_to_queue(array($email), $email_details);

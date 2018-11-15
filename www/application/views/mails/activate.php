@@ -1,0 +1,1 @@
+<p>Klikni na link da bi tvoj nalog postao aktivan: <?= user_activation_link($email, $key) ?>
