@@ -76,14 +76,15 @@
             <div class="container mx-auto px-4 py-4 sm:py-0 sm:-mb-px">
                 <div class="sm:flex justify-between text-center">
                     <div class="sm:flex text-sm">
-                        <div class="flex sm:mr-12 sm:mt-1 justify-center">
+                        <!-- Dashboard coming soon -->
+                        <!-- <div class="flex sm:mr-12 sm:mt-1 justify-center">
                             <a href="/admin" class="text-grey-light no-underline flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
                                 <?= file_get_contents("public/icons/chart-bars.svg") ?>
                             </div>
                                 Panel
                             </a>
-                        </div>
+                        </div> -->
                         <div class="flex sm:mr-12 sm:mt-1 justify-center sm:relative group">
                             <div class="cursor-pointer text-grey-light flex items-center py-4 sm:border-b-4 border-transparent hover:border-indigo-light hover:text-white">
                             <div class="sm:hidden md:block fill-current h-5 w-5 mr-2">
