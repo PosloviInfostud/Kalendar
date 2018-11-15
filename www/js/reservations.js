@@ -23,10 +23,10 @@ $("#new_reservation").on("touchstart", function(e) {
 $(document).ready(function() {
     var backToTop = $('#back_to_top_btn'); 
     $(window).scroll(function() {
-      if ($(window).scrollTop() > 300) {
-        backToTop.removeClass('hidden');
+      if ($(window).scrollTop() > 100) {
+        backToTop.addClass('flex items-center justify-center');
       } else {
-        backToTop.addClass('hidden');
+        backToTop.removeClass('flex items-center justify-center');
       }
     });
   

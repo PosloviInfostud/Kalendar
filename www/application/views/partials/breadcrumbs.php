@@ -1,4 +1,4 @@
-<div class="flex text-sm text-black py-3 border-b mb-8">
+<div class="flex text-sm text-black pb-3">
     <?php
     $crumbs = explode('/', $_SERVER['REQUEST_URI']);
 
