@@ -388,7 +388,7 @@ class Reservations extends MY_Controller
         $this->load->model('Calendar_model','calendar');
         $data['calendar'] = $this->calendar->get_all_meetings_for_user($this->user_data['user']['id']);
         $this->layouts->set_title('Moji sastanci');
-        $this->layouts->view('reservations/user_meetings', $data, 'master_tailwind');
+        $this->layouts->view('reservations/user_meetings', $data, 'master_wide_tailwind');
     }
 
     public function get_reservation_members()
@@ -411,7 +411,7 @@ class Reservations extends MY_Controller
         $data['equipment'] = $this->res->equipment_reservations_by_user([$this->user_data['user']['id']]);
         $this->layouts->set_title('Rezervisana oprema');
         $data['calendar'] = $this->calendar->get_all_items_for_user($this->user_data['user']['id']);
-        $this->layouts->view('reservations/user_equipment_tailwind', $data, 'master_tailwind');
+        $this->layouts->view('reservations/user_equipment_tailwind', $data, 'master_wide_tailwind');
     }
 
     public function single_room_reservation($id)
