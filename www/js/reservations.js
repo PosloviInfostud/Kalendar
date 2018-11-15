@@ -702,3 +702,43 @@ $(".user_notify").change(function(){
     }).done(function(response){
     })
 })
+
+//============================================================
+/* USER PROFILE */
+
+// Load user edit modal
+$("body").on('click', "#btn_edit_profile", function() {
+    $.ajax({
+        method: "POST",
+        url: "/users/edit_profile",
+        data: {}
+    })
+    .done(function(response) {
+        $('#edit_profile_modal_body').html(response);
+        // show modal
+        $('#editProfileModal').show('slow');
+    });
+})
+
+// Edit exisitng user
+$("body").on('submit', "#update_profile", function(e) {
+    e.preventDefault();
+    $.ajax({
+        method: "POST",
+        url: "/users/update_profile",
+        data: {
+            "id" : $("#user_id").val(),
+            "name" : $("#user_name").val(),
+            "email" : $("#user_email").val(),
+        }
+    })
+    .done(function(response){
+        if(response === 'success') {
+            $("#table").html('<div class="alert alert-success" role="alert"><strong>Success!</strong> User updated.</div>');
+            $('#editProfileModal').hide('slow');
+            location.reload();
+        } else {
+            $("#edit_error_msg").html(response);
+        }
+    })
+})

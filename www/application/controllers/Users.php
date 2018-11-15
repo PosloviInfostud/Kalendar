@@ -72,4 +72,49 @@ class Users extends MY_Controller
         $column = $this->input->post('column');
         $this->user->change_user_notifications($user_id, $notify, $column);
     }
+
+    public function edit_profile()
+    {
+        $id = $this->user_data['user']['id'];
+        $user = $this->user->get_single_user($id);
+
+        // send view to ajax
+        $form = $this->load->view('users/update_profile', ['user' => $user], TRUE);
+        echo $form;
+        die();
+    }
+    public function update_profile()
+    {
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('name', 'Name', 'required|trim');
+        $this->form_validation->set_rules(
+            'email',
+            'Email',
+            'required|valid_email|trim',
+            array(
+                'required' => 'Email adresa je obavezna.',
+                'valid_email' => 'Email adresa nije pravilmo napisana.',
+            )
+        );
+
+        $message = '';
+
+        if ($this->form_validation->run() == false) {
+            $message = validation_errors();
+
+        } else {
+            $data = [
+                "id" => $this->input->post('id'),
+                "name" => $this->input->post('name'),
+                "email" => $this->input->post('email')
+            ];
+            
+            $this->user->update_profile($data);
+            $message = 'success';
+        }
+        // Send response to ajax
+        echo $message;
+    }
+
 }

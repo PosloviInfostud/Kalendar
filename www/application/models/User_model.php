@@ -342,5 +342,12 @@ class User_model extends CI_Model
             $this->logs->insert_log($data_log);       
         }
     }
+    
+    public function update_profile($data)
+    {
+        $sql = "UPDATE users SET name = ?, email = ? WHERE id = ?";
+        $query = $this->db->query($sql, [$data['name'], $data['email'], $data['id']]);
+    }
+
 
 }
