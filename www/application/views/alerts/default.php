@@ -1,4 +1,4 @@
-<div class="bg-<?= $color ?>-alert border-l-4 border-<?= $color ?> text-<?= $color ?>-dark p-4 mb-5 mt-1 shadow relative" role="alert" id="alert_box">
+<div class="bg-<?= $color ?>-alert border-l-4 border-<?= $color ?> text-<?= $color ?>-dark p-4 mb-5 mt-1 shadow relative" role="alert" id="flash_alert_box">
     <p class="font-bold uppercase mb-2"><?= $title ?></p>
     <p><?= $text ?></p>
     <span class="absolute pin-t pin-b pin-r px-4 py-3">

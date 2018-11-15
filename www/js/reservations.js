@@ -5,7 +5,7 @@ $(".close-modal").on("click", function() {
  
  // Close alert box (error messages)
  $("#close_alert").on("click", function() {
-    $("#alert_box").hide("slow");
+    $("#flash_alert_box").hide("slow");
 });
 
 // Load mobile menu

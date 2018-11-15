@@ -7,7 +7,7 @@ $("#load-modal, #close-modal").on('click', function () {
 });
 
 $("#close_alert").on('click', function () {
-    $("#alert_box").toggle('slow');
+    $("#flash_alert_box").toggle('slow');
 });
 
 // Show register form

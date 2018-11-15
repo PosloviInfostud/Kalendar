@@ -30,6 +30,6 @@ $('*[data-link="forgot"]').click(function() {
     $('*[data-section="forgot"]').removeClass("hidden");
 })
 
-$("#close_alert").on('click', function () {
-    $("#alert_box").toggle('slow');
+$("#close_alert").on('click', function() {
+    $("#flash_alert_box").hide('slow');
 });

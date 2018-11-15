@@ -37,7 +37,7 @@ $('*[data-link="forgot"]').click(function() {
 
 // Close the alert box
 $("#close_alert").on('click', function () {
-    $("#alert_box").fadeToggle('slow');
+    $("#flash_alert_box").hide('slow');
 });
 
 // Register user
@@ -68,17 +68,18 @@ $("#register_form").submit(function (e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
-                $("#alert_box").fadeToggle();
+                $("#alert_box").show('slow');
             }
         })
 })
 
 //Login user
-$("#login_form").submit(function (e) {
+$("#login_form").submit(function(e) {
     e.preventDefault();
     $("#login_submit").addClass("spinner");
     $(".error_box").empty();
     $("#alert_box").hide();
+    $("#flash_alert_box").hide();
     $.ajax({
             method: "POST",
             url: "reg_log/login",
@@ -99,8 +100,9 @@ $("#login_form").submit(function (e) {
                     $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
+                console.log(response);
                 $("#messages").html(response['errors']);
-                $("#alert_box").fadeToggle();
+                $("#alert_box").show("slow");
             }
         })
 })
@@ -167,7 +169,7 @@ $("#form_reset_password").submit(function(e) {
                 }
             } else {
                 $("#messages").html(response['errors']);
-                $("#alert_box").fadeToggle();
+                $("#alert_box").show('slow');
             }
         })
 })
@@ -200,7 +202,7 @@ $("#register_by_invite_form").submit(function(e) {
                     $("input[name=" + key + "]").addClass("border-red");
                 }
             } else {
-                $("#alert_box").html(response['errors']);
+                $("#messages").html(response['errors']);
                 $("#alert_box").show('slow');
             }
         })

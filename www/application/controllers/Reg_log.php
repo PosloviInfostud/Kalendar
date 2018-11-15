@@ -40,17 +40,19 @@ class Reg_log extends MY_Controller
 
         $user = $this->user->get_user_by_email($data['email']);
 
-        // Check if email is registered
         if (empty($user)) {
-            echo 'Invalid activation link. Please try again.';
-        // Check if both values match
+            // Check if email is registered
+            $msg = $this->alerts->render('red', 'Attention', 'Neispravan aktivacioni kod. Pokušaj ponovo.');
+            $this->session->set_flashdata('flash_message', $msg);
         } elseif ($data['email'] == $user['email'] && $data['activation_key'] == $user['activation_key']) {
+            // Check if both values match
             $this->user->activate($user['id']);
-            url_redirect('/');
-        // Handle invalid activation link
         } else {
-            echo 'Invalid activation link.';
+            // Handle invalid activation link
+            $msg = $this->alerts->render('red', 'Attention', 'Neispravan aktivacioni kod. Pokušaj ponovo.');
+            $this->session->set_flashdata('flash_message', $msg);
         }
+        url_redirect('/');
     }
 
     public function login()
@@ -148,9 +150,15 @@ class Reg_log extends MY_Controller
             'email' => $this->input->get('email'),
             'code' => $this->input->get('code')
         ];
+
+        // Check for incorrect activation link
         if($this->user->check_reset_token($data) == false || $data['code'] == "") {
-            $data['error'] = "Email adresa i kod ne odgovaraju. Pokušaj ponovo.";
+            // Notification
+            $msg = $this->alerts->render('red', 'Pažnja', 'Email adresa i kod ne odgovaraju. Pokušaj ponovo.');
+            $this->session->set_flashdata('flash_message', $msg);
+            url_redirect('/');
         }
+        
         $this->layouts->set_title('Resetovanje šifre');
         $this->layouts->view('reset_password', $data, 'login_tailwind');
     }
