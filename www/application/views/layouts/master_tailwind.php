@@ -13,9 +13,13 @@
     <title><?= $title_for_layout ?>Kalendar</title>
 </head>
 <body class="font-sans bg-grey-lighter font-light">
-<!-- Back to top button -->
-<a id="back_to_top_btn" class="hidden cursor-pointer fixed bg-smoke hover:bg-smoke-dark m-2 sm:m-8 h-10 w-10 sm:h-12 sm:w-12 pin-b pin-r pin-4 z-50 rounded"></a>
-<!-- Navigation -->
+    <!-- Back to top button -->
+    <div id="back_to_top_btn" class="hidden cursor-pointer fixed bg-primary hover:bg-primary-dark text-primary-lighter m-4 sm:m-8 h-10 w-10 sm:h-12 sm:w-12 pin-b pin-r pin-4 z-50 opacity-50 rounded">
+        <div class="fill-current h-5 w-5 xs:h-6 xs:w-6">
+            <?= file_get_contents("public/icons/chevron-up.svg") ?>
+        </div>
+    </div>
+    <!-- Navigation -->
     <div>
         <div class="bg-primary-darkest">
             <div class="sm:container mx-auto px-2 xs:px-4">
@@ -128,7 +132,7 @@
     </div>
 
     <!-- Content section :: container replacement -->
-    <div class="mx-auto max-w-2/5xl sm:px-4 py-4">
+    <div class="max-w-md mx-auto sm:px-4 py-4 mb-4">
         <!-- Flash notifications -->
         <div class="max-w-md mx-auto">
             <div id="flash_message"><?= $this->session->flashdata('flash_message') ?></div>
