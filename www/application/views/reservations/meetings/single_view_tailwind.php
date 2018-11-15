@@ -120,7 +120,7 @@
                                                 <?= file_get_contents("public/icons/pencil.svg") ?>
                                             </div>
                                         </a>
-                                        <a href="#" class="member_delete text-grey-darker hover:text-red ml-2 no-underline focus:outline-none">
+                                        <a href="#" class="member_delete text-grey-darker hover:text-red ml-2 no-underline focus:outline-none" data-res="<?= $meeting['id'] ?>" data-user="<?= $member['user_id'] ?>" data-creator="<?= $meeting['creator_id'] ?>">
                                             <div class="fill-current h-4 w-4">
                                                 <?= file_get_contents("public/icons/cross-circle.svg") ?>
                                             </div>
@@ -166,7 +166,7 @@
                                     <?= file_get_contents("public/icons/magnifier.svg") ?>
                                 </div>
                             </a>
-                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/rezervacije/sastanci/edit/<?= $date['id'] ?>">
+                            <a class="text-grey-darker hover:text-primary mr-4 no-underline focus:outline-none" href="/rezervacije/sastanci/izmena/<?= $date['id'] ?>">
                                 <div class="fill-current h-4 w-4">
                                     <?= file_get_contents("public/icons/pencil.svg") ?>
                                 </div>

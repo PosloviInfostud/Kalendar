@@ -30,6 +30,10 @@
                 <div class="xs:w-3/4"><?= $equipment['item_name'] ?></div>
             </div>
             <div class="xs:flex py-1 mb-2">
+                <div class="xs:w-1/4"><b>Rezervisano od:</b></div>
+                <div class="xs:w-3/4"><?= $equipment['start_time'] ?></div>
+            </div>
+            <div class="xs:flex py-1 mb-2">
                 <div class="xs:w-1/4"><b>Rezervisano do:</b></div>
                 <div class="xs:w-3/4"><?= $equipment['end_time'] ?></div>
             </div>

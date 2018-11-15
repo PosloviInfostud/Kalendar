@@ -106,7 +106,7 @@
                     <div class="flex items-center text-sm z-40 relative group justify-center">
                     <?php if(strpos($_SERVER["REQUEST_URI"], 'sastanci') !== false) { ?>
                         <button id="new_reservation" class="w-auto bg-transparent hover:bg-white text-white sm:font-normal py-2 px-4 md:px-8 my-2 md:mt-2 border-2 border-white hover:text-primary hover:border-transparent hover:bg-white rounded">
-                            Kreiraj novi sastanak
+                            Zakaži novi sastanak
                         </button>
                         <div id="new_reservation_options" class="hidden sm:hover:inline-block sm:group-hover:inline-block bg-white text-primary shadow-md absolute mt-12 pin-t pin-l w-full border rounded">
                             <ul class="list-reset">

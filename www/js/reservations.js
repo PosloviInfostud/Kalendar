@@ -456,7 +456,6 @@ var deleteMemberConfirmModal = function(callback) {
 
     deleteMemberConfirmModal(function(confirm, data) {
         if(confirm) {
-            console.log($(this).attr("data-res"));
             $.ajax({
                 method: "POST",
                 url: "/reservations/delete_res_member",

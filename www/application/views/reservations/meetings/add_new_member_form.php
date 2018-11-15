@@ -2,13 +2,16 @@
 <form id="add_new_member_form">
     <div class="form-group">
         <select class="js-example-basic-multiple w-full my-2 rounded" name="members[]" id="members" multiple="multiple">
-        <?php if(empty($users)) { ?>
-            No results
-        <?php } else { ?> 
-            <?php foreach($users as $user) { ?>
+
+            <?php foreach($users as $user) { 
+                if (isset($user['email'])) { ?>
+                
             <option value="<?= $user['email'] ?>"><?= $user['name'] ?><small> (<?= $user['email'] ?>)</small></option>
-        <?php  } ?> 
-        <?php } ?>
+
+            <?php  } else { ?>
+            <option disabled>No results</option>
+            <?php break; } ?> 
+            <?php } ?>
 
         </select>
     </div>
