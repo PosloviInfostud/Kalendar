@@ -36,7 +36,7 @@
                 <?php } ?>
                 </tbody>
             </table>
-        </div>z
+        </div>
 <?php } ?>
 
 <!-- Add New Equipment Type Modal -->

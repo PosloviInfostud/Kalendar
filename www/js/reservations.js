@@ -565,7 +565,7 @@ var deleteReservationConfirmModal = function(callback) {
         delete_url = this.href;
         $("#delete_reservation_confirm_modal").show("slow");
         $("#delete_reservation_confirm_modal-body").html(
-            "Are you sure you want to cancel this meeting?"
+            "Da li zaista otkazujete ovaj sastanak?"
         );
     });
 
