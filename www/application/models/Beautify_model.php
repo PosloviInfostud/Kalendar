@@ -54,11 +54,14 @@ class Beautify_model extends CI_Model
         $result = [];
         foreach($data as $key => $value) {
             $result[$key] = $value;
+            $result[$key]['day'] = date('D (d/m/y)', strtotime($value['start_time']));
+            $result[$key]['duration'] = date('H:i', strtotime($value['start_time']))." - ".date('H:i', strtotime($value['end_time']));
             $result[$key]['start_time'] = date('D @ H:i (d/m/y)', strtotime($value['start_time']));
             $result[$key]['end_time'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
-            $result[$key]['created_at'] = date('D @ H:i (d/m/y)', strtotime($value['end_time']));
+            $result[$key]['created_at'] = date('D @ H:i (d/m/y)', strtotime($value['created_at']));
             $result[$key]['description'] = substr(ucfirst($value['description']), 0, 120);
             $result[$key]['user_name'] = ucwords($value['user_name']);
+            $result[$key]['recurring'] = $result[$key]['recurring'] == 1 ?  "Da" : "Ne";
         }
         return $result;
     }

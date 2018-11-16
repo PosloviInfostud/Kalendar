@@ -439,7 +439,7 @@ var deleteMemberConfirmModal = function(callback) {
         data.creator = $(this).attr("data-creator");
         $("#delete_member_confirm_modal").show("slow");
         $("#delete_member_confirm_modal-body").html(
-            "Are you sure you want to remove this member from meeting?"
+            "Da li zaista želiš da izbrišeš ovu osobu sa sastanka?"
         )
     });
 
@@ -574,7 +574,7 @@ var deleteReservationConfirmModal = function(callback) {
         delete_url = this.href;
         $("#delete_reservation_confirm_modal").show("slow");
         $("#delete_reservation_confirm_modal-body").html(
-            "Are you sure you want to cancel ALL the reservations of this recurring event?"
+            "Da li zaista želiš da obrišeš SVE sastanka ove ponavljajuće rezervacije?"
         );
     });
 
@@ -636,7 +636,7 @@ var deleteEquipReservationConfirmModal = function(callback) {
     e.preventDefault();
     $("#delete_equip_reservation_confirm_modal").show("slow");
     $("#delete_equip_reservation_confirm_modal-body").html(
-        "Are you sure you want to remove this item from reservations?"
+        "Da li zaista otkazuješ rezervaciju ovog artikla?"
     )
 });
 

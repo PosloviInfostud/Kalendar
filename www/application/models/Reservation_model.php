@@ -72,7 +72,7 @@ class Reservation_model extends CI_Model
     {
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'New meeting';
+        $email_details['subject'] = 'Novi sastanak';
         $email_details['message'] = $this->load->view('mails/reservation_invitation_mail', $user, TRUE);
 
         // Add email to queue
@@ -1043,7 +1043,7 @@ class Reservation_model extends CI_Model
     {
         // Prepare mail
         $email_details['from'] = 'visnjamarica@gmail.com';
-        $email_details['subject'] = 'AŽurirani podaci o sastanku';
+        $email_details['subject'] = 'Ažurirani podaci o sastanku';
         $email_details['message'] = $this->load->view('mails/updated_meeting_mail', ['members' => $members, 'reservation'=>$reservation], TRUE);
 
         // Add email to queue

@@ -6,14 +6,17 @@ class Admin_model extends CI_Model
         $result = [];
 
         $sql = "SELECT r.title, 
+                rooms.name AS room, 
                 r.description, 
                 u.name as user_name, 
                 r.start_time, 
                 r.end_time, 
                 r.created_at, 
+                r.recurring, 
                 r.deleted 
                 FROM room_reservations as r
-                INNER JOIN users as u ON u.id = r.user_id
+                INNER JOIN users as u ON u.id = r.user_id 
+                INNER JOIN rooms ON r.room_id = rooms.id
                 WHERE r.deleted = 0;";
 
         $query = $this->db->query($sql, []);
