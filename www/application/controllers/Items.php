@@ -30,7 +30,7 @@ class Items extends CI_Controller
         $this->item->insert_room($data);
         $message = 'success';
         // Notification
-        $msg = $this->alerts->render('green', 'Success', 'New room added.');
+        $msg = $this->alerts->render('green', 'Uspešna izmena', 'Dodata nova sala.');
         $this->session->set_flashdata('flash_message', $msg);
         
         }
@@ -72,7 +72,7 @@ class Items extends CI_Controller
             $this->item->update_room($data);
             $message = 'success';
             // Notification
-            $msg = $this->alerts->render('green', 'Success', 'Room updated.');
+            $msg = $this->alerts->render('green', 'Uspešno ažuriranje', 'Podaci o sali uspešno izmenjeni.');
             $this->session->set_flashdata('flash_message', $msg);
         }
 
@@ -102,7 +102,7 @@ class Items extends CI_Controller
         $this->item->insert_equipment($data);
         $message = 'success';
         // Notification
-        $msg = $this->alerts->render('green', 'Success', 'New item added.');
+        $msg = $this->alerts->render('green', 'Uspešna izmena', 'Dodata nova oprema.');
         $this->session->set_flashdata('flash_message', $msg);
         }
 
@@ -146,7 +146,7 @@ class Items extends CI_Controller
             $this->item->update_equipment($data);
             $message = 'success';
             // Notification
-            $msg = $this->alerts->render('green', 'Success', 'Item updated.');
+            $msg = $this->alerts->render('green', 'Uspešna izmena', 'Podaci o opremi uspešno ažurirani.');
             $this->session->set_flashdata('flash_message', $msg);
         }
 
@@ -170,7 +170,7 @@ class Items extends CI_Controller
         $this->item->insert_type($data);
         $message = 'success';
         // Notification
-        $msg = $this->alerts->render('green', 'Success', 'New equipment type added.');
+        $msg = $this->alerts->render('green', 'Uspešna izmena', 'Dodata nova vrsta opreme.');
         $this->session->set_flashdata('flash_message', $msg);
         }
 
@@ -209,7 +209,7 @@ class Items extends CI_Controller
             $this->item->update_type($data);
             $message = 'success';
             // Notification
-            $msg = $this->alerts->render('green', 'Success', 'Equipment type updated.');
+            $msg = $this->alerts->render('green', 'Uspešna izmena', 'Uspešno ažurirani podaci o opremi.');
             $this->session->set_flashdata('flash_message', $msg);
         }
         // Send response to ajax
