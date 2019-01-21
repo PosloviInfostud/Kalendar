@@ -49,7 +49,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
-$route['default_controller'] = 'welcome';
-$route['404_override'] = '';
+$route['default_controller'] = 'reg_log/index';
+$route['404_override'] = 'errors/index';
+$route['error_404'] = 'errors/index';
 $route['translate_uri_dashes'] = FALSE;
+$route['korisnik/nalog'] = 'users/profile';
+// $route['login'] = 'reg_log';
+$route['logout'] = 'reg_log/logout';
+$route['activate'] = 'reg_log/activate';
+$route['reset_password'] = 'reg_log/reset_password_form';
+$route['register_by_invite'] = 'reg_log/registration_by_invitation_form';
+$route['rezervacije/sastanci/kreiraj/datum'] = 'reservations/meeting_create_by_date';
+$route['rezervacije/sastanci/kreiraj/sala'] = 'reservations/meeting_create_by_room';
+$route['rezervacije/oprema/kreiraj/datum'] = 'reservations/equipment_create_by_date';
+$route['rezervacije/oprema/kreiraj/artikal'] = 'reservations/equipment_create_by_item';
+$route['rezervacije/sastanci'] = 'reservations/room_reservations_by_user';
+$route['rezervacije/sastanci/(:num)'] = 'reservations/single_room_reservation/$1';
+$route['rezervacije/sastanci/izmena/(:num)'] = 'reservations/update_room_reservation_form/$1';
+$route['rezervacije/sastanci/brisanje/(:num)'] = 'reservations/delete_room_reservation/$1';
+$route['rezervacije/oprema'] = 'reservations/equipment_reservations_by_user';
+$route['rezervacije/oprema/(:num)'] = 'reservations/single_equipment_reservation/$1';
+$route['rezervacije/oprema/brisanje/(:num)'] = 'reservations/delete_equipment_reservation/$1';
+$route['rezervacije/oprema/izmena/(:num)'] = 'reservations/show_update_equip_form/$1';
+$route['admin'] = 'admin/meetings';
+$route['admin/rezervacije/sastanci'] ='admin/meetings';
+$route['admin/rezervacije/oprema'] ='admin/equipment';
+$route['admin/sastanci/sale'] = 'admin/conference_rooms';
+$route['admin/oprema/artikli'] = 'admin/items';
+$route['admin/oprema/vrste'] = 'admin/types';
+$route['admin/korisnici/lista'] = 'admin/users';
+$route['admin/korisnici/aktivnosti'] = 'admin/activities';
+$route['admin/logovi'] = 'admin/logs';
 $route['welcome'] = 'test';

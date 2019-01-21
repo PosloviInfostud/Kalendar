@@ -1,0 +1,30 @@
+.hide {
+    display:none;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    padding: 0.6rem;
+}
+
+.dataTables_length select {
+    padding: 0.5rem;
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #dae1e7 !important;
+}
+
+.select2-container--default .select2-selection--multiple {
+    padding: .25rem;
+    background-color: #f1f5f8;
+    border-color: #dae1e7;
+}
+
+.select2-container--default .select2-selection--single {
+    background-color: #f1f5f8;
+    border-color: #dae1e7;
+}
+
+.fc-event {
+    cursor: pointer;
+}
